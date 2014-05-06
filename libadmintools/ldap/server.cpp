@@ -18,15 +18,15 @@ ldp::server & ldp::Server() {
 }
 
 ldp::server::server() : _connected(false) {
-  if(ldap_initialize(&_server, "ldap://sauron")) {
+  if(ldap_initialize(&_server, "ldap://localhost")) {
     Log().add("ldp::server::server() : unable to initialize LDAP");
     return;
   }
   int version = LDAP_VERSION3;
   ldap_set_option(_server, LDAP_OPT_PROTOCOL_VERSION, &version);
   berval credentials;
-  credentials.bv_val = "***REMOVED***";
-  credentials.bv_len = strlen("***REMOVED***");
+  credentials.bv_val = "";
+  credentials.bv_len = strlen("");
   berval * serverCred;
   int result = ldap_sasl_bind_s(_server, 
           "cn=admin,dc=sanctamaria-aarschot.dc=be", 
