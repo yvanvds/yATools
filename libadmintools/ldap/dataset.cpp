@@ -9,9 +9,9 @@
 #include "server.h"
 #include <ldap.h>
 
-ldp::dataset::dataset(const resultset& orig) {
+ldp::dataset::dataset(const dataset& orig) {
   filter = orig.filter;
-  results = orig.results;
+  content = orig.content;
 }
 
 bool ldp::dataset::create(const std::string & filter) {
@@ -19,12 +19,12 @@ bool ldp::dataset::create(const std::string & filter) {
   Server().getData(*this);
 }
 
-int ldp::dataSet::count() {
-  return datamap.size();
+int ldp::dataset::count() {
+  return content.size();
 }
 
-result & get(int index) {
-  if (index >= datamap.size()) return dummy;
-  return datamap[index];
+ldp::data & ldp::dataset::get(int index) {
+  if (index >= content.size()) return dummy;
+  return content[index];
 }
 

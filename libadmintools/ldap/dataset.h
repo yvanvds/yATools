@@ -9,6 +9,7 @@
 #define	DATASET_H
 #include <string>
 #include <map>
+#include <vector>
 #include "data.h"
 
 namespace ldp {
@@ -16,16 +17,17 @@ namespace ldp {
   
   class dataset {
   public:
-    dataset(const dataset& orig);
+    dataset();
+    dataset(const ldp::dataset& orig);
 
     bool create(const std::string & filter);
     int count();
-    result & get(int index = 0);
+    data & get(int index = 0);
 
   private:
     std::string filter;
-    std::vector<data> datamap;
-    static data dummy;
+    std::vector<data> content;
+    data dummy;
     
     friend class server;
   };

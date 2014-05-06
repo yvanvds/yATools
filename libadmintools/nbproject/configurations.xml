@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="90">
+<configurationDescriptor version="94">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="ldap" displayName="ldap" projectFiles="true">
       <logicalFolder name="f1" displayName="base" projectFiles="true">
@@ -41,6 +41,22 @@
                    displayName="Test Files"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f1"
+                     displayName="ldp attributes test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>ldap/tests/ldpAttributesTest.cpp</itemPath>
+        <itemPath>ldap/tests/ldpAttributesTest.h</itemPath>
+        <itemPath>ldap/tests/ldpAttributesTestRun.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2"
+                     displayName="ldpBaseData"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>ldap/tests/ldpBaseDataTest.cpp</itemPath>
+        <itemPath>ldap/tests/ldpBaseDataTest.h</itemPath>
+        <itemPath>ldap/tests/ldpBaseDataTestRun.cpp</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -78,6 +94,52 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <folder path="TestFiles">
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibLibItem>boost_filesystem</linkerLibLibItem>
+            <linkerLibLibItem>boost_system</linkerLibLibItem>
+            <linkerLibLibItem>boost_iostreams</linkerLibLibItem>
+            <linkerLibLibItem>ldap</linkerLibLibItem>
+            <linkerLibLibItem>lber</linkerLibLibItem>
+            <linkerLibFileItem>../Debug/libsystem.so</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
@@ -109,6 +171,21 @@
       <item path="ldap/server.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/server.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpAttributesTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpAttributesTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpAttributesTestRun.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpBaseDataTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpBaseDataTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpBaseDataTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="system/process.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -155,6 +232,40 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
@@ -186,6 +297,21 @@
       <item path="ldap/server.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/server.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpAttributesTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpAttributesTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpAttributesTestRun.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpBaseDataTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpBaseDataTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldpBaseDataTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="system/process.cpp" ex="false" tool="1" flavor2="0">
       </item>

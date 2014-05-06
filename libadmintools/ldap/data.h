@@ -27,6 +27,7 @@ namespace ldp {
     data(const data& orig);
     
     void setType(data_type type);
+    data_type getType();
     void add(const std::string & name, const std::string & value);
     int size();
     int nameCount(const std::string & name);
@@ -35,7 +36,7 @@ namespace ldp {
   private:
     data_type type;
     std::multimap<std::string, std::string> attributes;
-    static std::string dummy; // to return when asked for non existant value
+    std::string dummy; // to return when asked for non existant value
   };
 }
 

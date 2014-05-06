@@ -44,6 +44,8 @@ namespace ldp {
     bool _connected;
     std::string _base;
     LDAP * _server;
+    struct timeval timeOut;
+    
     friend class dataset;
   };
 

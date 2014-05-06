@@ -8,6 +8,11 @@
 #include "log.h"
 #include <iostream>
 
+log & Log() {
+  static log l;
+  return l;
+}
+
 log::log() : _useConsole(true), _useFile(true), _file("/var/log/admintools") {
   _stream.open(_file, std::ios_base::out | std::ios_base::app);
 }

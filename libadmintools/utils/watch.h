@@ -22,7 +22,15 @@ public:
   watch()                :                _changed(false) {}
   watch(const T & value) : _value(value), _changed(false) {}
   
-  const T & operator()();
-  void      operator()(const T & value, bool silent = false);
-  bool      changed ();
+  const T & operator()() { return _value; }
+  
+  void operator()(const T & value, bool silent = false) {
+    _value = value;
+    if(!silent) _changed = true;
+  }
+  
+  bool changed () {
+    return _changed;
+  }
+  
 };

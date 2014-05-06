@@ -15,12 +15,12 @@ namespace ldp {
   public:
     group(bool editable);
     
-    virtual bool load(const DN & id);
-    virtual bool load(const CN & id);
-    virtual bool save(             );
+    virtual bool load(const DN & id) = 0;
+    virtual bool load(const CN & id) = 0;
+    virtual bool save(             ) = 0;
     
     const DN & dn();
-    const CN & cn(); group & cn(const CN & value);
+    const CN & cn();
     
     container<DN> & owners ();
     container<DN> & members();
