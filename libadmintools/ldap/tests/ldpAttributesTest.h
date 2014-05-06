@@ -14,11 +14,21 @@ class ldpAttributesTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST_SUITE(ldpAttributesTest);
 
   CPPUNIT_TEST(testDN);
+  CPPUNIT_TEST(testUID_NUMBER);
+  CPPUNIT_TEST(testUID);
+  CPPUNIT_TEST(testCN);
+  CPPUNIT_TEST(testSN);
   CPPUNIT_TEST(testFULL_NAME);
-  CPPUNIT_TEST(testAsString);
-  CPPUNIT_TEST(testGetDay);
-  CPPUNIT_TEST(testGetMonth);
-  CPPUNIT_TEST(testGetYear);
+  CPPUNIT_TEST(testGID);
+  CPPUNIT_TEST(testGID_NUMBER);
+  CPPUNIT_TEST(testWISA_ID);
+  CPPUNIT_TEST(testMAIL);
+  CPPUNIT_TEST(testPASSWORD);
+  CPPUNIT_TEST(testDAY);
+  CPPUNIT_TEST(testMONTH);
+  CPPUNIT_TEST(testYEAR);
+  CPPUNIT_TEST(testDATE);
+  CPPUNIT_TEST(testHOMEDIR);
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -30,12 +40,21 @@ public:
 
 private:
   void testDN();
+  void testUID_NUMBER();
+  void testUID();
+  void testCN();
+  void testSN();
   void testFULL_NAME();
-  void testAsString();
-  void testGetDay();
-  void testGetMonth();
-  void testGetYear();
-
+  void testGID();
+  void testGID_NUMBER();
+  void testWISA_ID();
+  void testMAIL();
+  void testPASSWORD();
+  void testDAY();
+  void testMONTH();
+  void testYEAR();
+  void testDATE();
+  void testHOMEDIR();
 };
 
 #endif	/* LDPATTRIBUTESTEST_H */

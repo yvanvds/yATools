@@ -10,6 +10,7 @@
 #include <ldap.h>
 #include <vector>
 #include "utils/log.h"
+#include "utils/config.h"
 
 // global object
 y::ldap::server & y::ldap::Server() {
@@ -22,8 +23,8 @@ y::ldap::server::server() : _connected(false) {
   timeOut.tv_sec = 300L;
   timeOut.tv_usec = 0L;
   
-  if(ldap_initialize(&_server, "ldap://localhost")) {
-    Log().add("ldp::server::server() : unable to initialize LDAP");
+  if(ldap_initialize(&_server, utils::Config().getLdapHost().c_str())) {
+    y::utils::Log().add("y::ldap::server::server() : unable to initialize LDAP");
     return;
   }
   
@@ -32,20 +33,21 @@ y::ldap::server::server() : _connected(false) {
   
   // log in as admin
   BerValue credentials;
-  credentials.bv_val = "le55ing";
-  credentials.bv_len = strlen("le55ing");
+  // no idea why BerValue doesn't take a const char *
+  credentials.bv_val = const_cast<char*>(utils::Config().getLdapPasswd().c_str());
+  credentials.bv_len = strlen(utils::Config().getLdapPasswd().c_str());
   BerValue * serverCred;
   int result = ldap_sasl_bind_s(_server, 
-          "cn=admin,dc=sanctamaria-aarschot.dc=be", 
+          utils::Config().getLdapAdminDN().c_str(), 
           NULL, &credentials, NULL, NULL, &serverCred);
   
   // check login result
   if(result != LDAP_SUCCESS) {
-    Log().add("ldp::server::server() : unable to bind to LDAP");
+    y::utils::Log().add("y::ldap::server::server() : unable to bind to LDAP");
     return;
   }
-  Log().add("ldp::server::server() : connected to LDAP server");
-  _base = "dc=sanctamaria-aarschot,dc=be";
+  y::utils::Log().add("y::ldap::server::server() : connected to LDAP server");
+  _base = utils::Config().getLdapBaseDN();
 }
 
 y::ldap::server::~server() {
@@ -106,3 +108,6 @@ void y::ldap::server::getData(y::ldap::dataset& rs) {
 
 }
 
+y::ldap::account & y::ldap::server::getAccount(const UID & id) {
+  return _accounts[0];
+}

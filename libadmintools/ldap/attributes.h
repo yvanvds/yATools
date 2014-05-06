@@ -177,7 +177,7 @@ namespace y {
 
     class DAY {
     public:
-      explicit DAY(int val) : val(val) {}
+      explicit DAY(int val);
 
       // operators
       int operator()() const; // get value
@@ -191,7 +191,7 @@ namespace y {
 
     class MONTH {
     public:
-      explicit MONTH(int val) : val(val) {}
+      explicit MONTH(int val);
 
       // operators
       int operator()() const; // get value

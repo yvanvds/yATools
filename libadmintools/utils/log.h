@@ -9,38 +9,43 @@
 #include <string>
 #include <fstream>
 
-class log {
-public:
-  /**
-   * Add a message to the log. This can be console and/or
-   * a file.
-   * @param message : The message to add
-   * @return 
-   */
-  log & add(const std::string & message);
-  
-  /**
-   * Enable the use of the console for logging
-   * @param enable : enable or disable
-   * @return 
-   */
-  log & useConsole(bool enable);
-  
-  /**
-   * Enable the use of a logfile
-   * @param enable : enable or disable
-   * @param file   : absolute path to the file used for logging
-   * @return 
-   */
-  log & useFile   (bool enable, const std::string & file = "/var/log/admintools");
-  
-  log(); 
-private:
-  bool _useConsole;
-  bool _useFile   ;
-  std::string _file;
-  std::ofstream _stream;
-};
+namespace y {
+  namespace utils {
 
-// global object (functor)
-log & Log();
+    class log {
+    public:
+      /**
+       * Add a message to the log. This can be console and/or
+       * a file.
+       * @param message : The message to add
+       * @return 
+       */
+      log & add(const std::string & message);
+
+      /**
+       * Enable the use of the console for logging
+       * @param enable : enable or disable
+       * @return 
+       */
+      log & useConsole(bool enable);
+
+      /**
+       * Enable the use of a logfile
+       * @param enable : enable or disable
+       * @param file   : absolute path to the file used for logging
+       * @return 
+       */
+      log & useFile   (bool enable, const std::string & file = "/var/log/admintools");
+
+      log(); 
+    private:
+      bool _useConsole;
+      bool _useFile   ;
+      std::string _file;
+      std::ofstream _stream;
+    };
+
+    // global object (functor)
+    log & Log();
+  }
+}

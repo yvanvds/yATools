@@ -6,6 +6,7 @@
  */
 
 #include "attributes.h"
+#include <sstream>
 
 const std::string & y::ldap::DN::operator ()() const {
   return val;
@@ -199,6 +200,11 @@ int y::ldap::DAY::operator()() const {
   return val;
 }
 
+y::ldap::DAY::DAY(int val) : val(val) {
+  if(this->val <  1) this->val =  1;
+  if(this->val > 31) this->val = 31;
+}
+
 y::ldap::DAY & y::ldap::DAY::operator=(const DAY &ref) {
   if(this != &ref) val = ref.val;
   return *this;
@@ -210,6 +216,11 @@ bool y::ldap::DAY::operator==(const DAY &ref) const{
 
 bool y::ldap::DAY::operator!=(const DAY &ref) const {
   return val != ref.val;
+}
+
+y::ldap::MONTH::MONTH(int val) : val(val) {
+  if(this->val <  1) this->val =  1;
+  if(this->val > 12) this->val = 12;
 }
 
 int y::ldap::MONTH::operator()() const {
@@ -251,31 +262,32 @@ y::ldap::DATE::DATE(const DAY& day, const MONTH& month, const YEAR& year)
 
 int y::ldap::DATE::operator ()() const {
   int result = year();
-  result << 2;
+  result *= 100;
   result += month();
-  result << 2;
+  result *= 100;
   result += day();
   return result;
 }
 
 std::string y::ldap::DATE::asString() const {
-  std::string result;
-  result += day();
+  std::ostringstream result;
+  result << day();
   switch(month()) {
-    case 1: result += " januari "; break;
-    case 2: result += " februari "; break;
-    case 3: result += " maart "; break;
-    case 4: result += " april "; break;
-    case 5: result += " mei "; break;
-    case 6: result += " juni "; break;
-    case 7: result += " juli "; break;
-    case 8: result += " augustus "; break;
-    case 9: result += " september "; break;
-    case 10: result += " oktober "; break;
-    case 11: result += " november "; break;
-    case 12: result += " december "; break;
+    case 1: result << " januari "; break;
+    case 2: result << " februari "; break;
+    case 3: result << " maart "; break;
+    case 4: result << " april "; break;
+    case 5: result << " mei "; break;
+    case 6: result << " juni "; break;
+    case 7: result << " juli "; break;
+    case 8: result << " augustus "; break;
+    case 9: result << " september "; break;
+    case 10: result << " oktober "; break;
+    case 11: result << " november "; break;
+    case 12: result << " december "; break;
   }
-  result += year();
+  result << year();
+  return result.str();
 }
 
 int y::ldap::DATE::getDay() const {

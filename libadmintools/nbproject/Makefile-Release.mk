@@ -54,8 +54,10 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
+	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f1 \
-	${TESTDIR}/TestFiles/f2
+	${TESTDIR}/TestFiles/f2 \
+	${TESTDIR}/TestFiles/f3
 
 # C Compiler Flags
 CFLAGS=
@@ -151,6 +153,10 @@ ${OBJECTDIR}/utils/log.o: utils/log.cpp
 
 # Build Test Targets
 .build-tests-conf: .build-conf ${TESTFILES}
+${TESTDIR}/TestFiles/f4: ${TESTDIR}/ldap/tests/ldapServerTest.o ${TESTDIR}/ldap/tests/ldapServerTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/ldap/tests/ldpAttributesTest.o ${TESTDIR}/ldap/tests/ldpAttributesTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
@@ -158,6 +164,22 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/ldap/tests/ldpAttributesTest.o ${TESTDIR}/ld
 ${TESTDIR}/TestFiles/f2: ${TESTDIR}/ldap/tests/ldpBaseDataTest.o ${TESTDIR}/ldap/tests/ldpBaseDataTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
+${TESTDIR}/TestFiles/f3: ${TESTDIR}/system/tests/sysConfigTest.o ${TESTDIR}/system/tests/sysConfigTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
+
+${TESTDIR}/ldap/tests/ldapServerTest.o: ldap/tests/ldapServerTest.cpp 
+	${MKDIR} -p ${TESTDIR}/ldap/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldapServerTest.o ldap/tests/ldapServerTest.cpp
+
+
+${TESTDIR}/ldap/tests/ldapServerTestRun.o: ldap/tests/ldapServerTestRun.cpp 
+	${MKDIR} -p ${TESTDIR}/ldap/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldapServerTestRun.o ldap/tests/ldapServerTestRun.cpp
 
 
 ${TESTDIR}/ldap/tests/ldpAttributesTest.o: ldap/tests/ldpAttributesTest.cpp 
@@ -182,6 +204,18 @@ ${TESTDIR}/ldap/tests/ldpBaseDataTestRun.o: ldap/tests/ldpBaseDataTestRun.cpp
 	${MKDIR} -p ${TESTDIR}/ldap/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldpBaseDataTestRun.o ldap/tests/ldpBaseDataTestRun.cpp
+
+
+${TESTDIR}/system/tests/sysConfigTest.o: system/tests/sysConfigTest.cpp 
+	${MKDIR} -p ${TESTDIR}/system/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/system/tests/sysConfigTest.o system/tests/sysConfigTest.cpp
+
+
+${TESTDIR}/system/tests/sysConfigTestRun.o: system/tests/sysConfigTestRun.cpp 
+	${MKDIR} -p ${TESTDIR}/system/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/system/tests/sysConfigTestRun.o system/tests/sysConfigTestRun.cpp
 
 
 ${OBJECTDIR}/ldap/account_nomain.o: ${OBJECTDIR}/ldap/account.o ldap/account.cpp 
@@ -357,8 +391,10 @@ ${OBJECTDIR}/utils/log_nomain.o: ${OBJECTDIR}/utils/log.o utils/log.cpp
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
+	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
+	    ${TESTDIR}/TestFiles/f3 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

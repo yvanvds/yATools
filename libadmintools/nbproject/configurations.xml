@@ -41,6 +41,14 @@
                    displayName="Test Files"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f4"
+                     displayName="ldap Server Test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>ldap/tests/ldapServerTest.cpp</itemPath>
+        <itemPath>ldap/tests/ldapServerTest.h</itemPath>
+        <itemPath>ldap/tests/ldapServerTestRun.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1"
                      displayName="ldp attributes test"
                      projectFiles="true"
@@ -56,6 +64,14 @@
         <itemPath>ldap/tests/ldpBaseDataTest.cpp</itemPath>
         <itemPath>ldap/tests/ldpBaseDataTest.h</itemPath>
         <itemPath>ldap/tests/ldpBaseDataTestRun.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3"
+                     displayName="sys config Test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>system/tests/sysConfigTest.cpp</itemPath>
+        <itemPath>system/tests/sysConfigTest.h</itemPath>
+        <itemPath>system/tests/sysConfigTestRun.cpp</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -141,6 +157,34 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
@@ -173,6 +217,12 @@
       </item>
       <item path="ldap/server.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ldap/tests/ldapServerTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapServerTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapServerTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="ldap/tests/ldpAttributesTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/tests/ldpAttributesTest.h" ex="false" tool="3" flavor2="0">
@@ -193,6 +243,12 @@
       <item path="system/process.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="system/system.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/tests/sysConfigTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/tests/sysConfigTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/tests/sysConfigTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="system/workDir.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -267,6 +323,34 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
@@ -299,6 +383,12 @@
       </item>
       <item path="ldap/server.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ldap/tests/ldapServerTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapServerTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapServerTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="ldap/tests/ldpAttributesTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/tests/ldpAttributesTest.h" ex="false" tool="3" flavor2="0">
@@ -319,6 +409,12 @@
       <item path="system/process.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="system/system.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/tests/sysConfigTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/tests/sysConfigTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/tests/sysConfigTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="system/workDir.cpp" ex="false" tool="1" flavor2="0">
       </item>

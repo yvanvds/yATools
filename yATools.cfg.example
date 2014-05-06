@@ -1,0 +1,7 @@
+#config file for yATools
+
+ldapPasswd = "yourpassword"
+ldapHost = "ldap://localhost"
+ldapBaseDN = "dc=domain,dc=com"
+ldapAdminDN = "cn=admin,dc=domain,dc=com" 
+

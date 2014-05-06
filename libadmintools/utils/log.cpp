@@ -8,16 +8,16 @@
 #include "log.h"
 #include <iostream>
 
-log & Log() {
+y::utils::log & y::utils::Log() {
   static log l;
   return l;
 }
 
-log::log() : _useConsole(true), _useFile(true), _file("/var/log/admintools") {
+y::utils::log::log() : _useConsole(true), _useFile(true), _file("/var/log/admintools") {
   _stream.open(_file, std::ios_base::out | std::ios_base::app);
 }
 
-log & log::add(const std::string& message) {
+y::utils::log & y::utils::log::add(const std::string& message) {
   if(_useConsole) {
     std::cout << message << std::endl;
   }
@@ -26,11 +26,11 @@ log & log::add(const std::string& message) {
   }
 }
 
-log & log::useConsole(bool enable) {
+y::utils::log & y::utils::log::useConsole(bool enable) {
   _useConsole = enable;
 }
 
-log & log::useFile(bool enable, const std::string& file) {
+y::utils::log & y::utils::log::useFile(bool enable, const std::string& file) {
   if(_useFile) {
     _stream.close();
   }
