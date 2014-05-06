@@ -7,13 +7,13 @@
 
 #include "workDir.h"
 
-at::workDir at::WorkDir;
+y::sys::workDir y::sys::WorkDir;
 
-const std::string & at::workDir::get() {
+const std::string & y::sys::workDir::get() {
   return dir.string();
 }
 
-void at::workDir::set(const std::string & path) {
+void y::sys::workDir::set(const std::string & path) {
   dir = path;
 }
 

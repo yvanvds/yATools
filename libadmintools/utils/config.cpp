@@ -12,7 +12,7 @@
 
 using namespace boost::program_options;
 
-at::config::config(int argc, char** argv) : general("general options") {
+y::sys::config::config(int argc, char** argv) : general("general options") {
   general.add_options()
     ("help", "print help message")
     ("work-directory,w", value<std::string>(), "set working directory")

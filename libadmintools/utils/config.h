@@ -8,16 +8,18 @@
 
 #include <boost/program_options.hpp>
 
-namespace at {
-  class config {
-  public:
-    config(int argc, char** argv);
+namespace y {
+  namespace sys {
+    class config {
+    public:
+      config(int argc, char** argv);
 
-  private:
-    boost::program_options::options_description general;
-    boost::program_options::variables_map map;
-  };
-  
+    private:
+      boost::program_options::options_description general;
+      boost::program_options::variables_map map;
+    };
+
+  }
 }
 
 

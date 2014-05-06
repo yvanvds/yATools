@@ -9,15 +9,17 @@
 #include <string>
 #include <boost/filesystem.hpp>
 
-namespace at {
-  class workDir {
-  public:
-    const std::string & get();
-    void set(const std::string & path);
-  private:
-    boost::filesystem::path dir;
-  };
+namespace y {
+  namespace sys {
+    class workDir {
+    public:
+      const std::string & get();
+      void set(const std::string & path);
+    private:
+      boost::filesystem::path dir;
+    };
 
-  extern workDir WorkDir;
+    extern workDir WorkDir;
+  }
 }
 

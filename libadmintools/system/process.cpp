@@ -16,7 +16,7 @@
 #include <boost/tokenizer.hpp>
 
 
-at::process::process(const std::string & command) {
+y::sys::process::process(const std::string & command) {
   this->command = boost::process::posix::search_path(command);
   // it looks like the first argument doesn count, so we double the
   // command in there
@@ -26,12 +26,12 @@ at::process::process(const std::string & command) {
   );
 }
 
-at::process & at::process::arg(const std::string & arg) {
+y::sys::process & y::sys::process::arg(const std::string & arg) {
   args.push_back(arg);
   return *this;
 }
 
-at::process & at::process::run(void (*write)(const std::string & message)) { 
+y::sys::process & y::sys::process::run(void (*write)(const std::string & message)) { 
   {
     boost::iostreams::file_descriptor_sink sink(pipe->sink, boost::iostreams::close_handle);
     child.reset(
@@ -60,19 +60,19 @@ at::process & at::process::run(void (*write)(const std::string & message)) {
   return *this;
 }
 
-bool at::process::success() {
+bool y::sys::process::success() {
   return errorCode.value() == 0 ? true : false;
 }
 
-std::string at::process::error() {
+std::string y::sys::process::error() {
   return errorCode.message();
 }
 
-void at::stdOut(const std::string & message) {
+void y::sys::stdOut(const std::string & message) {
   std::cout << message << std::endl;
 }
 
-bool at::Exec(const std::string& command, void (*write)(const std::string & message)) {
+bool y::sys::Exec(const std::string& command, void (*write)(const std::string & message)) {
   boost::char_separator<char> sep(" ", "", boost::keep_empty_tokens);
   boost::tokenizer<boost::char_separator<char> > tok(command, sep);
   auto i = tok.begin();
