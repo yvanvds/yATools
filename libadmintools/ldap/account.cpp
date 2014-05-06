@@ -7,7 +7,7 @@
 
 #include "ldap/account.h"
 
-ldp::account::account() : 
+y::ldap::account::account() : 
   _new(true), 
   _uidNumber(UID_NUMBER(0)),
   _uid(UID("")),
@@ -22,6 +22,6 @@ ldp::account::account() :
   _birthDay(DATE(DAY(1), MONTH(1), YEAR(1)))
   {}
 
-bool ldp::account::load(const UID & id) {
+bool y::ldap::account::load(const UID & id) {
   
 }

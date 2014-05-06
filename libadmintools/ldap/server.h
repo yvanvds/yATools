@@ -17,37 +17,39 @@
 #include "dataset.h"
 #include <ldap.h>
 
-namespace ldp {
-  class server {
-  public:
-    server(); // create object and connect to ldap server
-   ~server(); // disconnect from ldap server, does not commit changes 
-    
-    bool commitChanges(); // propagate all changes to ldap server
-    
-    account & getAccount(const UID        & id);
-    account & getAccount(const UID_NUMBER   id);
-    account & getAccount(const DN         & id);
-    
-    group & getGroup(const DN & id);
-    group & getGroup(const CN & id);
-    
-    container<account> & getAccounts(); // do not mix with getAccount!
-    container<group  > & getGroups  (); // do not mix with getGroup!    
-    
-  private:
-    void getData(dataset & rs);
-    
-    container<account> _accounts;
-    container<group  > _groups  ;
-    
-    bool _connected;
-    std::string _base;
-    LDAP * _server;
-    struct timeval timeOut;
-    
-    friend class dataset;
-  };
+namespace y {
+  namespace ldap {
+    class server {
+    public:
+      server(); // create object and connect to ldap server
+     ~server(); // disconnect from ldap server, does not commit changes 
 
-  server & Server(); // global object
+      bool commitChanges(); // propagate all changes to ldap server
+
+      account & getAccount(const UID        & id);
+      account & getAccount(const UID_NUMBER   id);
+      account & getAccount(const DN         & id);
+
+      group & getGroup(const DN & id);
+      group & getGroup(const CN & id);
+
+      container<account> & getAccounts(); // do not mix with getAccount!
+      container<group  > & getGroups  (); // do not mix with getGroup!    
+
+    private:
+      void getData(dataset & rs);
+
+      container<account> _accounts;
+      container<group  > _groups  ;
+
+      bool _connected;
+      std::string _base;
+      LDAP * _server;
+      struct timeval timeOut;
+
+      friend class dataset;
+    };
+
+    server & Server(); // global object
+  }
 }

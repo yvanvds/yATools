@@ -14,18 +14,20 @@
 #pragma once
 #include "group.h"
 
-namespace ldp {
-  class mailGroup : group {
-  public:
-    mailGroup() : group(false) {}
-    
-    bool load(const DN & id);
-    bool load(const CN & id);
-    bool save(             );
-    
-  private:
+namespace y {
+  namespace ldap {
+    class mailGroup : group {
+    public:
+      mailGroup() : group(false) {}
 
-  };
+      bool load(const DN & id);
+      bool load(const CN & id);
+      bool save(             );
+
+    private:
+
+    };
+  }
 }
 
 

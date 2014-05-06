@@ -9,21 +9,21 @@
 #include "server.h"
 #include <ldap.h>
 
-ldp::dataset::dataset(const dataset& orig) {
+y::ldap::dataset::dataset(const dataset& orig) {
   filter = orig.filter;
   content = orig.content;
 }
 
-bool ldp::dataset::create(const std::string & filter) {
+bool y::ldap::dataset::create(const std::string & filter) {
   this->filter = filter;
   Server().getData(*this);
 }
 
-int ldp::dataset::count() {
+int y::ldap::dataset::count() {
   return content.size();
 }
 
-ldp::data & ldp::dataset::get(int index) {
+y::ldap::data & y::ldap::dataset::get(int index) {
   if (index >= content.size()) return dummy;
   return content[index];
 }

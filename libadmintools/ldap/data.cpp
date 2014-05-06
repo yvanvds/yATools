@@ -7,23 +7,23 @@
 
 #include "data.h"
 
-ldp::data::data(const data& orig) {
+y::ldap::data::data(const data& orig) {
   attributes = orig.attributes;
 }
 
-void ldp::data::add(const std::string & name, const std::string & value) {
+void y::ldap::data::add(const std::string & name, const std::string & value) {
   attributes.insert(std::pair<std::string,std::string>(name, value));
 }
 
-int ldp::data::size() {
+int y::ldap::data::size() {
   return attributes.size();
 }
 
-int ldp::data::nameCount(const std::string& name) {
+int y::ldap::data::nameCount(const std::string& name) {
   return attributes.count(name);
 }
 
-const std::string & ldp::data::getValue(const std::string& name, int index) {
+const std::string & y::ldap::data::getValue(const std::string& name, int index) {
   // return dummy if index is not valid
   if (attributes.count(name) <= index) return dummy;
   
@@ -42,11 +42,11 @@ const std::string & ldp::data::getValue(const std::string& name, int index) {
   return it->second;
 }
 
-void ldp::data::setType(ldp::data_type type) {
+void y::ldap::data::setType(y::ldap::data_type type) {
   this->type = type;
 }
 
-ldp::data_type ldp::data::getType() {
+y::ldap::data_type y::ldap::data::getType() {
   return type;
 }
 

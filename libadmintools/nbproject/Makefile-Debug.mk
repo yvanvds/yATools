@@ -84,67 +84,67 @@ LDLIBSOPTIONS=-lboost_system -lboost_filesystem -lboost_program_options
 ${OBJECTDIR}/ldap/account.o: ldap/account.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/account.o ldap/account.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/account.o ldap/account.cpp
 
 ${OBJECTDIR}/ldap/attributes.o: ldap/attributes.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/attributes.o ldap/attributes.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/attributes.o ldap/attributes.cpp
 
 ${OBJECTDIR}/ldap/data.o: ldap/data.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/data.o ldap/data.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/data.o ldap/data.cpp
 
 ${OBJECTDIR}/ldap/dataset.o: ldap/dataset.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/dataset.o ldap/dataset.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/dataset.o ldap/dataset.cpp
 
 ${OBJECTDIR}/ldap/editableGroup.o: ldap/editableGroup.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/editableGroup.o ldap/editableGroup.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/editableGroup.o ldap/editableGroup.cpp
 
 ${OBJECTDIR}/ldap/group.o: ldap/group.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/group.o ldap/group.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/group.o ldap/group.cpp
 
 ${OBJECTDIR}/ldap/mailGroup.o: ldap/mailGroup.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/mailGroup.o ldap/mailGroup.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/mailGroup.o ldap/mailGroup.cpp
 
 ${OBJECTDIR}/ldap/server.o: ldap/server.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/server.o ldap/server.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/server.o ldap/server.cpp
 
 ${OBJECTDIR}/system/process.o: system/process.cpp 
 	${MKDIR} -p ${OBJECTDIR}/system
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/system/process.o system/process.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/system/process.o system/process.cpp
 
 ${OBJECTDIR}/system/workDir.o: system/workDir.cpp 
 	${MKDIR} -p ${OBJECTDIR}/system
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/system/workDir.o system/workDir.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/system/workDir.o system/workDir.cpp
 
 ${OBJECTDIR}/utils/config.o: utils/config.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/config.o utils/config.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/config.o utils/config.cpp
 
 ${OBJECTDIR}/utils/container.o: utils/container.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/container.o utils/container.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/container.o utils/container.cpp
 
 ${OBJECTDIR}/utils/log.o: utils/log.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/log.o utils/log.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/log.o utils/log.cpp
 
 # Subprojects
 .build-subprojects:
@@ -163,25 +163,25 @@ ${TESTDIR}/TestFiles/f2: ${TESTDIR}/ldap/tests/ldpBaseDataTest.o ${TESTDIR}/ldap
 ${TESTDIR}/ldap/tests/ldpAttributesTest.o: ldap/tests/ldpAttributesTest.cpp 
 	${MKDIR} -p ${TESTDIR}/ldap/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldpAttributesTest.o ldap/tests/ldpAttributesTest.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldpAttributesTest.o ldap/tests/ldpAttributesTest.cpp
 
 
 ${TESTDIR}/ldap/tests/ldpAttributesTestRun.o: ldap/tests/ldpAttributesTestRun.cpp 
 	${MKDIR} -p ${TESTDIR}/ldap/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldpAttributesTestRun.o ldap/tests/ldpAttributesTestRun.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldpAttributesTestRun.o ldap/tests/ldpAttributesTestRun.cpp
 
 
 ${TESTDIR}/ldap/tests/ldpBaseDataTest.o: ldap/tests/ldpBaseDataTest.cpp 
 	${MKDIR} -p ${TESTDIR}/ldap/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldpBaseDataTest.o ldap/tests/ldpBaseDataTest.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldpBaseDataTest.o ldap/tests/ldpBaseDataTest.cpp
 
 
 ${TESTDIR}/ldap/tests/ldpBaseDataTestRun.o: ldap/tests/ldpBaseDataTestRun.cpp 
 	${MKDIR} -p ${TESTDIR}/ldap/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldpBaseDataTestRun.o ldap/tests/ldpBaseDataTestRun.cpp
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldpBaseDataTestRun.o ldap/tests/ldpBaseDataTestRun.cpp
 
 
 ${OBJECTDIR}/ldap/account_nomain.o: ${OBJECTDIR}/ldap/account.o ldap/account.cpp 
@@ -192,7 +192,7 @@ ${OBJECTDIR}/ldap/account_nomain.o: ${OBJECTDIR}/ldap/account.o ldap/account.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/account_nomain.o ldap/account.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/account_nomain.o ldap/account.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ldap/account.o ${OBJECTDIR}/ldap/account_nomain.o;\
 	fi
@@ -205,7 +205,7 @@ ${OBJECTDIR}/ldap/attributes_nomain.o: ${OBJECTDIR}/ldap/attributes.o ldap/attri
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/attributes_nomain.o ldap/attributes.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/attributes_nomain.o ldap/attributes.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ldap/attributes.o ${OBJECTDIR}/ldap/attributes_nomain.o;\
 	fi
@@ -218,7 +218,7 @@ ${OBJECTDIR}/ldap/data_nomain.o: ${OBJECTDIR}/ldap/data.o ldap/data.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/data_nomain.o ldap/data.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/data_nomain.o ldap/data.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ldap/data.o ${OBJECTDIR}/ldap/data_nomain.o;\
 	fi
@@ -231,7 +231,7 @@ ${OBJECTDIR}/ldap/dataset_nomain.o: ${OBJECTDIR}/ldap/dataset.o ldap/dataset.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/dataset_nomain.o ldap/dataset.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/dataset_nomain.o ldap/dataset.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ldap/dataset.o ${OBJECTDIR}/ldap/dataset_nomain.o;\
 	fi
@@ -244,7 +244,7 @@ ${OBJECTDIR}/ldap/editableGroup_nomain.o: ${OBJECTDIR}/ldap/editableGroup.o ldap
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/editableGroup_nomain.o ldap/editableGroup.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/editableGroup_nomain.o ldap/editableGroup.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ldap/editableGroup.o ${OBJECTDIR}/ldap/editableGroup_nomain.o;\
 	fi
@@ -257,7 +257,7 @@ ${OBJECTDIR}/ldap/group_nomain.o: ${OBJECTDIR}/ldap/group.o ldap/group.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/group_nomain.o ldap/group.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/group_nomain.o ldap/group.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ldap/group.o ${OBJECTDIR}/ldap/group_nomain.o;\
 	fi
@@ -270,7 +270,7 @@ ${OBJECTDIR}/ldap/mailGroup_nomain.o: ${OBJECTDIR}/ldap/mailGroup.o ldap/mailGro
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/mailGroup_nomain.o ldap/mailGroup.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/mailGroup_nomain.o ldap/mailGroup.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ldap/mailGroup.o ${OBJECTDIR}/ldap/mailGroup_nomain.o;\
 	fi
@@ -283,7 +283,7 @@ ${OBJECTDIR}/ldap/server_nomain.o: ${OBJECTDIR}/ldap/server.o ldap/server.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/server_nomain.o ldap/server.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/server_nomain.o ldap/server.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ldap/server.o ${OBJECTDIR}/ldap/server_nomain.o;\
 	fi
@@ -296,7 +296,7 @@ ${OBJECTDIR}/system/process_nomain.o: ${OBJECTDIR}/system/process.o system/proce
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/system/process_nomain.o system/process.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/system/process_nomain.o system/process.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/system/process.o ${OBJECTDIR}/system/process_nomain.o;\
 	fi
@@ -309,7 +309,7 @@ ${OBJECTDIR}/system/workDir_nomain.o: ${OBJECTDIR}/system/workDir.o system/workD
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/system/workDir_nomain.o system/workDir.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/system/workDir_nomain.o system/workDir.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/system/workDir.o ${OBJECTDIR}/system/workDir_nomain.o;\
 	fi
@@ -322,7 +322,7 @@ ${OBJECTDIR}/utils/config_nomain.o: ${OBJECTDIR}/utils/config.o utils/config.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/config_nomain.o utils/config.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/config_nomain.o utils/config.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/utils/config.o ${OBJECTDIR}/utils/config_nomain.o;\
 	fi
@@ -335,7 +335,7 @@ ${OBJECTDIR}/utils/container_nomain.o: ${OBJECTDIR}/utils/container.o utils/cont
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/container_nomain.o utils/container.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/container_nomain.o utils/container.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/utils/container.o ${OBJECTDIR}/utils/container_nomain.o;\
 	fi
@@ -348,7 +348,7 @@ ${OBJECTDIR}/utils/log_nomain.o: ${OBJECTDIR}/utils/log.o utils/log.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I. -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/log_nomain.o utils/log.cpp;\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/log_nomain.o utils/log.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/utils/log.o ${OBJECTDIR}/utils/log_nomain.o;\
 	fi

@@ -83,6 +83,7 @@
           <standard>8</standard>
           <incDir>
             <pElem>.</pElem>
+            <pElem>../dependencies/boost_process</pElem>
           </incDir>
         </ccTool>
         <linkerTool>

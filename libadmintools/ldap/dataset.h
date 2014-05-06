@@ -12,25 +12,27 @@
 #include <vector>
 #include "data.h"
 
-namespace ldp {
+namespace y {
+  namespace ldap {
 
-  
-  class dataset {
-  public:
-    dataset();
-    dataset(const ldp::dataset& orig);
 
-    bool create(const std::string & filter);
-    int count();
-    data & get(int index = 0);
+    class dataset {
+    public:
+      dataset();
+      dataset(const dataset& orig);
 
-  private:
-    std::string filter;
-    std::vector<data> content;
-    data dummy;
-    
-    friend class server;
-  };
+      bool create(const std::string & filter);
+      int count();
+      data & get(int index = 0);
+
+    private:
+      std::string filter;
+      std::vector<data> content;
+      data dummy;
+
+      friend class server;
+    };
+  }
 }
 
 

@@ -25,9 +25,9 @@ void ldpAttributesTest::tearDown() {
 }
 
 void ldpAttributesTest::testDN() {
-  ldp::DN dn("cn=name,dc=domain,dc=com");
-  ldp::DN dn2("cn=name,dc=domain,dc=com");
-  ldp::DN dn3("cn=name2,dc=domain,dc=com");
+  y::ldap::DN dn("cn=name,dc=domain,dc=com");
+  y::ldap::DN dn2("cn=name,dc=domain,dc=com");
+  y::ldap::DN dn3("cn=name2,dc=domain,dc=com");
   
   // test if we can get the string back
   if(dn().compare("cn=name,dc=domain,dc=com") != 0) {

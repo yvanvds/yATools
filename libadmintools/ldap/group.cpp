@@ -7,26 +7,26 @@
 
 #include "group.h"
 
-ldp::group::group(bool editable) 
+y::ldap::group::group(bool editable) 
   : _dn(DN("")), 
     _cn(CN("")), 
     _new(true), 
     _editable(editable) {
 }
 
-const ldp::DN & ldp::group::dn() {
+const y::ldap::DN & y::ldap::group::dn() {
   return _dn();
 }
 
-const ldp::CN & ldp::group::cn() {
+const y::ldap::CN & y::ldap::group::cn() {
   return _cn();
 }
 
-container<ldp::DN> & ldp::group::owners() {
+container<y::ldap::DN> & y::ldap::group::owners() {
   return _owners;
 }
 
-container<ldp::DN> & ldp::group::members() {
+container<y::ldap::DN> & y::ldap::group::members() {
   return _members;
 }
 

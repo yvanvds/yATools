@@ -14,18 +14,20 @@
 #pragma once
 #include "ldap/group.h"
 
-namespace ldp {
-  class editableGroup : group {
-  public:
-    editableGroup() : group(true) {}
-    
-    bool load(const DN & id);
-    bool load(const CN & id);
-    bool save(             );
-    
-  private:
+namespace y {
+  namespace ldap {
+    class editableGroup : group {
+    public:
+      editableGroup() : group(true) {}
 
-  };
+      bool load(const DN & id);
+      bool load(const CN & id);
+      bool save(             );
+
+    private:
+
+    };
+  }
 }
 
 

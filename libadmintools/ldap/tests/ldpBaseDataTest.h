@@ -35,7 +35,7 @@ private:
   void testNameCount();
   void testSize();
 
-  ldp::data _data;
+  y::ldap::data _data;
 };
 
 #endif	/* LDPBASEDATATEST_H */

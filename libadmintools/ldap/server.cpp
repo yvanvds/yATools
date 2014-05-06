@@ -12,12 +12,12 @@
 #include "utils/log.h"
 
 // global object
-ldp::server & ldp::Server() {
-  static ldp::server s;
+y::ldap::server & y::ldap::Server() {
+  static y::ldap::server s;
   return s;
 }
 
-ldp::server::server() : _connected(false) {
+y::ldap::server::server() : _connected(false) {
   // set timeout values
   timeOut.tv_sec = 300L;
   timeOut.tv_usec = 0L;
@@ -48,11 +48,11 @@ ldp::server::server() : _connected(false) {
   _base = "dc=sanctamaria-aarschot,dc=be";
 }
 
-ldp::server::~server() {
+y::ldap::server::~server() {
   ldap_unbind_ext(_server, NULL, NULL);
 }
 
-void ldp::server::getData(ldp::dataset& rs) {
+void y::ldap::server::getData(y::ldap::dataset& rs) {
   LDAPMessage * result;
   if(ldap_search_ext_s(
           _server, 

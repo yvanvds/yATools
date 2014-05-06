@@ -12,241 +12,243 @@
  * another are possible.
  */
 
-namespace ldp {
-  class DN {
-  public:
-    explicit DN(const std::string & val) : val(val) {}
- 
-    // operators
-    const std::string & operator()() const; // get value
-    DN & operator=(const DN &ref);
-    bool operator==(const DN &ref) const;
-    bool operator!=(const DN &ref) const;
+namespace y {
+  namespace ldap {
+    class DN {
+    public:
+      explicit DN(const std::string & val) : val(val) {}
 
-  private:
-    std::string val;
-  };
- 
-  class UID_NUMBER {
-  public:
-    explicit UID_NUMBER(const int val) : val(val) {}
- 
-    // operators
-    int operator()() const; // get value
-    UID_NUMBER & operator=(const UID_NUMBER &ref) {
-      if(this != &ref) {
-        val = ref.val;
+      // operators
+      const std::string & operator()() const; // get value
+      DN & operator=(const DN &ref);
+      bool operator==(const DN &ref) const;
+      bool operator!=(const DN &ref) const;
+
+    private:
+      std::string val;
+    };
+
+    class UID_NUMBER {
+    public:
+      explicit UID_NUMBER(const int val) : val(val) {}
+
+      // operators
+      int operator()() const; // get value
+      UID_NUMBER & operator=(const UID_NUMBER &ref) {
+        if(this != &ref) {
+          val = ref.val;
+        }
+        return *this;
       }
-      return *this;
-    }
-    bool operator==(const UID_NUMBER &ref) const;
-    bool operator!=(const UID_NUMBER &ref) const;
+      bool operator==(const UID_NUMBER &ref) const;
+      bool operator!=(const UID_NUMBER &ref) const;
 
-  private:
-    int val;
-  };
+    private:
+      int val;
+    };
 
-  class UID {
-  public:
-    explicit UID(const std::string & val) : val(val) {}
- 
-    // operators
-    const std::string & operator()() const; // get value
-    UID & operator=(const UID &ref);
-    bool operator==(const UID &ref) const;
-    bool operator!=(const UID &ref) const;
+    class UID {
+    public:
+      explicit UID(const std::string & val) : val(val) {}
 
-  private:
-    std::string val;
-  };
+      // operators
+      const std::string & operator()() const; // get value
+      UID & operator=(const UID &ref);
+      bool operator==(const UID &ref) const;
+      bool operator!=(const UID &ref) const;
 
-  class CN {
-  public:
-    explicit CN(const std::string & val) : val(val) {}
- 
-    // operators
-    const std::string & operator()() const; // get value
-    CN & operator=(const CN &ref);
-    bool operator==(const CN &ref) const;
-    bool operator!=(const CN &ref) const;
+    private:
+      std::string val;
+    };
 
-  private:
-    std::string val;
-  };
+    class CN {
+    public:
+      explicit CN(const std::string & val) : val(val) {}
 
-  class SN {
-  public:
-    explicit SN(const std::string & val) : val(val) {}
- 
-    // operators
-    const std::string & operator()() const; // get value
-    SN & operator=(const SN &ref);
-    bool operator==(const SN &ref) const;
-    bool operator!=(const SN &ref) const;
+      // operators
+      const std::string & operator()() const; // get value
+      CN & operator=(const CN &ref);
+      bool operator==(const CN &ref) const;
+      bool operator!=(const CN &ref) const;
 
-  private:
-    std::string val;
-  };
+    private:
+      std::string val;
+    };
 
-  class FULL_NAME {
-  public:
-    explicit FULL_NAME(const std::string & val) : val(val) {}
-    explicit FULL_NAME(const CN & cn, const SN & sn);
- 
-    // operators
-    const std::string & operator()() const; // get value
-    FULL_NAME & operator=(const FULL_NAME &ref);
-    bool operator==(const FULL_NAME &ref) const;
-    bool operator!=(const FULL_NAME &ref) const;
+    class SN {
+    public:
+      explicit SN(const std::string & val) : val(val) {}
 
-  private:
-    std::string val;
-  };
+      // operators
+      const std::string & operator()() const; // get value
+      SN & operator=(const SN &ref);
+      bool operator==(const SN &ref) const;
+      bool operator!=(const SN &ref) const;
 
-  // used for class, like 1D, extern, personeel...
-  class GID {
-  public:
-    explicit GID(const std::string & val) : val(val) {}
- 
-    // operators
-    const std::string & operator()() const; // get value
-    GID & operator=(const GID &ref);
-    bool operator==(const GID &ref) const;
-    bool operator!=(const GID &ref) const;
+    private:
+      std::string val;
+    };
 
-  private:
-    std::string val;
-  };
+    class FULL_NAME {
+    public:
+      explicit FULL_NAME(const std::string & val) : val(val) {}
+      explicit FULL_NAME(const CN & cn, const SN & sn);
 
-  class GID_NUMBER {
-  public:
-    explicit GID_NUMBER(int val) : val(val) {}
- 
-    // operators
-    int operator()() const; // get value
-    GID_NUMBER & operator=(const GID_NUMBER &ref);
-    bool operator==(const GID_NUMBER &ref) const;
-    bool operator!=(const GID_NUMBER &ref) const;
+      // operators
+      const std::string & operator()() const; // get value
+      FULL_NAME & operator=(const FULL_NAME &ref);
+      bool operator==(const FULL_NAME &ref) const;
+      bool operator!=(const FULL_NAME &ref) const;
 
-  private:
-    int val;
-  };
+    private:
+      std::string val;
+    };
 
-  class WISA_ID {
-  public:
-    explicit WISA_ID(int val) : val(val) {}
- 
-    // operators
-    int operator()() const; // get value
-    WISA_ID & operator=(const WISA_ID &ref);
-    bool operator==(const WISA_ID &ref) const;
-    bool operator!=(const WISA_ID &ref) const;
+    // used for class, like 1D, extern, personeel...
+    class GID {
+    public:
+      explicit GID(const std::string & val) : val(val) {}
 
-  private:
-    int val;
-  };
+      // operators
+      const std::string & operator()() const; // get value
+      GID & operator=(const GID &ref);
+      bool operator==(const GID &ref) const;
+      bool operator!=(const GID &ref) const;
 
-  class MAIL {
-  public:
-    explicit MAIL(const std::string & val) : val(val) {}
- 
-    // operators
-    const std::string & operator()() const; // get value
-    MAIL & operator=(const MAIL &ref);
-    bool operator==(const MAIL &ref) const;
-    bool operator!=(const MAIL &ref) const;
+    private:
+      std::string val;
+    };
 
-  private:
-    std::string val;
-  };
+    class GID_NUMBER {
+    public:
+      explicit GID_NUMBER(int val) : val(val) {}
 
-  class PASSWORD {
-  public:
-    explicit PASSWORD(const std::string & val) : val(val) {}
- 
-    // operators
-    const std::string & operator()() const; // get value
-    PASSWORD & operator=(const PASSWORD &ref);
-    bool operator==(const PASSWORD &ref) const;
-    bool operator!=(const PASSWORD &ref) const;
+      // operators
+      int operator()() const; // get value
+      GID_NUMBER & operator=(const GID_NUMBER &ref);
+      bool operator==(const GID_NUMBER &ref) const;
+      bool operator!=(const GID_NUMBER &ref) const;
 
-  private:
-    std::string val;
-  };
+    private:
+      int val;
+    };
 
-  class DAY {
-  public:
-    explicit DAY(int val) : val(val) {}
- 
-    // operators
-    int operator()() const; // get value
-    DAY & operator=(const DAY &ref);
-    bool operator==(const DAY &ref) const;
-    bool operator!=(const DAY &ref) const;
+    class WISA_ID {
+    public:
+      explicit WISA_ID(int val) : val(val) {}
 
-  private:
-    int val;
-  };
+      // operators
+      int operator()() const; // get value
+      WISA_ID & operator=(const WISA_ID &ref);
+      bool operator==(const WISA_ID &ref) const;
+      bool operator!=(const WISA_ID &ref) const;
 
-  class MONTH {
-  public:
-    explicit MONTH(int val) : val(val) {}
- 
-    // operators
-    int operator()() const; // get value
-    MONTH & operator=(const MONTH &ref);
-    bool operator==(const MONTH &ref) const;
-    bool operator!=(const MONTH &ref) const;
+    private:
+      int val;
+    };
 
-  private:
-    int val;
-  };
+    class MAIL {
+    public:
+      explicit MAIL(const std::string & val) : val(val) {}
 
-  class YEAR {
-  public:
-    explicit YEAR(int val) : val(val) {}
- 
-    // operators
-    int operator()() const; // get value
-    YEAR & operator=(const YEAR &ref);
-    bool operator==(const YEAR &ref) const;
-    bool operator!=(const YEAR &ref) const;
+      // operators
+      const std::string & operator()() const; // get value
+      MAIL & operator=(const MAIL &ref);
+      bool operator==(const MAIL &ref) const;
+      bool operator!=(const MAIL &ref) const;
 
-  private:
-    int val;
-  };
+    private:
+      std::string val;
+    };
 
-  class DATE {
-  public: 
-    explicit DATE(const DAY & day, const MONTH & month, const YEAR & year);
+    class PASSWORD {
+    public:
+      explicit PASSWORD(const std::string & val) : val(val) {}
 
-    // operators
-    int operator()() const; // get value
-    std::string asString() const;
-    int getDay() const;
-    int getMonth() const;
-    int getYear() const;
-    DATE & operator=(const DATE &ref);
-    bool operator==(const DATE &ref) const;
-    bool operator!=(const DATE &ref) const;
+      // operators
+      const std::string & operator()() const; // get value
+      PASSWORD & operator=(const PASSWORD &ref);
+      bool operator==(const PASSWORD &ref) const;
+      bool operator!=(const PASSWORD &ref) const;
 
-  private:
-    DAY day;
-    MONTH month;
-    YEAR year;
-  };
-  
-  class HOMEDIR {
-  public:
-    explicit HOMEDIR(const std::string & val) : val(val) {}
- 
-    // operators
-    const std::string & operator()() const; // get value
-    HOMEDIR & operator=(const HOMEDIR &ref);
-    bool operator==(const HOMEDIR &ref) const;
-    bool operator!=(const HOMEDIR &ref) const;
+    private:
+      std::string val;
+    };
 
-  private:
-    std::string val;
-  };
-};
+    class DAY {
+    public:
+      explicit DAY(int val) : val(val) {}
+
+      // operators
+      int operator()() const; // get value
+      DAY & operator=(const DAY &ref);
+      bool operator==(const DAY &ref) const;
+      bool operator!=(const DAY &ref) const;
+
+    private:
+      int val;
+    };
+
+    class MONTH {
+    public:
+      explicit MONTH(int val) : val(val) {}
+
+      // operators
+      int operator()() const; // get value
+      MONTH & operator=(const MONTH &ref);
+      bool operator==(const MONTH &ref) const;
+      bool operator!=(const MONTH &ref) const;
+
+    private:
+      int val;
+    };
+
+    class YEAR {
+    public:
+      explicit YEAR(int val) : val(val) {}
+
+      // operators
+      int operator()() const; // get value
+      YEAR & operator=(const YEAR &ref);
+      bool operator==(const YEAR &ref) const;
+      bool operator!=(const YEAR &ref) const;
+
+    private:
+      int val;
+    };
+
+    class DATE {
+    public: 
+      explicit DATE(const DAY & day, const MONTH & month, const YEAR & year);
+
+      // operators
+      int operator()() const; // get value
+      std::string asString() const;
+      int getDay() const;
+      int getMonth() const;
+      int getYear() const;
+      DATE & operator=(const DATE &ref);
+      bool operator==(const DATE &ref) const;
+      bool operator!=(const DATE &ref) const;
+
+    private:
+      DAY day;
+      MONTH month;
+      YEAR year;
+    };
+
+    class HOMEDIR {
+    public:
+      explicit HOMEDIR(const std::string & val) : val(val) {}
+
+      // operators
+      const std::string & operator()() const; // get value
+      HOMEDIR & operator=(const HOMEDIR &ref);
+      bool operator==(const HOMEDIR &ref) const;
+      bool operator!=(const HOMEDIR &ref) const;
+
+    private:
+      std::string val;
+    };
+  }
+}
