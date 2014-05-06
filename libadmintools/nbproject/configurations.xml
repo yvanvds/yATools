@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="90">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="ldap" displayName="ldap" projectFiles="true">
+      <logicalFolder name="f1" displayName="base" projectFiles="true">
+        <itemPath>ldap/data.cpp</itemPath>
+        <itemPath>ldap/data.h</itemPath>
+        <itemPath>ldap/dataset.cpp</itemPath>
+        <itemPath>ldap/dataset.h</itemPath>
+      </logicalFolder>
+      <itemPath>ldap/account.cpp</itemPath>
+      <itemPath>ldap/account.h</itemPath>
+      <itemPath>ldap/attributes.cpp</itemPath>
+      <itemPath>ldap/attributes.h</itemPath>
+      <itemPath>ldap/editableGroup.cpp</itemPath>
+      <itemPath>ldap/editableGroup.h</itemPath>
+      <itemPath>ldap/group.cpp</itemPath>
+      <itemPath>ldap/group.h</itemPath>
+      <itemPath>ldap/mailGroup.cpp</itemPath>
+      <itemPath>ldap/mailGroup.h</itemPath>
+      <itemPath>ldap/server.cpp</itemPath>
+      <itemPath>ldap/server.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="system" displayName="system" projectFiles="true">
+      <itemPath>system/process.cpp</itemPath>
+      <itemPath>system/process.h</itemPath>
+      <itemPath>system/system.hpp</itemPath>
+      <itemPath>system/workDir.cpp</itemPath>
+      <itemPath>system/workDir.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="utils" displayName="utils" projectFiles="true">
+      <itemPath>utils/config.cpp</itemPath>
+      <itemPath>utils/config.h</itemPath>
+      <itemPath>utils/container.cpp</itemPath>
+      <itemPath>utils/container.h</itemPath>
+      <itemPath>utils/log.cpp</itemPath>
+      <itemPath>utils/log.h</itemPath>
+      <itemPath>utils/watch.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>ldap</Elem>
+    <Elem>system</Elem>
+    <Elem>utils</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>../${CND_CONF}/libsystem.${CND_DLIB_EXT}</output>
+          <linkerLibItems>
+            <linkerOptionItem>-lboost_system</linkerOptionItem>
+            <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
+            <linkerOptionItem>-lboost_program_options</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/attributes.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/attributes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/data.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/data.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/dataset.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/dataset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/editableGroup.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/editableGroup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/group.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/group.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/mailGroup.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/mailGroup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/server.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/server.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/process.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/process.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/system.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/workDir.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/workDir.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/config.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/container.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/container.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/log.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/log.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/watch.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/attributes.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/attributes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/data.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/data.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/dataset.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/dataset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/editableGroup.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/editableGroup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/group.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/group.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/mailGroup.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/mailGroup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/server.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/server.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/process.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/process.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/system.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/workDir.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/workDir.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/config.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/container.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/container.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/log.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/log.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/watch.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
