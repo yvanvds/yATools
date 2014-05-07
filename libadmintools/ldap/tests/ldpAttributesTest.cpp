@@ -428,6 +428,20 @@ void ldpAttributesTest::testDATE() {
   if(item2.getYear() != 1980) {
     CPPUNIT_ASSERT(false);
   }
+  
+  // test for ldap date conversion
+  item1 = y::ldap::DATE("19720809");
+   if(item1.getDay() != 9) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  if(item1.getMonth() != 8) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  if(item1.getYear() != 1972) {
+    CPPUNIT_ASSERT(false);
+  } 
 }
 
 void ldpAttributesTest::testHOMEDIR() {

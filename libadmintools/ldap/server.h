@@ -24,6 +24,9 @@ namespace y {
       server(); // create object and connect to ldap server
      ~server(); // disconnect from ldap server, does not commit changes 
 
+      // check a user's password
+      bool auth(const DN & dn, const PASSWORD & password); 
+      
       bool commitChanges(); // propagate all changes to ldap server
 
       account & getAccount(const UID        & id);
@@ -37,7 +40,7 @@ namespace y {
       container<group  > & getGroups  (); // do not mix with getGroup!    
 
     private:
-      void getData(dataset & rs);
+      bool getData(dataset & rs);
 
       container<account> _accounts;
       container<group  > _groups  ;
@@ -45,6 +48,7 @@ namespace y {
       bool _connected;
       std::string _base;
       LDAP * _server;
+      LDAP * _authServer;
       struct timeval timeOut;
 
       friend class dataset;

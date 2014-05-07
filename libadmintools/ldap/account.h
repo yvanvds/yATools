@@ -15,19 +15,13 @@ namespace y {
     public:
       account();
 
-      // load - save
-      bool load(const UID  & id);
-      bool load(UID_NUMBER   id);
-      bool load(const DN   & id);
-      bool save();
-
-      bool empty(); // true if account does not contain any data
+      bool isNew(); // true if account does not exist in ldap
 
       // set - get
       const UID_NUMBER & uidNumber(); account & uidNumber(const UID_NUMBER & value);
       const UID        & uid      (); account & uid      (const UID        & value);
       const DN         & dn       (); 
-      const CN         & cn       (); account & cd       (const CN         & value);
+      const CN         & cn       (); account & cn       (const CN         & value);
       const SN         & sn       (); account & sn       (const SN         & value);
       const FULL_NAME  & fullName (); account & fullName (const FULL_NAME  & value);
       const HOMEDIR    & homeDir  (); account & homeDir  (const HOMEDIR    & value);
@@ -37,6 +31,10 @@ namespace y {
       const PASSWORD   & password (); account & password (const PASSWORD   & value);
 
     private:
+      bool load(const UID  & id);
+      bool load(UID_NUMBER   id);
+      bool load(const DN   & id); 
+      
       watch<UID_NUMBER>  _uidNumber;
       watch<UID       >  _uid      ;
       watch<DN        >  _dn       ;
@@ -50,6 +48,8 @@ namespace y {
       watch<PASSWORD  >  _password ;
 
       bool _new; // false if the account is loaded from ldap
+      
+      friend class server;
     };
   };
 }

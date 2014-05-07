@@ -18,12 +18,13 @@ namespace y {
 
     class dataset {
     public:
-      dataset();
+      dataset() {}
       dataset(const dataset& orig);
 
       bool create(const std::string & filter);
       int count();
       data & get(int index = 0);
+      data & New(data_type type);
 
     private:
       std::string filter;

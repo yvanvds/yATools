@@ -25,6 +25,7 @@ namespace y {
     class data {
     public:
       data() : type(NONE) {}
+      data(data_type type) : type(type) {}
       data(const data& orig);
 
       void setType(data_type type);

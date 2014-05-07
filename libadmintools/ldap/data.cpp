@@ -9,10 +9,11 @@
 
 y::ldap::data::data(const data& orig) {
   attributes = orig.attributes;
+  type = orig.type;
 }
 
 void y::ldap::data::add(const std::string & name, const std::string & value) {
-  attributes.insert(std::pair<std::string,std::string>(name, value));
+  attributes.emplace(std::string(name), std::string(value));
 }
 
 int y::ldap::data::size() {

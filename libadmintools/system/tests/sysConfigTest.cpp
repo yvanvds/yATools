@@ -21,6 +21,10 @@ sysConfigTest::sysConfigTest() {
                    "dc=domain,dc=com",
                    "--ldapAdminDN",
                    "cn=admin,dc=domain,dc=com",
+                   "--ldapTestUID",
+                   "testname",
+                   "--ldapTestPassword",
+                   "secret2",
                    NULL};
   int argc = sizeof(argv) / sizeof(char*) - 1;
   y::utils::Config().load(argc, argv);
@@ -65,3 +69,16 @@ void sysConfigTest::testGetLdapPasswd() {
   }
 }
 
+void sysConfigTest::testGetLdapTestUID() {
+  const std::string& result = y::utils::Config().getLdapTestUID();
+  if (result.compare("testname") != 0) {
+    CPPUNIT_ASSERT(false);
+  }
+}
+
+void sysConfigTest::testGetLdapTestPassword() {
+  const std::string& result = y::utils::Config().getLdapTestPassword();
+  if (result.compare("secret2") != 0) {
+    CPPUNIT_ASSERT(false);
+  }
+}

@@ -6,7 +6,9 @@
  */
 
 #include "attributes.h"
+#include "utils/log.h"
 #include <sstream>
+#include <stdexcept>
 
 const std::string & y::ldap::DN::operator ()() const {
   return val;
@@ -255,6 +257,23 @@ bool y::ldap::YEAR::operator==(const YEAR &ref) const{
 
 bool y::ldap::YEAR::operator!=(const YEAR &ref) const {
   return val != ref.val;
+}
+
+
+
+y::ldap::DATE::DATE(const std::string & ldapDate) : day(1), month(1), year(1) {
+  int i;
+  try {
+    i = std::stoi(ldapDate);
+  } catch(const std::invalid_argument &e) {
+    utils::Log().add("Invalid ldap::DATE conversion");
+    return;
+  }
+  day = DAY(i % 100);
+  i /= 100;
+  month = MONTH(i % 100);
+  i /= 100;
+  year = YEAR(i);
 }
 
 y::ldap::DATE::DATE(const DAY& day, const MONTH& month, const YEAR& year) 

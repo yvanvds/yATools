@@ -21,6 +21,7 @@ class ldapServerTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST(testGetGroup);
   CPPUNIT_TEST(testGetGroup2);
   CPPUNIT_TEST(testGetGroups);
+  CPPUNIT_TEST(testAuth);
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -39,6 +40,7 @@ private:
   void testGetGroup();
   void testGetGroup2();
   void testGetGroups();
+  void testAuth();
 
 };
 

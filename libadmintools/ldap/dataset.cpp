@@ -16,7 +16,7 @@ y::ldap::dataset::dataset(const dataset& orig) {
 
 bool y::ldap::dataset::create(const std::string & filter) {
   this->filter = filter;
-  Server().getData(*this);
+  return Server().getData(*this);
 }
 
 int y::ldap::dataset::count() {
@@ -28,3 +28,7 @@ y::ldap::data & y::ldap::dataset::get(int index) {
   return content[index];
 }
 
+y::ldap::data & y::ldap::dataset::New(data_type type) {
+  content.emplace_back(type);
+  return content.back();
+}

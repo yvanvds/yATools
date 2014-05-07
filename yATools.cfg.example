@@ -1,7 +1,10 @@
 #config file for yATools
 
-ldapPasswd = "yourpassword"
-ldapHost = "ldap://localhost"
-ldapBaseDN = "dc=domain,dc=com"
-ldapAdminDN = "cn=admin,dc=domain,dc=com" 
+ldapPasswd = yourpassword
+ldapHost = ldap://localhost
+ldapBaseDN = dc=domain,dc=com
+ldapAdminDN = cn=admin,dc=domain,dc=com 
 
+#provide an account that can be used for unit testing
+ldapTestUID = auser
+ldapTestPassword = secret

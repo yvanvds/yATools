@@ -11,6 +11,7 @@
 #include <vector>
 #include "utils/log.h"
 #include "utils/config.h"
+#include <iostream>
 
 // global object
 y::ldap::server & y::ldap::Server() {
@@ -22,8 +23,7 @@ y::ldap::server::server() : _connected(false) {
   // set timeout values
   timeOut.tv_sec = 300L;
   timeOut.tv_usec = 0L;
-  
-  if(ldap_initialize(&_server, utils::Config().getLdapHost().c_str())) {
+  if(ldap_initialize(&_server, y::utils::Config().getLdapHost().c_str())) {
     y::utils::Log().add("y::ldap::server::server() : unable to initialize LDAP");
     return;
   }
@@ -33,12 +33,13 @@ y::ldap::server::server() : _connected(false) {
   
   // log in as admin
   BerValue credentials;
-  // no idea why BerValue doesn't take a const char *
+  // BerValue doesn't take a const char *
   credentials.bv_val = const_cast<char*>(utils::Config().getLdapPasswd().c_str());
   credentials.bv_len = strlen(utils::Config().getLdapPasswd().c_str());
+  
   BerValue * serverCred;
   int result = ldap_sasl_bind_s(_server, 
-          utils::Config().getLdapAdminDN().c_str(), 
+          y::utils::Config().getLdapAdminDN().c_str(), 
           NULL, &credentials, NULL, NULL, &serverCred);
   
   // check login result
@@ -46,15 +47,23 @@ y::ldap::server::server() : _connected(false) {
     y::utils::Log().add("y::ldap::server::server() : unable to bind to LDAP");
     return;
   }
-  y::utils::Log().add("y::ldap::server::server() : connected to LDAP server");
+  //y::utils::Log().add("y::ldap::server::server() : connected to LDAP server");
   _base = utils::Config().getLdapBaseDN();
+  
+  // setup second connection for auth function
+  if(ldap_initialize(&_authServer, y::utils::Config().getLdapHost().c_str())) {
+    y::utils::Log().add("y::ldap::server::server() : unable to initialize LDAP for auth function");
+    return;
+  }
+  
+  ldap_set_option(_authServer, LDAP_OPT_PROTOCOL_VERSION, &version);
 }
 
 y::ldap::server::~server() {
   ldap_unbind_ext(_server, NULL, NULL);
 }
 
-void y::ldap::server::getData(y::ldap::dataset& rs) {
+bool y::ldap::server::getData(y::ldap::dataset& rs) {
   LDAPMessage * result;
   if(ldap_search_ext_s(
           _server, 
@@ -70,14 +79,14 @@ void y::ldap::server::getData(y::ldap::dataset& rs) {
           &result) != LDAP_SUCCESS) {
     // no results
     ldap_msgfree(result);
-    return; 
+    return false; 
   }
   
   LDAPMessage * entry;
   for (entry = ldap_first_entry(_server, result); 
        entry != NULL; 
        entry = ldap_next_entry(_server, entry)) {
-    data d;
+    data & d = rs.New(data_type::RESULT);
     
     // add DN
     char * dn = ldap_get_dn(_server, entry);
@@ -105,9 +114,37 @@ void y::ldap::server::getData(y::ldap::dataset& rs) {
     
   } 
   ldap_msgfree(result);
-
+  return true;
 }
 
 y::ldap::account & y::ldap::server::getAccount(const UID & id) {
-  return _accounts[0];
+  // first check if already in memory
+  for(int i = 0; i < _accounts.elms(); i++) {
+    if(_accounts[i].uid() == id) {
+      return _accounts[i];
+    }
+  }
+  
+  account & a = _accounts.New();
+  a.load(id);
+  return a;
+}
+
+bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) { 
+  BerValue credentials;
+  // BerValue doesn't take a const char *
+  credentials.bv_val = const_cast<char*>(password().c_str());
+  credentials.bv_len = strlen(password().c_str());
+  
+  BerValue * serverCred;
+  int result = ldap_sasl_bind_s(_authServer, 
+          dn().c_str(), 
+          NULL, &credentials, NULL, NULL, &serverCred);
+  
+  // check login result
+  if(result == LDAP_SUCCESS) {
+    ldap_unbind_ext(_authServer, NULL, NULL);
+    return true;
+  }
+  return false;
 }

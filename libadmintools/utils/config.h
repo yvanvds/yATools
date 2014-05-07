@@ -21,6 +21,8 @@ namespace y {
       const std::string & getLdapHost   () const;
       const std::string & getLdapBaseDN () const;
       const std::string & getLdapAdminDN() const;
+      const std::string & getLdapTestUID() const;
+      const std::string & getLdapTestPassword() const;
 
     private:
       bool configReady;
@@ -37,6 +39,8 @@ namespace y {
       std::string ldapAdminDN;
       std::string ldapHost;
       std::string ldapBaseDN;
+      std::string ldapTestUID;
+      std::string ldapTestPassword;
     };
     
     config & Config();

@@ -28,7 +28,7 @@ void y::utils::config::load() {
 
 void y::utils::config::load(int argc, char** argv) {
   if(configReady) {
-    Log().add("y::sys::config::load is called more than once!");
+    //Log().add("y::sys::config::load is called more than once!");
     return;
   }
   
@@ -46,6 +46,8 @@ void y::utils::config::load(int argc, char** argv) {
     ("ldapHost"   , value<std::string>(), "set ldap host"          )
     ("ldapBaseDN" , value<std::string>(), "set ldap base DN"       )
     ("ldapAdminDN", value<std::string>(), "set ldap admin DN"      )
+    ("ldapTestUID", value<std::string>(), "set ldap test account"  )
+    ("ldapTestPassword", value<std::string>(), "set ldap test account password")
   ;
   
   all.add(general).add(file);
@@ -91,6 +93,14 @@ void y::utils::config::load(int argc, char** argv) {
     ldapAdminDN = map["ldapAdminDN"].as<std::string>();
   } 
   
+  if(map.count("ldapTestUID")) {
+    ldapTestUID = map["ldapTestUID"].as<std::string>();
+  }
+  
+  if(map.count("ldapTestPassword")) {
+    ldapTestPassword = map["ldapTestPassword"].as<std::string>();
+  }
+  
   configReady = true;
 }
 
@@ -108,4 +118,12 @@ const std::string & y::utils::config::getLdapBaseDN() const {
 
 const std::string & y::utils::config::getLdapAdminDN() const {
   return ldapAdminDN;
+}
+
+const std::string & y::utils::config::getLdapTestUID() const {
+  return ldapTestUID;
+}
+
+const std::string & y::utils::config::getLdapTestPassword() const {
+  return ldapTestPassword;
 }

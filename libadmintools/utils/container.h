@@ -61,7 +61,7 @@ public:
    */
   T &  New   (       ) {
     _elements[++_highIndex] = new T;
-    return _elements[_highIndex];
+    return *_elements[_highIndex];
   }
   
   /**
