@@ -48,6 +48,7 @@ void y::utils::config::load(int argc, char** argv) {
     ("ldapAdminDN", value<std::string>(), "set ldap admin DN"      )
     ("ldapTestUID", value<std::string>(), "set ldap test account"  )
     ("ldapTestPassword", value<std::string>(), "set ldap test account password")
+    ("mysqlRootPassword", value<std::string>(), "set mysql root password")
   ;
   
   all.add(general).add(file);
@@ -61,9 +62,9 @@ void y::utils::config::load(int argc, char** argv) {
     out.append(configFile);
     Log().add(out);
   } else {
-    std::string out = "loading config file: ";
+    /*std::string out = "loading config file: ";
     out.append(configFile);
-    Log().add(out);
+    Log().add(out);*/
     store(parse_config_file(ifs, file), map);
     notify(map);
   }
@@ -101,6 +102,10 @@ void y::utils::config::load(int argc, char** argv) {
     ldapTestPassword = map["ldapTestPassword"].as<std::string>();
   }
   
+  if(map.count("mysqlRootPassword")) {
+    mysqlPassword = map["mysqlRootPassword"].as<std::string>();
+  }
+  
   configReady = true;
 }
 
@@ -126,4 +131,8 @@ const std::string & y::utils::config::getLdapTestUID() const {
 
 const std::string & y::utils::config::getLdapTestPassword() const {
   return ldapTestPassword;
+}
+
+const std::string & y::utils::config::getMysqlPassword() const {
+  return mysqlPassword;
 }

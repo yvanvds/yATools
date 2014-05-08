@@ -64,18 +64,3 @@ void ldapServerTest::testGetGroup2() {
 void ldapServerTest::testGetGroups() {
 
 }
-
-void ldapServerTest::testAuth() {
-  y::ldap::UID uid(y::utils::Config().getLdapTestUID());
-  y::ldap::account & a = y::ldap::Server().getAccount(uid);
-  y::ldap::DN dn(a.dn());
-  y::ldap::PASSWORD pwd(y::utils::Config().getLdapTestPassword());
-  
-  if(!y::ldap::Server().auth(dn, pwd)) {
-    CPPUNIT_ASSERT(false);
-  }
-  
-  if(y::ldap::Server().auth(dn, y::ldap::PASSWORD(""))) {
-    CPPUNIT_ASSERT(false);
-  }
-}

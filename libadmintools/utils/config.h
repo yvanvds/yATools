@@ -23,6 +23,7 @@ namespace y {
       const std::string & getLdapAdminDN() const;
       const std::string & getLdapTestUID() const;
       const std::string & getLdapTestPassword() const;
+      const std::string & getMysqlPassword() const;
 
     private:
       bool configReady;
@@ -41,6 +42,7 @@ namespace y {
       std::string ldapBaseDN;
       std::string ldapTestUID;
       std::string ldapTestPassword;
+      std::string mysqlPassword;
     };
     
     config & Config();

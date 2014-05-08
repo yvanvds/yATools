@@ -8,3 +8,5 @@ ldapAdminDN = cn=admin,dc=domain,dc=com
 #provide an account that can be used for unit testing
 ldapTestUID = auser
 ldapTestPassword = secret
+
+mysqlRootPassword = secret

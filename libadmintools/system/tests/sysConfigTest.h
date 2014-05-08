@@ -19,6 +19,7 @@ class sysConfigTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST(testGetLdapPasswd);
   CPPUNIT_TEST(testGetLdapTestUID);
   CPPUNIT_TEST(testGetLdapTestPassword);
+  CPPUNIT_TEST(testGetMysqlPassword);
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -35,6 +36,7 @@ private:
   void testGetLdapPasswd();
   void testGetLdapTestUID();
   void testGetLdapTestPassword();
+  void testGetMysqlPassword();
 };
 
 #endif	/* SYSCONFIGTEST_H */

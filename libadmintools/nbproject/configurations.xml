@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="94">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="data" displayName="data" projectFiles="true">
+      <itemPath>data/database.cpp</itemPath>
+      <itemPath>data/database.h</itemPath>
+      <itemPath>data/field.cpp</itemPath>
+      <itemPath>data/field.h</itemPath>
+      <itemPath>data/row.cpp</itemPath>
+      <itemPath>data/row.h</itemPath>
+      <itemPath>data/sqlserver.cpp</itemPath>
+      <itemPath>data/sqlserver.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="ldap" displayName="ldap" projectFiles="true">
       <logicalFolder name="f1" displayName="base" projectFiles="true">
         <itemPath>ldap/data.cpp</itemPath>
@@ -35,12 +45,22 @@
       <itemPath>utils/container.h</itemPath>
       <itemPath>utils/log.cpp</itemPath>
       <itemPath>utils/log.h</itemPath>
+      <itemPath>utils/security.cpp</itemPath>
+      <itemPath>utils/security.h</itemPath>
       <itemPath>utils/watch.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f7"
+                     displayName="data server test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>data/tests/dataServerTest.cpp</itemPath>
+        <itemPath>data/tests/dataServerTest.h</itemPath>
+        <itemPath>data/tests/dataServerTestRun.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f5"
                      displayName="ldap data test"
                      projectFiles="true"
@@ -81,6 +101,14 @@
         <itemPath>system/tests/sysConfigTest.h</itemPath>
         <itemPath>system/tests/sysConfigTestRun.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f6"
+                     displayName="utils security test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>utils/tests/utilsSecurityTest.cpp</itemPath>
+        <itemPath>utils/tests/utilsSecurityTest.h</itemPath>
+        <itemPath>utils/tests/utilsSecurityTestRun.cpp</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -93,6 +121,7 @@
     <Elem>ldap</Elem>
     <Elem>system</Elem>
     <Elem>utils</Elem>
+    <Elem>data</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -108,17 +137,47 @@
           <incDir>
             <pElem>.</pElem>
             <pElem>../dependencies/boost_process</pElem>
+            <pElem>/usr/include</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
           <output>../${CND_CONF}/libsystem.${CND_DLIB_EXT}</output>
+          <linkerAddLib>
+            <pElem>/usr/lib/x86_64-linux-gnu</pElem>
+            <pElem>/usr/lib</pElem>
+          </linkerAddLib>
           <linkerLibItems>
             <linkerOptionItem>-lboost_system</linkerOptionItem>
             <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
             <linkerOptionItem>-lboost_program_options</linkerOptionItem>
+            <linkerOptionItem>-lcrypt</linkerOptionItem>
+            <linkerLibLibItem>mysqlcppconn-static</linkerLibLibItem>
+            <linkerLibLibItem>mysqlclient</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/database.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/field.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/field.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/row.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/row.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/sqlserver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/sqlserver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/tests/dataServerTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/tests/dataServerTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/tests/dataServerTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <folder path="TestFiles">
         <linkerTool>
           <linkerLibItems>
@@ -207,6 +266,34 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
@@ -294,6 +381,19 @@
       </item>
       <item path="utils/log.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="utils/security.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/security.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/tests/utilsSecurityTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/tests/utilsSecurityTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/tests/utilsSecurityTestRun.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="utils/watch.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
@@ -317,6 +417,28 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/database.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/field.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/field.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/row.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/row.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/sqlserver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/sqlserver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/tests/dataServerTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/tests/dataServerTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/tests/dataServerTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -393,6 +515,34 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
@@ -479,6 +629,19 @@
       <item path="utils/log.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="utils/log.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/security.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/security.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/tests/utilsSecurityTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/tests/utilsSecurityTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/tests/utilsSecurityTestRun.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="utils/watch.h" ex="false" tool="3" flavor2="0">
       </item>

@@ -24,7 +24,7 @@ public:
    * create new elements, check with valid(index) before retrieving a value.
    * @return nr of elements
    */
-  int  elms  () {
+  int  elms  () const {
     return _elements.size();
   }
   
@@ -42,7 +42,7 @@ public:
    * 
    * @return true if the container is empty 
    */
-  bool empty () {
+  bool empty () const {
     return _elements.empty();
   }
   

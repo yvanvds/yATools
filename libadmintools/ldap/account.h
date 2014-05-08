@@ -18,17 +18,17 @@ namespace y {
       bool isNew(); // true if account does not exist in ldap
 
       // set - get
-      const UID_NUMBER & uidNumber(); account & uidNumber(const UID_NUMBER & value);
-      const UID        & uid      (); account & uid      (const UID        & value);
-      const DN         & dn       (); 
-      const CN         & cn       (); account & cn       (const CN         & value);
-      const SN         & sn       (); account & sn       (const SN         & value);
-      const FULL_NAME  & fullName (); account & fullName (const FULL_NAME  & value);
-      const HOMEDIR    & homeDir  (); account & homeDir  (const HOMEDIR    & value);
-      const WISA_ID    & wisaID   (); account & wisaID   (const WISA_ID    & value);
-      const MAIL       & mail     (); account & mail     (const MAIL       & value);
-      const DATE       & birthDay (); account & birthDay (const DATE       & value);
-      const PASSWORD   & password (); account & password (const PASSWORD   & value);
+      const UID_NUMBER & uidNumber() const; account & uidNumber(const UID_NUMBER & value);
+      const UID        & uid      () const; account & uid      (const UID        & value);
+      const DN         & dn       () const; 
+      const CN         & cn       () const; account & cn       (const CN         & value);
+      const SN         & sn       () const; account & sn       (const SN         & value);
+      const FULL_NAME  & fullName () const; account & fullName (const FULL_NAME  & value);
+      const HOMEDIR    & homeDir  () const; account & homeDir  (const HOMEDIR    & value);
+      const WISA_ID    & wisaID   () const; account & wisaID   (const WISA_ID    & value);
+      const MAIL       & mail     () const; account & mail     (const MAIL       & value);
+      const DATE       & birthDay () const; account & birthDay (const DATE       & value);
+      const PASSWORD   & password () const; account & password (const PASSWORD   & value);
 
     private:
       bool load(const UID  & id);

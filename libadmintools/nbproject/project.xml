@@ -13,6 +13,7 @@
                 <sourceRootElem>ldap</sourceRootElem>
                 <sourceRootElem>system</sourceRootElem>
                 <sourceRootElem>utils</sourceRootElem>
+                <sourceRootElem>data</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
