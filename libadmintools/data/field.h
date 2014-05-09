@@ -67,6 +67,18 @@ namespace y {
       const std::string & name();
       field & name(const std::string & fieldName);
       
+      // these are used when you supply fields to create
+      // a new table
+      field & stringLength(int length);
+      field & required(bool value);
+      field & autoIncrement(bool value);
+      field & primaryKey(bool value);
+      
+      int stringLength();
+      bool required();
+      bool autoIncrement();
+      bool primaryKey();
+      
     private:
       
       std::string fieldName;
