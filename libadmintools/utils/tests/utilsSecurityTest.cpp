@@ -28,8 +28,11 @@ void utilsSecurityTest::tearDown() {
 
 void utilsSecurityTest::testTest() {
   y::ldap::UID uid(y::utils::Config().getLdapTestUID());
+  
   y::ldap::account & acc = y::ldap::Server().getAccount(uid);
+  
   const std::string & password = y::utils::Config().getLdapTestPassword();
+  
   bool result = y::utils::Security().test(acc, password);
   if (!result) {
     CPPUNIT_ASSERT(false);

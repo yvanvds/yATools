@@ -7,55 +7,71 @@
 
 #include "field.h"
 
+y::data::field::field() : type(UNKNOWN) {
+  str_length = 16;
+  _required = false;
+  _auto = false;
+  _primary = false;
+}
+
 y::data::field::field(const std::string & name, bool value) {
+  field();
   fieldName = name;
   storage.t_bool = value;
   type = BOOL;
 }
 
 y::data::field::field(const std::string & name, char value) {
+  field();
   fieldName = name;
   storage.t_char = value;
   type = CHAR;
 }
 
 y::data::field::field(const std::string & name, short value) {
+  field();
   fieldName = name;
   storage.t_short = value;
   type = SHORT;
 }
 
 y::data::field::field(const std::string & name, int value) {
+  field();
   fieldName = name;
   storage.t_int = value;
   type = INT;
 }
 
 y::data::field::field(const std::string & name, long value) {
+  field();
   fieldName = name;
   storage.t_long = value;
   type = LONG;
 }
 
 y::data::field::field(const std::string & name, float value) {
+  field();
   fieldName = name;
   storage.t_float = value;
   type = FLOAT;
 }
 
 y::data::field::field(const std::string & name, double value) {
+  field();
   fieldName = name;
   storage.t_double = value;
   type = DOUBLE;
 }
 
 y::data::field::field(const std::string & name, const std::string & value) {
+  field();
   fieldName = name;
   t_str8 = value;
   type = STRING8;
 }
 
 y::data::field::field(const std::string & name, const std::u16string & value) {
+  field();
   fieldName = name;
   t_str16 = value;
   type = STRING;
@@ -162,4 +178,40 @@ y::data::field & y::data::field::setString(const std::u16string & value) {
 y::data::field & y::data::field::name(const std::string& fieldName) {
   this->fieldName = fieldName;
   return *this;
+}
+
+y::data::field & y::data::field::stringLength(int length) {
+  str_length = length;
+  return *this;
+}
+
+y::data::field & y::data::field::required(bool value) {
+  _required = value;
+  return *this;
+}
+
+y::data::field & y::data::field::autoIncrement(bool value) {
+  _auto = value;
+  return *this;
+}
+
+y::data::field & y::data::field::primaryKey(bool value) {
+  _primary = value;
+  return *this;
+}
+
+int y::data::field::stringLength() {
+  return str_length;
+}
+
+bool y::data::field::required() {
+  return _required;
+}
+
+bool y::data::field::autoIncrement() {
+  return _auto;
+}
+
+bool y::data::field::primaryKey() {
+  return _primary;
 }

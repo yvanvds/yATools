@@ -53,6 +53,14 @@
                    displayName="Test Files"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f8"
+                     displayName="data field test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>data/tests/dataFieldTest.cpp</itemPath>
+        <itemPath>data/tests/dataFieldTest.h</itemPath>
+        <itemPath>data/tests/dataFieldTestRun.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f7"
                      displayName="data server test"
                      projectFiles="true"
@@ -172,6 +180,12 @@
       </item>
       <item path="data/sqlserver.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="data/tests/dataFieldTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/tests/dataFieldTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/tests/dataFieldTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="data/tests/dataServerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/tests/dataServerTest.h" ex="false" tool="3" flavor2="0">
@@ -289,6 +303,20 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f8">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f8</output>
           <linkerLibItems>
             <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
           </linkerLibItems>
@@ -433,6 +461,12 @@
       </item>
       <item path="data/sqlserver.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="data/tests/dataFieldTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/tests/dataFieldTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/tests/dataFieldTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="data/tests/dataServerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/tests/dataServerTest.h" ex="false" tool="3" flavor2="0">
@@ -538,6 +572,20 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f8">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f8</output>
           <linkerLibItems>
             <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
           </linkerLibItems>

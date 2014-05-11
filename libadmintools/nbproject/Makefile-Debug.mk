@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux-x86
-CND_DLIB_EXT=so
+CND_PLATFORM=GNU-MacOSX
+CND_DLIB_EXT=dylib
 CND_CONF=Debug
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -59,6 +59,7 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
+	${TESTDIR}/TestFiles/f8 \
 	${TESTDIR}/TestFiles/f7 \
 	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f4 \
@@ -89,7 +90,7 @@ LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_file
 
 ../${CND_CONF}/libsystem.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ../${CND_CONF}
-	${LINK.cc} -o ../${CND_CONF}/libsystem.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
+	${LINK.cc} -o ../${CND_CONF}/libsystem.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -dynamiclib -install_name libsystem.${CND_DLIB_EXT} -fPIC
 
 ${OBJECTDIR}/data/database.o: data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
@@ -186,6 +187,10 @@ ${OBJECTDIR}/utils/security.o: utils/security.cpp
 
 # Build Test Targets
 .build-tests-conf: .build-conf ${TESTFILES}
+${TESTDIR}/TestFiles/f8: ${TESTDIR}/data/tests/dataFieldTest.o ${TESTDIR}/data/tests/dataFieldTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f8 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+
 ${TESTDIR}/TestFiles/f7: ${TESTDIR}/data/tests/dataServerTest.o ${TESTDIR}/data/tests/dataServerTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
@@ -213,6 +218,18 @@ ${TESTDIR}/TestFiles/f3: ${TESTDIR}/system/tests/sysConfigTest.o ${TESTDIR}/syst
 ${TESTDIR}/TestFiles/f6: ${TESTDIR}/utils/tests/utilsSecurityTest.o ${TESTDIR}/utils/tests/utilsSecurityTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+
+
+${TESTDIR}/data/tests/dataFieldTest.o: data/tests/dataFieldTest.cpp 
+	${MKDIR} -p ${TESTDIR}/data/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataFieldTest.o data/tests/dataFieldTest.cpp
+
+
+${TESTDIR}/data/tests/dataFieldTestRun.o: data/tests/dataFieldTestRun.cpp 
+	${MKDIR} -p ${TESTDIR}/data/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataFieldTestRun.o data/tests/dataFieldTestRun.cpp
 
 
 ${TESTDIR}/data/tests/dataServerTest.o: data/tests/dataServerTest.cpp 
@@ -537,6 +554,7 @@ ${OBJECTDIR}/utils/security_nomain.o: ${OBJECTDIR}/utils/security.o utils/securi
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
+	    ${TESTDIR}/TestFiles/f8 || true; \
 	    ${TESTDIR}/TestFiles/f7 || true; \
 	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \

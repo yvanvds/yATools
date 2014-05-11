@@ -39,6 +39,7 @@ namespace y {
       
     private:
       std::unique_ptr<sql::Statement> handle;
+      bool connected;
     };
   }
 }
