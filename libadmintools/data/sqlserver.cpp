@@ -19,7 +19,7 @@ y::data::server::server() {
             driver->connect("tcp://127.0.0.1:3306", 
                             "root", 
                             y::utils::Config().getMysqlPassword().c_str()));
-  handle = getStatement();
+  handle = std::unique_ptr<sql::Statement>(connection->createStatement());
 }
 
 bool y::data::server::drop(const std::string& dbName) {
@@ -27,7 +27,7 @@ bool y::data::server::drop(const std::string& dbName) {
 }
 
 bool y::data::server::create(const std::string& dbName) {
-  return handle->execute("CREATE DATABASE " + dbName);
+  return handle->execute("CREATE DATABASE " + dbName + " CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci'");
 }
 
 bool y::data::server::hasDatabase(const std::string& dbName) {
@@ -38,7 +38,10 @@ bool y::data::server::hasDatabase(const std::string& dbName) {
 }
 
 
-std::unique_ptr<sql::Statement> y::data::server::getStatement() {
-  return std::unique_ptr<sql::Statement>(connection->createStatement());
+std::unique_ptr<sql::Connection> y::data::server::getConnection() {
+  return std::unique_ptr<sql::Connection>
+          (driver->connect("tcp://127.0.0.1:3306", 
+                           "root", 
+                           y::utils::Config().getMysqlPassword().c_str()));
 }
 

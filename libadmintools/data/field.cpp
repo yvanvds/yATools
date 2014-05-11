@@ -6,6 +6,8 @@
  */
 
 #include "field.h"
+#include <iostream>
+#include "../utils/convert.h"
 
 y::data::field::field() : type(UNKNOWN) {
   str_length = 16;
@@ -214,4 +216,26 @@ bool y::data::field::autoIncrement() {
 
 bool y::data::field::primaryKey() {
   return _primary;
+}
+
+void y::data::field::print() {
+  if(getType() == BOOL) {
+    std::cout << fieldName << ": " << asBool() << std::endl;
+  } else if(getType() == CHAR) {
+    std::cout << fieldName << ": " << asChar() << std::endl;
+  } else if(getType() == SHORT) {
+    std::cout << fieldName << ": " << asShort() << std::endl;
+  } else if(getType() == INT) {
+    std::cout << fieldName << ": " << asInt() << std::endl;
+  } else if(getType() == LONG) {
+    std::cout << fieldName << ": " << asLong() << std::endl;
+  } else if(getType() == FLOAT) {
+    std::cout << fieldName << ": " << asFloat() << std::endl;
+  } else if(getType() == DOUBLE) {
+    std::cout << fieldName << ": " << asDouble() << std::endl;
+  } else if(getType() == STRING8) {
+    std::cout << fieldName << ": " << asString8() << std::endl;
+  } else if(getType() == STRING) {
+    std::cout << fieldName << ": " << str8(asString()) << std::endl;
+  }
 }

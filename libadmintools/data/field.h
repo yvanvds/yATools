@@ -79,6 +79,9 @@ namespace y {
       bool autoIncrement();
       bool primaryKey   ();
       
+      // for debugging
+      void print();
+      
     private:
       
       std::string fieldName;

@@ -26,7 +26,7 @@ namespace y {
       
     private:
       // the caller is responsible for deleting this, best to use a managed ptr
-      std::unique_ptr<sql::Statement> getStatement();
+      std::unique_ptr<sql::Connection> getConnection();
       
       sql::Driver * driver;
       std::unique_ptr<sql::Connection> connection;

@@ -16,7 +16,8 @@
 template <class T>
 class container {
 public:
-  container() : _highIndex(0) {}
+  container() : _highIndex(-1) {
+  }
  
   /**
    * Count the objects in the array. This can be different from the
@@ -88,7 +89,7 @@ public:
       delete (*i).second;
     }
     _elements.clear();
-    _highIndex = 0;
+    _highIndex = -1;
   }
   
   /**
@@ -103,6 +104,7 @@ public:
       return (*(*i).second);
     } else {
       _elements[pos] = new T;
+      if(_highIndex <= pos) _highIndex = pos + 1;
       return *_elements[pos];
     }
   }

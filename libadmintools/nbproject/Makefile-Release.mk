@@ -51,6 +51,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/system/workDir.o \
 	${OBJECTDIR}/utils/config.o \
 	${OBJECTDIR}/utils/container.o \
+	${OBJECTDIR}/utils/convert.o \
 	${OBJECTDIR}/utils/log.o \
 	${OBJECTDIR}/utils/security.o
 
@@ -59,6 +60,9 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
+	${TESTDIR}/TestFiles/f10 \
+	${TESTDIR}/TestFiles/f8 \
+	${TESTDIR}/TestFiles/f9 \
 	${TESTDIR}/TestFiles/f7 \
 	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f4 \
@@ -171,6 +175,11 @@ ${OBJECTDIR}/utils/container.o: utils/container.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/container.o utils/container.cpp
 
+${OBJECTDIR}/utils/convert.o: utils/convert.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/convert.o utils/convert.cpp
+
 ${OBJECTDIR}/utils/log.o: utils/log.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
 	${RM} "$@.d"
@@ -186,6 +195,18 @@ ${OBJECTDIR}/utils/security.o: utils/security.cpp
 
 # Build Test Targets
 .build-tests-conf: .build-conf ${TESTFILES}
+${TESTDIR}/TestFiles/f10: ${TESTDIR}/data/tests/dataDatabaseTest.o ${TESTDIR}/data/tests/dataDatabaseTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f10 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
+${TESTDIR}/TestFiles/f8: ${TESTDIR}/data/tests/dataFieldTest.o ${TESTDIR}/data/tests/dataFieldTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f8 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
+${TESTDIR}/TestFiles/f9: ${TESTDIR}/data/tests/dataRowTest.o ${TESTDIR}/data/tests/dataRowTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f9 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
 ${TESTDIR}/TestFiles/f7: ${TESTDIR}/data/tests/dataServerTest.o ${TESTDIR}/data/tests/dataServerTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
@@ -213,6 +234,42 @@ ${TESTDIR}/TestFiles/f3: ${TESTDIR}/system/tests/sysConfigTest.o ${TESTDIR}/syst
 ${TESTDIR}/TestFiles/f6: ${TESTDIR}/utils/tests/utilsSecurityTest.o ${TESTDIR}/utils/tests/utilsSecurityTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
+
+${TESTDIR}/data/tests/dataDatabaseTest.o: data/tests/dataDatabaseTest.cpp 
+	${MKDIR} -p ${TESTDIR}/data/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataDatabaseTest.o data/tests/dataDatabaseTest.cpp
+
+
+${TESTDIR}/data/tests/dataDatabaseTestRun.o: data/tests/dataDatabaseTestRun.cpp 
+	${MKDIR} -p ${TESTDIR}/data/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataDatabaseTestRun.o data/tests/dataDatabaseTestRun.cpp
+
+
+${TESTDIR}/data/tests/dataFieldTest.o: data/tests/dataFieldTest.cpp 
+	${MKDIR} -p ${TESTDIR}/data/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataFieldTest.o data/tests/dataFieldTest.cpp
+
+
+${TESTDIR}/data/tests/dataFieldTestRun.o: data/tests/dataFieldTestRun.cpp 
+	${MKDIR} -p ${TESTDIR}/data/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataFieldTestRun.o data/tests/dataFieldTestRun.cpp
+
+
+${TESTDIR}/data/tests/dataRowTest.o: data/tests/dataRowTest.cpp 
+	${MKDIR} -p ${TESTDIR}/data/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataRowTest.o data/tests/dataRowTest.cpp
+
+
+${TESTDIR}/data/tests/dataRowTestRun.o: data/tests/dataRowTestRun.cpp 
+	${MKDIR} -p ${TESTDIR}/data/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataRowTestRun.o data/tests/dataRowTestRun.cpp
 
 
 ${TESTDIR}/data/tests/dataServerTest.o: data/tests/dataServerTest.cpp 
@@ -507,6 +564,19 @@ ${OBJECTDIR}/utils/container_nomain.o: ${OBJECTDIR}/utils/container.o utils/cont
 	    ${CP} ${OBJECTDIR}/utils/container.o ${OBJECTDIR}/utils/container_nomain.o;\
 	fi
 
+${OBJECTDIR}/utils/convert_nomain.o: ${OBJECTDIR}/utils/convert.o utils/convert.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/convert.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/convert_nomain.o utils/convert.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/utils/convert.o ${OBJECTDIR}/utils/convert_nomain.o;\
+	fi
+
 ${OBJECTDIR}/utils/log_nomain.o: ${OBJECTDIR}/utils/log.o utils/log.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/log.o`; \
@@ -537,6 +607,9 @@ ${OBJECTDIR}/utils/security_nomain.o: ${OBJECTDIR}/utils/security.o utils/securi
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
+	    ${TESTDIR}/TestFiles/f10 || true; \
+	    ${TESTDIR}/TestFiles/f8 || true; \
+	    ${TESTDIR}/TestFiles/f9 || true; \
 	    ${TESTDIR}/TestFiles/f7 || true; \
 	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \

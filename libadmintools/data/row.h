@@ -16,15 +16,16 @@ namespace y {
     class row {
     public:
       
-      row & addBool   (const std::string & name, bool value);
-      row & addChar   (const std::string & name, char value);
-      row & addShort  (const std::string & name, short value);
-      row & addInt    (const std::string & name, int value);
-      row & addLong   (const std::string & name, long value);
-      row & addFloat  (const std::string & name, float value);
-      row & addDouble (const std::string & name, double value);
-      row & addString8(const std::string & name, const std::string & value);
-      row & addString (const std::string & name, const std::u16string & value);
+      row & addBool   (const std::string & name, bool value = false);
+      row & addChar   (const std::string & name, char value = 0);
+      row & addShort  (const std::string & name, short value = 0);
+      row & addInt    (const std::string & name, int value = 0);
+      row & addLong   (const std::string & name, long value = 0);
+      row & addFloat  (const std::string & name, float value = 0);
+      row & addDouble (const std::string & name, double value = 0);
+      row & addString8(const std::string & name, const std::string & value = "");
+      row & addString (const std::string & name, const std::u16string & value = u"");
+    
       
       int elms() const;
       row & clear();

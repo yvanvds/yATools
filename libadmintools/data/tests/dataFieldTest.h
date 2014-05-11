@@ -23,24 +23,11 @@ class dataFieldTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST(testAsString);
   CPPUNIT_TEST(testAsString8);
   CPPUNIT_TEST(testAutoIncrement);
-  CPPUNIT_TEST(testAutoIncrement2);
-  CPPUNIT_TEST(testField);
-  CPPUNIT_TEST(testField2);
-  CPPUNIT_TEST(testField3);
-  CPPUNIT_TEST(testField4);
-  CPPUNIT_TEST(testField5);
-  CPPUNIT_TEST(testField6);
-  CPPUNIT_TEST(testField7);
-  CPPUNIT_TEST(testField8);
-  CPPUNIT_TEST(testField9);
-  CPPUNIT_TEST(testField10);
   CPPUNIT_TEST(testGetType);
   CPPUNIT_TEST(testName);
   CPPUNIT_TEST(testName2);
   CPPUNIT_TEST(testPrimaryKey);
-  CPPUNIT_TEST(testPrimaryKey2);
   CPPUNIT_TEST(testRequired);
-  CPPUNIT_TEST(testRequired2);
   CPPUNIT_TEST(testSetBool);
   CPPUNIT_TEST(testSetChar);
   CPPUNIT_TEST(testSetDouble);
@@ -51,7 +38,6 @@ class dataFieldTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST(testSetString);
   CPPUNIT_TEST(testSetString8);
   CPPUNIT_TEST(testStringLength);
-  CPPUNIT_TEST(testStringLength2);
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -72,24 +58,11 @@ private:
   void testAsString();
   void testAsString8();
   void testAutoIncrement();
-  void testAutoIncrement2();
-  void testField();
-  void testField2();
-  void testField3();
-  void testField4();
-  void testField5();
-  void testField6();
-  void testField7();
-  void testField8();
-  void testField9();
-  void testField10();
   void testGetType();
   void testName();
   void testName2();
   void testPrimaryKey();
-  void testPrimaryKey2();
   void testRequired();
-  void testRequired2();
   void testSetBool();
   void testSetChar();
   void testSetDouble();
@@ -100,7 +73,6 @@ private:
   void testSetString();
   void testSetString8();
   void testStringLength();
-  void testStringLength2();
 
 };
 
