@@ -19,6 +19,7 @@ class dataDatabaseTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST(testDeleteTable);
   CPPUNIT_TEST(testExecute);
   CPPUNIT_TEST(testGetAllRows);
+  CPPUNIT_TEST(testGetRows);
   CPPUNIT_TEST(testGetTables);
   CPPUNIT_TEST(testSetRow);
   CPPUNIT_TEST(testUse);
@@ -38,6 +39,7 @@ private:
   void testDeleteTable();
   void testExecute();
   void testGetAllRows();
+  void testGetRows();
   void testGetTables();
   void testSetRow();
   void testUse();
