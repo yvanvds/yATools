@@ -66,10 +66,6 @@ void dataDatabaseTest::testAddRow() {
   }
   y::data::row & result = results[0];
   
-  for(int i = 0; i < result.elms(); i++) {
-    result[i].print();
-  }
-  
   if(result["ID"].asInt() != 1) {
     CPPUNIT_ASSERT(false);
   }
@@ -218,7 +214,7 @@ void dataDatabaseTest::testGetAllRows() {
   DB.use("testdb");
 
   if(DB.tableExists("testtable")) {
-    DB.deleteTable("testtable"));
+    DB.deleteTable("testtable");
   }
 
   y::data::row newRow;
@@ -255,7 +251,10 @@ void dataDatabaseTest::testGetAllRows() {
 
   container<y::data::row> results;
   DB.getRows("testtable", "shortvalue=1", results);
-  if(results.elms() != 2) {
+  if(results.elms() != 1) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(results[0]["longvalue"].asLong() != content2["longvalue"].asLong()) {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -289,7 +288,7 @@ void dataDatabaseTest::testSetRow() {
   DB.use("testdb");
 
   if(DB.tableExists("testtable")) {
-    DB.deleteTable("testtable"));
+    DB.deleteTable("testtable");
   }
 
   y::data::row newRow;
@@ -328,11 +327,11 @@ void dataDatabaseTest::testSetRow() {
   if(result["doublevalue"].asDouble() != content["doublevalue"].asDouble()) {
     CPPUNIT_ASSERT(false);
   }
-  y::data::row & result = results[0];
+  
   if(result["charvalue"].asChar() != content["charvalue"].asChar()) {
     CPPUNIT_ASSERT(false);
   }
-  DB.deleteTable("testtable"));
+  DB.deleteTable("testtable");
 }
 
 void dataDatabaseTest::testUse() {

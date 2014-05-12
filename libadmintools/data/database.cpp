@@ -195,7 +195,7 @@ bool y::data::database::getRows(const std::string& table, const std::string& con
   std::unique_ptr<sql::ResultSet> result;
   
   try {
-    result = std::unique_ptr<sql::ResultSet>(handle->executeQuery("SELECT " + condition + " FROM " + table));
+    result = std::unique_ptr<sql::ResultSet>(handle->executeQuery("SELECT * FROM " + table + " WHERE " + condition));
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -423,7 +423,7 @@ bool y::data::database::delRow(const std::string& table, const std::string& cond
   sql::SQLString query = "DELETE FROM " + table + " WHERE " + condition;
 
   try {
-    handle->executeQuery(query);
+    handle->execute(query);
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();
