@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/data/field.o \
 	${OBJECTDIR}/data/row.o \
 	${OBJECTDIR}/data/sqlserver.o \
+	${OBJECTDIR}/gui/application.o \
 	${OBJECTDIR}/ldap/account.o \
 	${OBJECTDIR}/ldap/attributes.o \
 	${OBJECTDIR}/ldap/data.o \
@@ -85,7 +86,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lmysqlcppconn-static -lmysqlclient
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lmysqlcppconn-static -lmysqlclient -lwthttp -lwt
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -114,6 +115,11 @@ ${OBJECTDIR}/data/sqlserver.o: data/sqlserver.cpp
 	${MKDIR} -p ${OBJECTDIR}/data
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/sqlserver.o data/sqlserver.cpp
+
+${OBJECTDIR}/gui/application.o: gui/application.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/application.o gui/application.cpp
 
 ${OBJECTDIR}/ldap/account.o: ldap/account.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
@@ -197,43 +203,43 @@ ${OBJECTDIR}/utils/security.o: utils/security.cpp
 .build-tests-conf: .build-conf ${TESTFILES}
 ${TESTDIR}/TestFiles/f10: ${TESTDIR}/data/tests/dataDatabaseTest.o ${TESTDIR}/data/tests/dataDatabaseTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f10 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f10 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f8: ${TESTDIR}/data/tests/dataFieldTest.o ${TESTDIR}/data/tests/dataFieldTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f8 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f8 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f9: ${TESTDIR}/data/tests/dataRowTest.o ${TESTDIR}/data/tests/dataRowTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f9 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f9 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f7: ${TESTDIR}/data/tests/dataServerTest.o ${TESTDIR}/data/tests/dataServerTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f5: ${TESTDIR}/ldap/tests/ldapDataTest.o ${TESTDIR}/ldap/tests/ldapDataTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f4: ${TESTDIR}/ldap/tests/ldapServerTest.o ${TESTDIR}/ldap/tests/ldapServerTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/ldap/tests/ldpAttributesTest.o ${TESTDIR}/ldap/tests/ldpAttributesTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f2: ${TESTDIR}/ldap/tests/ldpBaseDataTest.o ${TESTDIR}/ldap/tests/ldpBaseDataTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/system/tests/sysConfigTest.o ${TESTDIR}/system/tests/sysConfigTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f6: ${TESTDIR}/utils/tests/utilsSecurityTest.o ${TESTDIR}/utils/tests/utilsSecurityTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} -lboost_filesystem -lboost_system -lboost_iostreams -lldap -llber ../Debug/libsystem.so `cppunit-config --libs`   
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
 
 ${TESTDIR}/data/tests/dataDatabaseTest.o: data/tests/dataDatabaseTest.cpp 
@@ -406,6 +412,19 @@ ${OBJECTDIR}/data/sqlserver_nomain.o: ${OBJECTDIR}/data/sqlserver.o data/sqlserv
 	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/sqlserver_nomain.o data/sqlserver.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/data/sqlserver.o ${OBJECTDIR}/data/sqlserver_nomain.o;\
+	fi
+
+${OBJECTDIR}/gui/application_nomain.o: ${OBJECTDIR}/gui/application.o gui/application.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/application.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/application_nomain.o gui/application.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/gui/application.o ${OBJECTDIR}/gui/application_nomain.o;\
 	fi
 
 ${OBJECTDIR}/ldap/account_nomain.o: ${OBJECTDIR}/ldap/account.o ldap/account.cpp 

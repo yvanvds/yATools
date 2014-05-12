@@ -11,6 +11,10 @@
       <itemPath>data/sqlserver.cpp</itemPath>
       <itemPath>data/sqlserver.h</itemPath>
     </logicalFolder>
+    <logicalFolder name="f1" displayName="gui" projectFiles="true" kind="ROOT">
+      <itemPath>gui/application.cpp</itemPath>
+      <itemPath>gui/application.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="ldap" displayName="ldap" projectFiles="true">
       <logicalFolder name="f1" displayName="base" projectFiles="true">
         <itemPath>ldap/data.cpp</itemPath>
@@ -142,6 +146,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>admintools.h</itemPath>
   </logicalFolder>
   <sourceRootList>
     <Elem>ldap</Elem>
@@ -179,9 +184,12 @@
             <linkerOptionItem>-lcrypt</linkerOptionItem>
             <linkerLibLibItem>mysqlcppconn-static</linkerLibLibItem>
             <linkerLibLibItem>mysqlclient</linkerLibLibItem>
+            <linkerOptionItem>-lwthttp -lwt</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="admintools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/database.h" ex="false" tool="3" flavor2="0">
@@ -225,12 +233,12 @@
       <folder path="TestFiles">
         <linkerTool>
           <linkerLibItems>
-            <linkerLibLibItem>boost_filesystem</linkerLibLibItem>
-            <linkerLibLibItem>boost_system</linkerLibLibItem>
-            <linkerLibLibItem>boost_iostreams</linkerLibLibItem>
             <linkerLibLibItem>ldap</linkerLibLibItem>
             <linkerLibLibItem>lber</linkerLibLibItem>
             <linkerLibFileItem>../Debug/libsystem.so</linkerLibFileItem>
+            <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
+            <linkerOptionItem>-lboost_system</linkerOptionItem>
+            <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </folder>
@@ -380,6 +388,10 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <item path="gui/application.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gui/application.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
@@ -507,6 +519,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="admintools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/database.h" ex="false" tool="3" flavor2="0">
@@ -693,6 +707,10 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <item path="gui/application.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gui/application.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/account.h" ex="false" tool="3" flavor2="0">

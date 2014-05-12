@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/data/field.o \
 	${OBJECTDIR}/data/row.o \
 	${OBJECTDIR}/data/sqlserver.o \
+	${OBJECTDIR}/gui/application.o \
 	${OBJECTDIR}/ldap/account.o \
 	${OBJECTDIR}/ldap/attributes.o \
 	${OBJECTDIR}/ldap/data.o \
@@ -114,6 +115,11 @@ ${OBJECTDIR}/data/sqlserver.o: data/sqlserver.cpp
 	${MKDIR} -p ${OBJECTDIR}/data
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/sqlserver.o data/sqlserver.cpp
+
+${OBJECTDIR}/gui/application.o: gui/application.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/application.o gui/application.cpp
 
 ${OBJECTDIR}/ldap/account.o: ldap/account.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
@@ -406,6 +412,19 @@ ${OBJECTDIR}/data/sqlserver_nomain.o: ${OBJECTDIR}/data/sqlserver.o data/sqlserv
 	    $(COMPILE.cc) -O2 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/sqlserver_nomain.o data/sqlserver.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/data/sqlserver.o ${OBJECTDIR}/data/sqlserver_nomain.o;\
+	fi
+
+${OBJECTDIR}/gui/application_nomain.o: ${OBJECTDIR}/gui/application.o gui/application.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/application.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/application_nomain.o gui/application.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/gui/application.o ${OBJECTDIR}/gui/application_nomain.o;\
 	fi
 
 ${OBJECTDIR}/ldap/account_nomain.o: ${OBJECTDIR}/ldap/account.o ldap/account.cpp 
