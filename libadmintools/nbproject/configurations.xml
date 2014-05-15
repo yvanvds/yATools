@@ -571,7 +571,7 @@
             <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
             <linkerOptionItem>-lboost_program_options</linkerOptionItem>
             <linkerOptionItem>-lcrypt</linkerOptionItem>
-            <linkerOptionItem>-lwthttp -lwt</linkerOptionItem>
+            <linkerOptionItem>-lwtfcgi -lwt</linkerOptionItem>
             <linkerLibLibItem>mysqlcppconn-static</linkerLibLibItem>
             <linkerLibLibItem>mysqlclient</linkerLibLibItem>
             <linkerLibLibItem>lber</linkerLibLibItem>

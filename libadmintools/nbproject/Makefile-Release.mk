@@ -88,7 +88,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lwthttp -lwt -lmysqlcppconn-static -lmysqlclient -llber -lldap
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lwtfcgi -lwt -lmysqlcppconn-static -lmysqlclient -llber -lldap
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

@@ -167,7 +167,7 @@
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerOptionItem>-lwfcgi -lwt</linkerOptionItem>
+            <linkerOptionItem>-lwtfcgi -lwt</linkerOptionItem>
             <linkerLibLibItem>ldap</linkerLibLibItem>
             <linkerLibLibItem>lber</linkerLibLibItem>
             <linkerLibProjectItem>
@@ -264,7 +264,7 @@
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerOptionItem>-lwfcgi -lwt</linkerOptionItem>
+            <linkerOptionItem>-lwtfcgi -lwt</linkerOptionItem>
             <linkerLibLibItem>ldap</linkerLibLibItem>
             <linkerLibLibItem>lber</linkerLibLibItem>
             <linkerLibProjectItem>
