@@ -62,11 +62,13 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -lwtfcgi -lwt -lldap -llber -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals -llibadmintools
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -lwtfcgi -lwt -lldap -llber -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals -Wl,-rpath,/home/yvan/github/yATools/libadmintools/dist/Release/GNU-Linux-x86 -L/home/yvan/github/yATools/libadmintools/dist/Release/GNU-Linux-x86 -llibadmintools
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbook
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbook: /home/yvan/github/yATools/libadmintools/dist/Release/GNU-Linux-x86/liblibadmintools.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbook: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -129,6 +131,7 @@ ${OBJECTDIR}/yearBook.o: yearBook.cpp
 
 # Subprojects
 .build-subprojects:
+	cd /home/yvan/github/yATools/libadmintools && ${MAKE}  -f Makefile CONF=Release
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -137,6 +140,7 @@ ${OBJECTDIR}/yearBook.o: yearBook.cpp
 
 # Subprojects
 .clean-subprojects:
+	cd /home/yvan/github/yATools/libadmintools && ${MAKE}  -f Makefile CONF=Release clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl
