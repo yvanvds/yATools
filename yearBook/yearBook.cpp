@@ -32,6 +32,7 @@
 using namespace y;
 
 yearBook::yearBook(const Wt::WEnvironment& env) : Wt::WApplication(env) {
+  y::utils::Log().add("start of yearbook app");
   loggedIn = false;
   currentStep = 0;
   
@@ -134,7 +135,9 @@ void yearBook::loginButtonClicked() {
     if(loggedIn) {
       loginDialog->hide();
       loginFeedback->setStyleClass("");
+      y::utils::Log().add("load id from database");
       if(!store.load(id)) {
+        y::utils::Log().add("id not found");
         store.ID(id);
         store.name(account.cn()());
         store.surname(account.sn()());
@@ -148,6 +151,7 @@ void yearBook::loginButtonClicked() {
         date.setDate(account.birthDay().getYear(), account.birthDay().getMonth(), account.birthDay().getDay());    
         store.birthday(date);
       }
+      y::utils::Log().add("found id");
 
       steps[currentStep]->show();
     } else {
