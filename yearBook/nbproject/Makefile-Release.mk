@@ -62,7 +62,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lwthttp -lwt -lldap -llber -Wl,-rpath,/home/yvan/github/yATools/libadmintools/dist/Release/GNU-Linux-x86 -L/home/yvan/github/yATools/libadmintools/dist/Release/GNU-Linux-x86 -llibadmintools -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -lwthttp -lwt -lldap -llber -Wl,-rpath,/home/yvan/github/yATools/libadmintools/dist/Release/GNU-Linux-x86 -L/home/yvan/github/yATools/libadmintools/dist/Release/GNU-Linux-x86 -llibadmintools -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -77,57 +77,57 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbook: ${OBJECTFILES}
 ${OBJECTDIR}/data.o: data.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data.o data.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data.o data.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/step.o: step.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step.o step.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step.o step.cpp
 
 ${OBJECTDIR}/step1.o: step1.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step1.o step1.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step1.o step1.cpp
 
 ${OBJECTDIR}/step2.o: step2.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step2.o step2.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step2.o step2.cpp
 
 ${OBJECTDIR}/step3.o: step3.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step3.o step3.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step3.o step3.cpp
 
 ${OBJECTDIR}/step4.o: step4.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step4.o step4.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step4.o step4.cpp
 
 ${OBJECTDIR}/step5.o: step5.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step5.o step5.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step5.o step5.cpp
 
 ${OBJECTDIR}/step6.o: step6.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step6.o step6.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/step6.o step6.cpp
 
 ${OBJECTDIR}/stepPhoto.o: stepPhoto.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/stepPhoto.o stepPhoto.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/stepPhoto.o stepPhoto.cpp
 
 ${OBJECTDIR}/yearBook.o: yearBook.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearBook.o yearBook.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearBook.o yearBook.cpp
 
 # Subprojects
 .build-subprojects:

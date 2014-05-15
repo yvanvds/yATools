@@ -60,12 +60,14 @@
           <commandlineTool>g++</commandlineTool>
           <incDir>
             <pElem>../libadmintools</pElem>
+            <pElem>/usr/local/include</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
             <pElem>/usr/lib/x86_64-linux-gnu</pElem>
             <pElem>/usr/lib</pElem>
+            <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerOptionItem>-lwthttp -lwt</linkerOptionItem>
@@ -149,6 +151,7 @@
           <standard>8</standard>
           <incDir>
             <pElem>../libadmintools</pElem>
+            <pElem>/usr/local/include</pElem>
           </incDir>
         </ccTool>
         <fortranCompilerTool>
@@ -161,6 +164,7 @@
           <linkerAddLib>
             <pElem>/usr/lib/x86_64-linux-gnu</pElem>
             <pElem>/usr/lib</pElem>
+            <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerOptionItem>-lwthttp -lwt</linkerOptionItem>
