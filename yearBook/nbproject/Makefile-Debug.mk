@@ -62,7 +62,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lwthttp -lwt -Wl,-rpath,../libadmintools/../Debug -L../libadmintools/../Debug -lsystem -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lldap -llber
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lwthttp -lwt -Wl,-rpath,../libadmintools/../Debug -L../libadmintools/../Debug -lsystem -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lldap -llber -lboost-signals
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

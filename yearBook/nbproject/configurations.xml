@@ -87,6 +87,7 @@
             <linkerOptionItem>-lboost_program_options</linkerOptionItem>
             <linkerLibLibItem>ldap</linkerLibLibItem>
             <linkerLibLibItem>lber</linkerLibLibItem>
+            <linkerOptionItem>-lboost-signals</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -181,6 +182,7 @@
             <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
             <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
             <linkerOptionItem>-lboost_program_options</linkerOptionItem>
+            <linkerOptionItem>-lboost-signals</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
