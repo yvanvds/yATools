@@ -167,7 +167,104 @@
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerOptionItem>-lwthttp -lwt</linkerOptionItem>
+            <linkerOptionItem>-lwfcgi -lwt</linkerOptionItem>
+            <linkerLibLibItem>ldap</linkerLibLibItem>
+            <linkerLibLibItem>lber</linkerLibLibItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="/home/yvan/github/yATools/libadmintools"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="/home/yvan/github/yATools/libadmintools"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerOptionItem>-lboost_system</linkerOptionItem>
+            <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
+            <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
+            <linkerOptionItem>-lboost_program_options</linkerOptionItem>
+            <linkerOptionItem>-lboost_signals</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="data.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="step.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="step.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="step1.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="step1.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="step2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="step2.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="step3.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="step3.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="step4.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="step4.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="step5.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="step5.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="step6.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="step6.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="stepPhoto.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="stepPhoto.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearBook.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearBook.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release_fastcgi" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../libadmintools</pElem>
+            <pElem>/usr/local/include</pElem>
+          </incDir>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/lib/x86_64-linux-gnu</pElem>
+            <pElem>/usr/lib</pElem>
+            <pElem>/usr/local/lib</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerOptionItem>-lwfcgi -lwt</linkerOptionItem>
             <linkerLibLibItem>ldap</linkerLibLibItem>
             <linkerLibLibItem>lber</linkerLibLibItem>
             <linkerLibProjectItem>
