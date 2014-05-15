@@ -197,6 +197,7 @@
             <linkerOptionItem>-lwthttp -lwt</linkerOptionItem>
             <linkerLibLibItem>ldap</linkerLibLibItem>
             <linkerLibLibItem>lber</linkerLibLibItem>
+            <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -576,6 +577,7 @@
             <linkerLibLibItem>mysqlclient</linkerLibLibItem>
             <linkerLibLibItem>lber</linkerLibLibItem>
             <linkerLibLibItem>ldap</linkerLibLibItem>
+            <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
