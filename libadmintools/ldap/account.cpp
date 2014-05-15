@@ -126,49 +126,61 @@ const y::ldap::GID_NUMBER & y::ldap::account::groupID() const {
 
 y::ldap::account & y::ldap::account::uidNumber(const UID_NUMBER& value) {
   _uidNumber(value);
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::uid(const UID& value) {
   _uid(value);
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::cn(const CN& value) {
   _cn(value);
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::sn(const SN& value) {
   _sn(value);
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::fullName(const FULL_NAME& value) {
   _fullName(value);
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::homeDir(const HOMEDIR& value) {
   _homeDir(value);
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::wisaID(const WISA_ID& value) {
   _wisaID(value);
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::mail(const MAIL& value) {
   _mail(value);
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::birthDay(const DATE& value) {
   _birthDay(value);
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::password(const PASSWORD& value) {
   _password(value);
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::group(const GID& value) {
   _group(value);
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::groupID(const GID_NUMBER& value) {
   _groupID(value);
+  return *this;
 }
 

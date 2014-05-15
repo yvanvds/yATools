@@ -62,6 +62,8 @@
             <pElem>../libadmintools</pElem>
             <pElem>/usr/local/include</pElem>
           </incDir>
+          <commandLine>-Wreturn-type</commandLine>
+          <warningLevel>3</warningLevel>
         </ccTool>
         <linkerTool>
           <linkerAddLib>

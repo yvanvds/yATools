@@ -34,8 +34,6 @@ void stepPhoto::setContent(Wt::WVBoxLayout * box) {
   
   box->addWidget(new Wt::WText("<h1>De Foto</h1>"));
   box->addWidget(new Wt::WText("<p>Voeg tot slot een mooie foto van jezelf toe.</p>"));
-  
-  Wt::WVBoxLayout * subBox = new Wt::WVBoxLayout();
  
   image = new Wt::WImage();
   image->setImageLink("http://placekitten.com/300/300");

@@ -29,26 +29,32 @@ y::data::dateTime::dateTime(const std::string & dbFormat) :
 
 y::data::dateTime & y::data::dateTime::day(int value) {
   _day = value;
+  return *this;
 }
 
 y::data::dateTime & y::data::dateTime::month(int value) {
   _month = value;
+  return *this;
 }
 
 y::data::dateTime & y::data::dateTime::year(int value) {
-  _year = value;
+  _year = value; 
+  return *this;
 }
 
 y::data::dateTime & y::data::dateTime::hours(int value) {
-  _hours = value;
+  _hours = value; 
+  return *this;
 }
 
 y::data::dateTime & y::data::dateTime::minutes(int value) {
   _minutes = value;
+  return *this;
 }
 
 y::data::dateTime & y::data::dateTime::seconds(int value) {
   _seconds = value;
+  return *this;
 }
 
 int y::data::dateTime::day() const {

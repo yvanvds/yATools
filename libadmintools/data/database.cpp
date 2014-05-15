@@ -471,4 +471,5 @@ bool y::data::database::execute(const std::string& query) {
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
     return false;
   }
+  return true;
 }

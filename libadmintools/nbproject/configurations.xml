@@ -180,6 +180,8 @@
             <pElem>../dependencies/boost_process</pElem>
             <pElem>/usr/include</pElem>
           </incDir>
+          <commandLine>-Wreturn-type</commandLine>
+          <warningLevel>3</warningLevel>
         </ccTool>
         <linkerTool>
           <output>../${CND_CONF}/libsystem.${CND_DLIB_EXT}</output>

@@ -24,10 +24,12 @@ y::utils::log & y::utils::log::add(const std::string& message) {
   if(_useFile) {
     _stream << message << std::endl;
   }
+  return *this;
 }
 
 y::utils::log & y::utils::log::useConsole(bool enable) {
   _useConsole = enable;
+  return *this;
 }
 
 y::utils::log & y::utils::log::useFile(bool enable, const std::string& file) {
@@ -38,4 +40,5 @@ y::utils::log & y::utils::log::useFile(bool enable, const std::string& file) {
   if(_useFile) {
     _stream.open(_file, std::ios_base::out | std::ios_base::app);
   }
+  return *this;
 }
