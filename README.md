@@ -23,3 +23,7 @@ Wt
 == 
 look for installation instructions on webtoolkit.eu
 
+unit tests
+==========
+apt-get install libcppunit
+make test

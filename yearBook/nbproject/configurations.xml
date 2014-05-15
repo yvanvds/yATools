@@ -267,23 +267,12 @@
             <linkerOptionItem>-lwtfcgi -lwt</linkerOptionItem>
             <linkerLibLibItem>ldap</linkerLibLibItem>
             <linkerLibLibItem>lber</linkerLibLibItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="/home/yvan/github/yATools/libadmintools"
-                            CT="2"
-                            CN="Release"
-                            AC="true"
-                            BL="true"
-                            WD="/home/yvan/github/yATools/libadmintools"
-                            BC="${MAKE}  -f Makefile CONF=Release"
-                            CC="${MAKE}  -f Makefile CONF=Release clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
             <linkerOptionItem>-lboost_system</linkerOptionItem>
             <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
             <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
             <linkerOptionItem>-lboost_program_options</linkerOptionItem>
             <linkerOptionItem>-lboost_signals</linkerOptionItem>
+            <linkerLibLibItem>libadmintools</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
