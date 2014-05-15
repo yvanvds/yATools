@@ -9,6 +9,7 @@
 #define	FIELD_H
 
 #include <string>
+#include "dateTime.h"
 
 namespace y {
   namespace data {
@@ -41,6 +42,7 @@ namespace y {
       explicit field(const std::string & name, double value);
       explicit field(const std::string & name, const std::string    & value);
       explicit field(const std::string & name, const std::u16string & value);
+      explicit field(const std::string & name, const dateTime       & value);
       
       FIELD_TYPE getType();
       
@@ -53,6 +55,7 @@ namespace y {
       double  asDouble();
       const std::string    & asString8();
       const std::u16string & asString ();
+      const dateTime       & asDate   ();
       
       field & setBool   (bool   value);
       field & setChar   (char   value);
@@ -63,6 +66,7 @@ namespace y {
       field & setDouble (double value);
       field & setString8(const  std::string    & value);
       field & setString (const  std::u16string & value);
+      field & setDate   (const  dateTime       & value);
       
       const std::string & name();
       field & name(const std::string & fieldName);
@@ -99,6 +103,7 @@ namespace y {
       
       std::string    t_str8 ;
       std::u16string t_str16;
+      dateTime       date   ;
       
       int str_length;
       bool _required;

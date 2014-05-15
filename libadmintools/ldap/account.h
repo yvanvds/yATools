@@ -16,7 +16,8 @@ namespace y {
       account();
 
       bool isNew(); // true if account does not exist in ldap
-
+      void clear();
+      
       // set - get
       const UID_NUMBER & uidNumber() const; account & uidNumber(const UID_NUMBER & value);
       const UID        & uid      () const; account & uid      (const UID        & value);
@@ -29,7 +30,9 @@ namespace y {
       const MAIL       & mail     () const; account & mail     (const MAIL       & value);
       const DATE       & birthDay () const; account & birthDay (const DATE       & value);
       const PASSWORD   & password () const; account & password (const PASSWORD   & value);
-
+      const GID        & group    () const; account & group    (const GID        & value);
+      const GID_NUMBER & groupID  () const; account & groupID  (const GID_NUMBER & value);
+      
     private:
       bool load(const UID  & id);
       bool load(UID_NUMBER   id);
@@ -46,6 +49,8 @@ namespace y {
       watch<MAIL      >  _mail     ;
       watch<DATE      >  _birthDay ;
       watch<PASSWORD  >  _password ;
+      watch<GID       >  _group    ;
+      watch<GID_NUMBER>  _groupID  ;
 
       bool _new; // false if the account is loaded from ldap
       

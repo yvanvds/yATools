@@ -20,7 +20,9 @@ y::ldap::account::account() :
   _wisaID(WISA_ID(0)),
   _mail(MAIL("")),
   _password(PASSWORD("")),
-  _birthDay(DATE(DAY(1), MONTH(1), YEAR(1)))
+  _birthDay(DATE(DAY(1), MONTH(1), YEAR(1))),
+  _group(GID("")),
+  _groupID(GID_NUMBER(0))
   {}
 
 bool y::ldap::account::load(const UID & id) {
@@ -41,6 +43,8 @@ bool y::ldap::account::load(const UID & id) {
     _mail(MAIL(temp.getValue("mail")), true);
     _password(PASSWORD(temp.getValue("userPassword")), true);
     _birthDay(DATE(temp.getValue("roomNumber")), true);
+    _group(GID(temp.getValue("departmentNumber")), true);
+    _groupID(GID_NUMBER(std::stoi(temp.getValue("gidNumber"))), true);
     _new = false;
   }
   
@@ -49,6 +53,23 @@ bool y::ldap::account::load(const UID & id) {
 
 bool y::ldap::account::isNew() {
   return _new;
+}
+
+void y::ldap::account::clear() {
+  _new = true; 
+  _uidNumber(UID_NUMBER(0));
+  _uid(UID(""));
+  _dn(DN(""));
+  _cn(CN(""));
+  _sn(SN(""));
+  _fullName(FULL_NAME(""));
+  _homeDir(HOMEDIR(""));
+  _wisaID(WISA_ID(0));
+  _mail(MAIL(""));
+  _password(PASSWORD(""));
+  _birthDay(DATE(DAY(1), MONTH(1), YEAR(1)));
+  _group(GID(""));
+  _groupID(GID_NUMBER(0));
 }
 
 const y::ldap::UID_NUMBER & y::ldap::account::uidNumber() const {
@@ -95,6 +116,14 @@ const y::ldap::PASSWORD & y::ldap::account::password() const {
   return _password();
 }
 
+const y::ldap::GID & y::ldap::account::group() const {
+  return _group();
+}
+
+const y::ldap::GID_NUMBER & y::ldap::account::groupID() const {
+  return _groupID();
+}
+
 y::ldap::account & y::ldap::account::uidNumber(const UID_NUMBER& value) {
   _uidNumber(value);
 }
@@ -135,5 +164,11 @@ y::ldap::account & y::ldap::account::password(const PASSWORD& value) {
   _password(value);
 }
 
+y::ldap::account & y::ldap::account::group(const GID& value) {
+  _group(value);
+}
 
+y::ldap::account & y::ldap::account::groupID(const GID_NUMBER& value) {
+  _groupID(value);
+}
 

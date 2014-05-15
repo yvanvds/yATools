@@ -25,7 +25,7 @@ namespace y {
       row & addDouble (const std::string & name, double value = 0);
       row & addString8(const std::string & name, const std::string & value = "");
       row & addString (const std::string & name, const std::u16string & value = u"");
-    
+      row & addDate   (const std::string & name, const dateTime & value = dateTime("0000-00-00 00:00:00"));
       
       int elms() const;
       row & clear();

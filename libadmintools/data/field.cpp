@@ -8,6 +8,7 @@
 #include "field.h"
 #include <iostream>
 #include "../utils/convert.h"
+#include "dateTime.h"
 
 y::data::field::field() : type(UNKNOWN) {
   str_length = 16;
@@ -79,6 +80,13 @@ y::data::field::field(const std::string & name, const std::u16string & value) {
   type = STRING;
 }
 
+y::data::field::field(const std::string & name, const dateTime & value) {
+  field();
+  fieldName = name;
+  date = value;
+  type = DATE_TIME;
+}
+
 y::data::FIELD_TYPE y::data::field::getType() {
   return type;
 }
@@ -117,6 +125,10 @@ const std::string & y::data::field::asString8() {
 
 const std::u16string & y::data::field::asString() {
   return t_str16;
+}
+
+const y::data::dateTime & y::data::field::asDate() {
+  return date;
 }
 
 const std::string & y::data::field::name() {
@@ -174,6 +186,12 @@ y::data::field & y::data::field::setString8(const std::string & value) {
 y::data::field & y::data::field::setString(const std::u16string & value) {
   t_str16 = value;
   type = STRING;
+  return *this;
+}
+
+y::data::field & y::data::field::setDate(const dateTime & value) {
+  date = value;
+  type = DATE_TIME;
   return *this;
 }
 
@@ -237,5 +255,7 @@ void y::data::field::print() {
     std::cout << fieldName << ": " << asString8() << std::endl;
   } else if(getType() == STRING) {
     std::cout << fieldName << ": " << str8(asString()) << std::endl;
+  } else if(getType() == DATE_TIME) {
+    std::cout << fieldName << ": " << date.dbFormat() << std::endl;
   }
 }

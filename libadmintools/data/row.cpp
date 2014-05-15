@@ -52,6 +52,11 @@ y::data::row & y::data::row::addString(const std::string& name, const std::u16st
   return *this;
 }
 
+y::data::row & y::data::row::addDate(const std::string& name, const dateTime & value) {
+  fields.New().name(name).setDate(value);
+  return *this;
+}
+
 int y::data::row::elms() const {
   return fields.elms();
 }

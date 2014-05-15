@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/data/database.o \
+	${OBJECTDIR}/data/dateTime.o \
 	${OBJECTDIR}/data/field.o \
 	${OBJECTDIR}/data/row.o \
 	${OBJECTDIR}/data/sqlserver.o \
@@ -62,6 +63,7 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 # Test Files
 TESTFILES= \
 	${TESTDIR}/TestFiles/f10 \
+	${TESTDIR}/TestFiles/f11 \
 	${TESTDIR}/TestFiles/f8 \
 	${TESTDIR}/TestFiles/f9 \
 	${TESTDIR}/TestFiles/f7 \
@@ -86,7 +88,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lmysqlcppconn-static -lmysqlclient -lwthttp -lwt
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lmysqlcppconn-static -lmysqlclient -lwthttp -lwt -lldap -llber
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -100,6 +102,11 @@ ${OBJECTDIR}/data/database.o: data/database.cpp
 	${MKDIR} -p ${OBJECTDIR}/data
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/database.o data/database.cpp
+
+${OBJECTDIR}/data/dateTime.o: data/dateTime.cpp 
+	${MKDIR} -p ${OBJECTDIR}/data
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/dateTime.o data/dateTime.cpp
 
 ${OBJECTDIR}/data/field.o: data/field.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
@@ -205,6 +212,10 @@ ${TESTDIR}/TestFiles/f10: ${TESTDIR}/data/tests/dataDatabaseTest.o ${TESTDIR}/da
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f10 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
+${TESTDIR}/TestFiles/f11: ${TESTDIR}/data/tests/dataDateTimeTest.o ${TESTDIR}/data/tests/dataDateTimeTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f11 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
+
 ${TESTDIR}/TestFiles/f8: ${TESTDIR}/data/tests/dataFieldTest.o ${TESTDIR}/data/tests/dataFieldTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f8 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
@@ -252,6 +263,18 @@ ${TESTDIR}/data/tests/dataDatabaseTestRun.o: data/tests/dataDatabaseTestRun.cpp
 	${MKDIR} -p ${TESTDIR}/data/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataDatabaseTestRun.o data/tests/dataDatabaseTestRun.cpp
+
+
+${TESTDIR}/data/tests/dataDateTimeTest.o: data/tests/dataDateTimeTest.cpp 
+	${MKDIR} -p ${TESTDIR}/data/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataDateTimeTest.o data/tests/dataDateTimeTest.cpp
+
+
+${TESTDIR}/data/tests/dataDateTimeTestRun.o: data/tests/dataDateTimeTestRun.cpp 
+	${MKDIR} -p ${TESTDIR}/data/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataDateTimeTestRun.o data/tests/dataDateTimeTestRun.cpp
 
 
 ${TESTDIR}/data/tests/dataFieldTest.o: data/tests/dataFieldTest.cpp 
@@ -373,6 +396,19 @@ ${OBJECTDIR}/data/database_nomain.o: ${OBJECTDIR}/data/database.o data/database.
 	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/database_nomain.o data/database.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/data/database.o ${OBJECTDIR}/data/database_nomain.o;\
+	fi
+
+${OBJECTDIR}/data/dateTime_nomain.o: ${OBJECTDIR}/data/dateTime.o data/dateTime.cpp 
+	${MKDIR} -p ${OBJECTDIR}/data
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/data/dateTime.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/dateTime_nomain.o data/dateTime.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/data/dateTime.o ${OBJECTDIR}/data/dateTime_nomain.o;\
 	fi
 
 ${OBJECTDIR}/data/field_nomain.o: ${OBJECTDIR}/data/field.o data/field.cpp 
@@ -627,6 +663,7 @@ ${OBJECTDIR}/utils/security_nomain.o: ${OBJECTDIR}/utils/security.o utils/securi
 	@if [ "${TEST}" = "" ]; \
 	then  \
 	    ${TESTDIR}/TestFiles/f10 || true; \
+	    ${TESTDIR}/TestFiles/f11 || true; \
 	    ${TESTDIR}/TestFiles/f8 || true; \
 	    ${TESTDIR}/TestFiles/f9 || true; \
 	    ${TESTDIR}/TestFiles/f7 || true; \

@@ -39,10 +39,54 @@ void ldapServerTest::testGetAccount() {
   if(a.isNew()) {
     CPPUNIT_ASSERT(false);
   }
+  
+  y::ldap::account & a2 = y::ldap::Server().getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
+  if(a2.isNew()) {
+    CPPUNIT_ASSERT(false);
+  }
 }
 
-void ldapServerTest::testGetAccount2() {
-
+void ldapServerTest::testAuth() {
+  y::ldap::account & a = y::ldap::Server().getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
+  if(a.isNew()) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  bool result = y::ldap::Server().auth(a.dn(), y::ldap::PASSWORD(y::utils::Config().getLdapTestPassword()));
+  if(!result) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  y::ldap::account & a2 = y::ldap::Server().getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
+  if(a2.isNew()) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  result = y::ldap::Server().auth(a2.dn(), y::ldap::PASSWORD(y::utils::Config().getLdapTestPassword()));
+  if(!result) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  result = y::ldap::Server().auth(a2.dn(), y::ldap::PASSWORD("wrongpassword"));
+  if(result) {
+    CPPUNIT_ASSERT(false);
+  }
+    
+  result = y::ldap::Server().auth(a2.dn(), y::ldap::PASSWORD(y::utils::Config().getLdapTestPassword()));
+  if(!result) {
+    CPPUNIT_ASSERT(false);
+  }
+    
+  result = y::ldap::Server().auth(a2.dn(), y::ldap::PASSWORD("wrongpassword"));
+  if(result) {
+    CPPUNIT_ASSERT(false);
+  }  
+    
+  result = y::ldap::Server().auth(a2.dn(), y::ldap::PASSWORD(y::utils::Config().getLdapTestPassword()));
+  if(!result) {
+    CPPUNIT_ASSERT(false);
+  }  
+  
 }
 
 void ldapServerTest::testGetAccount3() {

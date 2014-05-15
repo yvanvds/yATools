@@ -15,7 +15,7 @@ class ldapServerTest : public CPPUNIT_NS::TestFixture {
 
   CPPUNIT_TEST(testCommitChanges);
   CPPUNIT_TEST(testGetAccount);
-  CPPUNIT_TEST(testGetAccount2);
+  CPPUNIT_TEST(testAuth);
   CPPUNIT_TEST(testGetAccount3);
   CPPUNIT_TEST(testGetAccounts);
   CPPUNIT_TEST(testGetGroup);
@@ -34,7 +34,7 @@ public:
 private:
   void testCommitChanges();
   void testGetAccount();
-  void testGetAccount2();
+  void testAuth();
   void testGetAccount3();
   void testGetAccounts();
   void testGetGroup();

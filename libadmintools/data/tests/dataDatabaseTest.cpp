@@ -9,6 +9,7 @@
 #include "../database.h"
 #include "utils/config.h"
 #include "data/sqlserver.h"
+#include "../dateTime.h"
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(dataDatabaseTest);
@@ -44,7 +45,7 @@ void dataDatabaseTest::testAddRow() {
   newRow.addBool("boolvalue").addChar("charvalue").addShort("shortvalue");
   newRow.addInt("intvalue").addLong("longvalue").addFloat("floatvalue");
   newRow.addDouble("doublevalue").addString8("string8value").addString("stringvalue");
-  
+  newRow.addDate("datevalue");
   DB.createTable("testtable", newRow);
   
   y::data::row content;
@@ -57,6 +58,8 @@ void dataDatabaseTest::testAddRow() {
   content.addDouble("doublevalue", 5.37347);
   content.addString8("string8value", "name");
   content.addString("stringvalue", u"ëç&æ");
+  content.addDate("datevalue", y::data::dateTime("1972-08-09 13:06:20"));
+  
   DB.addRow("testtable", content);
   
   container<y::data::row> results;
@@ -94,6 +97,9 @@ void dataDatabaseTest::testAddRow() {
     CPPUNIT_ASSERT(false);
   }
   if(result["stringvalue"].asString() != content["stringvalue"].asString()) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(result["datevalue"].asDate().dbFormat().compare(content["datevalue"].asDate().dbFormat())) {
     CPPUNIT_ASSERT(false);
   }
 }

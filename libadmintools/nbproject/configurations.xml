@@ -4,6 +4,8 @@
     <logicalFolder name="data" displayName="data" projectFiles="true">
       <itemPath>data/database.cpp</itemPath>
       <itemPath>data/database.h</itemPath>
+      <itemPath>data/dateTime.cpp</itemPath>
+      <itemPath>data/dateTime.h</itemPath>
       <itemPath>data/field.cpp</itemPath>
       <itemPath>data/field.h</itemPath>
       <itemPath>data/row.cpp</itemPath>
@@ -11,7 +13,7 @@
       <itemPath>data/sqlserver.cpp</itemPath>
       <itemPath>data/sqlserver.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f1" displayName="gui" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f1" displayName="gui" projectFiles="true">
       <itemPath>gui/application.cpp</itemPath>
       <itemPath>gui/application.h</itemPath>
     </logicalFolder>
@@ -66,6 +68,14 @@
         <itemPath>data/tests/dataDatabaseTest.cpp</itemPath>
         <itemPath>data/tests/dataDatabaseTest.h</itemPath>
         <itemPath>data/tests/dataDatabaseTestRun.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f11"
+                     displayName="data dateTime test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>data/tests/dataDateTimeTest.cpp</itemPath>
+        <itemPath>data/tests/dataDateTimeTest.h</itemPath>
+        <itemPath>data/tests/dataDateTimeTestRun.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f8"
                      displayName="data field test"
@@ -185,6 +195,8 @@
             <linkerLibLibItem>mysqlcppconn-static</linkerLibLibItem>
             <linkerLibLibItem>mysqlclient</linkerLibLibItem>
             <linkerOptionItem>-lwthttp -lwt</linkerOptionItem>
+            <linkerLibLibItem>ldap</linkerLibLibItem>
+            <linkerLibLibItem>lber</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -193,6 +205,10 @@
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/database.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/dateTime.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/dateTime.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/field.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -211,6 +227,12 @@
       <item path="data/tests/dataDatabaseTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/tests/dataDatabaseTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/tests/dataDateTimeTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/tests/dataDateTimeTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/tests/dataDateTimeTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/tests/dataFieldTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -271,6 +293,20 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f10</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f11">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f11</output>
           <linkerLibItems>
             <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
           </linkerLibItems>
@@ -511,6 +547,13 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>../dependencies/boost_process</pElem>
+            <pElem>/usr/include</pElem>
+          </incDir>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -518,12 +561,33 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/lib/x86_64-linux-gnu</pElem>
+            <pElem>/usr/lib</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerOptionItem>-lboost_system</linkerOptionItem>
+            <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
+            <linkerOptionItem>-lboost_program_options</linkerOptionItem>
+            <linkerOptionItem>-lcrypt</linkerOptionItem>
+            <linkerOptionItem>-lwthttp -lwt</linkerOptionItem>
+            <linkerLibLibItem>mysqlcppconn-static</linkerLibLibItem>
+            <linkerLibLibItem>mysqlclient</linkerLibLibItem>
+            <linkerLibLibItem>lber</linkerLibLibItem>
+            <linkerLibLibItem>ldap</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="admintools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/database.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/dateTime.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/dateTime.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/field.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -543,6 +607,12 @@
       </item>
       <item path="data/tests/dataDatabaseTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="data/tests/dataDateTimeTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/tests/dataDateTimeTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data/tests/dataDateTimeTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="data/tests/dataFieldTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/tests/dataFieldTest.h" ex="false" tool="3" flavor2="0">
@@ -561,6 +631,16 @@
       </item>
       <item path="data/tests/dataServerTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <folder path="TestFiles">
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibLibItem>ldap</linkerLibLibItem>
+            <linkerLibLibItem>lber</linkerLibLibItem>
+            <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
+            <linkerOptionItem>-lboost_program_options</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -590,6 +670,20 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f10</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f11">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f11</output>
           <linkerLibItems>
             <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
           </linkerLibItems>

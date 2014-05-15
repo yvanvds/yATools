@@ -19,6 +19,7 @@ using namespace y;
 
 int main(int argc, char **argv)
 {
+  utils::Config().load();
   gui::application<yearBook> app; 
   return app.run(argc, argv);
 }

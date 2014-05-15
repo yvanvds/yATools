@@ -10,6 +10,7 @@
 #include "row.h"
 #include "../utils/container.h"
 #include "../utils/convert.h"
+#include "dateTime.h"
 
 y::data::database::database() 
 : connection(y::data::Server().getConnection()),
@@ -90,6 +91,10 @@ bool y::data::database::createTable(const std::string& tableName, row & descript
         query.append(") CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci'");
         break;
       }
+      case DATE_TIME: {
+        query.append(" DATETIME ");
+        break;
+      }
       case UNKNOWN: {
         return false;
       }      
@@ -113,6 +118,8 @@ bool y::data::database::createTable(const std::string& tableName, row & descript
   
   query.append(")");
   // execute
+  std::cout << query << std::endl;
+  
   return handle->execute(query);
 }
 
@@ -240,7 +247,11 @@ void y::data::database::parseRows(std::unique_ptr<sql::ResultSet>& result, conta
         entry.addString8(columnNames[i], result->getString(i+1));
       } else if(columnTypes[i].compare("VARCHAR") == 0) {
         entry.addString(columnNames[i], str16(result->getString(i+1)));
-      } 
+      } else if(columnTypes[i].compare("DATETIME") == 0) {
+        dateTime d;
+        d.dbFormat(result->getString(i+1));
+        entry.addDate(columnNames[i], d);
+      }
     }
   }
 }
@@ -264,7 +275,8 @@ bool y::data::database::setRow(const std::string& table, const std::string& cond
           query.append("b'1'");
         } else {
           query.append("b'0'");
-        }  
+        } 
+        break;
       }
       case CHAR: {
         query.append("'");
@@ -314,12 +326,19 @@ bool y::data::database::setRow(const std::string& table, const std::string& cond
         query.append("'");
         break;
       }
+      case DATE_TIME: {
+        query.append("'");
+        query.append(values[i].asDate().dbFormat());
+        query.append("'");
+        break;
+      }
       default: return false;
       
     }
   }
   query.append(" WHERE ");
   query.append(condition);
+
   try {
     handle->execute(query);
   } catch (sql::SQLException & e) {
@@ -400,6 +419,12 @@ bool y::data::database::addRow(const std::string& table, row& values) {
       case STRING8: {
         query.append("'");
         query.append(values[i].asString8());
+        query.append("'");
+        break;
+      }
+      case DATE_TIME: {
+        query.append("'");
+        query.append(values[i].asDate().dbFormat());
         query.append("'");
         break;
       }

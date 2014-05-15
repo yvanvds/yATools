@@ -50,13 +50,7 @@ y::ldap::server::server() : _connected(false) {
   //y::utils::Log().add("y::ldap::server::server() : connected to LDAP server");
   _base = utils::Config().getLdapBaseDN();
   
-  // setup second connection for auth function
-  if(ldap_initialize(&_authServer, y::utils::Config().getLdapHost().c_str())) {
-    y::utils::Log().add("y::ldap::server::server() : unable to initialize LDAP for auth function");
-    return;
-  }
-  
-  ldap_set_option(_authServer, LDAP_OPT_PROTOCOL_VERSION, &version);
+
 }
 
 y::ldap::server::~server() {
@@ -82,7 +76,14 @@ bool y::ldap::server::getData(y::ldap::dataset& rs) {
     return false; 
   }
   
+  
+  if(ldap_count_entries(_server, result) == 0) {
+    ldap_msgfree(result);
+    return false;
+  }
+  
   LDAPMessage * entry;
+  
   for (entry = ldap_first_entry(_server, result); 
        entry != NULL; 
        entry = ldap_next_entry(_server, entry)) {
@@ -131,6 +132,15 @@ y::ldap::account & y::ldap::server::getAccount(const UID & id) {
 }
 
 bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) { 
+  // setup second connection for auth function
+  if(ldap_initialize(&_authServer, y::utils::Config().getLdapHost().c_str())) {
+    y::utils::Log().add("y::ldap::server::server() : unable to initialize LDAP for auth function");
+    return false;
+  }
+  
+  int version = LDAP_VERSION3;
+  ldap_set_option(_authServer, LDAP_OPT_PROTOCOL_VERSION, &version);
+  
   BerValue credentials;
   // BerValue doesn't take a const char *
   credentials.bv_val = const_cast<char*>(password().c_str());
@@ -140,10 +150,11 @@ bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) {
   int result = ldap_sasl_bind_s(_authServer, 
           dn().c_str(), 
           NULL, &credentials, NULL, NULL, &serverCred);
+  ldap_unbind_ext(_authServer, NULL, NULL);
   
   // check login result
   if(result == LDAP_SUCCESS) {
-    ldap_unbind_ext(_authServer, NULL, NULL);
+    
     return true;
   }
   return false;
