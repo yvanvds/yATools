@@ -287,45 +287,45 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="data.cpp" ex="false" tool="1" flavor2="0">
+      <item path="data.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="data.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      <item path="main.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="step.cpp" ex="false" tool="1" flavor2="0">
+      <item path="step.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="step.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step1.cpp" ex="false" tool="1" flavor2="0">
+      <item path="step1.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="step1.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step2.cpp" ex="false" tool="1" flavor2="0">
+      <item path="step2.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="step2.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step3.cpp" ex="false" tool="1" flavor2="0">
+      <item path="step3.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="step3.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step4.cpp" ex="false" tool="1" flavor2="0">
+      <item path="step4.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="step4.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step5.cpp" ex="false" tool="1" flavor2="0">
+      <item path="step5.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="step5.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step6.cpp" ex="false" tool="1" flavor2="0">
+      <item path="step6.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="step6.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="stepPhoto.cpp" ex="false" tool="1" flavor2="0">
+      <item path="stepPhoto.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="stepPhoto.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="yearBook.cpp" ex="false" tool="1" flavor2="0">
+      <item path="yearBook.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="yearBook.h" ex="false" tool="3" flavor2="0">
       </item>
