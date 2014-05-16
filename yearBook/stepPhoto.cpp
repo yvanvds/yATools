@@ -78,6 +78,7 @@ void stepPhoto::setUpload() {
   
   fileUpload->uploaded().connect(std::bind([=] () {
     std::string file = fileUpload->spoolFileName();
+    y::utils::Log().add("step 0");
     y::sys::process p("cp");
     p.arg(file);
     std::string out ="userImages/";

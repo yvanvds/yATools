@@ -14,16 +14,20 @@
 #include <boost/array.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <boost/tokenizer.hpp>
-
+#include "../utils/log.h"
 
 y::sys::process::process(const std::string & command) {
+  utils::Log().add("step 1");
   this->command = boost::process::posix::search_path(command);
+  utils::Log().add("step 2");
   // it looks like the first argument doesn count, so we double the
   // command in there
   args.push_back(this->command.string());
+  utils::Log().add("step 3");
   pipe.reset(new boost::process::posix::pipe(
             boost::process::posix::create_pipe())
   );
+  utils::Log().add("step 4");
 }
 
 y::sys::process & y::sys::process::arg(const std::string & arg) {
