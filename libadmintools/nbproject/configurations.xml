@@ -141,6 +141,14 @@
         <itemPath>system/tests/sysConfigTest.h</itemPath>
         <itemPath>system/tests/sysConfigTestRun.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f12"
+                     displayName="system process test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp</itemPath>
+        <itemPath>/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.h</itemPath>
+        <itemPath>/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTestRun.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f6"
                      displayName="utils security test"
                      projectFiles="true"
@@ -181,7 +189,7 @@
             <pElem>/usr/include</pElem>
           </incDir>
           <commandLine>-Wreturn-type</commandLine>
-          <warningLevel>3</warningLevel>
+          <warningLevel>2</warningLevel>
         </ccTool>
         <linkerTool>
           <output>../${CND_CONF}/libsystem.${CND_DLIB_EXT}</output>
@@ -203,6 +211,21 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTestRun.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="admintools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
@@ -311,6 +334,21 @@
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f11</output>
           <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f12">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f12</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
             <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
@@ -583,6 +621,21 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTestRun.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="admintools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
@@ -689,6 +742,21 @@
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f11</output>
           <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f12">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f12</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
             <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>

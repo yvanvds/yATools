@@ -153,7 +153,9 @@ void dataconnect::photo(const Wt::WString& value) {
 }
 
 void dataconnect::birthday(const Wt::WDate& value) {
-  _birthday.day(value.day()).month(value.month()).year(value.year());
+  _birthday.day(value.day());
+  _birthday.month(value.month());
+  _birthday.year(value.year());
 }
 
 Wt::WString dataconnect::ID() {

@@ -72,6 +72,7 @@ TESTFILES= \
 	${TESTDIR}/TestFiles/f1 \
 	${TESTDIR}/TestFiles/f2 \
 	${TESTDIR}/TestFiles/f3 \
+	${TESTDIR}/TestFiles/f12 \
 	${TESTDIR}/TestFiles/f6
 
 # C Compiler Flags
@@ -248,6 +249,10 @@ ${TESTDIR}/TestFiles/f3: ${TESTDIR}/system/tests/sysConfigTest.o ${TESTDIR}/syst
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} -lldap -llber -lboost_iostreams -lboost_program_options `cppunit-config --libs`   
 
+${TESTDIR}/TestFiles/f12: ${TESTDIR}/_ext/1151702947/systemProcessTest.o ${TESTDIR}/_ext/1151702947/systemProcessTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f12 $^ ${LDLIBSOPTIONS} -lldap -llber -lboost_iostreams -lboost_program_options `cppunit-config --libs` `cppunit-config --libs`   
+
 ${TESTDIR}/TestFiles/f6: ${TESTDIR}/utils/tests/utilsSecurityTest.o ${TESTDIR}/utils/tests/utilsSecurityTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} -lldap -llber -lboost_iostreams -lboost_program_options `cppunit-config --libs`   
@@ -371,6 +376,18 @@ ${TESTDIR}/system/tests/sysConfigTestRun.o: system/tests/sysConfigTestRun.cpp
 	${MKDIR} -p ${TESTDIR}/system/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/system/tests/sysConfigTestRun.o system/tests/sysConfigTestRun.cpp
+
+
+${TESTDIR}/_ext/1151702947/systemProcessTest.o: /home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp 
+	${MKDIR} -p ${TESTDIR}/_ext/1151702947
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/_ext/1151702947/systemProcessTest.o /home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp
+
+
+${TESTDIR}/_ext/1151702947/systemProcessTestRun.o: /home/yvan/github/yATools/libadmintools/system/tests/systemProcessTestRun.cpp 
+	${MKDIR} -p ${TESTDIR}/_ext/1151702947
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/_ext/1151702947/systemProcessTestRun.o /home/yvan/github/yATools/libadmintools/system/tests/systemProcessTestRun.cpp
 
 
 ${TESTDIR}/utils/tests/utilsSecurityTest.o: utils/tests/utilsSecurityTest.cpp 
@@ -672,6 +689,7 @@ ${OBJECTDIR}/utils/security_nomain.o: ${OBJECTDIR}/utils/security.o utils/securi
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
+	    ${TESTDIR}/TestFiles/f12 || true; \
 	    ${TESTDIR}/TestFiles/f6 || true; \
 	else  \
 	    ./${TEST} || true; \
