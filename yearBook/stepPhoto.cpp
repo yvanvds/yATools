@@ -25,6 +25,8 @@
 #include <Wt/WProgressBar>
 #include <Wt/WFileResource>
 
+#include <stdlib.h>
+
 void consOut(const std::string & message) {
   std::cout << message << std::endl;
 }
@@ -78,13 +80,28 @@ void stepPhoto::setUpload() {
   
   fileUpload->uploaded().connect(std::bind([=] () {
     std::string file = fileUpload->spoolFileName();
-    y::utils::Log().add("step 0");
+    /*y::utils::Log().add("step 0");
     y::sys::process p("cp");
     p.arg(file);
     std::string out ="userImages/";
     out += parent->store.ID().toUTF8();
     p.arg(out);
-    p.run(consOut);
+    p.run(consOut);*/
+    if (!system(NULL)) {
+      y::utils::Log().add("command not available");
+    } else {
+      std::string cmd;
+      cmd = "cp ";
+      cmd.append(file);
+      cmd.append(" userImages/");
+      cmd.append(parent->store.ID().toUTF8());
+      int i = system(cmd.c_str());
+      std::string result = "system returned ";
+      result.append(std::to_string(i));
+      y::utils::Log().add(result);
+    }
+    std::string out ="userImages/";
+    out += parent->store.ID().toUTF8();
     parent->store.photo(out);
     hint->setText("Je foto is opgeslagen.");
     Wt::WFileResource * r = new Wt::WFileResource(out);
