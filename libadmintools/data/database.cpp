@@ -126,7 +126,6 @@ bool y::data::database::createTable(const std::string& tableName, row & descript
   
   query.append(")");
   // execute
-  std::cout << query << std::endl;
   
   return handle->execute(query);
 }

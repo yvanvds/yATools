@@ -12,55 +12,57 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(dataServerTest);
 
 dataServerTest::dataServerTest() {
+  y::utils::Config().load();
+  server = std::unique_ptr<y::data::server>(new y::data::server);
 }
 
 dataServerTest::~dataServerTest() {
 }
 
 void dataServerTest::setUp() {
-  y::utils::Config().load();
+  
 }
 
 void dataServerTest::tearDown() {
 }
 
 void dataServerTest::testCreate() {
-  if(server.hasDatabase("serverUnitTest")) {
-    server.drop("serverUnitTest");
+  if(server->hasDatabase("serverUnitTest")) {
+    server->drop("serverUnitTest");
   }
-  if (server.hasDatabase("serverUnitTest")) {
+  if (server->hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
   
-  server.create("serverUnitTest");
+  server->create("serverUnitTest");
   
-  if (!server.hasDatabase("serverUnitTest")) {
+  if (!server->hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
-  server.drop("serverUnitTest");
+  server->drop("serverUnitTest");
 }
 
 void dataServerTest::testDrop() {
-  if(!server.hasDatabase("serverUnitTest")) {
-    server.create("serverUnitTest");
+  if(!server->hasDatabase("serverUnitTest")) {
+    server->create("serverUnitTest");
   }
-  if (!server.hasDatabase("serverUnitTest")) {
+  if (!server->hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
-  server.drop("serverUnitTest");
-  if (server.hasDatabase("serverUnitTest")) {
+  server->drop("serverUnitTest");
+  if (server->hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void dataServerTest::testHasDatabase() {
-  server.create("serverUnitTest");
-  if (!server.hasDatabase("serverUnitTest")) {
+  server->create("serverUnitTest");
+  if (!server->hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
   
-  server.drop("serverUnitTest");
-  if (server.hasDatabase("serverUnitTest")) {
+  server->drop("serverUnitTest");
+  if (server->hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
 }

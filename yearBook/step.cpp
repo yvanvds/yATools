@@ -29,7 +29,7 @@ void step::create(yearBook * parent) {
   if(createDone) return;
   
   this->parent = parent;
-  mainPanel = new Wt::WPanel(parent->root());
+  mainPanel = new Wt::WPanel();
   
   mainPanel->setTitleBar(true);
   mainPanel->setTitle("<h1>Jaarboek App</h1>");
@@ -88,7 +88,7 @@ void step::create(yearBook * parent) {
   box->addLayout(buttonBox);
   
   mainPanel->setCentralWidget(mainContent);
-  mainPanel->hide();
+  //mainPanel->hide();
   mainContent->addStyleClass("panel-body");
   createDone = true;
 }

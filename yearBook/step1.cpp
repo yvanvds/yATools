@@ -42,7 +42,6 @@ void step1::setContent(Wt::WVBoxLayout * box) {
 
   Wt::WLengthValidator * validator = new Wt::WLengthValidator();
   validator->setMinimumLength(2);
-  validator->setInvalidTooShortText("Je hebt WEL een naam!");
   validator->setMandatory(true);
   nameEdit->setValidator(validator);
   
@@ -50,7 +49,8 @@ void step1::setContent(Wt::WVBoxLayout * box) {
   surnameEdit->setWidth(200);
   surnameEdit->setHeight(35);
   surnameEdit->changed().connect(this, &step1::surnameEditChanged); 
-
+  surnameEdit->setValidator(validator);
+  
   groupEdit = new Wt::WLineEdit();
   groupEdit->setWidth(200);
   groupEdit->setHeight(35);
@@ -92,14 +92,23 @@ void step1::nameEditChanged() {
     feedback->setStyleClass("alert alert-success");
     nameEdit->setStyleClass("form-control");
   } else {
-    feedback->setText("Zo kort kan je naam niet zijn.");
+    feedback->setText("Zo kort kan een naam niet zijn.");
     feedback->setStyleClass("alert alert-danger");
-    nameEdit->setStyleClass("form-control Wt-invalid");
+    nameEdit->setStyleClass("form-control invalid");
   }
 }
 
 void step1::surnameEditChanged() {
-  parent->store.surname(surnameEdit->text());
+  if(surnameEdit->validate() == Wt::WValidator::Valid) {
+    parent->surname = surnameEdit->text();
+    feedback->setText("Je familienaam werd gewijzigd.");
+    feedback->setStyleClass("alert alert-success");
+    nameEdit->setStyleClass("form-control");
+  } else {
+    feedback->setText("Zo kort kan een naam niet zijn.");
+    feedback->setStyleClass("alert alert-danger");
+    surnameEdit->setStyleClass("form-control invalid");
+  }
 }
 
 void step1::groupEditChanged() {
@@ -109,17 +118,47 @@ void step1::groupEditChanged() {
 void step1::dateEditChanged() {
   if(dateEdit->date().isValid()) {
     parent->store.birthday(dateEdit->date());
-    feedback->setText("");
-    feedback->setStyleClass("");
+    feedback->setText("Je geboortedatum werd gewijzigd.");
+    feedback->setStyleClass("alert alert-success");
+    dateEdit->setStyleClass("form-control");
     
   } else {
     feedback->setText("Deze datum is niet geldig");
     feedback->setStyleClass("alert alert-danger");
+    dateEdit->setStyleClass("form-control invalid");
   }
 }
 
 void step1::mailEditChanged() {
-  parent->store.mail(mailEdit->text());
+  bool valid = true;
+  Wt::WString message;
+  
+  std::string value = mailEdit->text().toUTF8();
+  if (value.length() < 6) {
+    valid = false;
+    message = "je email adres is te kort";
+  }
+
+  if(value.find('@') == std::string::npos) {
+    valid = false;
+    message = "dit is geen geldig email adres";
+  } 
+  
+  if(value.find('.') == std::string::npos) {
+    valid = false;
+    message = "dit is geen geldig email adres";
+  } 
+  if(valid) {
+    parent->store.mail(mailEdit->text());
+    feedback->setText("Je email adres werd gewijzigd.");
+    feedback->setStyleClass("alert alert-success");
+    mailEdit->setStyleClass("form-control");
+  } else {
+    feedback->setText(message);
+    feedback->setStyleClass("alert alert-danger");
+    mailEdit->setStyleClass("form-control invalid");
+  }
+  
 }
 
 void step1::onShow() {

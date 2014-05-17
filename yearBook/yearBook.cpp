@@ -20,6 +20,7 @@
 #include <Wt/WBootstrapTheme>
 #include <Wt/WTable>
 #include <Wt/WLengthValidator>
+#include <Wt/WAnimation>
 
 #include "step1.h"
 #include "step2.h"
@@ -122,6 +123,21 @@ yearBook::yearBook(const Wt::WEnvironment& env) : Wt::WApplication(env) {
   steps[5]->showSaveButton(true);
   steps[5]->create(this);
   steps[6]->create(this);
+  
+  stack = new Wt::WStackedWidget(root());
+  stack->addWidget(steps[0]->mainPanel);
+  stack->addWidget(steps[1]->mainPanel);
+  stack->addWidget(steps[2]->mainPanel);
+  stack->addWidget(steps[3]->mainPanel);
+  stack->addWidget(steps[4]->mainPanel);
+  stack->addWidget(steps[5]->mainPanel);
+  stack->addWidget(steps[6]->mainPanel);
+  stack->setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
+  
+  //Wt::WAnimation * animation = new Wt::WAnimation(Wt::WAnimation::SlideInFromRight);
+  //stack->setTransitionAnimation(*animation);
+  
+  //stack->hide();
 }
 
 void yearBook::loginButtonClicked() {
@@ -153,11 +169,12 @@ void yearBook::loginButtonClicked() {
       }
       y::utils::Log().add("found id");
 
-      steps[currentStep]->show();
+      stack->setCurrentIndex(currentStep);
+      steps[currentStep]->onShow();
     } else {
       loginFeedback->setText("controleer je wachtwoord");
       loginFeedback->setStyleClass("alert alert-danger");
-      passEdit->setStyleClass("form-control Wt-invalid");
+      passEdit->setStyleClass("form-control invalid");
       passEdit->setText("");
       passEdit->setFocus();
       nameEdit->setStyleClass("form-control");
@@ -165,7 +182,7 @@ void yearBook::loginButtonClicked() {
   } else {
     loginFeedback->setText("controleer je naam");
     loginFeedback->setStyleClass("alert alert-danger");
-    nameEdit->setStyleClass("form-group has-error");
+    nameEdit->setStyleClass("form-control invalid");
     nameEdit->setText(id);
     nameEdit->setFocus();
     passEdit->setStyleClass("form-control");
@@ -181,22 +198,22 @@ void yearBook::setAction(action message) {
       break;
     }
     case A_PREVIOUS: {
-      steps[currentStep]->hide();
       currentStep--;
-      steps[currentStep]->show();
+      stack->setCurrentIndex(currentStep);
+      steps[currentStep]->onShow();
       break;
     }
     case A_NEXT: {
-      steps[currentStep]->hide();
       currentStep++;
-      steps[currentStep]->show();
+      stack->setCurrentIndex(currentStep);
+      steps[currentStep]->onShow();
       break;
     }
     case A_SAVE: {
       store.save();
-      steps[currentStep]->hide();
       currentStep++;
-      steps[currentStep]->show();
+      stack->setCurrentIndex(currentStep);
+      steps[currentStep]->onShow();
       break;
     }
   }

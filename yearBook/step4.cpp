@@ -31,7 +31,28 @@ void step4::setContent(Wt::WVBoxLayout * box) {
   textArea->setRows(10);
   //textArea->setPlaceholderText("");
   textArea->changed().connect(this, &step4::contentChanged);
+  
+  hint = new Wt::WText();
+  hint->setText("256 characters remaining");
+  hint->addStyleClass("help-block");
+  
+  
+  textArea->keyPressed().connect(std::bind([=] (const Wt::WKeyEvent & e) {
+    int count = 256 - textArea->text().toUTF8().length();
+    Wt::WString out;
+    out = std::to_string(count);
+    out += " characters remaining";
+    hint->setText(out);
+    if (count < 1) {
+      out = textArea->text();
+      std::string in = out.toUTF8();
+      in.resize(256);
+      textArea->setText(in);
+    }
+  }, std::placeholders::_1));
+  
   box->addWidget(textArea);
+  box->addWidget(hint);
 }
 
 void step4::onShow() {

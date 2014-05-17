@@ -12,6 +12,7 @@
 #include <Wt/WBootstrapTheme>
 #include <Wt/WTable>
 #include <Wt/WDate>
+#include <Wt/WStackedWidget>
 #include <vector>
 #include "step.h"
 #include "data.h"
@@ -63,6 +64,7 @@ private:
   
   // content
   std::vector<std::unique_ptr<step>> steps;
+  Wt::WStackedWidget * stack;
   int currentStep;
   
   

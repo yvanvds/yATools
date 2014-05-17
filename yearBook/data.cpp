@@ -10,9 +10,9 @@
 #include "data.h"
 #include <admintools.h>
 
-dataconnect::dataconnect() {
-  if(!y::data::Server().hasDatabase("yearbookApp")) {
-    y::data::Server().create("yearbookApp");
+dataconnect::dataconnect() : db(server) {
+  if(!server.hasDatabase("yearbookApp")) {
+    server.create("yearbookApp");
     db.use("yearbookApp");
     
     // create table for submissions

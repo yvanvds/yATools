@@ -44,6 +44,7 @@ public:
   Wt::WDate birthday();
   
 private:
+  y::data::server server;
   y::data::database db;
   
   

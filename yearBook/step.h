@@ -31,6 +31,7 @@ public:
   bool visible();
   
   yearBook * parent;
+  Wt::WPanel * mainPanel;
 private:
   
   void logoutClicked();
@@ -38,7 +39,7 @@ private:
   void nextClicked();
   void saveClicked();
   
-  Wt::WPanel * mainPanel;
+  
   Wt::WContainerWidget * mainContent;
   
   Wt::WPushButton * logOutButton;

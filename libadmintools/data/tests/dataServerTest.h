@@ -31,7 +31,7 @@ private:
   void testDrop();
   void testHasDatabase();
 
-  y::data::server server;
+  std::unique_ptr<y::data::server> server;
 };
 
 #endif	/* DATASERVERTEST_H */

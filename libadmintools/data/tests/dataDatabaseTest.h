@@ -43,7 +43,7 @@ private:
   void testSetRow();
   void testUse();
 
-  y::data::server server;
+  std::unique_ptr<y::data::server> server;
 };
 
 #endif	/* DATADATABASETEST_H */
