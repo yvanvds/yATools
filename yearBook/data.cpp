@@ -10,10 +10,13 @@
 #include "data.h"
 #include <admintools.h>
 
-dataconnect::dataconnect() : db(server) {
-  if(!server.hasDatabase("yearbookApp")) {
-    server.create("yearbookApp");
-    db.use("yearbookApp");
+dataconnect::dataconnect() {
+  server = std::unique_ptr<y::data::server>(new y::data::server);
+  db = std::unique_ptr<y::data::database>(new y::data::database(*server));
+  
+  if(!server->hasDatabase("yearbookApp")) {
+    server->create("yearbookApp");
+    db->use("yearbookApp");
     
     // create table for submissions
     y::data::row submissions;
@@ -36,10 +39,10 @@ dataconnect::dataconnect() : db(server) {
     submissions.addDate("submitDate");
     submissions.addBool("approved");
     
-    db.createTable("submissions", submissions);
+    db->createTable("submissions", submissions);
     
   } else {
-    db.use("yearbookApp");
+    db->use("yearbookApp");
   }
   newEntry = true;
 }
@@ -50,7 +53,7 @@ bool dataconnect::load(const Wt::WString & ID) {
   query.append(ID.toUTF8());
   query.append("'");
   container<y::data::row> rows;
-  db.getRows("submissions", query, rows);
+  db->getRows("submissions", query, rows);
   if(rows.elms() > 0) {
     y::data::row & result = rows[0];
     _ID = result["ID"].asString8();
@@ -97,14 +100,14 @@ void dataconnect::save() {
   
   if(newEntry) {
     row.addString8("ID", _ID);
-    db.addRow("submissions", row);
+    db->addRow("submissions", row);
     newEntry = false;
   } else {
     std::string query;
     query.append("ID='");
     query.append(_ID);
     query.append("'");
-    db.setRow("submissions", query, row);
+    db->setRow("submissions", query, row);
   }
 }
 

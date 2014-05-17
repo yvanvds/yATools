@@ -44,8 +44,8 @@ public:
   Wt::WDate birthday();
   
 private:
-  y::data::server server;
-  y::data::database db;
+  std::unique_ptr<y::data::server> server;
+  std::unique_ptr<y::data::database> db;
   
   
   std::string _ID;
