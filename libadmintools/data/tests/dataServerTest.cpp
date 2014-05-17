@@ -25,42 +25,42 @@ void dataServerTest::tearDown() {
 }
 
 void dataServerTest::testCreate() {
-  if(y::data::Server().hasDatabase("serverUnitTest")) {
-    y::data::Server().drop("serverUnitTest");
+  if(server.hasDatabase("serverUnitTest")) {
+    server.drop("serverUnitTest");
   }
-  if (y::data::Server().hasDatabase("serverUnitTest")) {
+  if (server.hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
   
-  y::data::Server().create("serverUnitTest");
+  server.create("serverUnitTest");
   
-  if (!y::data::Server().hasDatabase("serverUnitTest")) {
+  if (!server.hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
-  y::data::Server().drop("serverUnitTest");
+  server.drop("serverUnitTest");
 }
 
 void dataServerTest::testDrop() {
-  if(!y::data::Server().hasDatabase("serverUnitTest")) {
-    y::data::Server().create("serverUnitTest");
+  if(!server.hasDatabase("serverUnitTest")) {
+    server.create("serverUnitTest");
   }
-  if (!y::data::Server().hasDatabase("serverUnitTest")) {
+  if (!server.hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
-  y::data::Server().drop("serverUnitTest");
-  if (y::data::Server().hasDatabase("serverUnitTest")) {
+  server.drop("serverUnitTest");
+  if (server.hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void dataServerTest::testHasDatabase() {
-  y::data::Server().create("serverUnitTest");
-  if (!y::data::Server().hasDatabase("serverUnitTest")) {
+  server.create("serverUnitTest");
+  if (!server.hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
   
-  y::data::Server().drop("serverUnitTest");
-  if (y::data::Server().hasDatabase("serverUnitTest")) {
+  server.drop("serverUnitTest");
+  if (server.hasDatabase("serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
 }

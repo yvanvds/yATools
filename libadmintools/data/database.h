@@ -15,12 +15,13 @@
 #include <cppconn/statement.h>
 #include "../utils/container.h"
 #include "row.h"
+#include "sqlserver.h"
 
 namespace y {
   namespace data {
     class database {
     public:
-      database();
+      database(server & serverObject);
       
       bool use(const std::string & dbName);
       
@@ -41,9 +42,11 @@ namespace y {
     private:
       void parseRows(std::unique_ptr<sql::ResultSet> & result, container<row> & rows);
       
+      server & serverObject;
       std::unique_ptr<sql::Connection> connection;
       std::unique_ptr<sql::Statement> handle;
       bool connected;
+      
     };
   }
 }

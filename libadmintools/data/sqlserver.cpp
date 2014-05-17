@@ -8,17 +8,14 @@
 #include "sqlserver.h"
 #include "utils/config.h"
 
-y::data::server & y::data::Server() {
-  static server s;
-  return s;
-}
-
 y::data::server::server() {
   driver = get_driver_instance();
   connection = std::unique_ptr<sql::Connection>(
             driver->connect("tcp://127.0.0.1:3306", 
                             "root", 
                             y::utils::Config().getMysqlPassword().c_str()));
+  bool myTrue = true;
+  connection->setClientOption("OPT_RECONNECT", &myTrue);
   handle = std::unique_ptr<sql::Statement>(connection->createStatement());
 }
 
@@ -44,4 +41,3 @@ std::unique_ptr<sql::Connection> y::data::server::getConnection() {
                            "root", 
                            y::utils::Config().getMysqlPassword().c_str()));
 }
-

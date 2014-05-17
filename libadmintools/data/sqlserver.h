@@ -35,7 +35,6 @@ namespace y {
       friend class database;
     };
     
-    server & Server();
   }
 }
 

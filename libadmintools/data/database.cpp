@@ -12,14 +12,14 @@
 #include "../utils/convert.h"
 #include "dateTime.h"
 
-y::data::database::database() 
-: connection(y::data::Server().getConnection()),
+y::data::database::database(y::data::server & serverObject) : serverObject(serverObject)
+, connection(serverObject.getConnection()),
   connected(false){
   handle = std::unique_ptr<sql::Statement>(connection->createStatement());
 }
 
 bool y::data::database::use(const std::string& dbName) {
-  if(!Server().hasDatabase(dbName)) {
+  if(!serverObject.hasDatabase(dbName)) {
     connected = false;
   } else {
     connection->setSchema(dbName);
@@ -93,6 +93,14 @@ bool y::data::database::createTable(const std::string& tableName, row & descript
       }
       case DATE_TIME: {
         query.append(" DATETIME ");
+        break;
+      }
+      case UID: {
+        // not implemented yet
+        break;
+      }
+      case BINARY: {
+        // not implemented yet
         break;
       }
       case UNKNOWN: {
@@ -222,7 +230,7 @@ void y::data::database::parseRows(std::unique_ptr<sql::ResultSet>& result, conta
   sql::ResultSetMetaData * meta = result->getMetaData();
   container<std::string> columnNames;
   container<std::string> columnTypes;
-  for(int i = 1; i <= meta->getColumnCount(); i++) {
+  for(unsigned int i = 1; i <= meta->getColumnCount(); i++) {
     columnNames[i-1] = meta->getColumnName(i);
     columnTypes[i-1] = meta->getColumnTypeName(i);
   }
@@ -461,10 +469,9 @@ bool y::data::database::delRow(const std::string& table, const std::string& cond
 
 bool y::data::database::execute(const std::string& query) {
   if(!connected) return false;
-  bool result;
   
   try {
-    result = handle->execute(query);
+    handle->execute(query);
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();

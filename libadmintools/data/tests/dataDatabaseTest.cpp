@@ -18,25 +18,25 @@ dataDatabaseTest::dataDatabaseTest() {
 }
 
 dataDatabaseTest::~dataDatabaseTest() {
-  if (y::data::Server().hasDatabase("testdb")) {
-    y::data::Server().drop("testdb");
+  if (server.hasDatabase("testdb")) {
+    server.drop("testdb");
   }
 }
 
 void dataDatabaseTest::setUp() {
   y::utils::Config().load();
   
-  if (y::data::Server().hasDatabase("testdb")) {
-    y::data::Server().drop("testdb");
+  if (server.hasDatabase("testdb")) {
+    server.drop("testdb");
   }
-  y::data::Server().create("testdb");  
+  server.create("testdb");  
 }
 
 void dataDatabaseTest::tearDown() {
 }
 
 void dataDatabaseTest::testAddRow() {
-  y::data::database DB;
+  y::data::database DB(server);
   DB.use("testdb");
 
   y::data::row newRow;
@@ -105,7 +105,7 @@ void dataDatabaseTest::testAddRow() {
 }
 
 void dataDatabaseTest::testCreateTable() {
-  y::data::database DB;
+  y::data::database DB(server);
   DB.use("testdb");
   if(DB.tableExists("testtable")) {
     CPPUNIT_ASSERT(false);
@@ -122,7 +122,7 @@ void dataDatabaseTest::testCreateTable() {
 }
 
 void dataDatabaseTest::testDelRow() {
-  y::data::database DB;
+  y::data::database DB(server);
   DB.use("testdb");
 
   y::data::row newRow;
@@ -172,7 +172,7 @@ void dataDatabaseTest::testDelRow() {
 }
 
 void dataDatabaseTest::testDeleteTable() {
-  y::data::database DB;
+  y::data::database DB(server);
   DB.use("testdb");
   if(DB.tableExists("testtable")) {
     CPPUNIT_ASSERT(false);
@@ -194,7 +194,7 @@ void dataDatabaseTest::testDeleteTable() {
 }
 
 void dataDatabaseTest::testExecute() {
-  y::data::database DB;
+  y::data::database DB(server);
   DB.use("testdb");
   if(DB.tableExists("testtable")) {
     CPPUNIT_ASSERT(false);
@@ -216,7 +216,7 @@ void dataDatabaseTest::testExecute() {
 }
 
 void dataDatabaseTest::testGetAllRows() {
-  y::data::database DB;
+  y::data::database DB(server);
   DB.use("testdb");
 
   if(DB.tableExists("testtable")) {
@@ -266,7 +266,7 @@ void dataDatabaseTest::testGetAllRows() {
 }
 
 void dataDatabaseTest::testGetTables() {
-  y::data::database DB;
+  y::data::database DB(server);
   DB.use("testdb");
 
   y::data::row newRow;
@@ -290,7 +290,7 @@ void dataDatabaseTest::testGetTables() {
 }
 
 void dataDatabaseTest::testSetRow() {
-  y::data::database DB;
+  y::data::database DB(server);
   DB.use("testdb");
 
   if(DB.tableExists("testtable")) {
@@ -341,7 +341,7 @@ void dataDatabaseTest::testSetRow() {
 }
 
 void dataDatabaseTest::testUse() {
-  y::data::database DB;
+  y::data::database DB(server);
   if(!DB.use("testdb")) {
     CPPUNIT_ASSERT(false);
   }

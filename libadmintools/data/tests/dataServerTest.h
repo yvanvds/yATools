@@ -9,6 +9,7 @@
 #define	DATASERVERTEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
+#include "../sqlserver.h"
 
 class dataServerTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST_SUITE(dataServerTest);
@@ -30,6 +31,7 @@ private:
   void testDrop();
   void testHasDatabase();
 
+  y::data::server server;
 };
 
 #endif	/* DATASERVERTEST_H */
