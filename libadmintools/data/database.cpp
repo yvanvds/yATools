@@ -11,6 +11,7 @@
 #include "../utils/container.h"
 #include "../utils/convert.h"
 #include "dateTime.h"
+#include "field.h"
 
 y::data::database::database(y::data::server & serverObject) : serverObject(serverObject)
 , connection(serverObject.getConnection()),
@@ -204,12 +205,24 @@ bool y::data::database::getAllRows(const std::string& table, container<row>& row
   return true;
 }
 
-bool y::data::database::getRows(const std::string& table, const std::string& condition, container<row>& rows) {
+bool y::data::database::getRows(const std::string & table, container<row> & rows, field & condition, COMPARE c) {
   if(!connected) return false;
   std::unique_ptr<sql::ResultSet> result;
   
+  std::string query;
+  query = "SELECT * FROM " + table + " WHERE ";
+  query.append(condition.name());
+  switch(c) {
+    case COMPARE::equal: 
+      query.append("="); break;
+  }
+  query.append("?");
+
+  STATEMENT(statement, query);
+  addToStatement(statement, condition, 1);
+  
   try {
-    result = std::unique_ptr<sql::ResultSet>(handle->executeQuery("SELECT * FROM " + table + " WHERE " + condition));
+    result = std::unique_ptr<sql::ResultSet>(statement->executeQuery());
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -263,7 +276,7 @@ void y::data::database::parseRows(std::unique_ptr<sql::ResultSet>& result, conta
   }
 }
 
-bool y::data::database::setRow(const std::string& table, const std::string& condition, row& values){
+bool y::data::database::setRow(const std::string & table, row & values, field & condition, y::data::COMPARE c){
   if(!connected) return false;
   if(!values.elms()) return false;
   
@@ -274,80 +287,25 @@ bool y::data::database::setRow(const std::string& table, const std::string& cond
   for(int i = 0; i < values.elms(); i++) {
     if(i > 0) query.append(", ");
     query.append(values[i].name());
-    query.append("=");
-    
-    switch(values[i].getType()) {
-      case BOOL: {
-        if(values[i].asBool()) {
-          query.append("b'1'");
-        } else {
-          query.append("b'0'");
-        } 
-        break;
-      }
-      case CHAR: {
-        query.append("'");
-        query.append(std::to_string(values[i].asChar()));
-        query.append("'");
-        break;
-      }
-      case SHORT: {
-        query.append("'");
-        query.append(std::to_string(values[i].asShort()));
-        query.append("'");
-        break;
-      }
-      case INT: {
-        query.append("'");
-        query.append(std::to_string(values[i].asInt()));
-        query.append("'");
-        break;
-      }
-      case LONG: {
-        query.append("'");
-        query.append(std::to_string(values[i].asLong()));
-        query.append("'");
-        break;
-      }
-      case FLOAT: {
-        query.append("'");
-        query.append(std::to_string(values[i].asFloat()));
-        query.append("'");
-        break;
-      }
-      case DOUBLE: {
-        query.append("'");
-        query.append(std::to_string(values[i].asDouble()));
-        query.append("'");
-        break;
-      }
-      case STRING: {
-        query.append("'");
-        query.append(str8(values[i].asString()));
-        query.append("'");
-        break;
-      }
-      case STRING8: {
-        query.append("'");
-        query.append(values[i].asString8());
-        query.append("'");
-        break;
-      }
-      case DATE_TIME: {
-        query.append("'");
-        query.append(values[i].asDate().dbFormat());
-        query.append("'");
-        break;
-      }
-      default: return false;
-      
-    }
+    query.append("=?");
   }
   query.append(" WHERE ");
-  query.append(condition);
+  query.append(condition.name());
+  switch (c) {
+    case COMPARE::equal: query.append("="); break;
+  }
+  query.append("?");
+  
+  STATEMENT(statement, query);
+  
+  int i = 0;
+  for(; i < values.elms(); i++) {
+    addToStatement(statement, values[i], i+1);    
+  }
+  addToStatement(statement, condition, i+1);
 
   try {
-    handle->execute(query);
+    statement->executeQuery();
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 		std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -372,75 +330,19 @@ bool y::data::database::addRow(const std::string& table, row& values) {
   query.append(") VALUES (");
   for(int i = 0; i < values.elms(); i++) {
     if(i > 0) query.append(", ");
-    switch(values[i].getType()) {
-      case BOOL: {
-        if(values[i].asBool()) {
-          query.append("b'1'");
-        } else {
-          query.append("b'0'");
-        }
-        break;
-      }
-      case CHAR: {
-        query.append("'");
-        query.append(std::to_string(values[i].asChar()));
-        query.append("'");
-        break;
-      }
-      case SHORT: {
-        query.append("'");
-        query.append(std::to_string(values[i].asShort()));
-        query.append("'");
-        break;
-      }
-      case INT: {
-        query.append("'");
-        query.append(std::to_string(values[i].asInt()));
-        query.append("'");
-        break;
-      }
-      case LONG: {
-        query.append("'");
-        query.append(std::to_string(values[i].asLong()));
-        query.append("'");
-        break;
-      }
-      case FLOAT: {
-        query.append("'");
-        query.append(std::to_string(values[i].asFloat()));
-        query.append("'");
-        break;
-      }
-      case DOUBLE: {
-        query.append("'");
-        query.append(std::to_string(values[i].asDouble()));
-        query.append("'");
-        break;
-      }
-      case STRING: {
-        query.append("'");
-        query.append(str8(values[i].asString()));
-        query.append("'");
-        break;
-      }
-      case STRING8: {
-        query.append("'");
-        query.append(values[i].asString8());
-        query.append("'");
-        break;
-      }
-      case DATE_TIME: {
-        query.append("'");
-        query.append(values[i].asDate().dbFormat());
-        query.append("'");
-        break;
-      }
-      default: return false;
-    }
+    query.append("?");
   }
   query.append(")");
+
+  STATEMENT(statement, query);
+  
+  for(int i = 0; i < values.elms(); i++) {
+    addToStatement(statement, values[i], i+1);
+  }
+
   try {
-    handle->execute(query);
+    statement->executeUpdate();
+    
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 		std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -450,12 +352,24 @@ bool y::data::database::addRow(const std::string& table, row& values) {
   return true;
 }
 
-bool y::data::database::delRow(const std::string& table, const std::string& condition) {
+bool y::data::database::delRow(const std::string & table, field & condition, y::data::COMPARE c) {
   if(!connected) return false;
-  sql::SQLString query = "DELETE FROM " + table + " WHERE " + condition;
+  sql::SQLString query = "DELETE FROM ";
+  query.append(table);
+  query.append(" WHERE ");
+  query.append(condition.name());
+  switch (c) {
+    case COMPARE::equal: query.append("=");
+  } 
+  query.append("?");
+
+  STATEMENT(statement, query);
+
+  addToStatement(statement, condition, 1);
 
   try {
-    handle->execute(query);
+    statement->executeUpdate();
+    
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -478,4 +392,53 @@ bool y::data::database::execute(const std::string& query) {
     return false;
   }
   return true;
+}
+
+void y::data::database::addToStatement(std::unique_ptr<sql::PreparedStatement>& statement, field& condition, int position) {
+  //std::cout << "added " << condition.name() << " at position " << position << std::endl;
+  
+  switch(condition.getType()) {
+    case BOOL: {
+      statement->setBoolean(position, condition.asBool());
+      break;
+    }
+    case CHAR: {
+      statement->setInt(position, condition.asChar());
+      break;
+    }
+    case SHORT: {
+      statement->setInt(position, condition.asShort());
+      break;
+    }
+    case INT: {
+      statement->setInt(position, condition.asInt());
+      break;
+    }
+    case LONG: {
+      statement->setInt64(position, condition.asLong());
+      break;
+    }
+    case FLOAT: {
+      statement->setDouble(position, condition.asFloat());
+      break;
+    }
+    case DOUBLE: {
+      statement->setDouble(position, condition.asDouble());
+      break;
+    }
+    case STRING: {
+      statement->setString(position, str8(condition.asString()));
+      break;
+    }
+    case STRING8: {
+      statement->setString(position, condition.asString8());
+      break;
+    }
+    case DATE_TIME: {
+      statement->setDateTime(position, condition.asDate().dbFormat());
+      break;
+    }
+    default: return;
+
+  }
 }

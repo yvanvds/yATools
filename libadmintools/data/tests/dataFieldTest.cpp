@@ -40,6 +40,7 @@ void dataFieldTest::testAsBool() {
   if(_field.getType() != y::data::BOOL) {
     CPPUNIT_ASSERT(false);
   }
+ 
 }
 
 void dataFieldTest::testAsChar() {

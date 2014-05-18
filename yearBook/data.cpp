@@ -48,12 +48,11 @@ dataconnect::dataconnect() {
 }
 
 bool dataconnect::load(const Wt::WString & ID) {
-  std::string query;
-  query.append("ID='");
-  query.append(ID.toUTF8());
-  query.append("'");
+  y::data::field condition;
+  condition.name("ID");
+  condition.setString8(ID.toUTF8());
   container<y::data::row> rows;
-  db->getRows("submissions", query, rows);
+  db->getRows("submissions", rows, condition);
   if(rows.elms() > 0) {
     y::data::row & result = rows[0];
     _ID = result["ID"].asString8();
@@ -103,11 +102,11 @@ void dataconnect::save() {
     db->addRow("submissions", row);
     newEntry = false;
   } else {
-    std::string query;
-    query.append("ID='");
-    query.append(_ID);
-    query.append("'");
-    db->setRow("submissions", query, row);
+    y::data::field condition;
+    condition.name("ID");
+    condition.setString8(_ID);
+
+    db->setRow("submissions", row, condition);
   }
 }
 

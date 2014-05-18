@@ -13,12 +13,22 @@
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
+#include <cppconn/prepared_statement.h>
 #include "../utils/container.h"
 #include "row.h"
 #include "sqlserver.h"
 
+#define STATEMENT(NAME, ARGS) \
+std::unique_ptr<sql::PreparedStatement> NAME \
+= std::unique_ptr<sql::PreparedStatement>(connection->prepareStatement(ARGS))
+
 namespace y {
   namespace data {
+    
+    enum COMPARE {
+      equal,
+    };
+    
     class database {
     public:
       database(server & serverObject);
@@ -31,16 +41,17 @@ namespace y {
       
       bool getTables(container<std::string> & tables);
       bool getAllRows(const std::string & table, container<row> & rows);
-      bool getRows(const std::string & table, const std::string & condition, container<row> & rows);
+      bool getRows(const std::string & table, container<row> & rows, field & condition, COMPARE c = COMPARE::equal);
 
-      bool setRow(const std::string & table, const std::string & condition, row & values);
+      bool setRow(const std::string & table, row & values, field & condition, COMPARE c = COMPARE::equal);
       bool addRow(const std::string & table, row & values);
-      bool delRow(const std::string & table, const std::string & condition);
+      bool delRow(const std::string & table, field & condition, COMPARE c = COMPARE::equal);
       
       bool execute(const std::string & query);
       
     private:
       void parseRows(std::unique_ptr<sql::ResultSet> & result, container<row> & rows);
+      void addToStatement(std::unique_ptr<sql::PreparedStatement> & statement, field & condition, int position);
       
       server & serverObject;
       std::unique_ptr<sql::Connection> connection;

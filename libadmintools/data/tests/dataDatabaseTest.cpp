@@ -10,6 +10,7 @@
 #include "utils/config.h"
 #include "data/sqlserver.h"
 #include "../dateTime.h"
+#include "../field.h"
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(dataDatabaseTest);
@@ -160,14 +161,17 @@ void dataDatabaseTest::testDelRow() {
   content2.addString("stringvalue", u"ëç&æ2");
   DB.addRow("testtable", content2);
 
+  y::data::field condition;
+  condition.name("shortvalue");
+  condition.setShort(1);
   container<y::data::row> results;
-  DB.getRows("testtable", "shortvalue=1", results);
+  DB.getRows("testtable", results, condition);
   if(results.elms() != 1) {
     CPPUNIT_ASSERT(false);
   }
-  DB.delRow("testtable", "shortvalue=1");
+  DB.delRow("testtable", condition);
   results.clear();
-  DB.getRows("testtable", "shortvalue=1", results);
+  DB.getRows("testtable", results, condition);
   if(results.elms() > 0) {
     CPPUNIT_ASSERT(false);
   }	
@@ -257,8 +261,12 @@ void dataDatabaseTest::testGetAllRows() {
   content2.addString("stringvalue", u"ëç&æ2");
   DB.addRow("testtable", content2);
 
+  y::data::field condition;
+  condition.name("shortvalue");
+  condition.setShort(1);
   container<y::data::row> results;
-  DB.getRows("testtable", "shortvalue=1", results);
+  DB.getRows("testtable", results, condition);
+  
   if(results.elms() != 1) {
     CPPUNIT_ASSERT(false);
   }
@@ -323,10 +331,16 @@ void dataDatabaseTest::testSetRow() {
   content.addDouble("doublevalue", 3.004);
   content.addChar("charvalue", 1);
 
-  DB.setRow("testtable", "charvalue=34", content);
+  y::data::field condition;
+  condition.name("charvalue");
+  condition.setChar(34);
+  
+  DB.setRow("testtable", content, condition);
 
+  condition.name("shortvalue");
+  condition.setString8("42");
   container<y::data::row> results;
-  DB.getRows("testtable", "shortvalue=42", results);
+  DB.getRows("testtable", results, condition);
   
   if(!results.elms()) {
     CPPUNIT_ASSERT(false);

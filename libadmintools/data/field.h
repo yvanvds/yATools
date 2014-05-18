@@ -44,6 +44,7 @@ namespace y {
       explicit field(const std::string & name, const std::u16string & value);
       explicit field(const std::string & name, const dateTime       & value);
       
+      
       FIELD_TYPE getType();
       
       bool    asBool  ();

@@ -146,38 +146,49 @@ void yearBook::loginButtonClicked() {
   
   account = y::ldap::Server().getAccount(y::ldap::UID(id.toUTF8()));
   if(!account.isNew()) {
-    loggedIn = y::ldap::Server().auth(account.dn(), y::ldap::PASSWORD(passwd.toUTF8()));
-  
-    if(loggedIn) {
-      loginDialog->hide();
-      loginFeedback->setStyleClass("");
-      y::utils::Log().add("load id from database");
-      if(!store.load(id)) {
-        y::utils::Log().add("id not found");
-        store.ID(id);
-        store.name(account.cn()());
-        store.surname(account.sn()());
-        std::string fullname;
-        fullname = account.cn()();
-        fullname.append(" ");
-        fullname.append(account.sn()());
-        store.servername(fullname);
-        store.group(account.group()());
-        Wt::WDate date;
-        date.setDate(account.birthDay().getYear(), account.birthDay().getMonth(), account.birthDay().getDay());    
-        store.birthday(date);
-      }
-      y::utils::Log().add("found id");
+    std::string group = account.group()();
+    
+    if(group[0] == '6' || group[0] == '7') {
+    
+      loggedIn = y::ldap::Server().auth(account.dn(), y::ldap::PASSWORD(passwd.toUTF8()));
 
-      stack->setCurrentIndex(currentStep);
-      steps[currentStep]->onShow();
+      if(loggedIn) {
+        loginDialog->hide();
+        loginFeedback->setStyleClass("");
+        y::utils::Log().add("load id from database");
+        if(!store.load(id)) {
+          y::utils::Log().add("id not found");
+          store.ID(id);
+          store.name(account.cn()());
+          store.surname(account.sn()());
+          std::string fullname;
+          fullname = account.cn()();
+          fullname.append(" ");
+          fullname.append(account.sn()());
+          store.servername(fullname);
+          store.group(account.group()());
+          Wt::WDate date;
+          date.setDate(account.birthDay().getYear(), account.birthDay().getMonth(), account.birthDay().getDay());    
+          store.birthday(date);
+        }
+        y::utils::Log().add("found id");
+
+        stack->setCurrentIndex(currentStep);
+        steps[currentStep]->onShow();
+      } else {
+        loginFeedback->setText("controleer je wachtwoord");
+        loginFeedback->setStyleClass("alert alert-danger");
+        passEdit->setStyleClass("form-control invalid");
+        passEdit->setText("");
+        passEdit->setFocus();
+        nameEdit->setStyleClass("form-control");
+      }
     } else {
-      loginFeedback->setText("controleer je wachtwoord");
+      loginFeedback->setText("enkel voor laatstejaars!");
       loginFeedback->setStyleClass("alert alert-danger");
-      passEdit->setStyleClass("form-control invalid");
-      passEdit->setText("");
-      passEdit->setFocus();
+      passEdit->setStyleClass("form-control");
       nameEdit->setStyleClass("form-control");
+      
     }
   } else {
     loginFeedback->setText("controleer je naam");

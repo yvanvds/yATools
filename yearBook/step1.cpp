@@ -147,7 +147,11 @@ void step1::mailEditChanged() {
   if(value.find('.') == std::string::npos) {
     valid = false;
     message = "dit is geen geldig email adres";
-  } 
+  }
+  if(value.find("sanctamaria-aarschot")) {
+    valid = false;
+    message = "dit adres wordt binnenkort afgesloten";
+  }
   if(valid) {
     parent->store.mail(mailEdit->text());
     feedback->setText("Je email adres werd gewijzigd.");
