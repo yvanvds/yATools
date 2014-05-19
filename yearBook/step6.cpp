@@ -27,7 +27,7 @@ void step6::setContent(Wt::WVBoxLayout * box) {
 }
 
 void step6::onShow() {
-  
+  logOutButton->setFocus();
 }
 
 void step6::contentChanged() {

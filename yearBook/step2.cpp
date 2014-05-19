@@ -57,6 +57,7 @@ void step2::setContent(Wt::WVBoxLayout * box) {
 
 void step2::onShow() {
   textArea->setText(parent->store.answer1());
+  textArea->setFocus();
 }
 
 void step2::contentChanged() {

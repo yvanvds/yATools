@@ -57,8 +57,10 @@ void step5::setContent(Wt::WVBoxLayout * box) {
 
 void step5::onShow() {
   textArea->setText(parent->store.answer4());
+  textArea->setFocus();
 }
 
 void step5::contentChanged() {
   parent->store.answer4(textArea->text());
+  
 }

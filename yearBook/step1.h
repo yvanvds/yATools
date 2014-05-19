@@ -16,6 +16,7 @@ class step1 : public step {
 public:
   virtual void setContent(Wt::WVBoxLayout * box);
   virtual void onShow();
+  virtual bool validateAll();
   
 private:
  
@@ -34,7 +35,7 @@ private:
   Wt::WLineEdit * mailEdit;
   Wt::WText * feedback;
   
-
+  bool allOK;
   
 };
 

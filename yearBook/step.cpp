@@ -53,6 +53,7 @@ void step::create(yearBook * parent) {
   logOutButton->setHeight(35);
   logOutButton->clicked().connect(this, &step::logoutClicked);
   logOutButton->setStyleClass("btn btn-danger");
+  logOutButton->setTabIndex(20);
   buttonBox->addWidget(logOutButton);
   
   if(showPrevious) {
@@ -61,6 +62,7 @@ void step::create(yearBook * parent) {
     previousButton->setHeight(35);
     previousButton->clicked().connect(this, &step::previousClicked);
     previousButton->setStyleClass("btn btn-primary");
+    previousButton->setTabIndex(19);
     buttonBox->addWidget(previousButton);
   }
   
@@ -71,6 +73,7 @@ void step::create(yearBook * parent) {
     nextButton->clicked().connect(this, &step::nextClicked);
     nextButton->setStyleClass("btn btn-primary");
     nextButton->setDefault(true);
+    nextButton->setTabIndex(17);
     buttonBox->addWidget(nextButton);
   }
   
@@ -81,6 +84,7 @@ void step::create(yearBook * parent) {
     saveButton->clicked().connect(this, &step::saveClicked);
     saveButton->setStyleClass("btn btn-success");
     saveButton->setDefault(true);
+    saveButton->setTabIndex(18);
     buttonBox->addWidget(saveButton);
   }
   
@@ -111,14 +115,17 @@ void step::logoutClicked() {
 }
 
 void step::previousClicked() {
+  if (validateAll())
   parent->setAction(A_PREVIOUS);
 }
 
 void step::nextClicked() {
+  if (validateAll())
   parent->setAction(A_NEXT);
 }
 
 void step::saveClicked() {
+  if(validateAll())
   parent->setAction(A_SAVE);
 }
 
@@ -132,4 +139,8 @@ void step::showNextButton(bool value) {
 
 void step::showSaveButton(bool value) {
   showSave = value;
+}
+
+bool step::validateAll() {
+  return true;
 }

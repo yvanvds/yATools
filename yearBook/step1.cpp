@@ -91,10 +91,13 @@ void step1::nameEditChanged() {
     feedback->setText("Je naam werd gewijzigd.");
     feedback->setStyleClass("alert alert-success");
     nameEdit->setStyleClass("form-control");
+    allOK = true;
   } else {
     feedback->setText("Zo kort kan een naam niet zijn.");
     feedback->setStyleClass("alert alert-danger");
     nameEdit->setStyleClass("form-control invalid");
+    nameEdit->setFocus();
+    allOK = false;
   }
 }
 
@@ -104,10 +107,13 @@ void step1::surnameEditChanged() {
     feedback->setText("Je familienaam werd gewijzigd.");
     feedback->setStyleClass("alert alert-success");
     nameEdit->setStyleClass("form-control");
+    allOK = true;
   } else {
     feedback->setText("Zo kort kan een naam niet zijn.");
     feedback->setStyleClass("alert alert-danger");
     surnameEdit->setStyleClass("form-control invalid");
+    surnameEdit->setFocus();
+    allOK = false;
   }
 }
 
@@ -121,11 +127,14 @@ void step1::dateEditChanged() {
     feedback->setText("Je geboortedatum werd gewijzigd.");
     feedback->setStyleClass("alert alert-success");
     dateEdit->setStyleClass("form-control");
+    allOK = true;
     
   } else {
     feedback->setText("Deze datum is niet geldig");
     feedback->setStyleClass("alert alert-danger");
     dateEdit->setStyleClass("form-control invalid");
+    dateEdit->setFocus();
+    allOK = false;
   }
 }
 
@@ -148,7 +157,7 @@ void step1::mailEditChanged() {
     valid = false;
     message = "dit is geen geldig email adres";
   }
-  if(value.find("sanctamaria-aarschot")) {
+  if(value.find("sanctamaria") != std::string::npos) {
     valid = false;
     message = "dit adres wordt binnenkort afgesloten";
   }
@@ -157,10 +166,13 @@ void step1::mailEditChanged() {
     feedback->setText("Je email adres werd gewijzigd.");
     feedback->setStyleClass("alert alert-success");
     mailEdit->setStyleClass("form-control");
+    allOK = true;
   } else {
     feedback->setText(message);
     feedback->setStyleClass("alert alert-danger");
     mailEdit->setStyleClass("form-control invalid");
+    mailEdit->setFocus();
+    allOK = false;
   }
   
 }
@@ -171,4 +183,18 @@ void step1::onShow() {
   groupEdit->setText(parent->store.group());
   dateEdit->setDate(parent->store.birthday());
   mailEdit->setText(parent->store.mail());
+  nameEdit->setFocus();
+}
+
+bool step1::validateAll() {
+  allOK = false;
+  nameEditChanged();
+  if(!allOK) return false;
+  surnameEditChanged();
+  if(!allOK) return false;
+  dateEditChanged();
+  if(!allOK) return false;
+  mailEditChanged();
+  if(!allOK) return false;
+  return true;
 }

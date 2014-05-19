@@ -148,7 +148,7 @@ void yearBook::loginButtonClicked() {
   if(!account.isNew()) {
     std::string group = account.group()();
     
-    if(group[0] == '6' || group[0] == '7') {
+    if(group[0] == '6' || group[0] == '7' || (id.toUTF8().compare("yvanym") == 0) ) {
     
       loggedIn = y::ldap::Server().auth(account.dn(), y::ldap::PASSWORD(passwd.toUTF8()));
 

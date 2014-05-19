@@ -21,6 +21,7 @@ public:
   
   virtual void setContent(Wt::WVBoxLayout * box) = 0;
   virtual void onShow() = 0;
+  virtual bool validateAll();
   
   void showPreviousButton(bool value);
   void showNextButton(bool value);
@@ -32,7 +33,7 @@ public:
   
   yearBook * parent;
   Wt::WPanel * mainPanel;
-private:
+protected:
   
   void logoutClicked();
   void previousClicked();
