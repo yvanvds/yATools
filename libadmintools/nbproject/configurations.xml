@@ -16,6 +16,10 @@
     <logicalFolder name="f1" displayName="gui" projectFiles="true">
       <itemPath>gui/application.cpp</itemPath>
       <itemPath>gui/application.h</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/gui/passwordDialog.h</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/gui/session.cpp</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/gui/session.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ldap" displayName="ldap" projectFiles="true">
       <logicalFolder name="f1" displayName="base" projectFiles="true">
@@ -167,10 +171,11 @@
     <itemPath>admintools.h</itemPath>
   </logicalFolder>
   <sourceRootList>
-    <Elem>ldap</Elem>
-    <Elem>system</Elem>
-    <Elem>utils</Elem>
-    <Elem>data</Elem>
+    <Elem>/home/yvan/github/yATools/libadmintools/ldap</Elem>
+    <Elem>/home/yvan/github/yATools/libadmintools/system</Elem>
+    <Elem>/home/yvan/github/yATools/libadmintools/utils</Elem>
+    <Elem>/home/yvan/github/yATools/libadmintools/data</Elem>
+    <Elem>/home/yvan/github/yATools/libadmintools/gui</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -211,6 +216,26 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/passwordDialog.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/session.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/session.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp"
             ex="false"
             tool="1"
@@ -621,6 +646,26 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/passwordDialog.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/session.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/session.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp"
             ex="false"
             tool="1"

@@ -3,27 +3,23 @@
     <type>org.netbeans.modules.cnd.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>libadmintools</name>
+            <name>yearbookAdmin</name>
             <c-extensions/>
             <cpp-extensions>cpp</cpp-extensions>
-            <header-extensions>h,hpp</header-extensions>
+            <header-extensions>h</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
-            <make-dep-projects/>
-            <sourceRootList>
-                <sourceRootElem>/home/yvan/github/yATools/libadmintools/ldap</sourceRootElem>
-                <sourceRootElem>/home/yvan/github/yATools/libadmintools/system</sourceRootElem>
-                <sourceRootElem>/home/yvan/github/yATools/libadmintools/utils</sourceRootElem>
-                <sourceRootElem>/home/yvan/github/yATools/libadmintools/data</sourceRootElem>
-                <sourceRootElem>/home/yvan/github/yATools/libadmintools/gui</sourceRootElem>
-            </sourceRootList>
+            <make-dep-projects>
+                <make-dep-project>/home/yvan/github/yATools/libadmintools</make-dep-project>
+            </make-dep-projects>
+            <sourceRootList/>
             <confList>
                 <confElem>
                     <name>Debug</name>
-                    <type>2</type>
+                    <type>1</type>
                 </confElem>
                 <confElem>
                     <name>Release</name>
-                    <type>2</type>
+                    <type>1</type>
                 </confElem>
             </confList>
             <formatting>

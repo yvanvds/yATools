@@ -35,6 +35,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/252733849/passwordDialog.o \
+	${OBJECTDIR}/_ext/252733849/session.o \
 	${OBJECTDIR}/data/database.o \
 	${OBJECTDIR}/data/dateTime.o \
 	${OBJECTDIR}/data/field.o \
@@ -98,6 +100,16 @@ LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_file
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
+
+${OBJECTDIR}/_ext/252733849/passwordDialog.o: /home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/passwordDialog.o /home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp
+
+${OBJECTDIR}/_ext/252733849/session.o: /home/yvan/github/yATools/libadmintools/gui/session.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/session.o /home/yvan/github/yATools/libadmintools/gui/session.cpp
 
 ${OBJECTDIR}/data/database.o: data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
@@ -401,6 +413,32 @@ ${TESTDIR}/utils/tests/utilsSecurityTestRun.o: utils/tests/utilsSecurityTestRun.
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/utils/tests/utilsSecurityTestRun.o utils/tests/utilsSecurityTestRun.cpp
 
+
+${OBJECTDIR}/_ext/252733849/passwordDialog_nomain.o: ${OBJECTDIR}/_ext/252733849/passwordDialog.o /home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/252733849/passwordDialog.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/passwordDialog_nomain.o /home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/_ext/252733849/passwordDialog.o ${OBJECTDIR}/_ext/252733849/passwordDialog_nomain.o;\
+	fi
+
+${OBJECTDIR}/_ext/252733849/session_nomain.o: ${OBJECTDIR}/_ext/252733849/session.o /home/yvan/github/yATools/libadmintools/gui/session.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/252733849/session.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/session_nomain.o /home/yvan/github/yATools/libadmintools/gui/session.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/_ext/252733849/session.o ${OBJECTDIR}/_ext/252733849/session_nomain.o;\
+	fi
 
 ${OBJECTDIR}/data/database_nomain.o: ${OBJECTDIR}/data/database.o data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data

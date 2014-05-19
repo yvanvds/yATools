@@ -39,6 +39,8 @@
 
 //gui
 #include "gui/application.h"
+#include "gui/passwordDialog.h"
+#include "gui/session.h"
 
 #endif	/* ADMINTOOLS_H */
 
