@@ -10,17 +10,24 @@
 
 #include <Wt/WApplication>
 #include <Wt/WBootstrapTheme>
-#include <admintools.h>
 
+#include <admintools.h>
+#include "configuration.h"
+#include "review.h"
+#include "dataconnect.h"
 
 class yearbookAdmin : public y::gui::session {
 public:
   yearbookAdmin(const Wt::WEnvironment & env);
   virtual bool validate();
   virtual void onLogin();
+  
+  dataconnect db;
+  
 private:
 
-  
+  configuration * confPage;
+  review * reviewPage;
 };
 
 

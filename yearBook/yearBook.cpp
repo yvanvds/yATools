@@ -30,6 +30,8 @@
 #include "stepPhoto.h"
 #include "step6.h"
 
+#include <cctype>
+
 using namespace y;
 
 yearBook::yearBook(const Wt::WEnvironment& env) : Wt::WApplication(env) {
@@ -159,8 +161,12 @@ void yearBook::loginButtonClicked() {
         if(!store.load(id)) {
           y::utils::Log().add("id not found");
           store.ID(id);
-          store.name(account.cn()());
-          store.surname(account.sn()());
+          std::string name = account.cn()();
+          name[0] = toupper(name[0]);
+          store.name(name);
+          std::string surname = account.sn()();
+          surname[0] = toupper(surname[0]);
+          store.surname(surname);
           std::string fullname;
           fullname = account.cn()();
           fullname.append(" ");

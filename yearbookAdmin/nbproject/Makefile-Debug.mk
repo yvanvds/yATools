@@ -35,6 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/1764173701/configuration.o \
+	${OBJECTDIR}/_ext/1764173701/dataconnect.o \
+	${OBJECTDIR}/_ext/1764173701/review.o \
 	${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o \
 	${OBJECTDIR}/main.o
 
@@ -64,6 +67,21 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin: /home/yvan/github/yATo
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/_ext/1764173701/configuration.o: /home/yvan/github/yATools/yearbookAdmin/configuration.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/home/yvan/github/yATools/libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/configuration.o /home/yvan/github/yATools/yearbookAdmin/configuration.cpp
+
+${OBJECTDIR}/_ext/1764173701/dataconnect.o: /home/yvan/github/yATools/yearbookAdmin/dataconnect.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/home/yvan/github/yATools/libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/dataconnect.o /home/yvan/github/yATools/yearbookAdmin/dataconnect.cpp
+
+${OBJECTDIR}/_ext/1764173701/review.o: /home/yvan/github/yATools/yearbookAdmin/review.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/home/yvan/github/yATools/libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/review.o /home/yvan/github/yATools/yearbookAdmin/review.cpp
 
 ${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o: /home/yvan/github/yATools/yearbookAdmin/yearbookAdmin.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701

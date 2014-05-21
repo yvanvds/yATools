@@ -12,9 +12,9 @@
             <file>file:/home/yvan/github/yATools/libadmintools/data/tests/dataFieldTest.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/data/database.h</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/gui/session.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/container.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/data/field.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/gui/session.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/gui/session.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/data/tests/dataDatabaseTest.cpp</file>
         </group>

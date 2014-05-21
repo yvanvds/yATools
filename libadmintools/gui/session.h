@@ -11,6 +11,10 @@
 #include <Wt/WApplication>
 #include <Wt/WEnvironment>
 #include <Wt/WBootstrapTheme>
+#include <Wt/WMenu>
+#include <Wt/WMenuItem>
+#include <Wt/WStackedWidget>
+#include <string>
 #include "passwordDialog.h"
 
 namespace y {
@@ -19,6 +23,7 @@ namespace y {
     class session : public Wt::WApplication {
     public:
       session(const Wt::WEnvironment & env);
+      void setTitle(const std::string & title);
       passwordDialog & login();
       
       virtual bool validate() = 0;
@@ -26,6 +31,10 @@ namespace y {
       
     protected:
       Wt::WBootstrapTheme * theme;
+      Wt::WStackedWidget * content;
+      Wt::WMenu * menu;
+      Wt::WText * title;
+      
       passwordDialog loginDialog;
     };
     

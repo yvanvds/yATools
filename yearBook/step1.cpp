@@ -87,7 +87,7 @@ void step1::setContent(Wt::WVBoxLayout * box) {
 
 void step1::nameEditChanged() {
   if(nameEdit->validate() == Wt::WValidator::Valid) {
-    parent->name = nameEdit->text();
+    parent->store.name(nameEdit->text());
     feedback->setText("Je naam werd gewijzigd.");
     feedback->setStyleClass("alert alert-success");
     nameEdit->setStyleClass("form-control");
@@ -103,10 +103,10 @@ void step1::nameEditChanged() {
 
 void step1::surnameEditChanged() {
   if(surnameEdit->validate() == Wt::WValidator::Valid) {
-    parent->surname = surnameEdit->text();
     feedback->setText("Je familienaam werd gewijzigd.");
     feedback->setStyleClass("alert alert-success");
     nameEdit->setStyleClass("form-control");
+    parent->store.surname(surnameEdit->text());
     allOK = true;
   } else {
     feedback->setText("Zo kort kan een naam niet zijn.");

@@ -11,8 +11,19 @@
 #include "yearbookAdmin.h"
 
 yearbookAdmin::yearbookAdmin(const Wt::WEnvironment & env) : session(env) {
+  // set login dialog
   setTitle("Jaarboek Administratie");
   this->login().setTitle("login vereist");
+  
+  confPage = new configuration(this);
+  reviewPage = new review(this);
+  
+  menu->addItem("Configuratie", confPage);
+  menu->addItem("Review", reviewPage);
+  menu->addItem("Download", new Wt::WText("download page"));
+  menu->addItem("Exit", new Wt::WText("exit page"));
+
+  login().hide(); 
 }
 
 bool yearbookAdmin::validate() {
@@ -30,6 +41,6 @@ bool yearbookAdmin::validate() {
 }
 
 void yearbookAdmin::onLogin() {
-  Wt::WText * text = new Wt::WText("success");
-  root()->addWidget(text);
+  //Wt::WText * text = new Wt::WText("success");
+  //root()->addWidget(text);
 }
