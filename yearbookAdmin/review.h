@@ -22,6 +22,11 @@ private:
   void openDialog(int withEntry);
   void loadDialogContent();
   
+  void entryCancel();
+  void entryRemove();
+  void entrySave();
+  void entryApprove();
+  
   yearbookAdmin * parent;
   int currentEntry;
   
@@ -29,6 +34,14 @@ private:
   Wt::WImage * dialogImage;
   Wt::WLineEdit * dialogName;
   Wt::WLineEdit * dialogSurname;
+  Wt::WLineEdit * dialogClass;
+  Wt::WText * dialogBirthday;
+  Wt::WText * dialogEmail;
+  Wt::WTextArea * answer1;
+  Wt::WTextArea * answer2;
+  Wt::WTextArea * answer3;
+  Wt::WTextArea * answer4;
+  
 };
 
 #endif	/* REVIEW_H */

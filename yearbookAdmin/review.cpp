@@ -15,6 +15,7 @@
 #include "review.h"
 #include "yearbookAdmin.h"
 #include <boost/bind.hpp>
+#include <Wt/WTextArea>
 
 review::review(yearbookAdmin * parent) : parent(parent) {
   //this->setContentAlignment(Wt::AlignCenter | Wt::AlignTop);
@@ -80,29 +81,48 @@ review::review(yearbookAdmin * parent) : parent(parent) {
   
   // create dialog, but hide
   dialog = new Wt::WDialog(parent->root());
-  dialog->resize("700px", "500px");
+  dialog->resize("700px", "600px");
   Wt::WContainerWidget * container = new Wt::WContainerWidget(dialog->contents());
-  //container->resize("700px", "500px");
+  Wt::WContainerWidget * personInfo = new Wt::WContainerWidget();
+  personInfo->setStyleClass("well");
+  personInfo->setHeight("250px");
+  container->addWidget(personInfo); 
+  container->setHeight("400px");
+  container->setPadding("10px");
+  container->setOverflow(Wt::WContainerWidget::OverflowScroll, Wt::Orientation::Vertical);
   
-  Wt::WHBoxLayout * box = new Wt::WHBoxLayout(container);;
+  Wt::WTable * dialogTable = new Wt::WTable();
+  dialogTable->columnAt(0)->setWidth("230px");
+  dialogTable->columnAt(1)->setWidth("100px");
+  dialogTable->columnAt(2)->setWidth("300px");
+  dialogTable->elementAt(0,0)->setRowSpan(5);
+  
+  personInfo->addWidget(dialogTable);
   
   dialogImage = new Wt::WImage();
   dialogImage->setImageLink("http://placekitten.com/200/200");
   //dialogImage->setHeight("200px");
-  box->addWidget(dialogImage);
+  dialogTable->elementAt(0,0)->addWidget(dialogImage);
   
-  Wt::WTable * dialogTable = new Wt::WTable();
-  dialogTable->columnAt(0)->setWidth("100px");
-  dialogTable->columnAt(1)->setWidth("300px");
-  box->addWidget(dialogTable);
-  
-  dialogTable->elementAt(0,0)->addWidget(new Wt::WText("voornaam: "));
+  dialogTable->elementAt(0,1)->addWidget(new Wt::WText("<b>voornaam:</b>"));
   dialogName = new Wt::WLineEdit();
-  dialogTable->elementAt(0,1)->addWidget(dialogName);
+  dialogTable->elementAt(0,2)->addWidget(dialogName);
   
-  dialogTable->elementAt(1,0)->addWidget(new Wt::WText("naam: "));
+  dialogTable->elementAt(1,1)->addWidget(new Wt::WText("<b>naam:</b>"));
   dialogSurname = new Wt::WLineEdit();
-  dialogTable->elementAt(1,1)->addWidget(dialogSurname);
+  dialogTable->elementAt(1,2)->addWidget(dialogSurname);
+  
+  dialogTable->elementAt(2,1)->addWidget(new Wt::WText("<b>klas:</b>"));
+  dialogClass = new Wt::WLineEdit();
+  dialogTable->elementAt(2,2)->addWidget(dialogClass);
+  
+  dialogTable->elementAt(3,1)->addWidget(new Wt::WText("<b>verjaardag:</b>"));
+  dialogBirthday = new Wt::WText();
+  dialogTable->elementAt(3,2)->addWidget(dialogBirthday);
+  
+  dialogTable->elementAt(4,1)->addWidget(new Wt::WText("<b>email:</b>"));
+  dialogEmail = new Wt::WText();
+  dialogTable->elementAt(4,2)->addWidget(dialogEmail);
   
   for(int i = 0; i < dialogTable->rowCount(); i++) {
     for(int j = 0; j < dialogTable->columnCount(); j++) {
@@ -111,6 +131,52 @@ review::review(yearbookAdmin * parent) : parent(parent) {
     }
   }
   
+  container->addWidget(new Wt::WText("<p>vraag 1</p>"));
+  answer1 = new Wt::WTextArea();
+  answer1->setRows(4);
+  answer1->setColumns(60);
+  container->addWidget(answer1);
+  
+  container->addWidget(new Wt::WBreak());
+  container->addWidget(new Wt::WText("<p>vraag 2</p>"));
+  answer2 = new Wt::WTextArea();
+  answer2->setRows(4);
+  answer2->setColumns(60);
+  container->addWidget(answer2);
+  
+  container->addWidget(new Wt::WText("<br><p>vraag 3</p>"));
+  answer3 = new Wt::WTextArea();
+  answer3->setRows(4);
+  answer3->setColumns(60);
+  container->addWidget(answer3);
+  
+  container->addWidget(new Wt::WText("<br><br><p>vraag 4</p>"));
+  answer4 = new Wt::WTextArea();
+  answer4->setRows(4);
+  answer4->setColumns(60);
+  container->addWidget(answer4);
+  
+  Wt::WHBoxLayout * footer = new Wt::WHBoxLayout(dialog->footer());
+  
+  Wt::WPushButton * remove = new Wt::WPushButton("Verwijder");
+  remove->setStyleClass("btn btn-danger");
+  remove->clicked().connect(this, &review::entryRemove);
+  footer->addWidget(remove);
+  
+  Wt::WPushButton * cancel = new Wt::WPushButton("Annuleer");
+  //cancel->setStyleClass("btn");
+  cancel->clicked().connect(this, &review::entryCancel);
+  footer->addWidget(cancel);
+  
+  Wt::WPushButton * save = new Wt::WPushButton("Bewaar");
+  //save->setStyleClass("btn");
+  save->clicked().connect(this, &review::entrySave);
+  footer->addWidget(save);
+  
+  Wt::WPushButton * approve = new Wt::WPushButton("Goedkeuren en volgende");
+  approve->setStyleClass("btn btn-success");
+  approve->clicked().connect(this, &review::entryApprove);
+  footer->addWidget(approve);
   
   dialog->rejectWhenEscapePressed(true);
   dialog->hide();
@@ -134,9 +200,38 @@ void review::loadDialogContent() {
   } else {
     Wt::WFileResource * r = new Wt::WFileResource(str8(parent->db.entries[currentEntry].photo));
     dialogImage->setImageLink(r);
-    //dialogImage->setHeight("200px");
+    dialogImage->setWidth("200px");
   }
   
   dialogName->setText(str8(parent->db.entries[currentEntry].name));
   dialogSurname->setText(str8(parent->db.entries[currentEntry].surname));
+  dialogClass->setText(str8(parent->db.entries[currentEntry].group));
+
+  y::data::dateTime date = parent->db.entries[currentEntry].birthday;
+  y::ldap::DATE dldap(y::ldap::DAY(date.day()), y::ldap::MONTH(date.month()), y::ldap::YEAR(date.year()));      
+  dialogBirthday->setText(dldap.asString());
+  
+  dialogEmail->setText(str8(parent->db.entries[currentEntry].mail));
+  
+  answer1->setText(str8(parent->db.entries[currentEntry].answer1));
+  answer2->setText(str8(parent->db.entries[currentEntry].answer2));
+  answer3->setText(str8(parent->db.entries[currentEntry].answer3));
+  answer4->setText(str8(parent->db.entries[currentEntry].answer4));
+  
+}
+
+void review::entryCancel() {
+  dialog->hide();
+}
+
+void review::entryRemove() {
+  dialog->hide();
+}
+
+void review::entrySave() {
+  dialog->hide();
+}
+
+void review::entryApprove() {
+  dialog->hide();
 }
