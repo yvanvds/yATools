@@ -10,6 +10,8 @@
 
 #include <admintools.h>
 #include <vector>
+#include <Wt/WDate>
+#include <Wt/WString>
 
 struct entry {
   std::string ID;
@@ -37,12 +39,29 @@ public:
   void save(int entry);
   void remove(int entry);
   
+  Wt::WDate getOpenDate();
+  void setOpenDate(const Wt::WDate & date);
+  
+  Wt::WDate getCloseDate();
+  void setCloseDate(const Wt::WDate & date);
+  
+  Wt::WString getQuestion(int nr);
+  void setQuestion(int nr, const Wt::WString & question);
+  
   std::vector<entry> entries;
+  container<y::data::row> replacements;
+  container<y::data::row> validUsers;
   
 private:
   std::unique_ptr<y::data::server> server;
   std::unique_ptr<y::data::database> db;
   bool loaded;
+  
+  y::data::dateTime openDate;
+  y::data::dateTime closeDate;
+  std::u16string question[4];
+  
+  
 };
 
 #endif	/* DATACONNECT_H */

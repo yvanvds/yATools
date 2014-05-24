@@ -16,6 +16,8 @@
     <logicalFolder name="f1" displayName="gui" projectFiles="true">
       <itemPath>gui/application.cpp</itemPath>
       <itemPath>gui/application.h</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/gui/confirmationDialog.h</itemPath>
       <itemPath>/home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp</itemPath>
       <itemPath>/home/yvan/github/yATools/libadmintools/gui/passwordDialog.h</itemPath>
       <itemPath>/home/yvan/github/yATools/libadmintools/gui/session.cpp</itemPath>
@@ -216,6 +218,16 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/confirmationDialog.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp"
             ex="false"
             tool="1"
@@ -646,6 +658,16 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/gui/confirmationDialog.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp"
             ex="false"
             tool="1"

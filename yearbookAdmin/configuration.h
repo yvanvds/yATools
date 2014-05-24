@@ -10,14 +10,25 @@
 
 #include <Wt/WDateEdit>
 #include <Wt/WLineEdit>
+#include <Wt/WSelectionBox>
 
 class yearbookAdmin;
 
 class configuration : public Wt::WContainerWidget {
 public:
   configuration(yearbookAdmin * parent);
+  void loadContent();
+  
   
 private:
+  void openDateChanged();
+  void closeDateChanged();
+  
+  void question1Changed();
+  void question2Changed();
+  void question3Changed();
+  void question4Changed();
+  
   yearbookAdmin * parent;
   
   Wt::WDateEdit * openDate;
@@ -29,6 +40,11 @@ private:
   Wt::WLineEdit * question3;
   Wt::WLineEdit * question4;
   
+  Wt::WSelectionBox * users;
+  Wt::WLineEdit * newUser;
+  Wt::WPushButton * newUserButton;
+  Wt::WPushButton * removeUserButton;
+  Wt::WText * userFeedback;
 };
 
 #endif	/* CONFIGURATION_H */

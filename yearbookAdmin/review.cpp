@@ -17,14 +17,17 @@
 #include <boost/bind.hpp>
 #include <Wt/WTextArea>
 
-review::review(yearbookAdmin * parent) : parent(parent) {
+review::review(yearbookAdmin * parent) : parent(parent) , warningAtRemove(this) {
   //this->setContentAlignment(Wt::AlignCenter | Wt::AlignTop);
   //this->setWidth("800px");
   
   {
     parent->db.load();
     
-    Wt::WText * title = new Wt::WText("<h1>Inzendingen</h1>");
+    Wt::WString s = "<h1>";
+    s += std::to_string(parent->db.entries.size());
+    s += " inzendingen</h1>";
+    title = new Wt::WText(s);
     title->addStyleClass("page-header");
     this->addWidget(title);
     Wt::WContainerWidget * group = new Wt::WContainerWidget();
@@ -32,50 +35,8 @@ review::review(yearbookAdmin * parent) : parent(parent) {
     group->setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
     this->addWidget(group);
     
-    Wt::WTable * table = new Wt::WTable(group);
-    table->setHeaderCount(1);
-    
-    table->elementAt(0, 0)->addWidget(new Wt::WText("naam"));
-    table->elementAt(0, 1)->addWidget(new Wt::WText("toegevoegd op"));
-    table->elementAt(0, 2)->addWidget(new Wt::WText(""));
-    
-    table->columnAt(0)->setWidth("400px");
-    table->columnAt(1)->setWidth("200px");
-    table->columnAt(2)->setWidth("100px");
-    
-    for(int i = 0; i < parent->db.entries.size(); i++) {
-      
-      Wt::WString str = str8(parent->db.entries[i].name);
-      str += " ";
-      str += str8(parent->db.entries[i].surname);
-      table->elementAt(i+1, 0)->addWidget(new Wt::WText(str));
-      
-      y::data::dateTime date = parent->db.entries[i].submitDate;
-      y::ldap::DATE dldap(y::ldap::DAY(date.day()), y::ldap::MONTH(date.month()), y::ldap::YEAR(date.year()));
-      table->elementAt(i+1, 1)->addWidget(new Wt::WText(dldap.asString()));
-
-      Wt::WPushButton * button = new Wt::WPushButton("view");
-      button->setWidth("80px");
-      button->clicked().connect(boost::bind(&review::openDialog, this, i));
-      table->elementAt(i+1, 2)->addWidget(button);
-      
-      if(parent->db.entries[i].approved) {
-        table->rowAt(i+1)->setStyleClass("alert alert-success");
-        button->setStyleClass("btn btn-success");
-      } else {
-        table->rowAt(i+1)->setStyleClass("alert alert-danger");
-        button->setStyleClass("btn btn-danger");
-      }
-    }
-    
-    for(int i = 0; i < table->rowCount(); i++) {
-      for(int j = 0; j < table->columnCount(); j++) {
-        table->elementAt(i, j)->setPadding(5);
-        table->elementAt(i, j)->setVerticalAlignment(Wt::AlignMiddle);
-      }
-    }
-    
-    
+    table = new Wt::WTable(group);
+    loadTableContent();
     
   }
   
@@ -130,27 +91,39 @@ review::review(yearbookAdmin * parent) : parent(parent) {
       dialogTable->elementAt(i, j)->setVerticalAlignment(Wt::AlignMiddle);
     }
   }
-  
-  container->addWidget(new Wt::WText("<p>vraag 1</p>"));
+  Wt::WString s;
+  s = "<p>";
+  s += parent->db.getQuestion(0);
+  s += "</p>";
+  container->addWidget(new Wt::WText(s));
   answer1 = new Wt::WTextArea();
   answer1->setRows(4);
   answer1->setColumns(60);
   container->addWidget(answer1);
   
+  s = "<p>";
+  s += parent->db.getQuestion(1);
+  s += "</p>";
   container->addWidget(new Wt::WBreak());
-  container->addWidget(new Wt::WText("<p>vraag 2</p>"));
+  container->addWidget(new Wt::WText(s));
   answer2 = new Wt::WTextArea();
   answer2->setRows(4);
   answer2->setColumns(60);
   container->addWidget(answer2);
   
-  container->addWidget(new Wt::WText("<br><p>vraag 3</p>"));
+  s = "<p>";
+  s += parent->db.getQuestion(2);
+  s += "</p>";
+  container->addWidget(new Wt::WText(s));
   answer3 = new Wt::WTextArea();
   answer3->setRows(4);
   answer3->setColumns(60);
   container->addWidget(answer3);
   
-  container->addWidget(new Wt::WText("<br><br><p>vraag 4</p>"));
+  s = "<p>";
+  s += parent->db.getQuestion(3);
+  s += "</p>";
+  container->addWidget(new Wt::WText(s));
   answer4 = new Wt::WTextArea();
   answer4->setRows(4);
   answer4->setColumns(60);
@@ -184,11 +157,18 @@ review::review(yearbookAdmin * parent) : parent(parent) {
 
 void review::openDialog(int withEntry) {
   currentEntry = withEntry;
-  loadDialogContent();
-  dialog->show();
+  if(currentEntry < parent->db.entries.size()) {
+    loadDialogContent();
+    dialog->show();
+  }
 }
 
 void review::loadDialogContent() {
+  Wt::WString s = "<h1>";
+  s += std::to_string(parent->db.entries.size());
+  s += " inzendingen</h1>";
+  title->setText(s);
+  
   Wt::WString title;
   title = str8(parent->db.entries[currentEntry].name);
   title += " ";
@@ -222,16 +202,93 @@ void review::loadDialogContent() {
 
 void review::entryCancel() {
   dialog->hide();
+  loadTableContent();
 }
 
 void review::entryRemove() {
   dialog->hide();
+  warningAtRemove.show();
 }
 
 void review::entrySave() {
+  saveCurrentEntry();
   dialog->hide();
+  loadTableContent();
 }
 
 void review::entryApprove() {
-  dialog->hide();
+  saveCurrentEntry(true);
+  currentEntry++;
+  if(currentEntry < parent->db.entries.size()) {
+    loadDialogContent();
+  } else {
+    dialog->hide();
+    loadTableContent();
+  }
+}
+
+void review::removeCurrentEntry() {
+  parent->db.remove(currentEntry);
+  loadTableContent();
+}
+
+void review::loadTableContent() {
+  table->clear();
+  table->setHeaderCount(1);
+
+  table->elementAt(0, 0)->addWidget(new Wt::WText("naam"));
+  table->elementAt(0, 1)->addWidget(new Wt::WText("toegevoegd op"));
+  table->elementAt(0, 2)->addWidget(new Wt::WText(""));
+
+  table->columnAt(0)->setWidth("200px");
+  table->columnAt(1)->setWidth("200px");
+  table->columnAt(2)->setWidth("200px");
+  table->columnAt(3)->setWidth("100px");
+
+  for(int i = 0; i < parent->db.entries.size(); i++) {
+
+    Wt::WString str = str8(parent->db.entries[i].name);
+    str += " ";
+    str += str8(parent->db.entries[i].surname);
+    table->elementAt(i+1, 0)->addWidget(new Wt::WText(str));
+
+    table->elementAt(i+1, 1)->addWidget(new Wt::WText(str8(parent->db.entries[i].group)));
+    
+    y::data::dateTime date = parent->db.entries[i].submitDate;
+    y::ldap::DATE dldap(y::ldap::DAY(date.day()), y::ldap::MONTH(date.month()), y::ldap::YEAR(date.year()));
+    table->elementAt(i+1, 2)->addWidget(new Wt::WText(dldap.asString()));
+
+    Wt::WPushButton * button = new Wt::WPushButton("view");
+    button->setWidth("80px");
+    button->clicked().connect(boost::bind(&review::openDialog, this, i));
+    table->elementAt(i+1, 3)->addWidget(button);
+
+    if(parent->db.entries[i].approved) {
+      table->rowAt(i+1)->setStyleClass("alert alert-success");
+      button->setStyleClass("btn btn-success");
+    } else {
+      table->rowAt(i+1)->setStyleClass("alert alert-danger");
+      button->setStyleClass("btn btn-danger");
+    }
+  }
+
+  for(int i = 0; i < table->rowCount(); i++) {
+    for(int j = 0; j < table->columnCount(); j++) {
+      table->elementAt(i, j)->setPadding(5);
+      table->elementAt(i, j)->setVerticalAlignment(Wt::AlignMiddle);
+    }
+  }
+}
+
+void review::saveCurrentEntry(bool approve) {
+  entry & e = parent->db.entries[currentEntry];
+  e.name = str16(dialogName->text().toUTF8());
+  e.surname = str16(dialogSurname->text().toUTF8());
+  e.group = str16(dialogClass->text().toUTF8());
+  e.answer1 = str16(answer1->text().toUTF8());
+  e.answer2 = str16(answer2->text().toUTF8());
+  e.answer3 = str16(answer3->text().toUTF8());
+  e.answer4 = str16(answer4->text().toUTF8());
+  e.approved = approve;
+  parent->db.save(currentEntry);
 }

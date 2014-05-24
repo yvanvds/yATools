@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>/home/yvan/github/yATools/yearbookAdmin/configuration.h</itemPath>
       <itemPath>/home/yvan/github/yATools/yearbookAdmin/dataconnect.h</itemPath>
+      <itemPath>/home/yvan/github/yATools/yearbookAdmin/removeDialog.h</itemPath>
       <itemPath>/home/yvan/github/yATools/yearbookAdmin/review.h</itemPath>
       <itemPath>/home/yvan/github/yATools/yearbookAdmin/yearbookAdmin.h</itemPath>
     </logicalFolder>
@@ -19,6 +20,7 @@
       <itemPath>/home/yvan/github/yATools/yearbookAdmin/configuration.cpp</itemPath>
       <itemPath>/home/yvan/github/yATools/yearbookAdmin/dataconnect.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
+      <itemPath>/home/yvan/github/yATools/yearbookAdmin/removeDialog.cpp</itemPath>
       <itemPath>/home/yvan/github/yATools/yearbookAdmin/review.cpp</itemPath>
       <itemPath>/home/yvan/github/yATools/yearbookAdmin/yearbookAdmin.cpp</itemPath>
     </logicalFolder>
@@ -98,6 +100,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="/home/yvan/github/yATools/yearbookAdmin/removeDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/yearbookAdmin/removeDialog.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/yvan/github/yATools/yearbookAdmin/review.cpp"
             ex="false"
             tool="1"
@@ -157,6 +169,16 @@
             flavor2="0">
       </item>
       <item path="/home/yvan/github/yATools/yearbookAdmin/dataconnect.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/yearbookAdmin/removeDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/yearbookAdmin/removeDialog.h"
             ex="false"
             tool="3"
             flavor2="0">

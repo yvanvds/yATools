@@ -15,14 +15,20 @@ yearbookAdmin::yearbookAdmin(const Wt::WEnvironment & env) : session(env) {
   setTitle("Jaarboek Administratie");
   this->login().setTitle("login vereist");
   
+  db.load();
+  
   confPage = new configuration(this);
   reviewPage = new review(this);
   
-  menu->addItem("Configuratie", confPage);
+  
   menu->addItem("Review", reviewPage);
   menu->addItem("Download", new Wt::WText("download page"));
+  menu->addItem("Configuratie", confPage);
   menu->addItem("Exit", new Wt::WText("exit page"));
-
+  menu->select(-1);
+  menu->contentsStack()->setCurrentIndex(-1);
+  
+  
   login().hide(); 
 }
 
@@ -31,8 +37,10 @@ bool yearbookAdmin::validate() {
     return true;
   }
   
-  if(login().getName().toUTF8().compare("segerja") == 0) {
-    return true;
+  for(int i = 0; i < db.validUsers.elms(); i++) {
+    if(db.validUsers[i]["accountName"].asString8().compare(login().getName().toUTF8()) == 0) {
+      return true;
+    }
   }
   
   // else 

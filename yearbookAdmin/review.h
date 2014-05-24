@@ -11,15 +11,19 @@
 #include <Wt/WDateEdit>
 #include <Wt/WLineEdit>
 #include <Wt/WDialog>
+#include <admintools.h>
+#include "removeDialog.h"
 
 class yearbookAdmin;
 
 class review : public Wt::WContainerWidget {
 public:
   review(yearbookAdmin * parent);
+  void removeCurrentEntry();
   
 private:
   void openDialog(int withEntry);
+  void loadTableContent();
   void loadDialogContent();
   
   void entryCancel();
@@ -27,9 +31,12 @@ private:
   void entrySave();
   void entryApprove();
   
+  void saveCurrentEntry(bool approve = false);
+  
   yearbookAdmin * parent;
   int currentEntry;
   
+  Wt::WText * title;
   Wt::WDialog * dialog;
   Wt::WImage * dialogImage;
   Wt::WLineEdit * dialogName;
@@ -41,7 +48,8 @@ private:
   Wt::WTextArea * answer2;
   Wt::WTextArea * answer3;
   Wt::WTextArea * answer4;
-  
+  Wt::WTable * table;
+  removeDialog warningAtRemove;
 };
 
 #endif	/* REVIEW_H */
