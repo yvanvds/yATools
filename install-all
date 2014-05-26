@@ -1,0 +1,18 @@
+#!/bin/bash
+git pull
+cd libadmintools
+make all
+sudo cp dist/Release/GNU-Linux-x86/liblibadmintools.so /usr/include
+cd ../yearBook
+make all
+sudo rm /var/www/apps/yearbook/yearbook.wt
+sudo cp dist/Release_fastcgi/GNU-Linux-x86/yearbook /var/www/apps/yearbook/yearbook.wt
+cd ../yearbookAdmin
+make all
+sudo rm /var/www/apps/yearbook/yearbookAdmin.wt
+sudo cp dist/Release/GNU-Linux-x86/yearbookAdmin /var/www/apps/yearbook/yearbookAdmin.wt
+sudo rm /var/log/admintools
+sudo touch /var/log/admintools
+sudo chown www-data:www-data /var/log/admintools
+sudo service apache2 restart
+cd ..

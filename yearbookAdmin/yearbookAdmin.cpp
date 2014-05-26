@@ -14,9 +14,9 @@ yearbookAdmin::yearbookAdmin(const Wt::WEnvironment & env) : session(env) {
   // set login dialog
   setTitle("Jaarboek Administratie");
   this->login().setTitle("login vereist");
-  
+	y::utils::Log().add("start of yearbookadmin app");
   db.load();
-  
+	y::utils::Log().add("yearbookadmin data loaded");
   confPage = new configuration(this);
   reviewPage = new review(this);
   
