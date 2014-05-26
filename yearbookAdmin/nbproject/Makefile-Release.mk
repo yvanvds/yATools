@@ -57,13 +57,11 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib ../libadmintools/dist/Release/GNU-Linux-x86/liblibadmintools.so -lboost_program_options -lboost_system -lboost_filesystem -llber -lboost_iostreams -lldap -lwt -lwtfcgi -llibadmintools -lboost_signals
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -lboost_program_options -lboost_system -lboost_filesystem -lboost_iostreams -lwt -lwthttp -lboost_signals -llibadmintools -llber -lldap
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin
-
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin: ../libadmintools/dist/Release/GNU-Linux-x86/liblibadmintools.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -101,7 +99,6 @@ ${OBJECTDIR}/main.o: main.cpp
 
 # Subprojects
 .build-subprojects:
-	cd ../libadmintools && ${MAKE}  -f Makefile CONF=Release
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -110,7 +107,6 @@ ${OBJECTDIR}/main.o: main.cpp
 
 # Subprojects
 .clean-subprojects:
-	cd ../libadmintools && ${MAKE}  -f Makefile CONF=Release clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

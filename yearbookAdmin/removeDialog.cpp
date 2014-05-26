@@ -11,7 +11,7 @@
 #include "yearbookAdmin.h"
 
 removeDialog::removeDialog(review * parent)
-: parent(parent), y::gui::confirmationDialog("Ben je zeker?") {
+: y::gui::confirmationDialog("Ben je zeker?"), parent(parent) {
   setContents("OK klikken verwijdert deze inzending!");
 }
 
