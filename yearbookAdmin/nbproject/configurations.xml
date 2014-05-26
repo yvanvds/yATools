@@ -147,8 +147,7 @@
           <developmentMode>5</developmentMode>
           <standard>8</standard>
           <incDir>
-            <pElem>Include</pElem>
-            <pElem>Directories	/home/yvan/github/yATools/libadmintools</pElem>
+            <pElem>/home/yvan/github/yATools/libadmintools</pElem>
           </incDir>
           <warningLevel>2</warningLevel>
         </ccTool>
