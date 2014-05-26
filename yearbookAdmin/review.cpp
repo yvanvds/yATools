@@ -43,7 +43,7 @@ review::review(yearbookAdmin * parent) : parent(parent) , warningAtRemove(this) 
   // create dialog, but hide
   dialog = new Wt::WDialog(parent->root());
   dialog->resize("700px", "600px");
-  Wt::WContainerWidget * container = new Wt::WContainerWidget(dialog->contents());
+  container = new Wt::WContainerWidget(dialog->contents());
   Wt::WContainerWidget * personInfo = new Wt::WContainerWidget();
   personInfo->setStyleClass("well");
   personInfo->setHeight("250px");
@@ -194,10 +194,9 @@ void review::loadDialogContent() {
   dialogEmail->setText(str8(parent->db.entries[currentEntry].mail));
   
   answer1->setText(str8(parent->db.entries[currentEntry].answer1));
-  answer2->setText(str8(parent->db.entries[currentEntry].answer2));
+  answer2->setText(Wt::WString(str8(parent->db.entries[currentEntry].answer2), Wt::UTF8));
   answer3->setText(str8(parent->db.entries[currentEntry].answer3));
   answer4->setText(str8(parent->db.entries[currentEntry].answer4));
-  
 }
 
 void review::entryCancel() {

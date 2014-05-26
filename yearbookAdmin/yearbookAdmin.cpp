@@ -13,6 +13,8 @@
 yearbookAdmin::yearbookAdmin(const Wt::WEnvironment & env) : session(env) {
   // set login dialog
   setTitle("Jaarboek Administratie");
+  root()->setAttributeValue("lang", "nl");
+  
   this->login().setTitle("login vereist");
 	y::utils::Log().add("start of yearbookadmin app");
   db.load();

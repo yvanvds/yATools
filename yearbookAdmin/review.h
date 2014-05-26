@@ -10,6 +10,7 @@
 
 #include <Wt/WDateEdit>
 #include <Wt/WLineEdit>
+#include <Wt/WContainerWidget>
 #include <Wt/WDialog>
 #include <admintools.h>
 #include "removeDialog.h"
@@ -49,6 +50,7 @@ private:
   Wt::WTextArea * answer3;
   Wt::WTextArea * answer4;
   Wt::WTable * table;
+  Wt::WContainerWidget * container;
   removeDialog warningAtRemove;
 };
 
