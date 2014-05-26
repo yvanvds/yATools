@@ -13,7 +13,9 @@ using namespace y;
 
 int main(int argc, char** argv) {
   utils::Config().load();
+  y::utils::Log().add("start of yearbookadmin main 1");
   gui::application<yearbookAdmin> app;
+  y::utils::Log().add("start of yearbookadmin main 2");
   return app.run(argc, argv);
 }
 

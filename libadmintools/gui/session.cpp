@@ -10,6 +10,7 @@
 #include <Wt/WContainerWidget>
 
 y::gui::session::session(const Wt::WEnvironment & env) : Wt::WApplication(env) {
+  y::utils::Log().add("start of yearbookadmin session 1");
   theme = new Wt::WBootstrapTheme();
   theme->setVersion(Wt::WBootstrapTheme::Version3);
   this->setTheme(theme);
@@ -25,7 +26,7 @@ y::gui::session::session(const Wt::WEnvironment & env) : Wt::WApplication(env) {
   content->setMargin("50px", Wt::Side::Top);
   content->setPadding("10px");
   content->setWidth("800px");
-  
+  y::utils::Log().add("start of yearbookadmin session 2");
   // create top menu structure
   Wt::WContainerWidget * topMenu = new Wt::WContainerWidget(root());
   topMenu->setStyleClass("navbar navbar-inverse navbar-fixed-top");
@@ -53,7 +54,7 @@ y::gui::session::session(const Wt::WEnvironment & env) : Wt::WApplication(env) {
   menu->setStyleClass("nav navbar-nav");
   
   root()->addWidget(content); 
-  
+  y::utils::Log().add("start of yearbookadmin session 3");
 }
 
 void y::gui::session::setTitle(const std::string & title) {
