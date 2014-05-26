@@ -180,7 +180,7 @@ void review::loadDialogContent() {
   } else {
     Wt::WFileResource * r = new Wt::WFileResource(str8(parent->db.entries[currentEntry].photo));
     dialogImage->setImageLink(r);
-    dialogImage->setWidth("200px");
+    dialogImage->setHeight("200px");
   }
   
   dialogName->setText(str8(parent->db.entries[currentEntry].name));

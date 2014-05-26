@@ -28,8 +28,6 @@ yearbookAdmin::yearbookAdmin(const Wt::WEnvironment & env) : session(env) {
   menu->select(-1);
   menu->contentsStack()->setCurrentIndex(-1);
   
-  
-  login().hide(); 
 }
 
 bool yearbookAdmin::validate() {
@@ -49,6 +47,5 @@ bool yearbookAdmin::validate() {
 }
 
 void yearbookAdmin::onLogin() {
-  //Wt::WText * text = new Wt::WText("success");
-  //root()->addWidget(text);
+
 }
