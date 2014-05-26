@@ -6,6 +6,7 @@
  */
 
 #include "session.h"
+#include "../utils/log.h"
 #include <Wt/WHBoxLayout>
 #include <Wt/WContainerWidget>
 
