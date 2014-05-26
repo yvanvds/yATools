@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux-x86
-CND_DLIB_EXT=so
+CND_PLATFORM=GNU-MacOSX
+CND_DLIB_EXT=dylib
 CND_CONF=Release
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -57,11 +57,13 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib ../libadmintools/dist/Release/GNU-Linux-x86/liblibadmintools.so -lboost_program_options -lboost_system -lboost_filesystem -llber -lboost_iostreams -lldap -lwt -lwtfcgi -llibadmintools -lboost_signals
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin: ../libadmintools/dist/Release/GNU-Linux-x86/liblibadmintools.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -70,35 +72,36 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin: ${OBJECTFILES}
 ${OBJECTDIR}/_ext/1764173701/configuration.o: /home/yvan/github/yATools/yearbookAdmin/configuration.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/configuration.o /home/yvan/github/yATools/yearbookAdmin/configuration.cpp
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/configuration.o /home/yvan/github/yATools/yearbookAdmin/configuration.cpp
 
 ${OBJECTDIR}/_ext/1764173701/dataconnect.o: /home/yvan/github/yATools/yearbookAdmin/dataconnect.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/dataconnect.o /home/yvan/github/yATools/yearbookAdmin/dataconnect.cpp
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/dataconnect.o /home/yvan/github/yATools/yearbookAdmin/dataconnect.cpp
 
 ${OBJECTDIR}/_ext/1764173701/removeDialog.o: /home/yvan/github/yATools/yearbookAdmin/removeDialog.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/removeDialog.o /home/yvan/github/yATools/yearbookAdmin/removeDialog.cpp
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/removeDialog.o /home/yvan/github/yATools/yearbookAdmin/removeDialog.cpp
 
 ${OBJECTDIR}/_ext/1764173701/review.o: /home/yvan/github/yATools/yearbookAdmin/review.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/review.o /home/yvan/github/yATools/yearbookAdmin/review.cpp
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/review.o /home/yvan/github/yATools/yearbookAdmin/review.cpp
 
 ${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o: /home/yvan/github/yATools/yearbookAdmin/yearbookAdmin.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o /home/yvan/github/yATools/yearbookAdmin/yearbookAdmin.cpp
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o /home/yvan/github/yATools/yearbookAdmin/yearbookAdmin.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
+	cd ../libadmintools && ${MAKE}  -f Makefile CONF=Release
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -107,6 +110,7 @@ ${OBJECTDIR}/main.o: main.cpp
 
 # Subprojects
 .clean-subprojects:
+	cd ../libadmintools && ${MAKE}  -f Makefile CONF=Release clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl
