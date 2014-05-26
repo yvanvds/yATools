@@ -29,6 +29,13 @@ private:
   void question3Changed();
   void question4Changed();
   
+  void calculateStatus();
+  
+  void addUserPushed();
+  void removeUserPushed();
+  
+  void refreshUsers();
+  
   yearbookAdmin * parent;
   
   Wt::WDateEdit * openDate;
@@ -44,7 +51,6 @@ private:
   Wt::WLineEdit * newUser;
   Wt::WPushButton * newUserButton;
   Wt::WPushButton * removeUserButton;
-  Wt::WText * userFeedback;
 };
 
 #endif	/* CONFIGURATION_H */

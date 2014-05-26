@@ -45,7 +45,7 @@ dataconnect::dataconnect() {
   if(!db->tableExists("config")) {
     y::data::row config;
     config.addInt("ID");
-    config["ID"].primaryKey(true).required(true);
+    config["ID"].primaryKey(true).required(true).autoIncrement(true);
     config.addDate("openDate");
     config.addDate("closeDate");
     config.addString("question1");
@@ -72,7 +72,7 @@ dataconnect::dataconnect() {
   if(!db->tableExists("replacements")) {
     y::data::row replacements;
     replacements.addInt("ID");
-    replacements["ID"].primaryKey(true).required(true);
+    replacements["ID"].primaryKey(true).required(true).autoIncrement(true);
     replacements.addString("original").addString("replacement");
     
     db->createTable("replacements", replacements);
@@ -81,7 +81,7 @@ dataconnect::dataconnect() {
   if(!db->tableExists("validUsers")) {
     y::data::row users;
     users.addInt("ID");
-    users["ID"].primaryKey(true).required(true);
+    users["ID"].primaryKey(true).required(true).autoIncrement(true);
     users.addString8("accountName");
     
     db->createTable("validUsers", users);
@@ -168,7 +168,7 @@ void dataconnect::setOpenDate(const Wt::WDate& date) {
   openDate.year(date.year());
   y::data::row row;
   row.addDate("openDate", openDate);
-  y::data::field condition("ID", 0);
+  y::data::field condition("ID", 1);
   db->setRow("config", row, condition);
 }
 
@@ -176,6 +176,7 @@ Wt::WDate dataconnect::getCloseDate() {
   Wt::WDate date;
   date.setDate(closeDate.year(), closeDate.month(), closeDate.day());
   return date;
+    y::data::row users;
 }
 
 void dataconnect::setCloseDate(const Wt::WDate& date) {
@@ -184,7 +185,7 @@ void dataconnect::setCloseDate(const Wt::WDate& date) {
   closeDate.year(date.year());
   y::data::row row;
   row.addDate("closeDate", closeDate);
-  y::data::field condition("ID", 0);
+  y::data::field condition("ID", 1);
   db->setRow("config", row, condition);
 }
 
@@ -201,7 +202,23 @@ void dataconnect::setQuestion(int nr, const Wt::WString& question) {
     case 2: row.addString("question3", this->question[2]); break;
     case 3: row.addString("question4", this->question[3]); break;
   }
-  y::data::field condition("ID", 0);
+  y::data::field condition("ID", 1);
   db->setRow("config", row, condition);
 }
 
+void dataconnect::addUser(const std::string& name) {
+  y::data::row row;
+  row.addString8("accountName", name);
+  db->addRow("validUsers", row);
+  
+  validUsers.clear();
+  db->getAllRows("validUsers", validUsers);
+}
+
+void dataconnect::delUser(const std::string& name) {
+  y::data::field condition("accountName", name);
+  db->delRow("validUsers", condition);
+  
+  validUsers.clear();
+  db->getAllRows("validUsers", validUsers);
+}

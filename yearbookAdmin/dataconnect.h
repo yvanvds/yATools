@@ -48,6 +48,9 @@ public:
   Wt::WString getQuestion(int nr);
   void setQuestion(int nr, const Wt::WString & question);
   
+  void addUser(const std::string & name);
+  void delUser(const std::string & name);
+  
   std::vector<entry> entries;
   container<y::data::row> replacements;
   container<y::data::row> validUsers;

@@ -119,19 +119,28 @@ configuration::configuration(yearbookAdmin * parent) : parent(parent) {
     users = new Wt::WSelectionBox();
     users->setMargin(10, Wt::Right);
     users->setLineHeight(5);
+    users->setWidth(100);
+    users->setSelectionMode(Wt::ExtendedSelection);
     table->elementAt(0, 0)->addWidget(users);
     
     newUser = new Wt::WLineEdit();
     table->elementAt(0,1)->addWidget(newUser);
     
     newUserButton = new Wt::WPushButton("voeg toe");
-    table->elementAt(0,1)->addWidget(newUserButton);
+    newUserButton->clicked().connect(this, &configuration::addUserPushed);
+    newUserButton->setStyleClass("btn btn-success");
+    table->elementAt(0,2)->addWidget(newUserButton);
     
     removeUserButton = new Wt::WPushButton("verwijder selectie");
+    removeUserButton->clicked().connect(this, &configuration::removeUserPushed);
+    removeUserButton->setStyleClass("btn btn-danger");
     table->elementAt(1,1)->addWidget(removeUserButton);
     
-    userFeedback = new Wt::WText("feedback");
-    table->elementAt(2,1)->addWidget(userFeedback);
+    for(int i = 0; i < table->rowCount(); i++) {
+      for(int j = 0; j < table->columnCount(); j++) {
+        table->elementAt(i, j)->setPadding(5);
+      }
+    }
     
     group->addWidget(table);
   }
@@ -142,21 +151,60 @@ configuration::configuration(yearbookAdmin * parent) : parent(parent) {
 void configuration::loadContent() {
   openDate->setDate(parent->db.getOpenDate());
   closeDate->setDate(parent->db.getCloseDate());
+  calculateStatus();
   
   question1->setText(parent->db.getQuestion(0));
   question2->setText(parent->db.getQuestion(1));
   question3->setText(parent->db.getQuestion(2));
   question4->setText(parent->db.getQuestion(3));
   
-  
+  refreshUsers();
+}
+
+void configuration::addUserPushed() {
+  parent->db.addUser(newUser->text().toUTF8());
+  refreshUsers();
+  newUser->setText("");
+}
+
+void configuration::removeUserPushed() {
+  std::set<int> selection = users->selectedIndexes();
+  for(std::set<int>::iterator it = selection.begin(); it != selection.end(); ++it) {
+    parent->db.delUser(users->itemText(*it).toUTF8());
+  }
+  refreshUsers();
+}
+
+void configuration::refreshUsers() {
+  users->clear();
+  for (int i = 0; i < parent->db.validUsers.elms(); i++) {
+    users->addItem(parent->db.validUsers[i]["accountName"].asString8());
+  }
 }
 
 void configuration::openDateChanged() {
   parent->db.setOpenDate(openDate->date());
+  calculateStatus();
 }
 
 void configuration::closeDateChanged() {
   parent->db.setCloseDate(closeDate->date());
+  calculateStatus();
+}
+
+void configuration::calculateStatus() {
+  Wt::WDate begin =  openDate->date();
+  Wt::WDate end = closeDate->date();
+  Wt::WDate current;
+  current = Wt::WDate::currentServerDate();
+  
+  if(current >= begin && current <= end) {
+    currentDate->setText("De client interface is open.");
+    currentDate->setStyleClass("alert alert-success");
+  } else {
+    currentDate->setText("De client interface is gesloten.");
+    currentDate->setStyleClass("alert alert-danger");
+  }
 }
 
 void configuration::question1Changed() {
