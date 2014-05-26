@@ -2,7 +2,7 @@
 git pull
 cd libadmintools
 make all
-sudo cp dist/Release/GNU-Linux-x86/liblibadmintools.so /usr/include
+sudo cp dist/Release/GNU-Linux-x86/liblibadmintools.so /usr/lib
 cd ../yearBook
 make all
 sudo rm /var/www/apps/yearbook/yearbook.wt
