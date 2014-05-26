@@ -147,7 +147,8 @@
           <developmentMode>5</developmentMode>
           <standard>8</standard>
           <incDir>
-            <pElem>/home/yvan/github/yATools/libadmintools</pElem>
+            <pElem>../libadmintools</pElem>
+            <pElem>/usr/local/include</pElem>
           </incDir>
           <warningLevel>2</warningLevel>
         </ccTool>
@@ -183,6 +184,8 @@
             <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
             <linkerOptionItem>-lldap</linkerOptionItem>
             <linkerOptionItem>-lwt -lwtfcgi</linkerOptionItem>
+            <linkerOptionItem>-llibadmintools</linkerOptionItem>
+            <linkerOptionItem>-lboost_signals</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
