@@ -169,11 +169,22 @@
             <linkerOptionItem>-lboost_system</linkerOptionItem>
             <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
             <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
-            <linkerOptionItem>-lwt -lwthttp</linkerOptionItem>
+            <linkerOptionItem>-lwt -lwtfcgi</linkerOptionItem>
             <linkerOptionItem>-lboost_signals</linkerOptionItem>
-            <linkerOptionItem>-llibadmintools</linkerOptionItem>
             <linkerLibLibItem>lber</linkerLibLibItem>
             <linkerLibLibItem>ldap</linkerLibLibItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="/home/yvan/github/yATools/libadmintools"
+                            CT="2"
+                            CN="Release"
+                            AC="false"
+                            BL="true"
+                            WD="/home/yvan/github/yATools/libadmintools"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
