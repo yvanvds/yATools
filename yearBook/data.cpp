@@ -176,43 +176,43 @@ Wt::WString dataconnect::ID() {
 }
 
 Wt::WString dataconnect::name() {
-  return str8(_name);
+  return strWt(_name);
 }
 
 Wt::WString dataconnect::surname() {
-  return str8(_surname);
+  return strWt(_surname);
 }
 
 Wt::WString dataconnect::servername() {
-  return str8(_servername);
+  return strWt(_servername);
 }
 
 Wt::WString dataconnect::group() {
-  return str8(_group);
+  return strWt(_group);
 }
 
 Wt::WString dataconnect::mail() {
-  return str8(_mail);
+  return strWt(_mail);
 }
 
 Wt::WString dataconnect::answer1() {
-  return str8(_answer1);
+  return strWt(_answer1);
 }
 
 Wt::WString dataconnect::answer2() {
-  return str8(_answer2);
+  return strWt(_answer2);
 }
 
 Wt::WString dataconnect::answer3() {
-  return str8(_answer3);
+  return strWt(_answer3);
 }
 
 Wt::WString dataconnect::answer4() {
-  return str8(_answer4);
+  return strWt(_answer4);
 }
 
 Wt::WString dataconnect::photo() {
-  return str8(_photo);
+  return strWt(_photo);
 }
 
 Wt::WDate dataconnect::birthday() {
