@@ -13,6 +13,25 @@
 #include "dateTime.h"
 #include "field.h"
 
+y::data::order::order() : ascend(true) {}
+
+y::data::order & y::data::order::setKey(const std::string & key) {
+  this->key = key;
+  return *this;
+}
+
+y::data::order & y::data::order::descending() {
+  ascend = false;
+  return *this;
+}
+
+y::data::order & y::data::order::ascending() {
+  ascend = true;
+  return *this;
+}
+
+container<y::data::order> y::data::defaultOrder;
+
 y::data::database::database(y::data::server & serverObject) : serverObject(serverObject)
 , connection(serverObject.getConnection()),
   connected(false){
@@ -185,12 +204,28 @@ bool y::data::database::getTables(container<std::string>& tables) {
   return true;
 }
 
-bool y::data::database::getAllRows(const std::string& table, container<row>& rows) {
+bool y::data::database::getAllRows(const std::string& table, container<row>& rows, container<order>& orderBy) {
   if(!connected) return false;
   std::unique_ptr<sql::ResultSet> result;
   
+  std::string query;
+  query = "SELECT * FROM ";
+  query += table;
+  if(!orderBy.empty()) {
+    query += " ORDER BY ";
+    for(int i = 0; i < orderBy.elms(); i++) {
+      if(i > 0) query += ", ";
+      query += orderBy[0].key;
+      if (orderBy[0].ascend) {
+        query += " ASC";
+      } else {
+        query += " DESC";
+      }
+    }
+  }
+  
   try {
-    result = std::unique_ptr<sql::ResultSet>(handle->executeQuery("SELECT * FROM " + table));
+    result = std::unique_ptr<sql::ResultSet>(handle->executeQuery(query));
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -205,7 +240,7 @@ bool y::data::database::getAllRows(const std::string& table, container<row>& row
   return true;
 }
 
-bool y::data::database::getRows(const std::string & table, container<row> & rows, field & condition, COMPARE c) {
+bool y::data::database::getRows(const std::string & table, container<row> & rows, field & condition, container<order>& orderBy, COMPARE c) {
   if(!connected) return false;
   std::unique_ptr<sql::ResultSet> result;
   
@@ -218,6 +253,19 @@ bool y::data::database::getRows(const std::string & table, container<row> & rows
   }
   query.append("?");
 
+  if(!orderBy.empty()) {
+    query += " ORDER BY ";
+    for(int i = 0; i < orderBy.elms(); i++) {
+      if(i > 0) query += ", ";
+      query += orderBy[0].key;
+      if (orderBy[0].ascend) {
+        query += " ASC";
+      } else {
+        query += " DESC";
+      }
+    }
+  }  
+  
   STATEMENT(statement, query);
   addToStatement(statement, condition, 1);
   

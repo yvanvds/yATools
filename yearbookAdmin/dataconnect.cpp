@@ -93,7 +93,9 @@ dataconnect::dataconnect() {
 void dataconnect::load() {
   if(loaded) return;
   container<y::data::row> rows;
-  db->getAllRows("submissions", rows);
+  container<y::data::order> order;
+  order.New().setKey("name");
+  db->getAllRows("submissions", rows, order);
   for (int i = 0; i < rows.elms(); i++) {
     entries.emplace_back();
     entries.back().ID = rows[i]["ID"].asString8();
@@ -176,7 +178,6 @@ Wt::WDate dataconnect::getCloseDate() {
   Wt::WDate date;
   date.setDate(closeDate.year(), closeDate.month(), closeDate.day());
   return date;
-    y::data::row users;
 }
 
 void dataconnect::setCloseDate(const Wt::WDate& date) {
@@ -190,7 +191,7 @@ void dataconnect::setCloseDate(const Wt::WDate& date) {
 }
 
 Wt::WString dataconnect::getQuestion(int nr) {
-  return str8(question[nr]);
+  return strWt(question[nr]);
 }
 
 void dataconnect::setQuestion(int nr, const Wt::WString& question) {
@@ -221,4 +222,32 @@ void dataconnect::delUser(const std::string& name) {
   
   validUsers.clear();
   db->getAllRows("validUsers", validUsers);
+}
+
+void dataconnect::reloadEntries(const std::string& orderBy) {
+  entries.clear();
+  
+  container<y::data::row> rows;
+  container<y::data::order> order;
+  order.New().setKey(orderBy);
+  db->getAllRows("submissions", rows, order);
+  
+  for (int i = 0; i < rows.elms(); i++) {
+    entries.emplace_back();
+    entries.back().ID = rows[i]["ID"].asString8();
+    entries.back().name = rows[i]["name"].asString();
+    entries.back().surname = rows[i]["surname"].asString();
+    entries.back().servername = rows[i]["servername"].asString();
+    entries.back().birthday = rows[i]["birthday"].asDate();
+    entries.back().group = rows[i]["classgroup"].asString();
+    entries.back().mail = rows[i]["mail"].asString();
+    entries.back().answer1 = rows[i]["answer1"].asString();
+    entries.back().answer2 = rows[i]["answer2"].asString();
+    entries.back().answer3 = rows[i]["answer3"].asString();
+    entries.back().answer4 = rows[i]["answer4"].asString();
+    entries.back().photo = rows[i]["photo"].asString();
+    entries.back().submitDate = rows[i]["submitDate"].asDate();
+    entries.back().approved = rows[i]["approved"].asBool();
+    entries.back().changed = false;
+  }
 }

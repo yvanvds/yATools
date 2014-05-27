@@ -38,6 +38,7 @@ public:
   void load();
   void save(int entry);
   void remove(int entry);
+  void reloadEntries(const std::string & orderBy);
   
   Wt::WDate getOpenDate();
   void setOpenDate(const Wt::WDate & date);

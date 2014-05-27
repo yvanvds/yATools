@@ -32,7 +32,12 @@ private:
   void entrySave();
   void entryApprove();
   
+  void onNameClicked();
+  void onGroupClicked();
+  void onDateClicked();
+  
   void saveCurrentEntry(bool approve = false);
+  void removeImage();
   
   yearbookAdmin * parent;
   int currentEntry;
@@ -40,6 +45,7 @@ private:
   Wt::WText * title;
   Wt::WDialog * dialog;
   Wt::WImage * dialogImage;
+  Wt::WPushButton * dialogImageButton;
   Wt::WLineEdit * dialogName;
   Wt::WLineEdit * dialogSurname;
   Wt::WLineEdit * dialogClass;

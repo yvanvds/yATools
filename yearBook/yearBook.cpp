@@ -146,6 +146,20 @@ void yearBook::loginButtonClicked() {
   Wt::WString id = nameEdit->text();
   Wt::WString passwd = passEdit->text();
   
+  Wt::WDate begin =  store.getOpenDate();
+  Wt::WDate end = store.getCloseDate();
+  Wt::WDate current;
+  current = Wt::WDate::currentServerDate();
+  
+  if(current >= begin && current <= end) {
+    //
+  } else {
+    loginFeedback->setText("Deze app is afgesloten");
+    loginFeedback->setStyleClass("alert alert-danger");
+    return;
+  }
+  
+  
   account = y::ldap::Server().getAccount(y::ldap::UID(id.toUTF8()));
   if(!account.isNew()) {
     std::string group = account.group()();

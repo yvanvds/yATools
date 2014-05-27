@@ -46,7 +46,7 @@ review::review(yearbookAdmin * parent) : parent(parent) , warningAtRemove(this) 
   container = new Wt::WContainerWidget(dialog->contents());
   Wt::WContainerWidget * personInfo = new Wt::WContainerWidget();
   personInfo->setStyleClass("well");
-  personInfo->setHeight("250px");
+  personInfo->setHeight("300px");
   container->addWidget(personInfo); 
   container->setHeight("400px");
   container->setPadding("10px");
@@ -64,6 +64,11 @@ review::review(yearbookAdmin * parent) : parent(parent) , warningAtRemove(this) 
   dialogImage->setImageLink("http://placekitten.com/200/200");
   //dialogImage->setHeight("200px");
   dialogTable->elementAt(0,0)->addWidget(dialogImage);
+  
+  dialogImageButton = new Wt::WPushButton("verwijder foto");
+  dialogImageButton->setStyleClass("btn btn-danger");
+  dialogImageButton->clicked().connect(this, &review::removeImage);
+  dialogTable->elementAt(5,0)->addWidget(dialogImageButton);
   
   dialogTable->elementAt(0,1)->addWidget(new Wt::WText("<b>voornaam:</b>"));
   dialogName = new Wt::WLineEdit();
@@ -151,7 +156,7 @@ review::review(yearbookAdmin * parent) : parent(parent) , warningAtRemove(this) 
   approve->clicked().connect(this, &review::entryApprove);
   footer->addWidget(approve);
   
-  dialog->rejectWhenEscapePressed(true);
+  //dialog->rejectWhenEscapePressed(true);
   dialog->hide();
 }
 
@@ -170,9 +175,9 @@ void review::loadDialogContent() {
   title->setText(s);
   
   Wt::WString title;
-  title = str8(parent->db.entries[currentEntry].name);
+  title = strWt(parent->db.entries[currentEntry].name);
   title += " ";
-  title += str8(parent->db.entries[currentEntry].surname);
+  title += strWt(parent->db.entries[currentEntry].surname);
   dialog->setWindowTitle(title);
   
   if(parent->db.entries[currentEntry].photo.empty()) {
@@ -183,9 +188,9 @@ void review::loadDialogContent() {
     dialogImage->setHeight("200px");
   }
   
-  dialogName->setText(str8(parent->db.entries[currentEntry].name));
-  dialogSurname->setText(str8(parent->db.entries[currentEntry].surname));
-  dialogClass->setText(str8(parent->db.entries[currentEntry].group));
+  dialogName->setText(strWt(parent->db.entries[currentEntry].name));
+  dialogSurname->setText(strWt(parent->db.entries[currentEntry].surname));
+  dialogClass->setText(strWt(parent->db.entries[currentEntry].group));
 
   y::data::dateTime date = parent->db.entries[currentEntry].birthday;
   y::ldap::DATE dldap(y::ldap::DAY(date.day()), y::ldap::MONTH(date.month()), y::ldap::YEAR(date.year()));      
@@ -193,10 +198,14 @@ void review::loadDialogContent() {
   
   dialogEmail->setText(str8(parent->db.entries[currentEntry].mail));
   
-  answer1->setText(str8(parent->db.entries[currentEntry].answer1));
-  answer2->setText(Wt::WString(str8(parent->db.entries[currentEntry].answer2), Wt::UTF8));
-  answer3->setText(str8(parent->db.entries[currentEntry].answer3));
-  answer4->setText(str8(parent->db.entries[currentEntry].answer4));
+  answer1->setText(strWt(parent->db.entries[currentEntry].answer1));
+  answer2->setText(strWt(parent->db.entries[currentEntry].answer2));
+  answer3->setText(strWt(parent->db.entries[currentEntry].answer3));
+  answer4->setText(strWt(parent->db.entries[currentEntry].answer4));
+  std::string script;
+  script = container->jsRef();
+  script += ".scrollTop = 0";
+  container->doJavaScript(script);
 }
 
 void review::entryCancel() {
@@ -211,8 +220,13 @@ void review::entryRemove() {
 
 void review::entrySave() {
   saveCurrentEntry();
-  dialog->hide();
-  loadTableContent();
+  currentEntry++;
+  if(currentEntry < parent->db.entries.size()) {
+    loadDialogContent();
+  } else {
+    dialog->hide();
+    loadTableContent();
+  }
 }
 
 void review::entryApprove() {
@@ -233,11 +247,20 @@ void review::removeCurrentEntry() {
 
 void review::loadTableContent() {
   table->clear();
+  
   table->setHeaderCount(1);
 
-  table->elementAt(0, 0)->addWidget(new Wt::WText("naam"));
-  table->elementAt(0, 1)->addWidget(new Wt::WText("toegevoegd op"));
-  table->elementAt(0, 2)->addWidget(new Wt::WText(""));
+  Wt::WText * naam = new Wt::WText("naam");
+  naam->clicked().connect(this, &review::onNameClicked);
+  table->elementAt(0, 0)->addWidget(naam);
+  
+  Wt::WText * klas = new Wt::WText("klas");
+  klas->clicked().connect(this, &review::onGroupClicked);
+  table->elementAt(0, 1)->addWidget(klas);
+  
+  Wt::WText * date = new Wt::WText("gewijzigd op");
+  date->clicked().connect(this, &review::onDateClicked);
+  table->elementAt(0, 2)->addWidget(date);
 
   table->columnAt(0)->setWidth("200px");
   table->columnAt(1)->setWidth("200px");
@@ -251,7 +274,7 @@ void review::loadTableContent() {
     str += str8(parent->db.entries[i].surname);
     table->elementAt(i+1, 0)->addWidget(new Wt::WText(str));
 
-    table->elementAt(i+1, 1)->addWidget(new Wt::WText(str8(parent->db.entries[i].group)));
+    table->elementAt(i+1, 1)->addWidget(new Wt::WText(strWt(parent->db.entries[i].group)));
     
     y::data::dateTime date = parent->db.entries[i].submitDate;
     y::ldap::DATE dldap(y::ldap::DAY(date.day()), y::ldap::MONTH(date.month()), y::ldap::YEAR(date.year()));
@@ -277,6 +300,7 @@ void review::loadTableContent() {
       table->elementAt(i, j)->setVerticalAlignment(Wt::AlignMiddle);
     }
   }
+  table->refresh();
 }
 
 void review::saveCurrentEntry(bool approve) {
@@ -290,4 +314,24 @@ void review::saveCurrentEntry(bool approve) {
   e.answer4 = str16(answer4->text().toUTF8());
   e.approved = approve;
   parent->db.save(currentEntry);
+}
+
+void review::onDateClicked() {
+  parent->db.reloadEntries("submitDate");
+  loadTableContent();
+}
+
+void review::onGroupClicked() {
+  parent->db.reloadEntries("classgroup");
+  loadTableContent();
+}
+
+void review::onNameClicked() {
+  parent->db.reloadEntries("name");
+  loadTableContent();
+}
+
+void review::removeImage() {
+  parent->db.entries[currentEntry].photo.clear();
+  dialogImage->setImageLink("http://placekitten.com/200/200");
 }

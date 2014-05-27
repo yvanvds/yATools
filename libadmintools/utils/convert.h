@@ -10,7 +10,7 @@
 
 #include <string>
 #include <ext/codecvt_specializations.h>
-
+#include <Wt/WString>
 #include <stdexcept>
 
 class MyException : public std::runtime_error
@@ -90,6 +90,8 @@ extern std::u16string str16(const std::u32string& s);
 
 extern std::u32string str32(const std::string& s);
 extern std::u32string str32(const std::u16string& s);
+
+extern Wt::WString strWt(const std::u16string& s);
 
 #endif	/* CONVERT_H */
 

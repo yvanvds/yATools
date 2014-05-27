@@ -25,7 +25,7 @@
 
 void step4::setContent(Wt::WVBoxLayout * box) {
   box->addWidget(new Wt::WText("<h1>Stap 4</h1>"));
-  box->addWidget(new Wt::WText("<p>Born to be wild! Wat is je wildste droom?</p>"));
+  box->addWidget(new Wt::WText("<p>" + parent->store.getQuestion(2) + "</p>"));
   textArea = new Wt::WTextArea();
   textArea->setColumns(60);
   textArea->setRows(10);

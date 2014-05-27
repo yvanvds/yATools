@@ -25,7 +25,7 @@
 
 void step5::setContent(Wt::WVBoxLayout * box) {
   box->addWidget(new Wt::WText("<h1>Stap 5</h1>"));
-  box->addWidget(new Wt::WText("<p>Had je 10 miljoen, wat zou jij dan doen...</p>"));
+  box->addWidget(new Wt::WText("<p>" + parent->store.getQuestion(3) + "</p>"));
   textArea = new Wt::WTextArea();
   textArea->setColumns(60);
   textArea->setRows(10);

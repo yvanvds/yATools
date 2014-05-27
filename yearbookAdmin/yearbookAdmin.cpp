@@ -26,10 +26,11 @@ yearbookAdmin::yearbookAdmin(const Wt::WEnvironment & env) : session(env) {
   menu->addItem("Review", reviewPage);
   menu->addItem("Download", new Wt::WText("download page"));
   menu->addItem("Configuratie", confPage);
-  menu->addItem("Exit", new Wt::WText("exit page"));
+  menu->addSeparator();
+  menu->addItem("Exit", new Wt::WText("exit"));
   menu->select(-1);
   menu->contentsStack()->setCurrentIndex(-1);
-  
+  menu->itemSelected().connect(this, &yearbookAdmin::onSelected);
 }
 
 bool yearbookAdmin::validate() {
@@ -50,4 +51,11 @@ bool yearbookAdmin::validate() {
 
 void yearbookAdmin::onLogin() {
 
+}
+
+void yearbookAdmin::onSelected() {
+  if(menu->currentIndex() == 4) {
+    this->redirect(this->bookmarkUrl());
+    this->quit();
+  }
 }

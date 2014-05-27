@@ -45,6 +45,17 @@ dataconnect::dataconnect() {
     db->use("yearbookApp");
   }
   newEntry = true;
+  
+  container<y::data::row> config;
+  db->getAllRows("config", config);
+  if(config.elms()) {
+    openDate  = config[0]["openDate" ].asDate();
+    closeDate = config[0]["closeDate"].asDate();
+    question[0] = config[0]["question1"].asString();
+    question[1] = config[0]["question2"].asString();
+    question[2] = config[0]["question3"].asString();
+    question[3] = config[0]["question4"].asString();
+  }
 }
 
 bool dataconnect::load(const Wt::WString & ID) {
@@ -210,4 +221,18 @@ Wt::WDate dataconnect::birthday() {
   return result;
 }
 
+Wt::WDate dataconnect::getOpenDate() {
+  Wt::WDate date;
+  date.setDate(openDate.year(), openDate.month(), openDate.day());
+  return date;
+}
 
+Wt::WDate dataconnect::getCloseDate() {
+  Wt::WDate date;
+  date.setDate(closeDate.year(), closeDate.month(), closeDate.day());
+  return date;
+}
+
+Wt::WString dataconnect::getQuestion(int nr) {
+  return strWt(question[nr]);
+}

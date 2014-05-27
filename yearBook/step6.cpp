@@ -6,6 +6,7 @@
  */
 
 #include "step6.h"
+#include "yearBook.h"
 #include <gui/application.h>
 #include <Wt/WApplication>
 #include <Wt/WBreak>
@@ -23,7 +24,13 @@
 
 void step6::setContent(Wt::WVBoxLayout * box) {
   box->addWidget(new Wt::WText("<h1>Bedankt!</h1>"));
-  box->addWidget(new Wt::WText("<p>Je antwoorden zijn opgeslagen, maar hebt nog 3 dagen om ze aan te passen. Daarna maken we er een mooi jaarboek van.</p>"));
+  Wt::WDate date;
+  date = date.currentServerDate();
+  std::string s;
+  s = "<p>Je antwoorden zijn opgeslagen, maar hebt nog ";
+  s += std::to_string(date.daysTo(parent->store.getCloseDate()));
+  s += " dagen om ze aan te passen. Daarna maken we er een mooi jaarboek van.</p>"; 
+  box->addWidget(new Wt::WText(s));
 }
 
 void step6::onShow() {

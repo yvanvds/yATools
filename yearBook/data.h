@@ -43,6 +43,10 @@ public:
   Wt::WString photo();
   Wt::WDate birthday();
   
+  Wt::WString getQuestion(int nr);
+  Wt::WDate getOpenDate();
+  Wt::WDate getCloseDate();
+  
 private:
   std::unique_ptr<y::data::server> server;
   std::unique_ptr<y::data::database> db;
@@ -62,6 +66,10 @@ private:
   std::u16string _photo;
   
   bool newEntry;
+  
+  y::data::dateTime openDate;
+  y::data::dateTime closeDate;
+  std::u16string question[4];
 };
 
 #endif	/* YEARBOOKDATA_H */

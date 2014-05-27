@@ -29,6 +29,22 @@ namespace y {
       equal,
     };
     
+    class database;
+    
+    class order {
+    public:
+      order();
+      order & setKey(const std::string & key);
+      order & descending(); 
+      order & ascending(); // this is the default direction
+    private:
+      std::string key;
+      bool ascend;
+      friend class database;
+    };
+    
+    extern container<order> defaultOrder;
+    
     class database {
     public:
       database(server & serverObject);
@@ -40,8 +56,8 @@ namespace y {
       bool tableExists(const std::string & tableName);
       
       bool getTables(container<std::string> & tables);
-      bool getAllRows(const std::string & table, container<row> & rows);
-      bool getRows(const std::string & table, container<row> & rows, field & condition, COMPARE c = COMPARE::equal);
+      bool getAllRows(const std::string & table, container<row> & rows, container<order> & order = defaultOrder);
+      bool getRows(const std::string & table, container<row> & rows, field & condition, container<order> & order = defaultOrder, COMPARE c = COMPARE::equal);
 
       bool setRow(const std::string & table, row & values, field & condition, COMPARE c = COMPARE::equal);
       bool addRow(const std::string & table, row & values);

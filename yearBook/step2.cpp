@@ -26,7 +26,7 @@
 
 void step2::setContent(Wt::WVBoxLayout * box) {
   box->addWidget(new Wt::WText("<h1>Stap 2</h1>"));
-  box->addWidget(new Wt::WText("<p>In het huishouden van welke leerkracht zou je wel eens een vlieg willen zijn? Waarom?</p>"));
+  box->addWidget(new Wt::WText("<p>" + parent->store.getQuestion(0) + "</p>"));
   textArea = new Wt::WTextArea();
   textArea->setColumns(60);
   textArea->setRows(10);

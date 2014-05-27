@@ -21,6 +21,9 @@ public:
   yearbookAdmin(const Wt::WEnvironment & env);
   virtual bool validate();
   virtual void onLogin();
+  void onSelected();
+  
+
   
   dataconnect db;
   
