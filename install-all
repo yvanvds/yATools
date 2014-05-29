@@ -14,5 +14,7 @@ sudo cp dist/Release/GNU-Linux-x86/yearbookadmin /var/www/apps/yearbook/yearbook
 sudo rm /var/log/admintools
 sudo touch /var/log/admintools
 sudo chown www-data:www-data /var/log/admintools
+sudo cp -fr yearbook_latex /var/www/apps/yearbook
+sudo chown -R www-data:www-data /var/www/apps/yearbook
 sudo service apache2 restart
 cd ..
