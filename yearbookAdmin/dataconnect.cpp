@@ -52,6 +52,10 @@ dataconnect::dataconnect() {
     config.addString("question2");
     config.addString("question3");
     config.addString("question4");
+    config["question1"].stringLength(128);
+    config["question2"].stringLength(128);
+    config["question3"].stringLength(128);
+    config["question4"].stringLength(128);
     
     db->createTable("config", config);
     
@@ -74,7 +78,7 @@ dataconnect::dataconnect() {
     replacements.addInt("ID");
     replacements["ID"].primaryKey(true).required(true).autoIncrement(true);
     replacements.addString("original").addString("replacement");
-    
+    replacements["replacement"].stringLength(128);
     db->createTable("replacements", replacements);
   }
   
@@ -230,6 +234,9 @@ void dataconnect::reloadEntries(const std::string& orderBy) {
   container<y::data::row> rows;
   container<y::data::order> order;
   order.New().setKey(orderBy);
+  if(orderBy.compare("classgroup")) {
+    order.New().setKey("surname");
+  }
   db->getAllRows("submissions", rows, order);
   
   for (int i = 0; i < rows.elms(); i++) {
@@ -250,4 +257,30 @@ void dataconnect::reloadEntries(const std::string& orderBy) {
     entries.back().approved = rows[i]["approved"].asBool();
     entries.back().changed = false;
   }
+}
+
+void dataconnect::setReplacement(const std::u16string& key, const std::u16string& value) {
+  bool found = false;
+  int i = 0;
+  for (; i < replacements.elms(); i++) {
+    if(replacements[i]["original"].asString().compare(key) == 0) {
+      replacements[i]["replacement"].setString(value);
+      found = true;
+      break;
+    }
+  }
+  
+  if(found) {
+    y::data::field condition("original", key);
+    y::data::row row;
+    row.addString("replacement", value);
+    db->setRow("replacements", row, condition);
+  } else {
+    y::data::row row;
+    row.addString("original", key);
+    row.addString("replacement", value);
+    db->addRow("replacements", row);
+  }
+  
+  
 }

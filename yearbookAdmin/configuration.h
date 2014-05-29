@@ -12,7 +12,14 @@
 #include <Wt/WLineEdit>
 #include <Wt/WSelectionBox>
 
+#include <vector>
+
 class yearbookAdmin;
+
+struct replacement {
+  std::u16string key;
+  Wt::WLineEdit * value;
+};
 
 class configuration : public Wt::WContainerWidget {
 public:
@@ -51,6 +58,9 @@ private:
   Wt::WLineEdit * newUser;
   Wt::WPushButton * newUserButton;
   Wt::WPushButton * removeUserButton;
+  
+  std::vector<replacement> replacements;
+  void replacementChange();
 };
 
 #endif	/* CONFIGURATION_H */

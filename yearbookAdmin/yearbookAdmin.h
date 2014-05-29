@@ -15,6 +15,7 @@
 #include "configuration.h"
 #include "review.h"
 #include "dataconnect.h"
+#include "download.h"
 
 class yearbookAdmin : public y::gui::session {
 public:
@@ -31,6 +32,7 @@ private:
 
   configuration * confPage;
   review * reviewPage;
+  download * downloadPage;
 };
 
 

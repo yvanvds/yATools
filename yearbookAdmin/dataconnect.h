@@ -52,6 +52,8 @@ public:
   void addUser(const std::string & name);
   void delUser(const std::string & name);
   
+  void setReplacement(const std::u16string & key, const std::u16string & value);
+  
   std::vector<entry> entries;
   container<y::data::row> replacements;
   container<y::data::row> validUsers;

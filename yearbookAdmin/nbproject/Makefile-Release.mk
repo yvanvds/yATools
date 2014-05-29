@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/1764173701/configuration.o \
 	${OBJECTDIR}/_ext/1764173701/dataconnect.o \
+	${OBJECTDIR}/_ext/1764173701/download.o \
 	${OBJECTDIR}/_ext/1764173701/removeDialog.o \
 	${OBJECTDIR}/_ext/1764173701/review.o \
 	${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o \
@@ -78,6 +79,11 @@ ${OBJECTDIR}/_ext/1764173701/dataconnect.o: /home/yvan/github/yATools/yearbookAd
 	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/dataconnect.o /home/yvan/github/yATools/yearbookAdmin/dataconnect.cpp
+
+${OBJECTDIR}/_ext/1764173701/download.o: /home/yvan/github/yATools/yearbookAdmin/download.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/download.o /home/yvan/github/yATools/yearbookAdmin/download.cpp
 
 ${OBJECTDIR}/_ext/1764173701/removeDialog.o: /home/yvan/github/yATools/yearbookAdmin/removeDialog.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701

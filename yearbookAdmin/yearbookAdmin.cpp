@@ -21,10 +21,11 @@ yearbookAdmin::yearbookAdmin(const Wt::WEnvironment & env) : session(env) {
 	y::utils::Log().add("yearbookadmin data loaded");
   confPage = new configuration(this);
   reviewPage = new review(this);
+  downloadPage = new download(this);
   
   
   menu->addItem("Review", reviewPage);
-  menu->addItem("Download", new Wt::WText("download page"));
+  menu->addItem("Download", downloadPage);
   menu->addItem("Configuratie", confPage);
   menu->addSeparator();
   menu->addItem("Exit", new Wt::WText("exit"));

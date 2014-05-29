@@ -183,7 +183,9 @@ void review::loadDialogContent() {
   if(parent->db.entries[currentEntry].photo.empty()) {
     dialogImage->setImageLink("http://placekitten.com/200/200");
   } else {
-    Wt::WFileResource * r = new Wt::WFileResource(str8(parent->db.entries[currentEntry].photo));
+    std::string s = str8(parent->db.entries[currentEntry].photo);
+    s += ".png";
+    Wt::WFileResource * r = new Wt::WFileResource(s);
     dialogImage->setImageLink(r);
     dialogImage->setHeight("200px");
   }

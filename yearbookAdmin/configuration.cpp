@@ -145,6 +145,71 @@ configuration::configuration(yearbookAdmin * parent) : parent(parent) {
     group->addWidget(table);
   }
 
+  
+  {  
+    Wt::WText * title = new Wt::WText("<h1>Klassen</h1>");
+    title->addStyleClass("page-header");
+    this->addWidget(title);
+    Wt::WContainerWidget * group = new Wt::WContainerWidget();
+    group->addStyleClass("well");
+    group->setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
+    this->addWidget(group);
+    
+    group->addWidget(new Wt::WText("<p>Geef hier de volledige naam voor elke klascode in.</p>"));
+    
+    Wt::WTable * table = new Wt::WTable(group);
+    int tableIndex = 0;
+    for (int i = 0; i < parent->db.entries.size(); i++) {
+      std::u16string group = parent->db.entries[i].group;
+      bool inList = false;
+      
+      // see if we have this group in our list
+      for (int j = 0; j < replacements.size(); j++) {
+        if (replacements[j].key.compare(group) == 0) {
+          inList = true;
+        }
+      }
+      
+      // if not, add it
+      if(!inList) {
+        replacement r;
+        r.key = group;
+        r.value = new Wt::WLineEdit();
+        r.value->setWidth("150px");
+        table->elementAt(tableIndex, 0)->addWidget(new Wt::WText(strWt(r.key)));
+        table->elementAt(tableIndex, 1)->addWidget(r.value);
+        tableIndex++;
+        
+        replacements.push_back(r);
+        
+        // see if this exists in the database
+        for(int j = 0; j < parent->db.replacements.elms(); j++) {
+          if(parent->db.replacements[j]["original"].asString().compare(r.key) == 0) {
+            r.value->setText(
+              strWt(
+                parent->db.replacements[j]["replacement"].asString()
+              )
+            );
+            break;
+          }
+        }
+        
+      }
+    }
+    
+    Wt::WPushButton * button = new Wt::WPushButton("bewaren");
+    button->clicked().connect(this, &configuration::replacementChange);
+    button->setStyleClass("btn btn-success");
+    button->setWidth("150px");
+    table->elementAt(tableIndex, 1)->addWidget(button);
+    
+    for(int i = 0; i < table->rowCount(); i++) {
+      for(int j = 0; j < table->columnCount(); j++) {
+        table->elementAt(i, j)->setPadding(5);
+      }
+    }
+  }
+  
   loadContent();
 }
 
@@ -223,4 +288,8 @@ void configuration::question4Changed() {
   parent->db.setQuestion(3, question4->text());
 }
 
-
+void configuration::replacementChange() {
+  for (int i = 0; i < replacements.size(); i++) {
+    parent->db.setReplacement(replacements[i].key, str16(replacements[i].value->text().toUTF8()));
+  }
+}

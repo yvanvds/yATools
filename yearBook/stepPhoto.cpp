@@ -35,10 +35,10 @@ void stepPhoto::setContent(Wt::WVBoxLayout * box) {
   this->box = box;
   
   box->addWidget(new Wt::WText("<h1>De Foto</h1>"));
-  box->addWidget(new Wt::WText("<p>Voeg tot slot een mooie foto van jezelf toe.</p>"));
+  box->addWidget(new Wt::WText("<p>Voeg tot slot een mooie foto van jezelf toe. Bij voorkeur in landscape formaat, met de verhouding 3 breed en 2 hoog.</p>"));
  
   image = new Wt::WImage();
-  image->setImageLink("http://placekitten.com/300/300");
+  image->setImageLink("http://placekitten.com/600/400");
   
   //image->setWidth(150);
           
@@ -55,10 +55,11 @@ void stepPhoto::setContent(Wt::WVBoxLayout * box) {
 
 void stepPhoto::onShow() {
   if(parent->store.photo().empty()) {
-    image->setImageLink("http://placekitten.com/300/300");
+    image->setImageLink("http://placekitten.com/600/400");
   } else {
-    Wt::WFileResource * r = new Wt::WFileResource(parent->store.photo().toUTF8());
-    image->setImageLink(r);
+    std::string s = parent->store.photo().toUTF8();
+    s += ".png";
+    Wt::WFileResource * r = new Wt::WFileResource(s);image->setImageLink(r);
   }
   image->setHeight(300);
 }
@@ -95,6 +96,7 @@ void stepPhoto::setUpload() {
       cmd.append(file);
       cmd.append(" userImages/");
       cmd.append(parent->store.ID().toUTF8());
+      cmd.append(".png");
       int i = system(cmd.c_str());
       std::string result = "system returned ";
       result.append(std::to_string(i));
@@ -104,13 +106,14 @@ void stepPhoto::setUpload() {
     out += parent->store.ID().toUTF8();
     parent->store.photo(out);
     hint->setText("Je foto is opgeslagen.");
+    out += ".png";
     Wt::WFileResource * r = new Wt::WFileResource(out);
     image->setImageLink(r);
     image->setHeight(300);
   }));
   
   fileUpload->fileTooLarge().connect(std::bind([=] () {
-    hint->setText("Je foto is te groot.");
+    hint->setText("Dit bestand is te groot.");
     setUpload();
   }));
   
