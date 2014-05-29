@@ -73,7 +73,7 @@ void download::generatePDF() {
           groupName = str8(parent->db.replacements[i]["replacement"].asString());
         }
       }
-      content << std::endl << "\\chapterimage{Pictures/chapter_head_2.pdf}" << std::endl;
+      content << std::endl << "\\chapterimage{Pictures/chapter_head_2}" << std::endl;
       content << std::endl << "\\chapter*{" << groupName << "}" << std::endl;
       content << std::endl << "\\chaptermark{" << groupName << "}" << std::endl;
       content << std::endl << "\\addcontentsline{toc}{chapter}{" << groupName << "}" << std::endl;
