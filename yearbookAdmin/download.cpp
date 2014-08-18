@@ -156,7 +156,8 @@ void download::generatePDF() {
   content.close();
   
   std::string cmd;
-  cmd = "cd yearbook_latex; ";
+	cmd =  "export PATH=\"$PATH:/usr/sbin:/usr/bin:/sbin:/bin\"; "; 
+	cmd += "cd yearbook_latex; ";
   cmd += "xelatex main; cd ..;";
   system(cmd.c_str());
   system(cmd.c_str());
