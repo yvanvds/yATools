@@ -47,7 +47,6 @@ void password::parse(int argc, char ** argv) {
       
       cout << "user    : " << account.uid()() << endl;
       cout << "password: " << password        << endl;
-      cout << account.password()() << endl;
       
     }
   }
