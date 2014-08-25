@@ -38,6 +38,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/252733849/confirmationDialog.o \
 	${OBJECTDIR}/_ext/252733849/passwordDialog.o \
 	${OBJECTDIR}/_ext/252733849/session.o \
+	${OBJECTDIR}/_ext/1925413572/samba.o \
+	${OBJECTDIR}/_ext/1923004017/random.o \
 	${OBJECTDIR}/data/database.o \
 	${OBJECTDIR}/data/dateTime.o \
 	${OBJECTDIR}/data/field.o \
@@ -48,9 +50,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/ldap/attributes.o \
 	${OBJECTDIR}/ldap/data.o \
 	${OBJECTDIR}/ldap/dataset.o \
-	${OBJECTDIR}/ldap/editableGroup.o \
 	${OBJECTDIR}/ldap/group.o \
-	${OBJECTDIR}/ldap/mailGroup.o \
 	${OBJECTDIR}/ldap/server.o \
 	${OBJECTDIR}/system/process.o \
 	${OBJECTDIR}/system/workDir.o \
@@ -117,6 +117,16 @@ ${OBJECTDIR}/_ext/252733849/session.o: /home/yvan/github/yATools/libadmintools/g
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/session.o /home/yvan/github/yATools/libadmintools/gui/session.cpp
 
+${OBJECTDIR}/_ext/1925413572/samba.o: /home/yvan/github/yATools/libadmintools/samba/samba.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1925413572
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1925413572/samba.o /home/yvan/github/yATools/libadmintools/samba/samba.cpp
+
+${OBJECTDIR}/_ext/1923004017/random.o: /home/yvan/github/yATools/libadmintools/utils/random.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/random.o /home/yvan/github/yATools/libadmintools/utils/random.cpp
+
 ${OBJECTDIR}/data/database.o: data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
 	${RM} "$@.d"
@@ -167,20 +177,10 @@ ${OBJECTDIR}/ldap/dataset.o: ldap/dataset.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/dataset.o ldap/dataset.cpp
 
-${OBJECTDIR}/ldap/editableGroup.o: ldap/editableGroup.cpp 
-	${MKDIR} -p ${OBJECTDIR}/ldap
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/editableGroup.o ldap/editableGroup.cpp
-
 ${OBJECTDIR}/ldap/group.o: ldap/group.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/group.o ldap/group.cpp
-
-${OBJECTDIR}/ldap/mailGroup.o: ldap/mailGroup.cpp 
-	${MKDIR} -p ${OBJECTDIR}/ldap
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/mailGroup.o ldap/mailGroup.cpp
 
 ${OBJECTDIR}/ldap/server.o: ldap/server.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
@@ -459,6 +459,32 @@ ${OBJECTDIR}/_ext/252733849/session_nomain.o: ${OBJECTDIR}/_ext/252733849/sessio
 	    ${CP} ${OBJECTDIR}/_ext/252733849/session.o ${OBJECTDIR}/_ext/252733849/session_nomain.o;\
 	fi
 
+${OBJECTDIR}/_ext/1925413572/samba_nomain.o: ${OBJECTDIR}/_ext/1925413572/samba.o /home/yvan/github/yATools/libadmintools/samba/samba.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1925413572
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/1925413572/samba.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1925413572/samba_nomain.o /home/yvan/github/yATools/libadmintools/samba/samba.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/_ext/1925413572/samba.o ${OBJECTDIR}/_ext/1925413572/samba_nomain.o;\
+	fi
+
+${OBJECTDIR}/_ext/1923004017/random_nomain.o: ${OBJECTDIR}/_ext/1923004017/random.o /home/yvan/github/yATools/libadmintools/utils/random.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/1923004017/random.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/random_nomain.o /home/yvan/github/yATools/libadmintools/utils/random.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/_ext/1923004017/random.o ${OBJECTDIR}/_ext/1923004017/random_nomain.o;\
+	fi
+
 ${OBJECTDIR}/data/database_nomain.o: ${OBJECTDIR}/data/database.o data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/data/database.o`; \
@@ -589,19 +615,6 @@ ${OBJECTDIR}/ldap/dataset_nomain.o: ${OBJECTDIR}/ldap/dataset.o ldap/dataset.cpp
 	    ${CP} ${OBJECTDIR}/ldap/dataset.o ${OBJECTDIR}/ldap/dataset_nomain.o;\
 	fi
 
-${OBJECTDIR}/ldap/editableGroup_nomain.o: ${OBJECTDIR}/ldap/editableGroup.o ldap/editableGroup.cpp 
-	${MKDIR} -p ${OBJECTDIR}/ldap
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/ldap/editableGroup.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/editableGroup_nomain.o ldap/editableGroup.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/ldap/editableGroup.o ${OBJECTDIR}/ldap/editableGroup_nomain.o;\
-	fi
-
 ${OBJECTDIR}/ldap/group_nomain.o: ${OBJECTDIR}/ldap/group.o ldap/group.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/ldap/group.o`; \
@@ -613,19 +626,6 @@ ${OBJECTDIR}/ldap/group_nomain.o: ${OBJECTDIR}/ldap/group.o ldap/group.cpp
 	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/group_nomain.o ldap/group.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ldap/group.o ${OBJECTDIR}/ldap/group_nomain.o;\
-	fi
-
-${OBJECTDIR}/ldap/mailGroup_nomain.o: ${OBJECTDIR}/ldap/mailGroup.o ldap/mailGroup.cpp 
-	${MKDIR} -p ${OBJECTDIR}/ldap
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/ldap/mailGroup.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/mailGroup_nomain.o ldap/mailGroup.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/ldap/mailGroup.o ${OBJECTDIR}/ldap/mailGroup_nomain.o;\
 	fi
 
 ${OBJECTDIR}/ldap/server_nomain.o: ${OBJECTDIR}/ldap/server.o ldap/server.cpp 

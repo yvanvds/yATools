@@ -21,13 +21,14 @@ namespace y {
       dataset() {}
       dataset(const dataset& orig);
 
-      bool create(const std::string & filter);
-      int count();
+      bool create(const std::string & filter, const std::string & directory = "");
+      int elms();
       data & get(int index = 0);
       data & New(data_type type);
 
     private:
       std::string filter;
+      std::string directory;
       std::vector<data> content;
       data dummy;
 

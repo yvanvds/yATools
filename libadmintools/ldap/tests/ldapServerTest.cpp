@@ -44,6 +44,22 @@ void ldapServerTest::testGetAccount() {
   if(a2.isNew()) {
     CPPUNIT_ASSERT(false);
   }
+  
+  y::ldap::account & a3 = y::ldap::Server().getAccount(y::ldap::UID_NUMBER(std::stoi(y::utils::Config().getLdapTestUidNumber())));
+  if(a3.isNew()) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(a3.uidNumber()() != std::stoi(y::utils::Config().getLdapTestUidNumber())) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  y::ldap::account & a4 = y::ldap::Server().getAccount(y::ldap::DN(y::utils::Config().getLdapTestDN()));
+  if(a4.isNew()) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(a4.uidNumber()() != std::stoi(y::utils::Config().getLdapTestUidNumber())) {
+    CPPUNIT_ASSERT(false);
+  }
 }
 
 void ldapServerTest::testAuth() {

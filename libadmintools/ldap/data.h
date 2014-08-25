@@ -13,10 +13,13 @@
 
 namespace y {
   namespace ldap {
+    class server;
+    
       // type of data
     enum data_type {
       NONE,
       RESULT,
+      NEW,
       ADD,
       MODIFY,
       DELETE,
@@ -31,14 +34,16 @@ namespace y {
       void setType(data_type type);
       data_type getType();
       void add(const std::string & name, const std::string & value);
-      int size();
-      int nameCount(const std::string & name);
-      const std::string & getValue(const std::string & name, int index = 0);
+      int elms();
+      int elms(const std::string & name) const;
+      const std::string & getValue(const std::string & name, int index = 0) const;
 
     private:
       data_type type;
       std::multimap<std::string, std::string> attributes;
       std::string dummy; // to return when asked for non existant value
+      
+      friend class server;
     };
   }
 }

@@ -17,13 +17,15 @@ namespace y {
       void load(); // use config file only, no command line arguments
       void load(int argc, char** argv);
       
-      const std::string & getLdapPasswd () const;
-      const std::string & getLdapHost   () const;
-      const std::string & getLdapBaseDN () const;
-      const std::string & getLdapAdminDN() const;
-      const std::string & getLdapTestUID() const;
-      const std::string & getLdapTestPassword() const;
-      const std::string & getMysqlPassword() const;
+      const std::string & getLdapPasswd       () const;
+      const std::string & getLdapHost         () const;
+      const std::string & getLdapBaseDN       () const;
+      const std::string & getLdapAdminDN      () const;
+      const std::string & getLdapTestUID      () const;
+      const std::string & getLdapTestPassword () const;
+      const std::string & getLdapTestUidNumber() const;
+      const std::string & getLdapTestDN       () const;
+      const std::string & getMysqlPassword    () const;
 
     private:
       bool configReady;
@@ -42,6 +44,8 @@ namespace y {
       std::string ldapBaseDN;
       std::string ldapTestUID;
       std::string ldapTestPassword;
+      std::string ldapTestUidNumber;
+      std::string ldapTestDN;
       std::string mysqlPassword;
     };
     

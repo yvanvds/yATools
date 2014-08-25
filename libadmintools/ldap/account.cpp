@@ -5,11 +5,13 @@
  * Created on January 14, 2014, 6:48 PM
  */
 
+#include <openssl/sha.h>
 #include "ldap/account.h"
 #include "dataset.h"
+#include "samba/samba.h"
+#include "server.h"
 
 y::ldap::account::account() : 
-  _new(true), 
   _uidNumber(UID_NUMBER(0)),
   _uid(UID("")),
   _dn(DN("")),
@@ -19,36 +21,80 @@ y::ldap::account::account() :
   _homeDir(HOMEDIR("")),
   _wisaID(WISA_ID(0)),
   _mail(MAIL("")),
-  _password(PASSWORD("")),
   _birthDay(DATE(DAY(1), MONTH(1), YEAR(1))),
+  _password(PASSWORD("")),
   _group(GID("")),
-  _groupID(GID_NUMBER(0))
+  _groupID(GID_NUMBER(0)),
+  _new(true) 
   {}
+
+bool y::ldap::account::load(const data& d) {
+  _uidNumber(UID_NUMBER(std::stoi(d.getValue("uidNumber"))), true);
+  _uid(UID(d.getValue("uid")), true);
+  _dn(DN(d.getValue("DN")), true);
+  _cn(CN(d.getValue("cn")), true);
+  _sn(SN(d.getValue("sn")), true);
+  _fullName(FULL_NAME(d.getValue("displayName")), true);
+  _homeDir(HOMEDIR(d.getValue("homeDirectory")), true);
+  _wisaID(WISA_ID(std::stoi(d.getValue("employeeNumber"))), true);
+  _mail(MAIL(d.getValue("mail")), true);
+  _password(PASSWORD(d.getValue("title")), true);
+  _birthDay(DATE(d.getValue("roomNumber")), true);
+  _group(GID(d.getValue("departmentNumber")), true);
+  _groupID(GID_NUMBER(std::stoi(d.getValue("gidNumber"))), true);
+  _new = false;
+  return !_new;
+}
 
 bool y::ldap::account::load(const UID & id) {
   dataset d;
   std::string filter;
   filter = "uid="; filter.append(id());
   
-  if(d.create(filter)) {
-    data & temp = d.get(0);
-    _uidNumber(UID_NUMBER(std::stoi(temp.getValue("uidNumber"))), true);
-    _uid(UID(temp.getValue("uid")), true);
-    _dn(DN(temp.getValue("DN")), true);
-    _cn(CN(temp.getValue("cn")), true);
-    _sn(SN(temp.getValue("sn")), true);
-    _fullName(FULL_NAME(temp.getValue("displayName")), true);
-    _homeDir(HOMEDIR(temp.getValue("homeDirectory")), true);
-    _wisaID(WISA_ID(std::stoi(temp.getValue("employeeNumber"))), true);
-    _mail(MAIL(temp.getValue("mail")), true);
-    _password(PASSWORD(temp.getValue("userPassword")), true);
-    _birthDay(DATE(temp.getValue("roomNumber")), true);
-    _group(GID(temp.getValue("departmentNumber")), true);
-    _groupID(GID_NUMBER(std::stoi(temp.getValue("gidNumber"))), true);
-    _new = false;
+  if(d.create(filter, "ou=People")) {
+    load(d.get(0));
   }
   
   return !_new;
+}
+
+bool y::ldap::account::load(UID_NUMBER id) {
+  dataset d;
+  std::string filter;
+  filter = "uidNumber="; filter.append(std::to_string(id()));
+  
+  if(d.create(filter)) {
+    load(d.get(0));
+  }
+  
+  return !_new;
+}
+
+bool y::ldap::account::load(const DN & id) {
+  dataset d;
+  std::string filter;
+  filter = "DN="; filter.append(id());
+  
+  if(d.create(filter)) {
+    load(d.get(0));
+  }
+  
+  return !_new;
+}
+
+bool y::ldap::account::save() {
+  dataset values;
+  if(_password.changed()) {
+    data & d = values.New(MODIFY);
+    d.add("type", "title");
+    d.add("values", _password()());
+  }
+  
+  if(values.elms()) {
+    Server().setData(_dn(), values);
+    return true;
+  }
+  return false;
 }
 
 bool y::ldap::account::isNew() {
@@ -170,7 +216,24 @@ y::ldap::account & y::ldap::account::birthDay(const DATE& value) {
 }
 
 y::ldap::account & y::ldap::account::password(const PASSWORD& value) {
-  _password(value);
+  std::string origin = value();
+  
+  // let samba change the password for us
+  samba::changePassword(_uid()(), origin);
+  
+  // the password value from ldap sets the title value, which is used
+  // to sync with google
+  unsigned char hash[SHA_DIGEST_LENGTH];
+  SHA1((unsigned char*)origin.c_str(), origin.size() - 1, (unsigned char*)hash);
+  char mdString[SHA_DIGEST_LENGTH*2+1];
+  
+  for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
+    sprintf(&mdString[i*2], "%02x", (unsigned int)hash[i]);
+  }
+  
+  std::string hashed;
+  hashed = mdString;
+  _password(PASSWORD(hashed));
   return *this;
 }
 

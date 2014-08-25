@@ -8,6 +8,11 @@
 #include "security.h"
 #include <crypt.h>
 #include <string.h>
+#include "../utils/random.h"
+
+char consonants[] = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
+                     'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z', '\0'}; 
+char vowels[] = {'a', 'e', 'i', 'o', 'u', 'y', '\0'};
 
 y::utils::security & y::utils::Security() {
   static security s;
@@ -27,4 +32,18 @@ bool y::utils::security::test(const y::ldap::account& account, const std::string
   }
   
   return false;
+}
+
+std::string y::utils::security::makePassword(int length) {
+  std::string result;
+  bool vowel = false;
+  for(int i = 0; i < length; i++) {
+    if(vowel) {
+      result += vowels[Random().get(5)];
+    } else {
+      result += consonants[Random().get(19)];
+    }
+    vowel = !vowel;
+  }
+  return result;
 }

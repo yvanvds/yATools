@@ -8,6 +8,7 @@
 #pragma once
 #include "utils/watch.h"
 #include "ldap/attributes.h"
+#include "ldap/data.h"
 
 namespace y {
   namespace ldap {
@@ -17,6 +18,7 @@ namespace y {
 
       bool isNew(); // true if account does not exist in ldap
       void clear();
+      bool save ();
       
       // set - get
       const UID_NUMBER & uidNumber() const; account & uidNumber(const UID_NUMBER & value);
@@ -37,6 +39,9 @@ namespace y {
       bool load(const UID  & id);
       bool load(UID_NUMBER   id);
       bool load(const DN   & id); 
+      
+      // shared code for load functions
+      bool load(const data & d);
       
       watch<UID_NUMBER>  _uidNumber;
       watch<UID       >  _uid      ;

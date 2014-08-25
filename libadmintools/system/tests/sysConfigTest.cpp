@@ -25,6 +25,10 @@ sysConfigTest::sysConfigTest() {
                    "testname",
                    "--ldapTestPassword",
                    "secret2",
+                   "--ldapTestUIDNumber",
+                   "1972",
+                   "--ldapTestDN",
+                   "uid=user,dc=domain,dc=com",
                    "--mysqlRootPassword",
                    "secret3",
                    NULL};
@@ -81,6 +85,20 @@ void sysConfigTest::testGetLdapTestUID() {
 void sysConfigTest::testGetLdapTestPassword() {
   const std::string& result = y::utils::Config().getLdapTestPassword();
   if (result.compare("secret2") != 0) {
+    CPPUNIT_ASSERT(false);
+  }
+}
+
+void sysConfigTest::testGetLdapTestUidNumber() {
+  const std::string& result = y::utils::Config().getLdapTestUidNumber();
+  if (result.compare("1972") != 0) {
+    CPPUNIT_ASSERT(false);
+  }
+}
+
+void sysConfigTest::testGetLdapTestDN() {
+  const std::string& result = y::utils::Config().getLdapTestDN();
+  if (result.compare("uid=user,dc=domain,dc=com") != 0) {
     CPPUNIT_ASSERT(false);
   }
 }

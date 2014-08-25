@@ -42,12 +42,14 @@ void y::utils::config::load(int argc, char** argv) {
   ;
   
   file.add_options()
-    ("ldapPasswd" , value<std::string>(), "set ldap admin password")
-    ("ldapHost"   , value<std::string>(), "set ldap host"          )
-    ("ldapBaseDN" , value<std::string>(), "set ldap base DN"       )
-    ("ldapAdminDN", value<std::string>(), "set ldap admin DN"      )
-    ("ldapTestUID", value<std::string>(), "set ldap test account"  )
-    ("ldapTestPassword", value<std::string>(), "set ldap test account password")
+    ("ldapPasswd"       , value<std::string>(), "set ldap admin password")
+    ("ldapHost"         , value<std::string>(), "set ldap host"          )
+    ("ldapBaseDN"       , value<std::string>(), "set ldap base DN"       )
+    ("ldapAdminDN"      , value<std::string>(), "set ldap admin DN"      )
+    ("ldapTestUID"      , value<std::string>(), "set ldap test account"  )
+    ("ldapTestPassword" , value<std::string>(), "set ldap test account password")
+    ("ldapTestUIDNumber", value<std::string>(), "set ldap test account UID number")
+    ("ldapTestDN"       , value<std::string>(), "set ldap test account DN")
     ("mysqlRootPassword", value<std::string>(), "set mysql root password")
   ;
   
@@ -102,6 +104,14 @@ void y::utils::config::load(int argc, char** argv) {
     ldapTestPassword = map["ldapTestPassword"].as<std::string>();
   }
   
+  if(map.count("ldapTestUIDNumber")) {
+    ldapTestUidNumber = map["ldapTestUIDNumber"].as<std::string>();
+  }
+  
+  if(map.count("ldapTestDN")) {
+    ldapTestDN = map["ldapTestDN"].as<std::string>();
+  }
+  
   if(map.count("mysqlRootPassword")) {
     mysqlPassword = map["mysqlRootPassword"].as<std::string>();
   }
@@ -131,6 +141,14 @@ const std::string & y::utils::config::getLdapTestUID() const {
 
 const std::string & y::utils::config::getLdapTestPassword() const {
   return ldapTestPassword;
+}
+
+const std::string & y::utils::config::getLdapTestUidNumber() const {
+  return ldapTestUidNumber;
+}
+
+const std::string & y::utils::config::getLdapTestDN() const {
+  return ldapTestDN;
 }
 
 const std::string & y::utils::config::getMysqlPassword() const {

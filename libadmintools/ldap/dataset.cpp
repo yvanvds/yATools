@@ -11,20 +11,22 @@
 
 y::ldap::dataset::dataset(const dataset& orig) {
   filter = orig.filter;
+  directory = orig.directory;
   content = orig.content;
 }
 
-bool y::ldap::dataset::create(const std::string & filter) {
+bool y::ldap::dataset::create(const std::string & filter, const std::string & directory) {
   this->filter = filter;
+  this->directory = directory;
   return Server().getData(*this);
 }
 
-int y::ldap::dataset::count() {
+int y::ldap::dataset::elms() {
   return content.size();
 }
 
 y::ldap::data & y::ldap::dataset::get(int index) {
-  if (index >= content.size()) return dummy;
+  if (static_cast<unsigned int>(index) >= content.size()) return dummy;
   return content[index];
 }
 

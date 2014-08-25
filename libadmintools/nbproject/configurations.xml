@@ -34,14 +34,14 @@
       <itemPath>ldap/account.h</itemPath>
       <itemPath>ldap/attributes.cpp</itemPath>
       <itemPath>ldap/attributes.h</itemPath>
-      <itemPath>ldap/editableGroup.cpp</itemPath>
-      <itemPath>ldap/editableGroup.h</itemPath>
       <itemPath>ldap/group.cpp</itemPath>
       <itemPath>ldap/group.h</itemPath>
-      <itemPath>ldap/mailGroup.cpp</itemPath>
-      <itemPath>ldap/mailGroup.h</itemPath>
       <itemPath>ldap/server.cpp</itemPath>
       <itemPath>ldap/server.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f2" displayName="samba" projectFiles="true">
+      <itemPath>/home/yvan/github/yATools/libadmintools/samba/samba.cpp</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/samba/samba.h</itemPath>
     </logicalFolder>
     <logicalFolder name="system" displayName="system" projectFiles="true">
       <itemPath>system/process.cpp</itemPath>
@@ -59,6 +59,8 @@
       <itemPath>utils/convert.h</itemPath>
       <itemPath>utils/log.cpp</itemPath>
       <itemPath>utils/log.h</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/utils/random.cpp</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/utils/random.h</itemPath>
       <itemPath>utils/security.cpp</itemPath>
       <itemPath>utils/security.h</itemPath>
       <itemPath>utils/watch.h</itemPath>
@@ -248,6 +250,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="/home/yvan/github/yATools/libadmintools/samba/samba.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/samba/samba.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp"
             ex="false"
             tool="1"
@@ -261,6 +273,16 @@
       <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTestRun.cpp"
             ex="false"
             tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/random.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/random.h"
+            ex="false"
+            tool="3"
             flavor2="0">
       </item>
       <item path="admintools.h" ex="false" tool="3" flavor2="0">
@@ -522,17 +544,9 @@
       </item>
       <item path="ldap/dataset.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ldap/editableGroup.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ldap/editableGroup.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="ldap/group.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/group.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ldap/mailGroup.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ldap/mailGroup.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ldap/server.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -688,6 +702,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="/home/yvan/github/yATools/libadmintools/samba/samba.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/samba/samba.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp"
             ex="false"
             tool="1"
@@ -701,6 +725,16 @@
       <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTestRun.cpp"
             ex="false"
             tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/random.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/random.h"
+            ex="false"
+            tool="3"
             flavor2="0">
       </item>
       <item path="admintools.h" ex="false" tool="3" flavor2="0">
@@ -960,17 +994,9 @@
       </item>
       <item path="ldap/dataset.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ldap/editableGroup.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ldap/editableGroup.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="ldap/group.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/group.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ldap/mailGroup.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ldap/mailGroup.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ldap/server.cpp" ex="false" tool="1" flavor2="0">
       </item>

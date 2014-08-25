@@ -16,6 +16,7 @@ namespace y {
     class security {
     public:
       bool test(const ldap::account & account, const std::string & password);
+      std::string makePassword(int length);
     }; 
     
     security & Security();

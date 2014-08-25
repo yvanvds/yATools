@@ -19,7 +19,7 @@ y::ldap::server & y::ldap::Server() {
   return s;
 }
 
-y::ldap::server::server() : _connected(false) {
+y::ldap::server::server() : _connected(false), _ldapMode(LDAP_MODE_NONE) {
   // set timeout values
   timeOut.tv_sec = 300L;
   timeOut.tv_usec = 0L;
@@ -58,10 +58,13 @@ y::ldap::server::~server() {
 }
 
 bool y::ldap::server::getData(y::ldap::dataset& rs) {
+  std::string base(rs.directory);
+  if(rs.directory.size()) base.append(",");
+  base.append(_base);
   LDAPMessage * result;
   if(ldap_search_ext_s(
           _server, 
-          _base.c_str(), 
+          base.c_str(), 
           LDAP_SCOPE_SUBTREE, 
           rs.filter.c_str(), 
           NULL, 
@@ -119,6 +122,10 @@ bool y::ldap::server::getData(y::ldap::dataset& rs) {
 }
 
 y::ldap::account & y::ldap::server::getAccount(const UID & id) {
+  // make sure we're in single mode
+  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_SINGLE;
+  assert(_ldapMode == LDAP_MODE_SINGLE);
+  
   // first check if already in memory
   for(int i = 0; i < _accounts.elms(); i++) {
     if(_accounts[i].uid() == id) {
@@ -129,6 +136,118 @@ y::ldap::account & y::ldap::server::getAccount(const UID & id) {
   account & a = _accounts.New();
   a.load(id);
   return a;
+}
+
+y::ldap::account & y::ldap::server::getAccount(UID_NUMBER id) {
+  // make sure we're in single mode
+  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_SINGLE;
+  assert(_ldapMode == LDAP_MODE_SINGLE);
+  
+  // first check if already in memory
+  for(int i = 0; i < _accounts.elms(); i++) {
+    if(_accounts[i].uidNumber() == id) {
+      return _accounts[i];
+    }
+  }
+  
+  account & a = _accounts.New();
+  a.load(id);
+  return a;
+}
+
+y::ldap::account & y::ldap::server::getAccount(const DN & id) {
+  // make sure we're in single mode
+  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_SINGLE;
+  assert(_ldapMode == LDAP_MODE_SINGLE);
+  
+  // first check if already in memory
+  for(int i = 0; i < _accounts.elms(); i++) {
+    if(_accounts[i].dn() == id) {
+      return _accounts[i];
+    }
+  }
+  
+  account & a = _accounts.New();
+  a.load(id);
+  return a;
+}
+
+y::ldap::group & y::ldap::server::getGroup(const DN& id) {
+  // make sure we're in single mode
+  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_SINGLE;
+  assert(_ldapMode == LDAP_MODE_SINGLE);
+  
+  for(int i = 0; i < _groups.elms(); i++) {
+    if(_groups[i].dn() == id) {
+      return _groups[i];
+    }
+  }
+  
+  group & g = _groups.New();
+  g.load(id);
+  return g;
+}
+
+y::ldap::group & y::ldap::server::getGroup(const CN& id) {
+  // make sure we're in single mode
+  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_SINGLE;
+  assert(_ldapMode == LDAP_MODE_SINGLE);
+  
+  for(int i = 0; i < _groups.elms(); i++) {
+    if(_groups[i].cn() == id) {
+      return _groups[i];
+    }
+  }
+  
+  group & g = _groups.New();
+  g.load(id);
+  return g;
+}
+
+container<y::ldap::account> & y::ldap::server::getAccounts() {
+  // make sure we're in single mode
+  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_FULL;
+  assert(_ldapMode == LDAP_MODE_FULL);
+  
+  // make sure the accounts are not loaded yet
+  assert(_accounts.empty());
+  
+  dataset d;
+  d.create("objectClass=*", "ou=people");
+  for(int i = 0; i < d.elms(); i++) {
+    account & a = _accounts.New();
+    a.load(d.get(i));
+  }
+  
+  return _accounts;
+}
+
+container<y::ldap::group> & y::ldap::server::getGroups() {
+  // make sure we're in single mode
+  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_FULL;
+  assert(_ldapMode == LDAP_MODE_FULL);
+  
+  // make sure the accounts are not loaded yet
+  assert(_groups.empty());
+  
+  {
+    dataset d;
+    d.create("objectClass=*", "ou=mailGroups");
+    for(int i = 0; i < d.elms(); i++) {
+      group & g = _groups.New();
+      g.load(d.get(i));
+    }
+  }
+  {
+    dataset d;
+    d.create("objectClass=*", "ou=editableMailGroups");
+    for(int i = 0; i < d.elms(); i++) {
+      group & g = _groups.New();
+      g.load(d.get(i));
+    }
+  }
+  
+  return _groups;
 }
 
 bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) { 
@@ -158,4 +277,123 @@ bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) {
     return true;
   }
   return false;
+}
+
+void y::ldap::server::setData(const DN & dn, dataset & values) {
+  LDAPMod ** mods = new LDAPMod*[values.elms() + 1];
+  mods[values.elms()] = NULL;
+  
+  for(int i = 0; i < values.elms(); i++) {
+    mods[i] = new LDAPMod;
+    data & d = values.get(i);
+    
+    switch (d.getType()) {
+      case ADD: mods[i]->mod_op = LDAP_MOD_ADD; break;
+      case MODIFY: mods[i]->mod_op = LDAP_MOD_REPLACE; break;
+      case DELETE: mods[i]->mod_op = LDAP_MOD_DELETE; break;
+      default: assert(false);
+    }
+    
+    std::string type = d.getValue("type");
+    mods[i]->mod_type = new char[type.size() + 1];
+    std::copy(type.begin(), type.end(), mods[i]->mod_type);
+    mods[i]->mod_type[type.size()] = '\0';
+    
+    mods[i]->mod_vals.modv_strvals = new char*[d.elms("values") + 1];
+    for(int j = 0; j < d.elms("values"); j++) {
+      std::string value = d.getValue("values", j);
+      mods[i]->mod_vals.modv_strvals[j] = new char[value.size() + 1];
+      std::copy(value.begin(), value.end(), mods[i]->mod_vals.modv_strvals[j]);
+      mods[i]->mod_vals.modv_strvals[j][value.size()] = '\0';
+    }
+    
+    mods[i]->mod_vals.modv_strvals[d.elms("values")] = NULL;
+  }
+  
+  if(int result = ldap_modify_ext_s(_server, dn().c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
+    std::string message;
+    message.append("y::ldap::server::setData() : ");
+    message.append(ldap_err2string(result));
+    y::utils::Log().add(message);
+  }
+  
+  // release memory
+  for(int i = 0; i < values.elms(); i++) {
+    delete[] mods[i]->mod_type;
+    for(int j = 0; j < values.get(i).elms("values"); j++) {
+      delete[] mods[i]->mod_vals.modv_strvals[j];
+    }
+    delete[] mods[i]->mod_vals.modv_strvals;
+    delete mods[i];
+  }
+  delete[] mods;
+}
+
+int y::ldap::server::findAccounts(const std::string& query, std::vector<UID_NUMBER> results) {
+  dataset rs;
+  rs.filter = query;
+  rs.directory = "ou=people";
+  
+  if(getData(rs)) {
+    for(int i = 0; i < rs.elms(); i++) {
+      data & d = rs.get(i);
+      bool found = false;
+      
+      // search if this account is already loaded in memory
+      for(int j = 0; j < _accounts.elms(); j++) {
+        if(std::stoi(d.getValue("uidnumber")) == _accounts[j].uidNumber()()) {
+          found = true;
+          results.push_back(_accounts[j].uidNumber());
+          break;
+        }
+      }
+      
+      if(!found) {
+        account & a = _accounts.New();
+        a.load(d);
+        results.push_back(a.uidNumber());
+      }
+      
+    }
+  }
+  
+  return results.size();
+}
+
+y::ldap::UID y::ldap::server::createUID(const std::string& cn, const std::string& sn) {
+  int pos = 0;
+  if(sn.find("de"    ) == 0) pos = 2;
+  if(sn.find("ver"   ) == 0) pos = 3;
+  if(sn.find("van"   ) == 0) pos = 3;
+  if(sn.find("vande" ) == 0) pos = 5;
+  if(sn.find("vander") == 0) pos = 6;
+  
+  std::string id = sn.substr(pos, 5);
+  id += cn.substr(0, 1);
+  int counter = 0;
+  std::vector<UID_NUMBER> result;
+  std::string test_id(id);
+  
+  while (true) {
+    std::string query;
+    query += "uid=";
+    query += test_id;
+    
+    if(!findAccounts(query, result)) {     
+      return UID(test_id);
+    }
+    
+    counter++;
+    test_id = id;
+    test_id.append(std::to_string(counter));
+  }
+}
+
+bool y::ldap::server::commitChanges() {
+  bool result = false;
+  for(int i = 0; i < _accounts.elms(); i++) {
+    if(_accounts[i].save()) result = true;
+  }
+  
+  return result;
 }
