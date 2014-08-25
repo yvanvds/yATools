@@ -10,10 +10,10 @@
 #include <string>
 
 void y::samba::changePassword(const std::string & user, const std::string & password) {
-  std::string command = "echo ";
-  command.append(password);
-  command.append(" | /usr/sbin/smbldap-passwd -p ");
+  std::string command = "/usr/sbin/smbldap-passwd -p ";
   command.append(user);
+  command.append(" ");
+  command.append(password);
   if(!y::sys::Exec(command, y::sys::stdOut)) {
     assert(false);
   }
