@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <unistd.h>
 #include "utils/config.h"
 #include "password.h"
 
@@ -16,6 +17,11 @@ using namespace std;
 void printBasicHelp();
 
 int main(int argc, char** argv) {
+  if(getuid()) {
+    cout << "You must be root to execute this command!" << endl;
+    return 0;
+  }
+  
   if(argc < 2) {
     printBasicHelp();
     return 0;
