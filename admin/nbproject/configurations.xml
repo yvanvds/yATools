@@ -15,6 +15,8 @@
     <itemPath>main.cpp</itemPath>
     <itemPath>/home/yvan/github/yATools/admin/password.cpp</itemPath>
     <itemPath>/home/yvan/github/yATools/admin/password.h</itemPath>
+    <itemPath>/home/yvan/github/yATools/admin/show.cpp</itemPath>
+    <itemPath>/home/yvan/github/yATools/admin/show.h</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -31,6 +33,9 @@
             <pElem>../libadmintools</pElem>
             <pElem>/usr/local/include</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
         </ccTool>
         <linkerTool>
           <linkerLibItems>
@@ -56,6 +61,16 @@
             flavor2="0">
       </item>
       <item path="/home/yvan/github/yATools/admin/password.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/admin/show.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/admin/show.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -110,6 +125,16 @@
             flavor2="0">
       </item>
       <item path="/home/yvan/github/yATools/admin/password.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/admin/show.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/admin/show.h"
             ex="false"
             tool="3"
             flavor2="0">

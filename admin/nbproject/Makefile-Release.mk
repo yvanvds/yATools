@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/1736800395/password.o \
+	${OBJECTDIR}/_ext/1736800395/show.o \
 	${OBJECTDIR}/main.o
 
 
@@ -69,6 +70,11 @@ ${OBJECTDIR}/_ext/1736800395/password.o: /home/yvan/github/yATools/admin/passwor
 	${MKDIR} -p ${OBJECTDIR}/_ext/1736800395
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1736800395/password.o /home/yvan/github/yATools/admin/password.cpp
+
+${OBJECTDIR}/_ext/1736800395/show.o: /home/yvan/github/yATools/admin/show.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1736800395
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1736800395/show.o /home/yvan/github/yATools/admin/show.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}

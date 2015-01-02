@@ -21,7 +21,11 @@ password::password() {
 }
 
 void password::printHelp() {
-  cout << "help" << endl;
+  cout << "To change a user's password, you need to supply one or two arguments." << endl;
+  cout << "first argument : the user's userID" << endl;
+  cout << "second argument: the new password" << endl;
+  cout << endl;
+  cout << "If the second argument is omitted, a random password will be chosen." << endl;
 }
 
 void password::parse(int argc, char ** argv) {
@@ -30,6 +34,12 @@ void password::parse(int argc, char ** argv) {
     return;
   } else {
     std::string uid(argv[2]);
+    
+    if(uid.compare("-?") == 0) {
+      printHelp();
+      return;
+    }
+    
     y::ldap::account & account = y::ldap::Server().getAccount(y::ldap::UID(uid));
     if(account.isNew()) {
       cout << "This account does not exist." << endl;

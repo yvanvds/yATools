@@ -11,16 +11,19 @@
 #include <unistd.h>
 #include "utils/config.h"
 #include "password.h"
+#include "show.h"
 
 using namespace std;
 
 void printBasicHelp();
 
 int main(int argc, char** argv) {
+#ifndef DEBUG
   if(getuid()) {
     cout << "You must be root to execute this command!" << endl;
     return 0;
   }
+#endif  
   
   if(argc < 2) {
     printBasicHelp();
@@ -32,6 +35,9 @@ int main(int argc, char** argv) {
 
   if(command.compare("password") == 0) {
     Password().parse(argc, argv);
+    return 0;
+  } else if(command.compare("show") == 0) {
+    Show().parse(argc, argv);
     return 0;
   }
 
@@ -46,6 +52,7 @@ void printBasicHelp() {
   cout << "be used." << endl << endl;
   cout << "Possible arguments are:" << endl;
   cout << "password   : change a user's password." << endl;
+  cout << "show       : show a user's details." << endl;
   
   cout << endl;
   cout << "Type admin <argument> -? for more information about a" << endl;
