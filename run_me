@@ -1,10 +1,9 @@
 #!/bin/bash
 
 installPackage() {
-  dpkg -s $1 &>/dev/null
-  if [ $? ]; then
-    echo "$1 is installed"
-  else
+  problem=$(dpkg -s $1|grep installed)
+  echo Checking for $1: $problem
+  if [ "" == "$problem" ]; then
     apt-get -y install $1
   fi
 }
@@ -39,6 +38,19 @@ then
     installPackage libmysqlcppconn-dev
     installPackage libmysql++-dev
     installPackage libcppunit-dev
+    installPackage ntp
+
+    # for cluster software
+    installPackage corosync
+    installPackage pacemaker
+
+    #check for localized ntp servers
+    if grep "ubuntu.pool" /etc/ntp.conf > /dev/null
+    then 
+       sed -i 's/ubuntu.pool/be.pool/' /etc/ntp.conf
+       echo "Changed /etc/ntp.conf to use local servers."
+       service ntp reload
+    fi
 
     # we need wt from github
     if [ -f ../wt/INSTALL ]; then
@@ -97,6 +109,20 @@ then
   touch /var/log/admintools
   chown www-data:www-data /var/log/admintools
 fi
+
+# install cockpit
+read -r -p "Install cockpit?[y/N]" response
+response=${response,,}
+if [[ $response =~ (yes|y)$ ]]
+then
+  git pull
+  cd cockpit
+  make CONF=Release build
+  cp dist/Release/GNU-Linux-x86/cockpit /sbin
+  cd ..
+  mkdir /root/admintools
+fi
+
 
 # install yearbook application
 read -r -p "Install Yearbook app?[y/N]" response

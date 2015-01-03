@@ -23,13 +23,13 @@ void config::create() {
     ("ServerName", value<std::string>())
   ;
   
-  std::ifstream ifs("~/admintools/cockpit.cfg");
+  std::ifstream ifs("/root/admintools/cockpit.cfg");
   if(ifs) {
     store(parse_config_file(ifs, cf), map);
     notify(map);
   } else {
     cout << "===============================================" << endl;
-    cout << "/etc/admintools/cockpit.cfg not found." << endl;
+    cout << "/root/admintools/cockpit.cfg not found." << endl;
     cout << "Starting with a new configuration." << endl;
     cout << "===============================================" << endl;
   }
@@ -43,7 +43,7 @@ void config::create() {
 }
 
 void config::save() {
-  std::ofstream ofs("~/admintools/cockpit.cfg", ios_base::trunc);
+  std::ofstream ofs("/root/admintools/cockpit.cfg", ios_base::trunc);
   ofs << "serverName = " << serverName << endl;
   ofs.close();
 }
