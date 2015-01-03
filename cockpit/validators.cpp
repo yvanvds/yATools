@@ -57,7 +57,7 @@ void hostValidate() {
   for(auto iter = Config().hosts.begin(); iter != Config().hosts.end(); ++iter) {
     if(!y::sys::file::has("/etc/hosts", iter->first)) {
       y::sys::file::append("/etc/hosts", iter->second + " " + iter->first);
-      y::sys::stdOut("added " + Config().getServerName() + " to /etc/hosts");
+      y::sys::stdOut("added " + iter->first + " to /etc/hosts");
     }
   }
   

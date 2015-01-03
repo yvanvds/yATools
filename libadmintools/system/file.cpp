@@ -11,7 +11,7 @@
 
 void y::sys::file::append(const std::string& file, const std::string& line) {
   std::ofstream ofs(file, std::ios_base::app);
-  ofs << line;
+  ofs << line << std::endl;
   ofs.close();
 }
 
