@@ -19,6 +19,7 @@ void hostValidate() {
   y::sys::GetProcessResult("cat /etc/hostname", result);
   if(result.size()) {
     if (result[0].compare(Config().getServerName()) == 0) {
+      cout << "/etc/hostname is valid" << endl;
       return;
     }
   }

@@ -50,7 +50,7 @@ void config::create() {
   if(map.count("domainName")) {
     domainName = map["domainName"].as<std::string>();
   } else {
-    cout << "Please enter the domain for this server:";
+    cout << "Please enter the domain for this server: ";
     getline(cin, domainName);
     needsSaving = true;
   }
@@ -58,7 +58,7 @@ void config::create() {
   if(map.count("publicIP")) {
     publicIP = map["publicIP"].as<std::string>();
   } else {
-    cout << "Please enter the public IP address:";
+    cout << "Please enter the public IP address: ";
     getline(cin, publicIP);
     needsSaving = true;
   }
@@ -66,7 +66,7 @@ void config::create() {
   if(map.count("backboneIP")) {
     backboneIP = map["backboneIP"].as<std::string>();
   } else {
-    cout << "Please enter the backbone IP address:";
+    cout << "Please enter the backbone IP address: ";
     getline(cin, backboneIP);
     needsSaving = true;
   }
