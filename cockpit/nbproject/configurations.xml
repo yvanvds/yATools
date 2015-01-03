@@ -59,6 +59,7 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerOptionItem>-lboost_system</linkerOptionItem>
+            <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -112,6 +113,7 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerOptionItem>-lboost_system</linkerOptionItem>
+            <linkerOptionItem>-lboost_filesystem</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

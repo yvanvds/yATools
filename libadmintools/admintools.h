@@ -29,6 +29,7 @@
 //system
 #include "system/process.h"
 #include "system/workDir.h"
+#include "system/file.h"
 
 //utils
 #include "utils/config.h"

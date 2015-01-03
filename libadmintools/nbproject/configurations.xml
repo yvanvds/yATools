@@ -44,6 +44,8 @@
       <itemPath>samba/samba.h</itemPath>
     </logicalFolder>
     <logicalFolder name="system" displayName="system" projectFiles="true">
+      <itemPath>system/file.cpp</itemPath>
+      <itemPath>system/file.h</itemPath>
       <itemPath>system/process.cpp</itemPath>
       <itemPath>system/process.h</itemPath>
       <itemPath>system/system.hpp</itemPath>
@@ -224,91 +226,6 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="gui/confirmationDialog.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="gui/confirmationDialog.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="gui/passwordDialog.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="gui/passwordDialog.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="gui/session.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="gui/session.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="samba/samba.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="samba/samba.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="system/tests/systemProcessTest.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="system/tests/systemProcessTest.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="system/tests/systemProcessTestRun.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="utils/memcontainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="utils/memcontainer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="utils/random.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="utils/random.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="utils/sha1.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="utils/sha1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="admintools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
@@ -552,6 +469,18 @@
       </item>
       <item path="gui/application.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="gui/confirmationDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gui/confirmationDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="gui/passwordDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gui/passwordDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="gui/session.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gui/session.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
@@ -603,6 +532,14 @@
       </item>
       <item path="ldap/tests/ldpBaseDataTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="samba/samba.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="samba/samba.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/file.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/file.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="system/process.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="system/process.h" ex="false" tool="3" flavor2="0">
@@ -614,6 +551,15 @@
       <item path="system/tests/sysConfigTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="system/tests/sysConfigTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/tests/systemProcessTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/tests/systemProcessTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/tests/systemProcessTestRun.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="system/workDir.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -635,9 +581,21 @@
       </item>
       <item path="utils/log.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="utils/memcontainer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/memcontainer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/random.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/random.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="utils/security.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="utils/security.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/sha1.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/sha1.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="utils/tests/utilsSecurityTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -696,91 +654,6 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="gui/confirmationDialog.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="gui/confirmationDialog.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="gui/passwordDialog.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="gui/passwordDialog.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="gui/session.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="gui/session.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="samba/samba.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="samba/samba.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="system/tests/systemProcessTest.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="system/tests/systemProcessTest.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="system/tests/systemProcessTestRun.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="utils/memcontainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="utils/memcontainer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="utils/random.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="utils/random.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="utils/sha1.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="utils/sha1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="admintools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
@@ -1022,6 +895,18 @@
       </item>
       <item path="gui/application.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="gui/confirmationDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gui/confirmationDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="gui/passwordDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gui/passwordDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="gui/session.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gui/session.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
@@ -1073,6 +958,14 @@
       </item>
       <item path="ldap/tests/ldpBaseDataTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="samba/samba.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="samba/samba.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/file.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/file.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="system/process.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="system/process.h" ex="false" tool="3" flavor2="0">
@@ -1084,6 +977,15 @@
       <item path="system/tests/sysConfigTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="system/tests/sysConfigTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/tests/systemProcessTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="system/tests/systemProcessTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system/tests/systemProcessTestRun.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="system/workDir.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1105,9 +1007,21 @@
       </item>
       <item path="utils/log.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="utils/memcontainer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/memcontainer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/random.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/random.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="utils/security.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="utils/security.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/sha1.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/sha1.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="utils/tests/utilsSecurityTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

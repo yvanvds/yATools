@@ -51,6 +51,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/ldap/group.o \
 	${OBJECTDIR}/ldap/server.o \
 	${OBJECTDIR}/samba/samba.o \
+	${OBJECTDIR}/system/file.o \
 	${OBJECTDIR}/system/process.o \
 	${OBJECTDIR}/system/workDir.o \
 	${OBJECTDIR}/utils/config.o \
@@ -183,6 +184,11 @@ ${OBJECTDIR}/samba/samba.o: samba/samba.cpp
 	${MKDIR} -p ${OBJECTDIR}/samba
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/samba/samba.o samba/samba.cpp
+
+${OBJECTDIR}/system/file.o: system/file.cpp 
+	${MKDIR} -p ${OBJECTDIR}/system
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/system/file.o system/file.cpp
 
 ${OBJECTDIR}/system/process.o: system/process.cpp 
 	${MKDIR} -p ${OBJECTDIR}/system
@@ -638,6 +644,19 @@ ${OBJECTDIR}/samba/samba_nomain.o: ${OBJECTDIR}/samba/samba.o samba/samba.cpp
 	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/samba/samba_nomain.o samba/samba.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/samba/samba.o ${OBJECTDIR}/samba/samba_nomain.o;\
+	fi
+
+${OBJECTDIR}/system/file_nomain.o: ${OBJECTDIR}/system/file.o system/file.cpp 
+	${MKDIR} -p ${OBJECTDIR}/system
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/system/file.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/system/file_nomain.o system/file.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/system/file.o ${OBJECTDIR}/system/file_nomain.o;\
 	fi
 
 ${OBJECTDIR}/system/process_nomain.o: ${OBJECTDIR}/system/process.o system/process.cpp 

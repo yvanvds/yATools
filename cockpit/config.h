@@ -10,6 +10,7 @@
 
 #include <boost/program_options.hpp>
 #include <string>
+#include <map>
 
 class config {
 public:
@@ -20,6 +21,9 @@ public:
   std::string getDomainName();
   std::string getPublicIP();
   std::string getBackboneIP();
+  
+  // this is filled in hostValidate()
+  std::map<std::string, std::string> hosts;
   
 private:
   boost::program_options::options_description cf;
