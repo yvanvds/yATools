@@ -22,8 +22,8 @@ void config::create() {
   needsSaving = false;
   
   cf.add_options()
-    ("ServerName", value<std::string>())
-    ("DomainName", value<std::string>())
+    ("serverName", value<std::string>())
+    ("domainName", value<std::string>())
     ("publicIP"  , value<std::string>())
     ("backboneIP", value<std::string>())
   ;
