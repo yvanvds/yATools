@@ -14,3 +14,16 @@ void y::sys::file::append(const std::string& file, const std::string& line) {
   ofs << line;
   ofs.close();
 }
+
+bool y::sys::file::has(const std::string& file, const std::string& token) {
+  std::ifstream ifs(file);
+  std::string line;
+  while(std::getline(ifs, line)) {
+    if(line.find(token, 0) != std::string::npos) {
+      ifs.close();
+      return true;
+    }
+  }
+  ifs.close();
+  return false;
+}

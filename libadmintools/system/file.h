@@ -15,7 +15,7 @@ namespace y {
     namespace file {
       
       void append(const std::string & file, const std::string & line);
-      
+      bool has(const std::string & file, const std::string & token);
     }
   }
 }

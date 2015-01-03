@@ -49,16 +49,13 @@ void hostValidate() {
   if(Config().hosts.find(Config().getServerName()) == Config().hosts.end()) {
     Config().hosts[Config().getServerName()] = Config().getBackboneIP();
     y::sys::file::append(domainFile, Config().getServerName() + ":" + Config().getBackboneIP());
-    y::sys::stdOut(Config().getServerName() + " added to domain list");
+    y::sys::stdOut(Config().getServerName() + " added to domain list. You probably need to push this git repo.");
   }
   
   // check /etc/hosts
   result.clear();
   for(auto iter = Config().hosts.begin(); iter != Config().hosts.end(); ++iter) {
-    std::string command;
-    command = "grep " + iter->first + " /etc/hosts";
-    y::sys::GetProcessResult(command, result);
-    if(!result.size()) {
+    if(!y::sys::file::has("/etc/hosts", iter->first)) {
       y::sys::file::append("/etc/hosts", iter->second + " " + iter->first);
       y::sys::stdOut("added " + Config().getServerName() + " to /etc/hosts");
     }
