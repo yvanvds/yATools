@@ -13,7 +13,13 @@ addCronJob() {
   cat <(fgrep -i -v "$2" <(crontab -l)) <(echo "$job") | crontab
 }
 
-echo "Welcome to superboot!"
+createDir() {
+  if [ ! -d $1 ]; then
+    mkdir $1
+  fi
+}
+
+echo "Welcome to yvan's admin tools!"
 read -r -p "Verify installed software?[y/N]" response
 response=${response,,}
 if [[ $response =~ (yes|y)$ ]]
@@ -65,9 +71,7 @@ then
       echo "wt is installed"
     else
       cd ../wt
-      if [ ! -d build ]; then
-        mkdir build
-      fi
+      createDir build
       cd build
       cmake ../
       make
@@ -120,7 +124,7 @@ then
   make CONF=Release build
   cp dist/Release/GNU-Linux-x86/cockpit /sbin
   cd ..
-  mkdir /root/admintools
+  createDir /root/admintools
 fi
 
 
@@ -134,13 +138,8 @@ then
   make CONF=Release build
   
   # create dirs if they don't exist
-  if [ ! -d /var/www/apps ]; then
-    mkdir /var/www/apps
-  fi
-
-  if [ ! -d /var/www/apps/yearbook ]; then
-    mkdir /var/www/apps/yearbook
-  fi
+  createDir /var/www/apps
+  createDir /var/www/apps/yearbook 
   
   # remove files if they exist
   if [ -f /var/www/apps/yearbook/yearbook.wt ]; then

@@ -696,87 +696,87 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="/home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp"
+      <item path="gui/confirmationDialog.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/gui/confirmationDialog.h"
+      <item path="gui/confirmationDialog.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp"
+      <item path="gui/passwordDialog.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/gui/passwordDialog.h"
+      <item path="gui/passwordDialog.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/gui/session.cpp"
+      <item path="gui/session.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/gui/session.h"
+      <item path="gui/session.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/samba/samba.cpp"
+      <item path="samba/samba.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/samba/samba.h"
+      <item path="samba/samba.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp"
+      <item path="system/tests/systemProcessTest.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.h"
+      <item path="system/tests/systemProcessTest.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTestRun.cpp"
+      <item path="system/tests/systemProcessTestRun.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp"
+      <item path="utils/memcontainer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/utils/memcontainer.h"
+      <item path="utils/memcontainer.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/utils/random.cpp"
+      <item path="utils/random.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/utils/random.h"
+      <item path="utils/random.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/utils/sha1.cpp"
+      <item path="utils/sha1.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/libadmintools/utils/sha1.h"
+      <item path="utils/sha1.h"
             ex="false"
             tool="3"
             flavor2="0">

@@ -173,12 +173,12 @@
             <linkerLibLibItem>ldap</linkerLibLibItem>
             <linkerLibLibItem>lber</linkerLibLibItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="/home/yvan/github/yATools/libadmintools"
+              <makeArtifact PL="../libadmintools"
                             CT="2"
                             CN="Release"
                             AC="true"
                             BL="true"
-                            WD="/home/yvan/github/yATools/libadmintools"
+                            WD="../libadmintools"
                             BC="${MAKE}  -f Makefile CONF=Release"
                             CC="${MAKE}  -f Makefile CONF=Release clean"
                             OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}">

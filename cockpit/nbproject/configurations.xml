@@ -2,8 +2,8 @@
 <configurationDescriptor version="94">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="f1" displayName="config" projectFiles="true" kind="ROOT">
-      <itemPath>/home/yvan/github/yATools/cockpit/config.cpp</itemPath>
-      <itemPath>/home/yvan/github/yATools/cockpit/config.h</itemPath>
+      <itemPath>config.cpp</itemPath>
+      <itemPath>config.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -38,12 +38,12 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="/home/yvan/github/yATools/cockpit/config.cpp"
+      <item path="config.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/cockpit/config.h"
+      <item path="config.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -76,12 +76,12 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="/home/yvan/github/yATools/cockpit/config.cpp"
+      <item path="config.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/yvan/github/yATools/cockpit/config.h"
+      <item path="config.h"
             ex="false"
             tool="3"
             flavor2="0">

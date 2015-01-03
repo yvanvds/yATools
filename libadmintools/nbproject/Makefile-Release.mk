@@ -104,40 +104,40 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}: ${O
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
-${OBJECTDIR}/_ext/252733849/confirmationDialog.o: /home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp 
+${OBJECTDIR}/_ext/252733849/confirmationDialog.o: gui/confirmationDialog.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/confirmationDialog.o /home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/confirmationDialog.o gui/confirmationDialog.cpp
 
-${OBJECTDIR}/_ext/252733849/passwordDialog.o: /home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp 
+${OBJECTDIR}/_ext/252733849/passwordDialog.o: gui/passwordDialog.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/passwordDialog.o /home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/passwordDialog.o gui/passwordDialog.cpp
 
-${OBJECTDIR}/_ext/252733849/session.o: /home/yvan/github/yATools/libadmintools/gui/session.cpp 
+${OBJECTDIR}/_ext/252733849/session.o: gui/session.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/session.o /home/yvan/github/yATools/libadmintools/gui/session.cpp
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/session.o gui/session.cpp
 
-${OBJECTDIR}/_ext/1925413572/samba.o: /home/yvan/github/yATools/libadmintools/samba/samba.cpp 
+${OBJECTDIR}/_ext/1925413572/samba.o: samba/samba.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1925413572
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1925413572/samba.o /home/yvan/github/yATools/libadmintools/samba/samba.cpp
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1925413572/samba.o samba/samba.cpp
 
-${OBJECTDIR}/_ext/1923004017/memcontainer.o: /home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp 
+${OBJECTDIR}/_ext/1923004017/memcontainer.o: utils/memcontainer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/memcontainer.o /home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/memcontainer.o utils/memcontainer.cpp
 
-${OBJECTDIR}/_ext/1923004017/random.o: /home/yvan/github/yATools/libadmintools/utils/random.cpp 
+${OBJECTDIR}/_ext/1923004017/random.o: utils/random.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/random.o /home/yvan/github/yATools/libadmintools/utils/random.cpp
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/random.o utils/random.cpp
 
-${OBJECTDIR}/_ext/1923004017/sha1.o: /home/yvan/github/yATools/libadmintools/utils/sha1.cpp 
+${OBJECTDIR}/_ext/1923004017/sha1.o: utils/sha1.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/sha1.o /home/yvan/github/yATools/libadmintools/utils/sha1.cpp
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/sha1.o utils/sha1.cpp
 
 ${OBJECTDIR}/data/database.o: data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
@@ -432,7 +432,7 @@ ${TESTDIR}/utils/tests/utilsSecurityTestRun.o: utils/tests/utilsSecurityTestRun.
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/utils/tests/utilsSecurityTestRun.o utils/tests/utilsSecurityTestRun.cpp
 
 
-${OBJECTDIR}/_ext/252733849/confirmationDialog_nomain.o: ${OBJECTDIR}/_ext/252733849/confirmationDialog.o /home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp 
+${OBJECTDIR}/_ext/252733849/confirmationDialog_nomain.o: ${OBJECTDIR}/_ext/252733849/confirmationDialog.o gui/confirmationDialog.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/252733849/confirmationDialog.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
@@ -440,7 +440,7 @@ ${OBJECTDIR}/_ext/252733849/confirmationDialog_nomain.o: ${OBJECTDIR}/_ext/25273
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/confirmationDialog_nomain.o /home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp;\
+	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/confirmationDialog_nomain.o gui/confirmationDialog.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/_ext/252733849/confirmationDialog.o ${OBJECTDIR}/_ext/252733849/confirmationDialog_nomain.o;\
 	fi
