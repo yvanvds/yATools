@@ -6,34 +6,6 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/yvan/github/yATools/libadmintools/samba/samba.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldapDataTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/group.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/system/process.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/random.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/account.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/dataset.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/dataset.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/random.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/config.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/security.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/data.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/security.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/watch.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/server.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/account.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldapServerTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/config.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/server.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/group.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/container.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/data.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/attributes.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldapServerTest.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/system/system.hpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/samba/samba.cpp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

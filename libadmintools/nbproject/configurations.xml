@@ -59,10 +59,14 @@
       <itemPath>utils/convert.h</itemPath>
       <itemPath>utils/log.cpp</itemPath>
       <itemPath>utils/log.h</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/utils/memcontainer.h</itemPath>
       <itemPath>/home/yvan/github/yATools/libadmintools/utils/random.cpp</itemPath>
       <itemPath>/home/yvan/github/yATools/libadmintools/utils/random.h</itemPath>
       <itemPath>utils/security.cpp</itemPath>
       <itemPath>utils/security.h</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/utils/sha1.cpp</itemPath>
+      <itemPath>/home/yvan/github/yATools/libadmintools/utils/sha1.h</itemPath>
       <itemPath>utils/watch.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -275,12 +279,32 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/memcontainer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/yvan/github/yATools/libadmintools/utils/random.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="/home/yvan/github/yATools/libadmintools/utils/random.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/sha1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/sha1.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -727,12 +751,32 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/memcontainer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/yvan/github/yATools/libadmintools/utils/random.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="/home/yvan/github/yATools/libadmintools/utils/random.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/sha1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/yvan/github/yATools/libadmintools/utils/sha1.h"
             ex="false"
             tool="3"
             flavor2="0">

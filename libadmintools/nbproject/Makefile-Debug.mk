@@ -39,7 +39,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/252733849/passwordDialog.o \
 	${OBJECTDIR}/_ext/252733849/session.o \
 	${OBJECTDIR}/_ext/1925413572/samba.o \
+	${OBJECTDIR}/_ext/1923004017/memcontainer.o \
 	${OBJECTDIR}/_ext/1923004017/random.o \
+	${OBJECTDIR}/_ext/1923004017/sha1.o \
 	${OBJECTDIR}/data/database.o \
 	${OBJECTDIR}/data/dateTime.o \
 	${OBJECTDIR}/data/field.o \
@@ -122,10 +124,20 @@ ${OBJECTDIR}/_ext/1925413572/samba.o: /home/yvan/github/yATools/libadmintools/sa
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1925413572/samba.o /home/yvan/github/yATools/libadmintools/samba/samba.cpp
 
+${OBJECTDIR}/_ext/1923004017/memcontainer.o: /home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/memcontainer.o /home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp
+
 ${OBJECTDIR}/_ext/1923004017/random.o: /home/yvan/github/yATools/libadmintools/utils/random.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/random.o /home/yvan/github/yATools/libadmintools/utils/random.cpp
+
+${OBJECTDIR}/_ext/1923004017/sha1.o: /home/yvan/github/yATools/libadmintools/utils/sha1.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/sha1.o /home/yvan/github/yATools/libadmintools/utils/sha1.cpp
 
 ${OBJECTDIR}/data/database.o: data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
@@ -472,6 +484,19 @@ ${OBJECTDIR}/_ext/1925413572/samba_nomain.o: ${OBJECTDIR}/_ext/1925413572/samba.
 	    ${CP} ${OBJECTDIR}/_ext/1925413572/samba.o ${OBJECTDIR}/_ext/1925413572/samba_nomain.o;\
 	fi
 
+${OBJECTDIR}/_ext/1923004017/memcontainer_nomain.o: ${OBJECTDIR}/_ext/1923004017/memcontainer.o /home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/1923004017/memcontainer.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/memcontainer_nomain.o /home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/_ext/1923004017/memcontainer.o ${OBJECTDIR}/_ext/1923004017/memcontainer_nomain.o;\
+	fi
+
 ${OBJECTDIR}/_ext/1923004017/random_nomain.o: ${OBJECTDIR}/_ext/1923004017/random.o /home/yvan/github/yATools/libadmintools/utils/random.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/1923004017/random.o`; \
@@ -483,6 +508,19 @@ ${OBJECTDIR}/_ext/1923004017/random_nomain.o: ${OBJECTDIR}/_ext/1923004017/rando
 	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/random_nomain.o /home/yvan/github/yATools/libadmintools/utils/random.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/_ext/1923004017/random.o ${OBJECTDIR}/_ext/1923004017/random_nomain.o;\
+	fi
+
+${OBJECTDIR}/_ext/1923004017/sha1_nomain.o: ${OBJECTDIR}/_ext/1923004017/sha1.o /home/yvan/github/yATools/libadmintools/utils/sha1.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/1923004017/sha1.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/sha1_nomain.o /home/yvan/github/yATools/libadmintools/utils/sha1.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/_ext/1923004017/sha1.o ${OBJECTDIR}/_ext/1923004017/sha1_nomain.o;\
 	fi
 
 ${OBJECTDIR}/data/database_nomain.o: ${OBJECTDIR}/data/database.o data/database.cpp 

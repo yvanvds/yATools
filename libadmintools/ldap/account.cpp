@@ -5,11 +5,11 @@
  * Created on January 14, 2014, 6:48 PM
  */
 
-#include <openssl/sha.h>
 #include "ldap/account.h"
 #include "dataset.h"
 #include "samba/samba.h"
 #include "server.h"
+#include "utils/sha1.h"
 
 y::ldap::account::account() : 
   _uidNumber(UID_NUMBER(0)),
@@ -219,21 +219,11 @@ y::ldap::account & y::ldap::account::password(const PASSWORD& value) {
   std::string origin = value();
   
   // let samba change the password for us
-  samba::changePassword(_uid()(), origin);
+  //samba::changePassword(_uid()(), origin);
   
   // the password value from ldap sets the title value, which is used
   // to sync with google
-  unsigned char hash[SHA_DIGEST_LENGTH];
-  SHA1((unsigned char*)origin.c_str(), origin.size() - 1, (unsigned char*)hash);
-  char mdString[SHA_DIGEST_LENGTH*2+1];
-  
-  for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
-    sprintf(&mdString[i*2], "%02x", (unsigned int)hash[i]);
-  }
-  
-  std::string hashed;
-  hashed = mdString;
-  _password(PASSWORD(hashed));
+  _password(PASSWORD(y::utils::sha1(origin)));
   return *this;
 }
 
