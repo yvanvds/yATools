@@ -60,5 +60,5 @@ void hostValidate() {
       y::sys::stdOut("added " + iter->first + " to /etc/hosts");
     }
   }
-  
+  y::sys::stdOut("/etc/hosts is up to date.");
 }
