@@ -1,0 +1,73 @@
+#!/bin/bash
+. scripts/functions
+
+installAdminTools(){
+echo
+read -r -p "Install libAdminTools?[y/N]" response
+response=${response,,}
+if [[ $response =~ (yes|y)$ ]]
+then
+  git pull
+  cd libadmintools
+  make CONF=Release build
+  cp dist/Release/GNU-Linux-x86/liblibadmintools.so /usr/lib
+  cd ..
+  rm /var/log/admintools
+  touch /var/log/admintools
+  chown www-data:www-data /var/log/admintools
+fi
+}
+
+# install cockpit
+installCockpit(){
+echo
+read -r -p "Install cockpit?[y/N]" response
+response=${response,,}
+if [[ $response =~ (yes|y)$ ]]
+then
+  git pull
+  cd cockpit
+  make CONF=Release build
+  cp dist/Release/GNU-Linux-x86/cockpit /sbin
+  cd ..
+  createDir /root/admintools
+fi
+}
+
+# install yearbook application
+installYearbook() {
+echo
+read -r -p "Install Yearbook app?[y/N]" response
+response=${response,,}
+if [[ $response =~ (yes|y)$ ]]
+then
+  git pull
+  cd yearBook
+  make CONF=Release build
+  
+  # create dirs if they don't exist
+  createDir /var/www/apps
+  createDir /var/www/apps/yearbook 
+  
+  # remove files if they exist
+  if [ -f /var/www/apps/yearbook/yearbook.wt ]; then
+    rm /var/www/apps/yearbook/yearbook.wt
+  fi
+
+  cp dist/Release_fastcgi/GNU-Linux-x86/yearbook /var/www/apps/yearbook/yearbook.wt
+  cd ../yearbookAdmin
+  make CONF=Release build
+
+  if [ -f /var/www/app/yearbook/yearbookAdmin.wt ]; then
+    rm /var/www/apps/yearbook/yearbookAdmin.wt
+  fi
+
+  cp dist/Release/GNU-Linux-x86/yearbookadmin /var/www/apps/yearbook/yearbookAdmin.wt
+  cp -fr yearbook_latex /var/www/apps/yearbook
+  chown -R www-data:www-data /var/www/apps/yearbook
+  service apache2 restart
+  cd ..
+fi
+}
+
+

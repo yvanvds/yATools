@@ -1,0 +1,50 @@
+#!/bin/bash
+
+installPackage() {
+  problem=$(dpkg -s $1|grep installed)
+  
+  if [ "" == "$problem" ]; then
+    printFailed "package $1" "NOT INSTALLED"
+    apt-get -y install $1
+  else 
+    printSuccess "package $1" "INSTALLED"
+  fi
+}
+
+addCronJob() {
+  job="$1 $2"
+  cat <(fgrep -i -v "$2" <(crontab -l)) <(echo "$job") | crontab
+}
+
+createDir() {
+  if [ ! -d $1 ]; then
+    mkdir $1
+  fi
+}
+
+#colored printing
+
+printSuccess() {
+  printf "\E[97m%40s \E[92m%15s \n" "$1" "$2"
+  tput sgr0
+}
+
+printFailed() {
+  printf "\E[97m%40s \E[91m%15s \n" "$1" "$2"
+  tput sgr0
+}
+
+printBox() {
+  str="$1"
+  len=$((${#str}+4))
+  echo -e "\E[34m"
+  for i in $(seq $len); do echo -n '*'; done;
+  echo; echo "* "$str" *";
+  for i in $(seq $len); do echo -n '*'; done;
+  echo
+  tput sgr0
+}     
+
+
+
+

@@ -78,6 +78,8 @@ void config::save() {
   std::ofstream ofs("/root/admintools/cockpit.cfg", ios_base::trunc);
   ofs << "serverName = " << serverName << endl;
   ofs << "domainName = " << domainName << endl;
+  ofs << "publicIP   = " << publicIP   << endl;
+  ofs << "backboneIP = " << backboneIP << endl; 
   ofs.close();
 }
 

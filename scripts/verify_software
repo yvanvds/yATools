@@ -1,0 +1,90 @@
+#!/bin/bash
+. scripts/functions
+
+verifySoftware() {
+read -r -p "Verify installed software?[y/N]" response
+response=${response,,}
+if [[ $response =~ (yes|y)$ ]]
+then 
+    installPackage build-essential
+    installPackage cmake
+    installPackage libboost-all-dev
+    installPackage libmysqlclient-dev
+    installPackage libfcgi-dev
+    installPackage graphicsmagick
+    installPackage libgraphicsmagick++1-dev
+    installPackage libpango-1.0-0
+    installPackage libpango1.0-dev
+    installPackage libhpdf-dev
+    installPackage freeglut3-dev
+    installPackage libgl1-mesa-dev
+    installPackage mesa-utils
+    installPackage pkg-config
+    installPackage doxygen
+    installPackage libldap2-dev
+    installPackage libssl-dev
+    installPackage libmysqlcppconn-dev
+    installPackage libmysql++-dev
+    installPackage libcppunit-dev
+    installPackage ntp
+
+    # for cluster software
+    installPackage corosync
+    installPackage pacemaker
+
+    #check for localized ntp servers
+    if grep "ubuntu.pool" /etc/ntp.conf > /dev/null
+    then 
+       sed -i 's/ubuntu.pool/be.pool/' /etc/ntp.conf
+       echo "Changed /etc/ntp.conf to use local servers."
+       printFailed "Time Server Configuration" "REPAIRED"
+       service ntp reload
+    else
+       printSuccess "Time Server Configuration" "OK"
+    fi
+
+    # we need wt from github
+    if [ -f ../wt/INSTALL ]; then
+      printSuccess  "verifying wt presence" "OK"   
+    else 
+      printFailure "verifying wt presence" "DOWNLOADING"
+      cd ..
+      git clone git://github.com/kdeforche/wt.git
+      cd yATools
+    fi
+    # check if wt is installed
+    if [ -d /usr/local/include/Wt ]; then
+      printSuccess "verifying wt installation" "OK"
+    else
+      printFailure "verifying wt installation" "COMPILING"
+      cd ../wt
+      createDir build
+      cd build
+      cmake ../
+      make
+      make install
+      cd ../../yATools
+    fi
+    
+    # copy boost process
+    if [ -f /usr/include/boost/process.hpp ]; then
+      printSuccess "checking for boost process" "OK"
+    else
+      cp -fr dependencies/boost_process/boost/* /usr/include/boost
+      printFailed "checking for boost process" "INSTALLING" 
+    fi
+
+    # put network checker in place
+    if [ -f /sbin/checkNetwork ]; then
+      printSuccess "verifying network restarter" "OK"
+    else 
+      cp -fr scripts/checkNetwork /sbin
+      printFailed "verifying network restarter" "INSTALLING"
+    fi
+
+    addCronJob "*/2 * * * *" "/sbin/checkNetwork"
+    printSuccess "adding checkNetwork to cron" "OK"
+fi
+}
+
+
