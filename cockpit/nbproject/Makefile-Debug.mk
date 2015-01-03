@@ -35,8 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/403659139/config.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/config.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/validators.o
 
 
 # C Compiler Flags
@@ -53,28 +54,36 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-lboost_program_options
+LDLIBSOPTIONS=-lboost_program_options -Wl,-rpath,../libadmintools/../Debug -L../libadmintools/../Debug -lsystem -lboost_system
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/cockpit
 
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/cockpit: ../libadmintools/../Debug/libsystem.so
+
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/cockpit: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/cockpit ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/403659139/config.o: /home/yvan/github/yATools/cockpit/config.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/403659139
+${OBJECTDIR}/config.o: config.cpp 
+	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/403659139/config.o /home/yvan/github/yATools/cockpit/config.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/config.o config.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/validators.o: validators.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/validators.o validators.cpp
 
 # Subprojects
 .build-subprojects:
+	cd ../libadmintools && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -83,6 +92,7 @@ ${OBJECTDIR}/main.o: main.cpp
 
 # Subprojects
 .clean-subprojects:
+	cd ../libadmintools && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

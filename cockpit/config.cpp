@@ -19,8 +19,13 @@ config & Config() {
 }
 
 void config::create() {
+  needsSaving = false;
+  
   cf.add_options()
     ("ServerName", value<std::string>())
+    ("DomainName", value<std::string>())
+    ("publicIP"  , value<std::string>())
+    ("backboneIP", value<std::string>())
   ;
   
   std::ifstream ifs("/root/admintools/cockpit.cfg");
@@ -39,11 +44,55 @@ void config::create() {
   } else {
     cout << "Please enter the name of this server: ";
     getline(cin, serverName);
+    needsSaving = true;
   } 
+  
+  if(map.count("domainName")) {
+    domainName = map["domainName"].as<std::string>();
+  } else {
+    cout << "Please enter the domain for this server:";
+    getline(cin, domainName);
+    needsSaving = true;
+  }
+  
+  if(map.count("publicIP")) {
+    publicIP = map["publicIP"].as<std::string>();
+  } else {
+    cout << "Please enter the public IP address:";
+    getline(cin, publicIP);
+    needsSaving = true;
+  }
+  
+  if(map.count("backboneIP")) {
+    backboneIP = map["backboneIP"].as<std::string>();
+  } else {
+    cout << "Please enter the backbone IP address:";
+    getline(cin, backboneIP);
+    needsSaving = true;
+  }
 }
 
 void config::save() {
+  if(!needsSaving) return;
+  
   std::ofstream ofs("/root/admintools/cockpit.cfg", ios_base::trunc);
   ofs << "serverName = " << serverName << endl;
+  ofs << "domainName = " << domainName << endl;
   ofs.close();
+}
+
+string config::getServerName() {
+  return serverName;
+}
+
+string config::getDomainName() {
+  return domainName;
+}
+
+string config::getPublicIP() {
+  return publicIP;
+}
+
+string config::getBackboneIP() {
+  return backboneIP;
 }

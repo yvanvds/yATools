@@ -7,6 +7,7 @@
 
 #include <cstdlib>
 #include "config.h"
+#include "validators.h"
 using namespace std;
 
 
@@ -22,6 +23,8 @@ int main(int argc, char** argv) {
   // first check for config file
   Config().create();
   Config().save();
+  
+  ValidateAll();
   
   return 0;
 }

@@ -16,11 +16,21 @@ public:
   void create();
   void save();
   
+  std::string getServerName();
+  std::string getDomainName();
+  std::string getPublicIP();
+  std::string getBackboneIP();
+  
 private:
   boost::program_options::options_description cf;
   boost::program_options::variables_map map;
   
+  bool needsSaving;
+  
   std::string serverName;
+  std::string domainName;
+  std::string publicIP;
+  std::string backboneIP;
 };
 
 config & Config();

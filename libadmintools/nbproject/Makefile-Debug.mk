@@ -35,32 +35,32 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/252733849/confirmationDialog.o \
-	${OBJECTDIR}/_ext/252733849/passwordDialog.o \
-	${OBJECTDIR}/_ext/252733849/session.o \
-	${OBJECTDIR}/_ext/1925413572/samba.o \
-	${OBJECTDIR}/_ext/1923004017/memcontainer.o \
-	${OBJECTDIR}/_ext/1923004017/random.o \
-	${OBJECTDIR}/_ext/1923004017/sha1.o \
 	${OBJECTDIR}/data/database.o \
 	${OBJECTDIR}/data/dateTime.o \
 	${OBJECTDIR}/data/field.o \
 	${OBJECTDIR}/data/row.o \
 	${OBJECTDIR}/data/sqlserver.o \
 	${OBJECTDIR}/gui/application.o \
+	${OBJECTDIR}/gui/confirmationDialog.o \
+	${OBJECTDIR}/gui/passwordDialog.o \
+	${OBJECTDIR}/gui/session.o \
 	${OBJECTDIR}/ldap/account.o \
 	${OBJECTDIR}/ldap/attributes.o \
 	${OBJECTDIR}/ldap/data.o \
 	${OBJECTDIR}/ldap/dataset.o \
 	${OBJECTDIR}/ldap/group.o \
 	${OBJECTDIR}/ldap/server.o \
+	${OBJECTDIR}/samba/samba.o \
 	${OBJECTDIR}/system/process.o \
 	${OBJECTDIR}/system/workDir.o \
 	${OBJECTDIR}/utils/config.o \
 	${OBJECTDIR}/utils/container.o \
 	${OBJECTDIR}/utils/convert.o \
 	${OBJECTDIR}/utils/log.o \
-	${OBJECTDIR}/utils/security.o
+	${OBJECTDIR}/utils/memcontainer.o \
+	${OBJECTDIR}/utils/random.o \
+	${OBJECTDIR}/utils/security.o \
+	${OBJECTDIR}/utils/sha1.o
 
 # Test Directory
 TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
@@ -104,41 +104,6 @@ LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_file
 	${MKDIR} -p ../${CND_CONF}
 	${LINK.cc} -o ../${CND_CONF}/libsystem.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
-${OBJECTDIR}/_ext/252733849/confirmationDialog.o: /home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/confirmationDialog.o /home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp
-
-${OBJECTDIR}/_ext/252733849/passwordDialog.o: /home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/passwordDialog.o /home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp
-
-${OBJECTDIR}/_ext/252733849/session.o: /home/yvan/github/yATools/libadmintools/gui/session.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/session.o /home/yvan/github/yATools/libadmintools/gui/session.cpp
-
-${OBJECTDIR}/_ext/1925413572/samba.o: /home/yvan/github/yATools/libadmintools/samba/samba.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1925413572
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1925413572/samba.o /home/yvan/github/yATools/libadmintools/samba/samba.cpp
-
-${OBJECTDIR}/_ext/1923004017/memcontainer.o: /home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/memcontainer.o /home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp
-
-${OBJECTDIR}/_ext/1923004017/random.o: /home/yvan/github/yATools/libadmintools/utils/random.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/random.o /home/yvan/github/yATools/libadmintools/utils/random.cpp
-
-${OBJECTDIR}/_ext/1923004017/sha1.o: /home/yvan/github/yATools/libadmintools/utils/sha1.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/sha1.o /home/yvan/github/yATools/libadmintools/utils/sha1.cpp
-
 ${OBJECTDIR}/data/database.o: data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
 	${RM} "$@.d"
@@ -168,6 +133,21 @@ ${OBJECTDIR}/gui/application.o: gui/application.cpp
 	${MKDIR} -p ${OBJECTDIR}/gui
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/application.o gui/application.cpp
+
+${OBJECTDIR}/gui/confirmationDialog.o: gui/confirmationDialog.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/confirmationDialog.o gui/confirmationDialog.cpp
+
+${OBJECTDIR}/gui/passwordDialog.o: gui/passwordDialog.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/passwordDialog.o gui/passwordDialog.cpp
+
+${OBJECTDIR}/gui/session.o: gui/session.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/session.o gui/session.cpp
 
 ${OBJECTDIR}/ldap/account.o: ldap/account.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
@@ -199,6 +179,11 @@ ${OBJECTDIR}/ldap/server.o: ldap/server.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/server.o ldap/server.cpp
 
+${OBJECTDIR}/samba/samba.o: samba/samba.cpp 
+	${MKDIR} -p ${OBJECTDIR}/samba
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/samba/samba.o samba/samba.cpp
+
 ${OBJECTDIR}/system/process.o: system/process.cpp 
 	${MKDIR} -p ${OBJECTDIR}/system
 	${RM} "$@.d"
@@ -229,10 +214,25 @@ ${OBJECTDIR}/utils/log.o: utils/log.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/log.o utils/log.cpp
 
+${OBJECTDIR}/utils/memcontainer.o: utils/memcontainer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/memcontainer.o utils/memcontainer.cpp
+
+${OBJECTDIR}/utils/random.o: utils/random.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/random.o utils/random.cpp
+
 ${OBJECTDIR}/utils/security.o: utils/security.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/security.o utils/security.cpp
+
+${OBJECTDIR}/utils/sha1.o: utils/sha1.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/sha1.o utils/sha1.cpp
 
 # Subprojects
 .build-subprojects:
@@ -279,7 +279,7 @@ ${TESTDIR}/TestFiles/f3: ${TESTDIR}/system/tests/sysConfigTest.o ${TESTDIR}/syst
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
-${TESTDIR}/TestFiles/f12: ${TESTDIR}/_ext/1151702947/systemProcessTest.o ${TESTDIR}/_ext/1151702947/systemProcessTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f12: ${TESTDIR}/system/tests/systemProcessTest.o ${TESTDIR}/system/tests/systemProcessTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f12 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs` `cppunit-config --libs`   
 
@@ -408,16 +408,16 @@ ${TESTDIR}/system/tests/sysConfigTestRun.o: system/tests/sysConfigTestRun.cpp
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/system/tests/sysConfigTestRun.o system/tests/sysConfigTestRun.cpp
 
 
-${TESTDIR}/_ext/1151702947/systemProcessTest.o: /home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp 
-	${MKDIR} -p ${TESTDIR}/_ext/1151702947
+${TESTDIR}/system/tests/systemProcessTest.o: system/tests/systemProcessTest.cpp 
+	${MKDIR} -p ${TESTDIR}/system/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/_ext/1151702947/systemProcessTest.o /home/yvan/github/yATools/libadmintools/system/tests/systemProcessTest.cpp
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/system/tests/systemProcessTest.o system/tests/systemProcessTest.cpp
 
 
-${TESTDIR}/_ext/1151702947/systemProcessTestRun.o: /home/yvan/github/yATools/libadmintools/system/tests/systemProcessTestRun.cpp 
-	${MKDIR} -p ${TESTDIR}/_ext/1151702947
+${TESTDIR}/system/tests/systemProcessTestRun.o: system/tests/systemProcessTestRun.cpp 
+	${MKDIR} -p ${TESTDIR}/system/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/_ext/1151702947/systemProcessTestRun.o /home/yvan/github/yATools/libadmintools/system/tests/systemProcessTestRun.cpp
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/system/tests/systemProcessTestRun.o system/tests/systemProcessTestRun.cpp
 
 
 ${TESTDIR}/utils/tests/utilsSecurityTest.o: utils/tests/utilsSecurityTest.cpp 
@@ -431,97 +431,6 @@ ${TESTDIR}/utils/tests/utilsSecurityTestRun.o: utils/tests/utilsSecurityTestRun.
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/utils/tests/utilsSecurityTestRun.o utils/tests/utilsSecurityTestRun.cpp
 
-
-${OBJECTDIR}/_ext/252733849/confirmationDialog_nomain.o: ${OBJECTDIR}/_ext/252733849/confirmationDialog.o /home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/252733849/confirmationDialog.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/confirmationDialog_nomain.o /home/yvan/github/yATools/libadmintools/gui/confirmationDialog.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/_ext/252733849/confirmationDialog.o ${OBJECTDIR}/_ext/252733849/confirmationDialog_nomain.o;\
-	fi
-
-${OBJECTDIR}/_ext/252733849/passwordDialog_nomain.o: ${OBJECTDIR}/_ext/252733849/passwordDialog.o /home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/252733849/passwordDialog.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/passwordDialog_nomain.o /home/yvan/github/yATools/libadmintools/gui/passwordDialog.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/_ext/252733849/passwordDialog.o ${OBJECTDIR}/_ext/252733849/passwordDialog_nomain.o;\
-	fi
-
-${OBJECTDIR}/_ext/252733849/session_nomain.o: ${OBJECTDIR}/_ext/252733849/session.o /home/yvan/github/yATools/libadmintools/gui/session.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/252733849
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/252733849/session.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/252733849/session_nomain.o /home/yvan/github/yATools/libadmintools/gui/session.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/_ext/252733849/session.o ${OBJECTDIR}/_ext/252733849/session_nomain.o;\
-	fi
-
-${OBJECTDIR}/_ext/1925413572/samba_nomain.o: ${OBJECTDIR}/_ext/1925413572/samba.o /home/yvan/github/yATools/libadmintools/samba/samba.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1925413572
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/1925413572/samba.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1925413572/samba_nomain.o /home/yvan/github/yATools/libadmintools/samba/samba.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/_ext/1925413572/samba.o ${OBJECTDIR}/_ext/1925413572/samba_nomain.o;\
-	fi
-
-${OBJECTDIR}/_ext/1923004017/memcontainer_nomain.o: ${OBJECTDIR}/_ext/1923004017/memcontainer.o /home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/1923004017/memcontainer.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/memcontainer_nomain.o /home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/_ext/1923004017/memcontainer.o ${OBJECTDIR}/_ext/1923004017/memcontainer_nomain.o;\
-	fi
-
-${OBJECTDIR}/_ext/1923004017/random_nomain.o: ${OBJECTDIR}/_ext/1923004017/random.o /home/yvan/github/yATools/libadmintools/utils/random.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/1923004017/random.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/random_nomain.o /home/yvan/github/yATools/libadmintools/utils/random.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/_ext/1923004017/random.o ${OBJECTDIR}/_ext/1923004017/random_nomain.o;\
-	fi
-
-${OBJECTDIR}/_ext/1923004017/sha1_nomain.o: ${OBJECTDIR}/_ext/1923004017/sha1.o /home/yvan/github/yATools/libadmintools/utils/sha1.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1923004017
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/1923004017/sha1.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1923004017/sha1_nomain.o /home/yvan/github/yATools/libadmintools/utils/sha1.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/_ext/1923004017/sha1.o ${OBJECTDIR}/_ext/1923004017/sha1_nomain.o;\
-	fi
 
 ${OBJECTDIR}/data/database_nomain.o: ${OBJECTDIR}/data/database.o data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
@@ -599,6 +508,45 @@ ${OBJECTDIR}/gui/application_nomain.o: ${OBJECTDIR}/gui/application.o gui/applic
 	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/application_nomain.o gui/application.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/gui/application.o ${OBJECTDIR}/gui/application_nomain.o;\
+	fi
+
+${OBJECTDIR}/gui/confirmationDialog_nomain.o: ${OBJECTDIR}/gui/confirmationDialog.o gui/confirmationDialog.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/confirmationDialog.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/confirmationDialog_nomain.o gui/confirmationDialog.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/gui/confirmationDialog.o ${OBJECTDIR}/gui/confirmationDialog_nomain.o;\
+	fi
+
+${OBJECTDIR}/gui/passwordDialog_nomain.o: ${OBJECTDIR}/gui/passwordDialog.o gui/passwordDialog.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/passwordDialog.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/passwordDialog_nomain.o gui/passwordDialog.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/gui/passwordDialog.o ${OBJECTDIR}/gui/passwordDialog_nomain.o;\
+	fi
+
+${OBJECTDIR}/gui/session_nomain.o: ${OBJECTDIR}/gui/session.o gui/session.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/session.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/session_nomain.o gui/session.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/gui/session.o ${OBJECTDIR}/gui/session_nomain.o;\
 	fi
 
 ${OBJECTDIR}/ldap/account_nomain.o: ${OBJECTDIR}/ldap/account.o ldap/account.cpp 
@@ -679,6 +627,19 @@ ${OBJECTDIR}/ldap/server_nomain.o: ${OBJECTDIR}/ldap/server.o ldap/server.cpp
 	    ${CP} ${OBJECTDIR}/ldap/server.o ${OBJECTDIR}/ldap/server_nomain.o;\
 	fi
 
+${OBJECTDIR}/samba/samba_nomain.o: ${OBJECTDIR}/samba/samba.o samba/samba.cpp 
+	${MKDIR} -p ${OBJECTDIR}/samba
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/samba/samba.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/samba/samba_nomain.o samba/samba.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/samba/samba.o ${OBJECTDIR}/samba/samba_nomain.o;\
+	fi
+
 ${OBJECTDIR}/system/process_nomain.o: ${OBJECTDIR}/system/process.o system/process.cpp 
 	${MKDIR} -p ${OBJECTDIR}/system
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/system/process.o`; \
@@ -757,6 +718,32 @@ ${OBJECTDIR}/utils/log_nomain.o: ${OBJECTDIR}/utils/log.o utils/log.cpp
 	    ${CP} ${OBJECTDIR}/utils/log.o ${OBJECTDIR}/utils/log_nomain.o;\
 	fi
 
+${OBJECTDIR}/utils/memcontainer_nomain.o: ${OBJECTDIR}/utils/memcontainer.o utils/memcontainer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/memcontainer.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/memcontainer_nomain.o utils/memcontainer.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/utils/memcontainer.o ${OBJECTDIR}/utils/memcontainer_nomain.o;\
+	fi
+
+${OBJECTDIR}/utils/random_nomain.o: ${OBJECTDIR}/utils/random.o utils/random.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/random.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/random_nomain.o utils/random.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/utils/random.o ${OBJECTDIR}/utils/random_nomain.o;\
+	fi
+
 ${OBJECTDIR}/utils/security_nomain.o: ${OBJECTDIR}/utils/security.o utils/security.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/security.o`; \
@@ -768,6 +755,19 @@ ${OBJECTDIR}/utils/security_nomain.o: ${OBJECTDIR}/utils/security.o utils/securi
 	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/security_nomain.o utils/security.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/utils/security.o ${OBJECTDIR}/utils/security_nomain.o;\
+	fi
+
+${OBJECTDIR}/utils/sha1_nomain.o: ${OBJECTDIR}/utils/sha1.o utils/sha1.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/sha1.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/sha1_nomain.o utils/sha1.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/utils/sha1.o ${OBJECTDIR}/utils/sha1_nomain.o;\
 	fi
 
 # Run Test Targets

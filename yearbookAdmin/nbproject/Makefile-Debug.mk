@@ -35,13 +35,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/1764173701/configuration.o \
-	${OBJECTDIR}/_ext/1764173701/dataconnect.o \
-	${OBJECTDIR}/_ext/1764173701/download.o \
-	${OBJECTDIR}/_ext/1764173701/removeDialog.o \
-	${OBJECTDIR}/_ext/1764173701/review.o \
-	${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/configuration.o \
+	${OBJECTDIR}/dataconnect.o \
+	${OBJECTDIR}/download.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/removeDialog.o \
+	${OBJECTDIR}/review.o \
+	${OBJECTDIR}/yearbookAdmin.o
 
 
 # C Compiler Flags
@@ -58,56 +58,56 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -Wl,-rpath,/home/yvan/github/yATools/libadmintools/../Debug -L/home/yvan/github/yATools/libadmintools/../Debug -lsystem -lwthttp -lwt -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -llber -lldap
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -Wl,-rpath,../libadmintools/../Debug -L../libadmintools/../Debug -lsystem -lwthttp -lwt -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -llber -lldap
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin: /home/yvan/github/yATools/libadmintools/../Debug/libsystem.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin: ../libadmintools/../Debug/libsystem.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/1764173701/configuration.o: /home/yvan/github/yATools/yearbookAdmin/configuration.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
+${OBJECTDIR}/configuration.o: configuration.cpp 
+	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/home/yvan/github/yATools/libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/configuration.o /home/yvan/github/yATools/yearbookAdmin/configuration.cpp
+	$(COMPILE.cc) -g -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/configuration.o configuration.cpp
 
-${OBJECTDIR}/_ext/1764173701/dataconnect.o: /home/yvan/github/yATools/yearbookAdmin/dataconnect.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
+${OBJECTDIR}/dataconnect.o: dataconnect.cpp 
+	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/home/yvan/github/yATools/libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/dataconnect.o /home/yvan/github/yATools/yearbookAdmin/dataconnect.cpp
+	$(COMPILE.cc) -g -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/dataconnect.o dataconnect.cpp
 
-${OBJECTDIR}/_ext/1764173701/download.o: /home/yvan/github/yATools/yearbookAdmin/download.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
+${OBJECTDIR}/download.o: download.cpp 
+	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/home/yvan/github/yATools/libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/download.o /home/yvan/github/yATools/yearbookAdmin/download.cpp
-
-${OBJECTDIR}/_ext/1764173701/removeDialog.o: /home/yvan/github/yATools/yearbookAdmin/removeDialog.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/home/yvan/github/yATools/libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/removeDialog.o /home/yvan/github/yATools/yearbookAdmin/removeDialog.cpp
-
-${OBJECTDIR}/_ext/1764173701/review.o: /home/yvan/github/yATools/yearbookAdmin/review.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/home/yvan/github/yATools/libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/review.o /home/yvan/github/yATools/yearbookAdmin/review.cpp
-
-${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o: /home/yvan/github/yATools/yearbookAdmin/yearbookAdmin.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/home/yvan/github/yATools/libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o /home/yvan/github/yATools/yearbookAdmin/yearbookAdmin.cpp
+	$(COMPILE.cc) -g -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/download.o download.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/home/yvan/github/yATools/libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/removeDialog.o: removeDialog.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/removeDialog.o removeDialog.cpp
+
+${OBJECTDIR}/review.o: review.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/review.o review.cpp
+
+${OBJECTDIR}/yearbookAdmin.o: yearbookAdmin.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../libadmintools -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbookAdmin.o yearbookAdmin.cpp
 
 # Subprojects
 .build-subprojects:
-	cd /home/yvan/github/yATools/libadmintools && ${MAKE}  -f Makefile CONF=Debug
+	cd ../libadmintools && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -116,7 +116,7 @@ ${OBJECTDIR}/main.o: main.cpp
 
 # Subprojects
 .clean-subprojects:
-	cd /home/yvan/github/yATools/libadmintools && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../libadmintools && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

@@ -52,9 +52,15 @@ y::sys::process & y::sys::process::run(void (*write)(const std::string & message
   boost::iostreams::stream<boost::iostreams::file_descriptor_source> is(source);
   std::string s;
   
-  while(std::getline(is, s)) {
+  if(write == nullptr) {
+    result.clear();
+    while (std::getline(is, s)) {
+      result.push_back(s);
+    }
+  } else while(std::getline(is, s)) {
     write(s);
   }
+  
   boost::process::posix::wait_for_exit(*child);
   
   return *this;
@@ -90,4 +96,27 @@ bool y::sys::Exec(const std::string& command, void (*write)(const std::string & 
   }
   
   return true;
+}
+
+bool y::sys::GetProcessResult(const std::string& command, std::vector<std::string>& result) {
+  boost::char_separator<char> sep(" ", "", boost::keep_empty_tokens);
+  boost::tokenizer<boost::char_separator<char> > tok(command, sep);
+  auto i = tok.begin();
+  
+  process p = process(*i);
+  ++i;
+  for(; i != tok.end(); ++i) {
+    p.arg(*i);
+  }
+  p.run();
+  
+  if(!p.success()) {
+    result.push_back(p.error());
+    return false;
+  }
+  
+  for(int i = 0; i < p.result.size(); i++) {
+    result.push_back(p.result[i]);
+  }
+  return true;  
 }

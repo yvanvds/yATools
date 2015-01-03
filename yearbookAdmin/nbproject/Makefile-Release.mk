@@ -35,13 +35,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/1764173701/configuration.o \
-	${OBJECTDIR}/_ext/1764173701/dataconnect.o \
-	${OBJECTDIR}/_ext/1764173701/download.o \
-	${OBJECTDIR}/_ext/1764173701/removeDialog.o \
-	${OBJECTDIR}/_ext/1764173701/review.o \
-	${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/configuration.o \
+	${OBJECTDIR}/dataconnect.o \
+	${OBJECTDIR}/download.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/removeDialog.o \
+	${OBJECTDIR}/review.o \
+	${OBJECTDIR}/yearbookAdmin.o
 
 
 # C Compiler Flags
@@ -70,40 +70,40 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yearbookadmin ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/1764173701/configuration.o: configuration.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
+${OBJECTDIR}/configuration.o: configuration.cpp 
+	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/configuration.o configuration.cpp
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/configuration.o configuration.cpp
 
-${OBJECTDIR}/_ext/1764173701/dataconnect.o: dataconnect.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
+${OBJECTDIR}/dataconnect.o: dataconnect.cpp 
+	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/dataconnect.o dataconnect.cpp
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/dataconnect.o dataconnect.cpp
 
-${OBJECTDIR}/_ext/1764173701/download.o: download.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
+${OBJECTDIR}/download.o: download.cpp 
+	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/download.o download.cpp
-
-${OBJECTDIR}/_ext/1764173701/removeDialog.o: removeDialog.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/removeDialog.o removeDialog.cpp
-
-${OBJECTDIR}/_ext/1764173701/review.o: review.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/review.o review.cpp
-
-${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o: yearbookAdmin.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1764173701
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1764173701/yearbookAdmin.o yearbookAdmin.cpp
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/download.o download.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/removeDialog.o: removeDialog.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/removeDialog.o removeDialog.cpp
+
+${OBJECTDIR}/review.o: review.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/review.o review.cpp
+
+${OBJECTDIR}/yearbookAdmin.o: yearbookAdmin.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbookAdmin.o yearbookAdmin.cpp
 
 # Subprojects
 .build-subprojects:
