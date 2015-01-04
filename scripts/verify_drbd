@@ -1,0 +1,21 @@
+#!/bin/bash
+. scripts/functions
+
+verifyDrbd() {
+  read -r -p "Verify DRBD?[y/N]" response
+  response=${response,,}
+  if [[ $response =~ (yes|y)$ ]]
+  then
+    # modprobe won't hurt if not needed
+    modprobe drbd
+    
+    # see if it's in /etc/modules
+    if grep "drbd" /etc/modules > /dev/null
+    then
+      printSuccess "check if DRBD is active" "OK"
+    else
+      echo "drbd" >> /etc/modules
+      printChange "check if DRBD is active" "ADDED"
+    fi
+  fi
+}

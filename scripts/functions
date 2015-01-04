@@ -4,11 +4,16 @@ installPackage() {
   problem=$(dpkg -s $1|grep installed)
   
   if [ "" == "$problem" ]; then
-    printFailed "package $1" "NOT INSTALLED"
+    printChange "package $1" "INSTALLING"
     apt-get -y install $1
+    problem2=$(dpkg -s $1|grep installed)
+    if [ "" == "$problem2" ]; then
+       printFailed "package $1" "NOT INSTALLED"
+    fi
   else 
     printSuccess "package $1" "INSTALLED"
   fi
+
 }
 
 addCronJob() {
@@ -22,17 +27,34 @@ createDir() {
   fi
 }
 
+restartService() {
+  service $1 restart
+  if ps ax | grep -v grep | grep -v $0 | grep $1 > /dev/null
+  then 
+    printSuccess "Service $1 should be running" "OK"
+  else
+    printFailed "Service $1 should be running" "NO" 
+    read -p "you might want to stop this script and fix this!"
+  fi
+}
+
 #colored printing
 
 printSuccess() {
-  printf "\E[97m%40s \E[92m%15s \n" "$1" "$2"
+  printf "\E[97m%50s \E[92m%25s \n" "$1" "$2"
   tput sgr0
 }
 
 printFailed() {
-  printf "\E[97m%40s \E[91m%15s \n" "$1" "$2"
+  printf "\E[97m%50s \E[91m%25s \n" "$1" "$2"
   tput sgr0
 }
+
+printChange() {
+  printf "\E[97m%50s \E[34m%25s \n" "$1" "$2"
+  tput sgr0
+}
+
 
 printBox() {
   str="$1"

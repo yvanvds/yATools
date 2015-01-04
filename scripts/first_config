@@ -1,0 +1,79 @@
+#!/bin/bash
+. scripts/functions
+. scripts/db_functions
+
+# function to update /etc/hosts with all known hosts
+updateHosts() {
+  read -r -p "Update hosts file?[y/N]" response
+  response=${response,,}
+  if [[ $response =~ (yes|y)$ ]]
+  then
+    cp data/hosts /etc/hosts
+    echo "127.0.1.1 $hostname" >> /etc/hosts
+    for entry in $(sqlite3 $database "select name, ip from $dbname"); do
+      arr=(${entry//|/ })
+      if [ "$hostname" != "${arr[0]}" ]; then
+        echo "${arr[1]} ${arr[0]}" >> /etc/hosts
+      fi
+    done;
+  fi
+}
+
+
+# basic variables for this server
+loadVariables() {
+  touch /root/admintools/config
+  
+  # load the variables
+  . /root/admintools/config
+ 
+  # check if variables are ok
+  if [ "" == "$hostname" ]; then
+    read -r -p "Please enter the hostname for this system: " response
+    hostname=${response,,}
+  fi
+  
+  if [ "" == "$domainname" ]; then
+    read -r -p "Please enter the domainname for this system: " response
+    domainname=${response,,}
+  fi
+
+  if [ "" == "$publicIP" ]; then
+    read -r -p "Please enter the public IP for this system: " response
+    publicIP=${response,,}
+  fi
+
+  if [ "" == "$backboneIP" ]; then
+    read -r -p "Please enter the backbone IP for this system: " response
+    backboneIP=${response,,}
+  fi
+
+
+  # store in file again
+  # first var clears file
+  declare -p hostname > /root/admintools/config
+  for var in domainname publicIP backboneIP; do
+     declare -p $var >> /root/admintools/config
+  done
+ 
+  #hostname check
+  hostfile=$(</etc/hostname)
+  if [ "$hostfile" == "$hostname" ]; then
+    printSuccess "Verifying /etc/hostname" "OK"
+  else 
+    printChange "Verifying /etc/hostname" "CORRECTED"
+    echo $hostname > /etc/hostname
+  fi
+
+  # update database if needed
+  dbname=$(tr -dc 'a-z' <<< $domainname)
+  db "create table if not exists $dbname (ID integer primary key, name text, ip text);"   
+  if [ $(dbCount $dbname "name='$hostname'") == 0 ]; then
+    printChange "host not found in config database" "ADDING"
+    db "insert into $dbname (name, ip) values ('$hostname','$backboneIP');"
+  else
+    printSuccess "host found in config database" "OK"
+  fi
+  updateHosts
+}
+

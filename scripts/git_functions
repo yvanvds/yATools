@@ -1,0 +1,11 @@
+#!/bin/bash
+
+sendToGit() {
+  read -r -p "Send changes to git repository?[y/N]" response
+  response=${response,,}
+  if [[ $response =~ (yes|y)$ ]]; then
+    git add -A
+    git commit -m "automated upload from install script"
+    git push
+  fi
+}

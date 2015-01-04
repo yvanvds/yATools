@@ -1,0 +1,12 @@
+#!/bin/bash
+
+database=/root/github/yATools/data/admintools.db
+
+db() {
+  sqlite3 $database "$1"
+}
+
+dbCount() {
+  local myresult=$(sqlite3 $database "select count(*) from $1 where $2")
+  echo "$myresult" 
+}
