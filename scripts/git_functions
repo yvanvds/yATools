@@ -6,10 +6,10 @@ sendToGit() {
   git add -A
   git commit -m "automated upload from install script"
   git push
-  if [[ $? = 0 ]]; then
+  if [[ $? == 0 ]]; then
     showMessage "Git Repository" 'everything is in sync now' 
   else 
     showMessage "Git Repository" 'Something went wrong'
-    exit
+   
   fi
 }
