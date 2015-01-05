@@ -10,6 +10,5 @@ sendToGit() {
     showMessage "Git Repository" 'everything is in sync now' 
   else 
     showMessage "Git Repository" 'Something went wrong'
-   
   fi
 }
