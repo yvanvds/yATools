@@ -17,5 +17,37 @@ verifyDrbd() {
       echo "drbd" >> /etc/modules
       printChange "check if DRBD is active" "ADDED"
     fi
+
+    # copy global configuration
+    cp data/drbd/global_common.conf /etc/drbd.d/
+    printSuccess "rewriting global config file" "OK"
+
+    # resource participation
+    read -r -p "Reconfigure Resources?[y/N]" response
+    response=${response,,}
+    if [[ $response =~ (yes|y)$ ]]; then
+      db "create table if not exists drbd (ID integer primary key, resource text, host text, disk text, ip text);"
+      
+      # website
+      if [ $(dbCount "drbd" "host='$hostname' AND resource='website'") == 0 ]; then 
+        echo "$hostname does not provide the website resource"
+        read -r -p "Would you like to add it?[y/N]" response
+        response=${response,,}
+        if [[ $response =~ (yes|y)$ ]]; then
+          read -r -p "Enter an unused partition of 200GB or more: " response
+          response=${response,,}
+          db "insert into drbd (resource, host, disk, ip) values ('website','$hostname', '$response', '$backboneIP');"
+        fi    
+ 
+      else
+        echo "$hostname does provide the website resource"
+        read -r -p "Would you like to remove it?[y/N]" response
+        response=${response,,}
+        if [[ $response =~ (yes|y)$ ]]; then
+          dbDelete "drbd" "host='$hostname' AND resource='website'"
+        fi
+      fi
+    fi
+
   fi
 }

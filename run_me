@@ -9,7 +9,10 @@
 . scripts/git_functions
 
 printBox "Welcome to yvan's admin tools!"
-echo
+#installPackage dialog
+
+
+
 verifySoftware
 echo
 

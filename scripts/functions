@@ -67,6 +67,10 @@ printBox() {
   tput sgr0
 }     
 
+waitForEnter() {
+  read -p "Press [Enter] key to continue..."
+}
+
 
 
 

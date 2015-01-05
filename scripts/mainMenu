@@ -1,0 +1,41 @@
+#!/bin/bash
+# utilitymenu.sh - A sample shell script to display menus on screen
+# Store menu options selected by the user
+INPUT=/tmp/menu.sh.$$
+ 
+# trap and delete temp files
+trap "rm $INPUT; exit" SIGHUP SIGINT SIGTERM
+ 
+#
+# set infinite loop
+#
+while true
+do
+ 
+### display main menu ###
+dialog --clear  --help-button --backtitle "yvan's admin tools" \
+--title "[ M A I N - M E N U ]" \
+--menu "You can use the UP/DOWN arrow keys, the first \n\
+letter of the choice as a hot key, or the \n\
+number keys 1-9 to choose an option.\n\
+Choose the TASK" 15 50 4 \
+Installation "Verifies software installation" \
+Identity "View and Modify this system's Identity" \
+HA "Control High Availability Server" \
+Exit "Exit to the shell" 2>"${INPUT}"
+ 
+menuitem=$(<"${INPUT}")
+ 
+ 
+# make decsion 
+case $menuitem in
+	Installation) echo "installation";;
+	Identity) echo "identitiy";;
+	HA) echo "ha";;
+	Exit) echo "Bye"; break;;
+esac
+ 
+done
+ 
+# if temp files found, delete em
+[ -f $INPUT ] && rm $INPUT

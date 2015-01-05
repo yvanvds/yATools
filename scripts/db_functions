@@ -10,3 +10,7 @@ dbCount() {
   local myresult=$(sqlite3 $database "select count(*) from $1 where $2")
   echo "$myresult" 
 }
+
+dbDelete() {
+  sqlite3 $database "delete from $1 where $2"
+}
