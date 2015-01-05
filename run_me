@@ -9,7 +9,7 @@
 . scripts/git_functions
 
 printBox "Welcome to yvan's admin tools!"
-#installPackage dialog
+installPackage dialog
 
 
 
