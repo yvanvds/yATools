@@ -71,6 +71,10 @@ waitForEnter() {
   read -p "Press [Enter] key to continue..."
 }
 
-
+showMessage() {
+  dialog --backtitle "yvan's admin tools" \
+         --title $1 \
+         -- msgbox $2 6 20
+}
 
 
