@@ -16,10 +16,10 @@ void y::samba::changePassword(const std::string & user, const std::string & pass
   command.append(user);
   command.append(" ");
   command.append(password);
-  if(!y::sys::Exec(command, y::sys::stdOut)) {
+  /*if(!y::sys::Exec(command, y::sys::stdOut)) {
     assert(false);
-  }
-  //system(command.c_str());
+  }*/
+  system(command.c_str());
 }
 
 void y::samba::addUser(const ldap::account & account) { 
