@@ -55,6 +55,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/system/process.o \
 	${OBJECTDIR}/system/workDir.o \
 	${OBJECTDIR}/utils/config.o \
+	${OBJECTDIR}/utils/console.o \
 	${OBJECTDIR}/utils/container.o \
 	${OBJECTDIR}/utils/convert.o \
 	${OBJECTDIR}/utils/log.o \
@@ -204,6 +205,11 @@ ${OBJECTDIR}/utils/config.o: utils/config.cpp
 	${MKDIR} -p ${OBJECTDIR}/utils
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/config.o utils/config.cpp
+
+${OBJECTDIR}/utils/console.o: utils/console.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/console.o utils/console.cpp
 
 ${OBJECTDIR}/utils/container.o: utils/container.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
@@ -696,6 +702,19 @@ ${OBJECTDIR}/utils/config_nomain.o: ${OBJECTDIR}/utils/config.o utils/config.cpp
 	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/config_nomain.o utils/config.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/utils/config.o ${OBJECTDIR}/utils/config_nomain.o;\
+	fi
+
+${OBJECTDIR}/utils/console_nomain.o: ${OBJECTDIR}/utils/console.o utils/console.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/console.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/console_nomain.o utils/console.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/utils/console.o ${OBJECTDIR}/utils/console_nomain.o;\
 	fi
 
 ${OBJECTDIR}/utils/container_nomain.o: ${OBJECTDIR}/utils/container.o utils/container.cpp 

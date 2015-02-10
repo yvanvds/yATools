@@ -12,6 +12,7 @@
 #include "utils/config.h"
 #include "password.h"
 #include "show.h"
+#include "find.h"
 
 using namespace std;
 
@@ -39,6 +40,9 @@ int main(int argc, char** argv) {
   } else if(command.compare("show") == 0) {
     Show().parse(argc, argv);
     return 0;
+  } else if(command.compare("find") == 0) {
+    Find().parse(argc,argv);
+    return 0;
   }
 
   // if we get here, print help
@@ -53,6 +57,7 @@ void printBasicHelp() {
   cout << "Possible arguments are:" << endl;
   cout << "password   : change a user's password." << endl;
   cout << "show       : show a user's details." << endl;
+  cout << "find       : find a user by name." << endl;
   
   cout << endl;
   cout << "Type admin <argument> -? for more information about a" << endl;

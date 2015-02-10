@@ -329,7 +329,7 @@ void y::ldap::server::setData(const DN & dn, dataset & values) {
   delete[] mods;
 }
 
-int y::ldap::server::findAccounts(const std::string& query, std::vector<UID_NUMBER> results) {
+int y::ldap::server::findAccounts(const std::string& query, std::vector<UID_NUMBER> & results) {
   dataset rs;
   rs.filter = query;
   rs.directory = "ou=people";
@@ -341,7 +341,7 @@ int y::ldap::server::findAccounts(const std::string& query, std::vector<UID_NUMB
       
       // search if this account is already loaded in memory
       for(int j = 0; j < _accounts.elms(); j++) {
-        if(std::stoi(d.getValue("uidnumber")) == _accounts[j].uidNumber()()) {
+        if(std::stoi(d.getValue("uidNumber")) == _accounts[j].uidNumber()()) {
           found = true;
           results.push_back(_accounts[j].uidNumber());
           break;

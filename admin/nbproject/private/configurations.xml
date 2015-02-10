@@ -17,7 +17,7 @@
         </gdb_signals>
         <gdb_options>
           <DebugOptions>
-            <option name="debug_command" value="&quot;${OUTPUT_PATH}&quot; password yvanym konijn"/>
+            <option name="debug_command" value="&quot;${OUTPUT_PATH}&quot; find yvan vander"/>
           </DebugOptions>
         </gdb_options>
         <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
@@ -29,8 +29,9 @@
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" password yvanym konijn</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" find yvan vander</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" password yvanym konijn</runcommand>
+        <runcommand>"${OUTPUT_PATH}" find yvan vander</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
