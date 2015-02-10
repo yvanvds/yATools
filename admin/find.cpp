@@ -19,7 +19,7 @@ using namespace std;
 
 void ::find::printHelp() {
   cout << "Find will help you find a user, even if you're not sure of its name." << endl;
-  cout << "first argument: presumed first name" << endl;
+  cout << "first argument            : presumed first name" << endl;
   cout << "second argument (optional): presumed last name" << endl;
 }
 

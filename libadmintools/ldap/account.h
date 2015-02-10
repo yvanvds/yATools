@@ -58,6 +58,7 @@ namespace y {
       watch<GID_NUMBER>  _groupID  ;
 
       bool _new; // false if the account is loaded from ldap
+      std::string _passwordClearText; // used to update samba password
       
       friend class server;
     };

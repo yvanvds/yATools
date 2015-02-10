@@ -9,6 +9,7 @@
 #include "../system/process.h"
 #include <string>
 #include <stdlib.h>
+#include <iostream>
 
 void y::samba::changePassword(const std::string & user, const std::string & password) {
   std::string command = "/usr/sbin/smbldap-passwd -p ";
@@ -29,9 +30,10 @@ void y::samba::addUser(const ldap::account & account) {
   command.append(" -C '\\\\ATSCHOOL\\homes' -D 'H:' -E ' STARTUP.BAT' -F");
   command.append(" '\\\\ATSCHOOL\\profiles\\Default' -H '[U]' ");
   command.append(account.uid()());
-  if(!y::sys::Exec(command, y::sys::stdOut)) {
+  /*if(!y::sys::Exec(command, y::sys::stdOut)) {
     assert(false);
-  }
+  }*/
+  system(command.c_str());
 }
 
 void y::samba::delUser(const ldap::account& account) {

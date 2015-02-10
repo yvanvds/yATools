@@ -36,7 +36,12 @@ bool y::ldap::account::load(const data& d) {
   _sn(SN(d.getValue("sn")), true);
   _fullName(FULL_NAME(d.getValue("displayName")), true);
   _homeDir(HOMEDIR(d.getValue("homeDirectory")), true);
-  _wisaID(WISA_ID(std::stoi(d.getValue("employeeNumber"))), true);
+  
+  if(d.getValue("employeeNumber").size()) {
+    _wisaID(WISA_ID(std::stoi(d.getValue("employeeNumber"))), true);
+  } else {
+    _wisaID(WISA_ID(0));
+  }
   _mail(MAIL(d.getValue("mail")), true);
   _password(PASSWORD(d.getValue("title")), true);
   _birthDay(DATE(d.getValue("roomNumber")), true);
@@ -88,6 +93,7 @@ bool y::ldap::account::save() {
     data & d = values.New(MODIFY);
     d.add("type", "title");
     d.add("values", _password()());
+    samba::changePassword(_uid()(), _passwordClearText);
   }
   
   if(values.elms()) {
@@ -216,14 +222,9 @@ y::ldap::account & y::ldap::account::birthDay(const DATE& value) {
 }
 
 y::ldap::account & y::ldap::account::password(const PASSWORD& value) {
-  std::string origin = value();
+  _passwordClearText = value();
   
-  // let samba change the password for us
-  //samba::changePassword(_uid()(), origin);
-  
-  // the password value from ldap sets the title value, which is used
-  // to sync with google
-  _password(PASSWORD(y::utils::sha1(origin)));
+  _password(PASSWORD(y::utils::sha1(_passwordClearText)));
   return *this;
 }
 

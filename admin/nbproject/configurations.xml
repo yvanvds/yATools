@@ -12,6 +12,8 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>addUser.cpp</itemPath>
+    <itemPath>addUser.h</itemPath>
     <itemPath>find.cpp</itemPath>
     <itemPath>find.h</itemPath>
     <itemPath>main.cpp</itemPath>
@@ -76,6 +78,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="addUser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="addUser.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="find.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -144,6 +150,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="addUser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="addUser.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="find.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -205,7 +205,7 @@ y::ldap::group & y::ldap::server::getGroup(const CN& id) {
 }
 
 container<y::ldap::account> & y::ldap::server::getAccounts() {
-  // make sure we're in single mode
+  // make sure we're in full mode
   if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_FULL;
   assert(_ldapMode == LDAP_MODE_FULL);
   
@@ -223,7 +223,7 @@ container<y::ldap::account> & y::ldap::server::getAccounts() {
 }
 
 container<y::ldap::group> & y::ldap::server::getGroups() {
-  // make sure we're in single mode
+  // make sure we're in full mode
   if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_FULL;
   assert(_ldapMode == LDAP_MODE_FULL);
   
@@ -386,6 +386,7 @@ y::ldap::UID y::ldap::server::createUID(const std::string& cn, const std::string
     counter++;
     test_id = id;
     test_id.append(std::to_string(counter));
+    result.clear();
   }
 }
 
