@@ -30,6 +30,7 @@ then
     installPackage apache2 
     installPackage drbd8-utils
     installPackage sqlite3
+		installPackage libboost-iostreams-dev
 
     # for cluster software
     installPackage corosync
