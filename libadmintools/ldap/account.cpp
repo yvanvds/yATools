@@ -10,6 +10,7 @@
 #include "samba/samba.h"
 #include "server.h"
 #include "utils/sha1.h"
+#include "utils/config.h"
 
 y::ldap::account::account() : 
   _uidNumber(UID_NUMBER(0)),
@@ -25,36 +26,47 @@ y::ldap::account::account() :
   _password(PASSWORD("")),
   _group(GID("")),
   _groupID(GID_NUMBER(0)),
-  _new(true) 
+  _new(true),
+  _hasKrbName(false),
+  _hasGroup(false),
+  _hasWisaID(false),
+  _hasMail(false),
+  _hasBirthday(false)
   {}
 
 bool y::ldap::account::load(const data& d) {
-  _uidNumber(UID_NUMBER(std::stoi(d.getValue("uidNumber"))), true);
-  _uid(UID(d.getValue("uid")), true);
-  _dn(DN(d.getValue("DN")), true);
-  _cn(CN(d.getValue("cn")), true);
-  _sn(SN(d.getValue("sn")), true);
-  _fullName(FULL_NAME(d.getValue("displayName")), true);
-  _homeDir(HOMEDIR(d.getValue("homeDirectory")), true);
+  _uidNumber(UID_NUMBER(std::stoi(d.getValue(TYPE_UID_NUMBER))), true);
+  _uid      (UID       (          d.getValue(TYPE_UID       ) ), true);
+  _dn       (DN        (          d.getValue(TYPE_DN        ) ), true);
+  _cn       (CN        (          d.getValue(TYPE_CN        ) ), true);
+  _sn       (SN        (          d.getValue(TYPE_SN        ) ), true);
+  _fullName (FULL_NAME (          d.getValue(TYPE_FULL_NAME ) ), true);
+  _homeDir  (HOMEDIR   (          d.getValue(TYPE_HOMEDIR   ) ), true);
+  _mail     (MAIL      (          d.getValue(TYPE_MAIL      ) ), true);
+  _password (PASSWORD  (          d.getValue(TYPE_PASSWORD  ) ), true);
+  _birthDay (DATE      (          d.getValue(TYPE_BIRTHDAY  ) ), true);
+  _group    (GID       (          d.getValue(TYPE_GID       ) ), true);
+  _groupID  (GID_NUMBER(std::stoi(d.getValue(TYPE_GID_NUMBER))), true);
   
-  if(d.getValue("employeeNumber").size()) {
-    _wisaID(WISA_ID(std::stoi(d.getValue("employeeNumber"))), true);
+  if(d.getValue(TYPE_WISA_ID).size()) {
+    _wisaID(WISA_ID(std::stoi(d.getValue(TYPE_WISA_ID))), true);
+    _hasWisaID = true;
   } else {
     _wisaID(WISA_ID(0));
   }
-  _mail(MAIL(d.getValue("mail")), true);
-  _password(PASSWORD(d.getValue("title")), true);
-  _birthDay(DATE(d.getValue("roomNumber")), true);
-  _group(GID(d.getValue("departmentNumber")), true);
-  _groupID(GID_NUMBER(std::stoi(d.getValue("gidNumber"))), true);
+
+  if(d.getValue("krbName"    ).size()) _hasKrbName  = true;
+  if(d.getValue(TYPE_GID     ).size()) _hasGroup    = true;
+  if(d.getValue(TYPE_MAIL    ).size()) _hasMail     = true;
+  if(d.getValue(TYPE_BIRTHDAY).size()) _hasBirthday = true;
   _new = false;
   return !_new;
 }
 
 bool y::ldap::account::load(const UID & id) {
   dataset d;
-  std::string filter;
-  filter = "uid="; filter.append(id());
+  std::string filter(TYPE_UID);
+  filter += "="; filter.append(id());
   
   if(d.create(filter, "ou=People")) {
     load(d.get(0));
@@ -65,8 +77,8 @@ bool y::ldap::account::load(const UID & id) {
 
 bool y::ldap::account::load(UID_NUMBER id) {
   dataset d;
-  std::string filter;
-  filter = "uidNumber="; filter.append(std::to_string(id()));
+  std::string filter(TYPE_UID_NUMBER);
+  filter += "="; filter.append(std::to_string(id()));
   
   if(d.create(filter)) {
     load(d.get(0));
@@ -77,8 +89,8 @@ bool y::ldap::account::load(UID_NUMBER id) {
 
 bool y::ldap::account::load(const DN & id) {
   dataset d;
-  std::string filter;
-  filter = "DN="; filter.append(id());
+  std::string filter(TYPE_DN);
+  filter += "="; filter.append(id());
   
   if(d.create(filter)) {
     load(d.get(0));
@@ -89,9 +101,109 @@ bool y::ldap::account::load(const DN & id) {
 
 bool y::ldap::account::save() {
   dataset values;
+  
+  // on first save, some new entries have to be added
+  if(!_hasKrbName) {
+    // add kerberos objectClass
+    data & d = values.New(ADD);
+    d.add("type", "objectClass");
+    d.add("values", "kerberosSecurityObject");
+    
+    // add kerberos name (for short mail)
+    std::string krbName(_uid()());
+    krbName += "@";
+    krbName += utils::Config().getDomain();
+    data & d1 = values.New(ADD);
+    d1.add("type", "krbName");
+    d1.add("values", krbName);    
+  }
+  
+  if(_group.changed()) {
+    if(!_hasGroup) {
+      data & d = values.New(ADD);
+      d.add("type", TYPE_GID);
+      d.add("values", _group()());
+    } else {
+      data & d = values.New(MODIFY);
+      d.add("type", TYPE_GID);
+      d.add("values", _group()());
+    }
+  }
+  
+  if(_wisaID.changed()) {
+    if(!_hasWisaID) {
+      data & d = values.New(ADD);
+      d.add("type", TYPE_WISA_ID);
+      d.add("values", std::to_string(_wisaID()()));
+    } else {
+      data & d = values.New(MODIFY);
+      d.add("type", TYPE_WISA_ID);
+      d.add("values", std::to_string(_wisaID()()));
+    }
+  }
+  
+  if(_mail.changed()) {
+    if(!_hasMail) {
+      data & d = values.New(ADD);
+      d.add("type", TYPE_MAIL);
+      d.add("values", _mail()());
+    } else {
+      data & d = values.New(MODIFY);
+      d.add("type", TYPE_MAIL);
+      d.add("values", _mail()());
+    }
+  }
+  
+  if(_birthDay.changed()) {
+    if(!_hasBirthday) {
+      data & d = values.New(ADD);
+      d.add("type", TYPE_BIRTHDAY);
+      d.add("values",std::to_string(_birthDay()()));
+    } else {
+      data & d = values.New(MODIFY);
+      d.add("type", TYPE_BIRTHDAY);
+      d.add("values", std::to_string(_birthDay()()));
+    }
+  }
+  
+  if(_cn.changed()) {
+    data & d = values.New(MODIFY);
+    d.add("type", TYPE_CN);
+    d.add("values", _cn()());
+  }
+  
+  if(_sn.changed()) {
+    data & d = values.New(MODIFY);
+    d.add("type", TYPE_SN);
+    d.add("values", _sn()());
+  }
+  
+  if(_fullName.changed()) {
+    data & d = values.New(MODIFY);
+    d.add("type", TYPE_FULL_NAME);
+    d.add("values", _fullName()());
+    
+    // this value is also kept in 'gecos' for historical reasons
+    data & d1 = values.New(MODIFY);
+    d1.add("type", "gecos");
+    d1.add("values", _fullName()());
+  }
+  
+  if(_homeDir.changed()) {
+    data & d = values.New(MODIFY);
+    d.add("type", TYPE_HOMEDIR);
+    d.add("values", _homeDir()());
+  }
+  
+  if(_groupID.changed()) {
+    data & d = values.New(MODIFY);
+    d.add("type", TYPE_GID_NUMBER);
+    d.add("values", std::to_string(_groupID()()));
+  }
+  
   if(_password.changed()) {
     data & d = values.New(MODIFY);
-    d.add("type", "title");
+    d.add("type", TYPE_PASSWORD);
     d.add("values", _password()());
     samba::changePassword(_uid()(), _passwordClearText);
   }

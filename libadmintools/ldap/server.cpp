@@ -390,6 +390,28 @@ y::ldap::UID y::ldap::server::createUID(const std::string& cn, const std::string
   }
 }
 
+y::ldap::MAIL y::ldap::server::createMail(const std::string& cn, const std::string& sn) {
+  std::string mail = cn;
+  mail += "."; mail += sn;
+  mail += "@"; mail += y::utils::Config().getDomain();
+  
+  std::string query;
+  query = "(mail="; query += mail; query += ")";
+  std::vector<UID_NUMBER> result;
+  int counter = 0;
+  
+  while(findAccounts(query, result) > 0) {
+    result.clear();
+    counter++;
+    mail = cn;
+    mail += "."; mail += sn; mail += counter;
+    mail += "@"; mail += y::utils::Config().getDomain();   
+    query = "(mail="; query += mail; query += ")";
+  }
+  
+  return MAIL(mail);
+}
+
 bool y::ldap::server::commitChanges() {
   bool result = false;
   for(int i = 0; i < _accounts.elms(); i++) {

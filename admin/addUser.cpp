@@ -65,9 +65,19 @@ void addUser::parse(int argc, char** argv) {
   account & acc = Server().getAccount(uid);
   assert(!acc.isNew()); // if this is a new account, samba failed to add it
   
-  acc.birthDay(DATE   (argc > 4 ? argv[4] : "19700101"  ));
-  acc.wisaID  (WISA_ID(argc > 6 ? std::stoi(argv[6]) : 0));
-  acc.password(PASSWORD(y::utils::Security().makePassword(8)));
+  acc.cn(CN(cn));
+  acc.sn(SN(sn));
   
+  std::string fullName(cn);
+  fullName += " "; fullName += sn;
+  acc.fullName(FULL_NAME(fullName));
   
+  acc.birthDay(DATE      (argc > 4 ? argv[4] : "19700101"  ));
+  acc.wisaID  (WISA_ID   (argc > 6 ? std::stoi(argv[6]) : 0));
+  acc.password(PASSWORD  (y::utils::Security().makePassword(8)));
+  acc.mail    (           Server().createMail(cn, sn));
+  acc.group   (GID       (tempAccount.group  ()()));
+  acc.groupID (GID_NUMBER(tempAccount.groupID()()));
+  
+  Server().commitChanges();
 }

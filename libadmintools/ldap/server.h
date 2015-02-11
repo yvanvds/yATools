@@ -43,7 +43,8 @@ namespace y {
       // uid numbers of accounts found by this query are stored in results.
       // the function returns the number of accounts found
       int findAccounts(const std::string & query, std::vector<UID_NUMBER> & results);
-      UID createUID(const std::string & cn, const std::string & sn);
+      UID  createUID (const std::string & cn, const std::string & sn);
+      MAIL createMail(const std::string & cn, const std::string & sn);
       
       // this
       int countResults(const std::string &q);
