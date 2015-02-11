@@ -43,10 +43,16 @@ bool y::ldap::account::load(const data& d) {
   _fullName (FULL_NAME (          d.getValue(TYPE_FULL_NAME ) ), true);
   _homeDir  (HOMEDIR   (          d.getValue(TYPE_HOMEDIR   ) ), true);
   _mail     (MAIL      (          d.getValue(TYPE_MAIL      ) ), true);
-  _password (PASSWORD  (          d.getValue(TYPE_PASSWORD  ) ), true);
-  _birthDay (DATE      (          d.getValue(TYPE_BIRTHDAY  ) ), true);
+  _password (PASSWORD  (          d.getValue(TYPE_PASSWORD  ) ), true); 
   _group    (GID       (          d.getValue(TYPE_GID       ) ), true);
   _groupID  (GID_NUMBER(std::stoi(d.getValue(TYPE_GID_NUMBER))), true);
+  
+  if(d.getValue(TYPE_BIRTHDAY).size()) {
+    _birthDay (DATE(d.getValue(TYPE_BIRTHDAY)), true);
+    _hasBirthday = true;
+  } else {
+    _birthDay(DATE("0"));
+  }
   
   if(d.getValue(TYPE_WISA_ID).size()) {
     _wisaID(WISA_ID(std::stoi(d.getValue(TYPE_WISA_ID))), true);
@@ -58,7 +64,6 @@ bool y::ldap::account::load(const data& d) {
   if(d.getValue("krbName"    ).size()) _hasKrbName  = true;
   if(d.getValue(TYPE_GID     ).size()) _hasGroup    = true;
   if(d.getValue(TYPE_MAIL    ).size()) _hasMail     = true;
-  if(d.getValue(TYPE_BIRTHDAY).size()) _hasBirthday = true;
   _new = false;
   return !_new;
 }

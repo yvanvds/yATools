@@ -74,10 +74,18 @@ void addUser::parse(int argc, char** argv) {
   
   acc.birthDay(DATE      (argc > 4 ? argv[4] : "19700101"  ));
   acc.wisaID  (WISA_ID   (argc > 6 ? std::stoi(argv[6]) : 0));
-  acc.password(PASSWORD  (y::utils::Security().makePassword(8)));
+  
+  std::string password(y::utils::Security().makePassword(8));
+  acc.password(PASSWORD(password));
+  
   acc.mail    (           Server().createMail(cn, sn));
   acc.group   (GID       (tempAccount.group  ()()));
   acc.groupID (GID_NUMBER(tempAccount.groupID()()));
   
   Server().commitChanges();
+  
+  cout << "Added user " << fullName << " to " << acc.group()() << endl;
+  cout << "  Login   : " << acc.uid()() << endl;
+  cout << "  Password: " << password << endl;
+  cout << "  Mail    : " << acc.mail()() << endl;
 }
