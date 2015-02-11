@@ -404,7 +404,7 @@ y::ldap::MAIL y::ldap::server::createMail(const std::string& cn, const std::stri
     result.clear();
     counter++;
     mail = cn;
-    mail += "."; mail += sn; mail += counter;
+    mail += "."; mail += sn; mail += std::to_string(counter);
     mail += "@"; mail += y::utils::Config().getDomain();   
     query = "(mail="; query += mail; query += ")";
   }
