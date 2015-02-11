@@ -29,7 +29,7 @@ namespace y {
       
       bool commitChanges(); // propagate all changes to ldap server
 
-      // these functions always create an account if none is found
+      // these functions always create a new account if none is found
       account & getAccount(const UID        & id);
       account & getAccount(      UID_NUMBER   id);
       account & getAccount(const DN         & id);
@@ -48,8 +48,13 @@ namespace y {
       
       // this
       int countResults(const std::string &q);
+      
+      // clears up all loaded accounts and groups
+      // this does not affect the database
+      void clear();
+      
     private:
-      bool getData(dataset & rs);
+      bool getData(dataset & rs, bool isDN = false);
       void setData(const DN & dn, dataset & values);
 
       container<account> _accounts;
@@ -69,6 +74,7 @@ namespace y {
       
       friend class dataset;
       friend class account;
+      friend class group  ;
     };
 
     server & Server(); // global object

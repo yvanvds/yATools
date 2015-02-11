@@ -133,6 +133,14 @@
         <itemPath>ldap/tests/ldapServerTest.h</itemPath>
         <itemPath>ldap/tests/ldapServerTestRun.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f13"
+                     displayName="LdapGroupTest"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>ldap/tests/ldapGroupTest.cpp</itemPath>
+        <itemPath>ldap/tests/ldapGroupTest.h</itemPath>
+        <itemPath>ldap/tests/ldapGroupTestRun.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1"
                      displayName="ldp attributes test"
                      projectFiles="true"
@@ -355,6 +363,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f13">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f13</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <folder path="TestFiles/f2">
         <cTool>
           <commandLine>`cppunit-config --cflags`</commandLine>
@@ -512,6 +534,12 @@
       <item path="ldap/tests/ldapDataTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ldap/tests/ldapDataTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapGroupTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapGroupTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapGroupTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/tests/ldapServerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -785,6 +813,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f13">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f13</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <folder path="TestFiles/f2">
         <cTool>
           <commandLine>`cppunit-config --cflags`</commandLine>
@@ -942,6 +984,12 @@
       <item path="ldap/tests/ldapDataTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ldap/tests/ldapDataTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapGroupTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapGroupTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapGroupTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/tests/ldapServerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

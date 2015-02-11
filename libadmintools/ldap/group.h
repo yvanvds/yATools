@@ -22,6 +22,7 @@ namespace y {
       bool load(const data& d);
       
       void flagForCommit();
+      bool save();
 
       const DN & dn();
       const CN & cn();
@@ -33,6 +34,8 @@ namespace y {
       bool    editable();
       
     private:
+      bool saveNew   ();
+      bool saveUpdate();
       void retrieveData(const data& d);
       
       watch<DN> _dn;
@@ -40,6 +43,10 @@ namespace y {
 
       container<std::string> _owners ;
       container<std::string> _members;
+      
+      // these are to compare with ldap data on save
+      container<std::string> _ownersInLDAP;
+      container<std::string> _membersInLDAP;
 
       bool _new     ; // false if loaded from ldap
       bool _editable;

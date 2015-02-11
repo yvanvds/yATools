@@ -57,11 +57,16 @@ y::ldap::server::~server() {
   ldap_unbind_ext(_server, NULL, NULL);
 }
 
-bool y::ldap::server::getData(y::ldap::dataset& rs) {
+bool y::ldap::server::getData(y::ldap::dataset& rs, bool isDN) {
   std::string base(rs.directory);
-  if(rs.directory.size()) base.append(",");
-  base.append(_base);
+  if(!isDN) {
+    if(rs.directory.size()) base.append(",");
+    base.append(_base);
+  }
   LDAPMessage * result;
+  ber_int_t scope = LDAP_SCOPE_SUBTREE;
+  //if(isDN) scope = LDAP_SCOPE_BASE;
+  
   if(ldap_search_ext_s(
           _server, 
           base.c_str(), 
@@ -215,8 +220,12 @@ container<y::ldap::account> & y::ldap::server::getAccounts() {
   dataset d;
   d.create("objectClass=*", "ou=people");
   for(int i = 0; i < d.elms(); i++) {
-    account & a = _accounts.New();
-    a.load(d.get(i));
+    data & temp = d.get(i);
+    // if data has no uid, it's not an account
+    if(temp.getValue(TYPE_UID).size()) {
+      account & a = _accounts.New();
+      a.load(temp);
+    }
   }
   
   return _accounts;
@@ -418,5 +427,15 @@ bool y::ldap::server::commitChanges() {
     if(_accounts[i].save()) result = true;
   }
   
+  for(int i = 0; i < _groups.elms(); i++) {
+    if(_groups[i].save()) result = true;
+  }
+  
   return result;
+}
+
+void y::ldap::server::clear() {
+  _accounts.clear();
+  _groups.clear();
+  _ldapMode = LDAP_MODE_NONE;
 }

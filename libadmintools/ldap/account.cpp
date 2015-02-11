@@ -11,6 +11,7 @@
 #include "server.h"
 #include "utils/sha1.h"
 #include "utils/config.h"
+#include "utils/log.h"
 
 y::ldap::account::account() : 
   _uidNumber(UID_NUMBER(0)),
@@ -35,7 +36,20 @@ y::ldap::account::account() :
   {}
 
 bool y::ldap::account::load(const data& d) {
-  _uidNumber(UID_NUMBER(std::stoi(d.getValue(TYPE_UID_NUMBER))), true);
+  if(d.getValue(TYPE_UID_NUMBER).size()) {
+    try {
+      _uidNumber(UID_NUMBER(std::stoi(d.getValue(TYPE_UID_NUMBER))), true);
+    } catch(const std::invalid_argument &e) {
+      std::string message("Invalid ldap::UID_NUMBER conversion: ");
+      message += d.getValue(TYPE_UID_NUMBER);
+      utils::Log().add(message);
+      return false;
+    }
+  } else {
+    _uidNumber(UID_NUMBER(0));
+    //assert(false);
+  }
+  
   _uid      (UID       (          d.getValue(TYPE_UID       ) ), true);
   _dn       (DN        (          d.getValue(TYPE_DN        ) ), true);
   _cn       (CN        (          d.getValue(TYPE_CN        ) ), true);
@@ -45,7 +59,20 @@ bool y::ldap::account::load(const data& d) {
   _mail     (MAIL      (          d.getValue(TYPE_MAIL      ) ), true);
   _password (PASSWORD  (          d.getValue(TYPE_PASSWORD  ) ), true); 
   _group    (GID       (          d.getValue(TYPE_GID       ) ), true);
-  _groupID  (GID_NUMBER(std::stoi(d.getValue(TYPE_GID_NUMBER))), true);
+  
+  if(d.getValue(TYPE_GID_NUMBER).size()) {
+    try {
+      _groupID(GID_NUMBER(std::stoi(d.getValue(TYPE_GID_NUMBER))), true);
+    } catch(const std::invalid_argument &e) {
+      std::string message("Invalid ldap::GID_NUMBER conversion: ");
+      message += d.getValue(TYPE_GID_NUMBER);
+      utils::Log().add(message);
+      return false;
+    }  
+  } else {
+    _groupID(GID_NUMBER(0));
+    //assert(false);
+  }
   
   if(d.getValue(TYPE_BIRTHDAY).size()) {
     _birthDay (DATE(d.getValue(TYPE_BIRTHDAY)), true);
@@ -55,8 +82,15 @@ bool y::ldap::account::load(const data& d) {
   }
   
   if(d.getValue(TYPE_WISA_ID).size()) {
-    _wisaID(WISA_ID(std::stoi(d.getValue(TYPE_WISA_ID))), true);
-    _hasWisaID = true;
+    try {
+      _wisaID(WISA_ID(std::stoi(d.getValue(TYPE_WISA_ID))), true);
+      _hasWisaID = true;
+    } catch(const std::invalid_argument &e) {
+      std::string message("Invalid ldap::WISA_ID conversion: ");
+      message += d.getValue(TYPE_WISA_ID);
+      utils::Log().add(message);
+      return false;
+    }
   } else {
     _wisaID(WISA_ID(0));
   }
@@ -93,11 +127,8 @@ bool y::ldap::account::load(UID_NUMBER id) {
 }
 
 bool y::ldap::account::load(const DN & id) {
-  dataset d;
-  std::string filter(TYPE_DN);
-  filter += "="; filter.append(id());
-  
-  if(d.create(filter)) {
+  dataset d;  
+  if(d.createFromDN(id())) {
     load(d.get(0));
   }
   
