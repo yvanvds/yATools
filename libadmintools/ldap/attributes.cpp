@@ -266,7 +266,9 @@ y::ldap::DATE::DATE(const std::string & ldapDate) : day(1), month(1), year(1) {
   try {
     i = std::stoi(ldapDate);
   } catch(const std::invalid_argument &e) {
-    utils::Log().add("Invalid ldap::DATE conversion");
+    std::string message("Invalid ldap::DATE conversion: ");
+    message += ldapDate;
+    utils::Log().add(message);
     return;
   }
   day = DAY(i % 100);

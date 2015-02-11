@@ -27,6 +27,10 @@ void y::samba::addUser(const ldap::account & account) {
   command.append(std::to_string(account.groupID()()));
   command.append(" -m -d /home/");
   command.append(account.group()());
+  command.append("/");
+  command.append(account.uid()());
+  command.append(" -o ou=");
+  command.append(account.group()());
   command.append(" -C '\\\\ATSCHOOL\\homes' -D 'H:' -E ' STARTUP.BAT' -F");
   command.append(" '\\\\ATSCHOOL\\profiles\\Default' -H '[U]' ");
   command.append(account.uid()());
