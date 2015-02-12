@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. scripts/gui
+
 installPackage() {
   problem=$(dpkg -s $1|grep installed)
   
@@ -37,44 +39,4 @@ restartService() {
     read -p "you might want to stop this script and fix this!"
   fi
 }
-
-#colored printing
-
-printSuccess() {
-  printf "\E[97m%50s \E[92m%25s \n" "$1" "$2"
-  tput sgr0
-}
-
-printFailed() {
-  printf "\E[97m%50s \E[91m%25s \n" "$1" "$2"
-  tput sgr0
-}
-
-printChange() {
-  printf "\E[97m%50s \E[34m%25s \n" "$1" "$2"
-  tput sgr0
-}
-
-
-printBox() {
-  str="$1"
-  len=$((${#str}+4))
-  echo -e "\E[34m"
-  for i in $(seq $len); do echo -n '*'; done;
-  echo; echo "* "$str" *";
-  for i in $(seq $len); do echo -n '*'; done;
-  echo
-  tput sgr0
-}     
-
-waitForEnter() {
-  read -p "Press [Enter] key to continue..."
-}
-
-showMessage() {
-  dialog --backtitle "yvan's admin tools" \
-         --title "$1" \
-         --msgbox "$2" 6 20
-}
-
 

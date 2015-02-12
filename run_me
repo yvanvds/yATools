@@ -1,40 +1,14 @@
 #!/bin/bash
 . scripts/functions
+. scripts/gui
 . scripts/verify_cluster
-. scripts/verify_software
 . scripts/install_yatools
 . scripts/verify_drbd
-. scripts/first_config
 . scripts/db_functions
-. scripts/git_functions
 
 printBox "Welcome to yvan's admin tools!"
 installPackage dialog
 
 scripts/mainMenu
+clear
 
-#verifySoftware
-#echo
-
-# function to verify system variables
-#loadVariables
-
-# now load all variables
-#. /root/admintools/config
-
-#echo
-#printSuccess "hostname" $hostname
-#printSuccess "domainname" $domainname
-#printSuccess "public IP" $publicIP
-#printSuccess "backbone IP" $backboneIP
-#echo
-#verifyDrbd
-#echo
-#verifyMulticast
-#echo
-#installAdminTools
-
-#installCockpit
-#installYearbook
-#echo
-#sendToGit

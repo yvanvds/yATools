@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. scripts/functions
+. scripts/gui
 
 sendToGit() {
   git add -A

@@ -3,6 +3,9 @@
 INPUT=/tmp/menu.sh.$$
 
 . scripts/git_functions
+. scripts/verify_software
+. scripts/system_config
+. scripts/verify_ha
  
 # trap and delete temp files
 trap "rm $INPUT; exit" SIGHUP SIGINT SIGTERM
@@ -22,9 +25,9 @@ do
 ### display main menu ###
 dialog --clear --backtitle "yvan's admin tools" \
 --title "[ M A I N - M E N U ]" \
---menu "Choose a TASK" 15 60 4 \
+--menu "Choose a TASK" 15 60 8 \
 Installation "Verifies software installation" \
-Identity "View and Modify this system's Identity" \
+Configuration "This system's Configuration" \
 HA "Control High Availability Server" \
 Git "Send updates to Git Repository" \
 Exit "Exit to the shell" 2>"${INPUT}"
@@ -36,9 +39,9 @@ menuitem=$(<"${INPUT}")
  
 # make decision 
 case $menuitem in
-	Installation) echo "installation";;
-	Identity) echo "identitiy";;
-	HA) echo "ha";;
+	Installation) verifyInstalledSoftware;;
+	Configuration) sysConfig;;
+	HA) verifyHA;;
         Git) sendToGit;;
 	Exit) break;;
 esac

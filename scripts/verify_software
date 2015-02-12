@@ -1,44 +1,17 @@
 #!/bin/bash
 . scripts/functions
 
-verifySoftware() {
-read -r -p "Verify installed software?[y/N]" response
-response=${response,,}
-if [[ $response =~ (yes|y)$ ]]
-then 
-    installPackage build-essential
-    installPackage cmake
-    installPackage libboost-all-dev
-    installPackage libmysqlclient-dev
-    installPackage libfcgi-dev
-    installPackage graphicsmagick
-    installPackage libgraphicsmagick++1-dev
-    installPackage libpango-1.0-0
-    installPackage libpango1.0-dev
-    installPackage libhpdf-dev
-    installPackage freeglut3-dev
-    installPackage libgl1-mesa-dev
-    installPackage mesa-utils
-    installPackage pkg-config
-    installPackage doxygen
-    installPackage libldap2-dev
-    installPackage libssl-dev
-    installPackage libmysqlcppconn-dev
-    installPackage libmysql++-dev
-    installPackage libcppunit-dev
-    installPackage ntp
-    installPackage apache2 
-    installPackage drbd8-utils
-    installPackage sqlite3
-    installPackage libboost-iostreams-dev
+installDebianPackages() {
+  for pkg in $(cat data/packagelist); do
+    installPackage $pkg
+  done
+  waitForEnter
+}
 
-    # for cluster software
-    installPackage corosync
-    installPackage pacemaker
-
+installScripts() {
     #check for localized ntp servers
     if grep "ubuntu.pool" /etc/ntp.conf > /dev/null
-    then 
+    then
        sed -i 's/ubuntu.pool/be.pool/' /etc/ntp.conf
        echo "Changed /etc/ntp.conf to use local servers."
        printChange "Time Server Configuration" "REPAIRED"
@@ -47,10 +20,25 @@ then
        printSuccess "Time Server Configuration" "OK"
     fi
 
-    # we need wt from github
+    # put network checker in place
+    if [ -f /sbin/checkNetwork ]; then
+      printSuccess "verifying network restarter" "OK"
+    else
+      cp -fr scripts_to_install/checkNetwork /sbin
+      printChange "verifying network restarter" "INSTALLING"
+    fi
+
+    addCronJob "*/2 * * * *" "/sbin/checkNetwork"
+    printSuccess "adding checkNetwork to cron" "OK"
+    waitForEnter
+}
+
+
+installWT() {
+    #download from github
     if [ -f ../wt/INSTALL ]; then
-      printSuccess  "verifying wt presence" "OK"   
-    else 
+      printSuccess  "verifying wt presence" "OK"
+    else
       printChange "verifying wt presence" "DOWNLOADING"
       cd ..
       git clone git://github.com/kdeforche/wt.git
@@ -69,26 +57,85 @@ then
       make install
       cd ../../yATools
     fi
-    
-    # copy boost process
+    waitForEnter
+}
+
+installBoost() {
     if [ -f /usr/include/boost/process.hpp ]; then
       printSuccess "checking for boost process" "OK"
     else
       cp -fr dependencies/boost_process/boost/* /usr/include/boost
-      printChange "checking for boost process" "INSTALLING" 
+      printChange "checking for boost process" "INSTALLING"
     fi
-
-    # put network checker in place
-    if [ -f /sbin/checkNetwork ]; then
-      printSuccess "verifying network restarter" "OK"
-    else 
-      cp -fr scripts/checkNetwork /sbin
-      printChange "verifying network restarter" "INSTALLING"
-    fi
-
-    addCronJob "*/2 * * * *" "/sbin/checkNetwork"
-    printSuccess "adding checkNetwork to cron" "OK"
-fi
+    waitForEnter
 }
+
+installAdmintools(){
+  git pull
+  cd libadmintools
+  make CONF=Release build
+  cp dist/Release/GNU-Linux-x86/liblibadmintools.so /usr/lib
+  cd ..
+  rm /var/log/admintools
+  touch /var/log/admintools
+  chown www-data:www-data /var/log/admintools
+  printSuccess "admin tools are updated" "OK"
+  waitForEnter
+}
+
+installYearbook() {
+  git pull
+  cd yearBook
+  make CONF=Release build
+
+  # create dirs if they don't exist
+  createDir /var/www/apps
+  createDir /var/www/apps/yearbook
+
+  # remove files if they exist
+  if [ -f /var/www/apps/yearbook/yearbook.wt ]; then
+    rm /var/www/apps/yearbook/yearbook.wt
+  fi
+  cp dist/Release_fastcgi/GNU-Linux-x86/yearbook /var/www/apps/yearbook/yearbook.wt
+  cd ../yearbookAdmin
+  make CONF=Release build
+
+  if [ -f /var/www/app/yearbook/yearbookAdmin.wt ]; then
+    rm /var/www/apps/yearbook/yearbookAdmin.wt
+  fi
+
+  cp dist/Release/GNU-Linux-x86/yearbookadmin /var/www/apps/yearbook/yearbookAdmin.wt
+  cp -fr yearbook_latex /var/www/apps/yearbook
+  chown -R www-data:www-data /var/www/apps/yearbook
+  service apache2 restart
+  cd ..
+  printSuccess "Yearbook app is updated" "OK"
+  waitForEnter
+}
+
+
+
+verifyInstalledSoftware() {
+  cmd=(dialog --separate-output --backtitle "yvan's admin tools" --checklist "Choose Actions:" 15 60 8)
+  options=(1 "Verify Debian Packages" on
+           2 "Verify Scripts" on
+           3 "Verify WT installation" off
+           4 "Verify Boost process" off
+	   5 "Reinstall account admin tools" off
+           6 "Reinstall Yearbook App" off)
+  choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+  clear 
+  for choice in $choices; do
+    case $choice in
+      1) installDebianPackages ;;
+      2) installScripts ;;
+      3) installWT ;;
+      4) installBoost ;;
+      5) installAdmintools ;;
+      6) installYearbook ;;
+   esac
+  done
+}
+
 
 

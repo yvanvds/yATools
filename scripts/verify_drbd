@@ -1,53 +1,147 @@
 #!/bin/bash
 . scripts/functions
+. scripts/gui
+. scripts/db_functions
 
-verifyDrbd() {
-  read -r -p "Verify DRBD?[y/N]" response
-  response=${response,,}
-  if [[ $response =~ (yes|y)$ ]]
+exitDRBDScript() {
+  [ -f $INPUTDRBD ] && rm $INPUTDRBD
+}
+
+saveResource() {
+  resource=$1
+  whereClause="host='$hostname' AND resource='$resource'"
+   
+  # save new value
+  if [ $(dbCount "drbd" "$whereClause") -ne 0 ]
   then
-    # modprobe won't hurt if not needed
-    modprobe drbd
-    
-    # see if it's in /etc/modules
-    if grep "drbd" /etc/modules > /dev/null
-    then
-      printSuccess "check if DRBD is active" "OK"
+    if [ "$input" == "" ]; then
+      dbDelete "drbd" $whereClause
     else
-      echo "drbd" >> /etc/modules
-      printChange "check if DRBD is active" "ADDED"
+      dbChange "drbd" "disk='$input'" "$whereClause"
     fi
-
-    # copy global configuration
-    cp data/drbd/global_common.conf /etc/drbd.d/
-    printSuccess "rewriting global config file" "OK"
-
-    # resource participation
-    read -r -p "Reconfigure Resources?[y/N]" response
-    response=${response,,}
-    if [[ $response =~ (yes|y)$ ]]; then
-      db "create table if not exists drbd (ID integer primary key, resource text, host text, disk text, ip text);"
-      
-      # website
-      if [ $(dbCount "drbd" "host='$hostname' AND resource='website'") == 0 ]; then 
-        echo "$hostname does not provide the website resource"
-        read -r -p "Would you like to add it?[y/N]" response
-        response=${response,,}
-        if [[ $response =~ (yes|y)$ ]]; then
-          read -r -p "Enter an unused partition of 200GB or more: " response
-          response=${response,,}
-          db "insert into drbd (resource, host, disk, ip) values ('website','$hostname', '$response', '$backboneIP');"
-        fi    
- 
-      else
-        echo "$hostname does provide the website resource"
-        read -r -p "Would you like to remove it?[y/N]" response
-        response=${response,,}
-        if [[ $response =~ (yes|y)$ ]]; then
-          dbDelete "drbd" "host='$hostname' AND resource='website'"
-        fi
-      fi
+  else
+    if [ "$input" == "" ]; then
+      # do nothing
+      echo "ok"
+    else
+      dbInsert "drbd(resource, host, disk, ip)" "('$resource', '$hostname', '$input', '$backboneIP')"
     fi
-
   fi
+  
+  #rewrite resource file
+  file="data/drbd/$resource"
+  file+=".res"
+  cp $file /etc/drbd.d/
+  
+  file="/etc/drbd.d/$resource"
+  file+=".res"
+  counter=0
+  for line in $(db "select * from drbd where resource='$resource'"); do
+    value=(${line//|/ })
+    echo "  on ${value[2]} {" >> $file
+    echo "    disk ${value[3]};" >> $file
+    echo "    address ${value[4]}:7789;" >> $file
+    echo "  }" >> $file
+    counter=$((counter + 1))
+  done
+  
+  #add dummy if there's only one host
+  if [ $counter -eq 1 ]; then
+    echo " on dummy {" >> $file
+    echo "   disk /dev/null;" >> $file
+    echo "   address 0.0.0.0:7789;" >> $file
+    echo " }" >> $file
+  fi
+  
+  #end of config file
+  echo "}" >> $file
+}
+
+reconfigureWebsite() {
+  input=$(dialog --stdout --backtitle "yvan's admin tools" \
+                 --title "Website Resource" \
+                 --inputbox "Please select a partition off at least 200GB" \
+                 10 60 $websiteResource)
+  if [ "$websiteResource" == "$input" ]; then
+    #nothing has changed
+    echo "nothing changed"
+  else
+    saveResource "website"
+    websiteResource=$input
+  fi                 
+}
+
+viewAllEntries() {
+  clear
+  db "select * from drbd"
+  waitForEnter
+}
+
+verifyDRBD() {
+  # modprobe won't hurt if not needed
+  modprobe drbd
+    
+  # see if it's in /etc/modules
+  if grep "drbd" /etc/modules > /dev/null
+  then
+    printSuccess "check if DRBD is active" "OK"
+  else
+    echo "drbd" >> /etc/modules
+    printChange "check if DRBD is active" "ADDED"
+  fi
+
+  # copy global configuration
+  cp data/drbd/global_common.conf /etc/drbd.d/
+  printSuccess "rewriting global config file" "OK"
+  waitForEnter
+
+  # resource participation
+  showQuestion "DRBD" "Reconfigure Resources?"
+  if [[ $? == 0 ]]; then
+    db "create table if not exists drbd (ID integer primary key, resource text, host text, disk text, ip text);"
+    
+    INPUTDRBD=/tmp/drbdmenu.sh.$$
+    #trap and delete temp files
+    trap "rm $INPUTDRBD; exit" SIGHUP SIGINT SIGTERM
+    
+    # get values
+    . /root/admintools/config
+    websiteResource=$(dbGet "drbd" "disk" "host='$hostname' AND resource='website'")
+
+    while true
+    do
+      websiteLabel="not Present"
+      if [ -n "$websiteResource" ]; then
+        websiteLabel=$websiteResource
+      fi 
+       
+      mysqlLabel="not Present"
+      if [ -n "$mysqlResource" ]; then
+        mysqlLabel=$mysqlResource
+      fi
+   
+      dialog --clear --backtitle "yvan's admin tools" \
+             --title "[ D R B D - M E N U ]" \
+             --menu "Choose a Resource" 15 40 8 \
+        Website "$websiteLabel" \
+        MySQL "$mysqlLabel" \
+        View "View All Entries" \
+        Exit "Exit to HA Menu" 2>"${INPUTDRBD}"
+      
+      opt=$?
+      [[ "$opt" -eq 1 ]] && exitDRBDScript && return
+
+      menuitem=$(<"${INPUTDRBD}")
+
+      case $menuitem in
+        Website) reconfigureWebsite;;
+        MySQL) reconfigureMysql;;
+        View) viewAllEntries;;
+        Exit) break;;
+      esac
+
+    done
+    exitDRBDScript
+  fi
+
 }

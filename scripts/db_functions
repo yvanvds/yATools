@@ -6,11 +6,24 @@ db() {
   sqlite3 $database "$1"
 }
 
-dbCount() {
+dbCount() { # table - where
   local myresult=$(sqlite3 $database "select count(*) from $1 where $2")
   echo "$myresult" 
 }
 
-dbDelete() {
+dbDelete() { # table - where
   sqlite3 $database "delete from $1 where $2"
+}
+
+dbGet() { # table - column - where
+  local myresult=$(sqlite3 $database "select $2 from $1 where $3")
+  echo "$myresult"
+}
+
+dbChange() { # table - value - where
+  sqlite3 $database "update $1 set $2 where $3"
+}
+
+dbInsert() { # table (columns) - values
+  sqlite3 $database "insert into $1 values $2"
 }
