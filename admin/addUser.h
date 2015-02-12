@@ -13,7 +13,7 @@
 
 class addUser {
 public:
-  void printHelp(const std::string & process);
+  void printHelp();
   
   void parse(int argc, char** argv);
 private:

@@ -18,23 +18,23 @@ using namespace std;
 }
 
 void ::find::printHelp() {
-  cout << "Find will help you find a user, even if you're not sure of its name." << endl;
-  cout << "first argument            : presumed first name" << endl;
-  cout << "second argument (optional): presumed last name" << endl;
+  cout << "I will help you find a user, even if you're not sure of its name." << endl;
+  cout << "<cn> : presumed first name" << endl;
+  cout << "<sn> : presumed last name" << endl;
 }
 
 void ::find::parse(int argc, char** argv) {
-  if (argc < 3) {
+  if (argc < 1) {
     printHelp();
     return;
   }
   
-  std::string cn(argv[2]);
+  std::string cn(argv[0]);
   std::string sn;
   std::vector<y::ldap::UID_NUMBER> results;
   
-  if (argc > 3) {
-    sn = argv[3];
+  if (argc > 1) {
+    sn = argv[1];
   }
   
   // try full name first

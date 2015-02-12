@@ -18,6 +18,7 @@
 using namespace std;
 
 void printBasicHelp();
+void printUserHelp ();
 
 int main(int argc, char** argv) {
 #ifndef DEBUG
@@ -36,16 +37,27 @@ int main(int argc, char** argv) {
   string command(argv[1]);
 
   if(command.compare("password") == 0) {
-    Password().parse(argc, argv);
+    Password().parse(argc - 2, argv + 2);
     return 0;
   } else if(command.compare("show") == 0) {
-    Show().parse(argc, argv);
+    Show().parse(argc - 2, argv + 2);
     return 0;
   } else if(command.compare("find") == 0) {
-    Find().parse(argc,argv);
+    Find().parse(argc - 2, argv + 2);
     return 0;
-  } else if(command.compare("add") == 0) {
-    AddUser().parse(argc,argv);
+  } else if(command.compare("user") == 0) {
+    if(argc < 3) {
+      printUserHelp();
+      return 0;
+    }
+    string userCommand(argv[2]);
+    if(userCommand.compare("add") == 0) {
+      AddUser().parse(argc - 3, argv + 3);
+      return 0;
+    } else if(userCommand.compare("delete") == 0) {
+      
+      return 0;
+    }
     return 0;
   }
 
@@ -55,16 +67,20 @@ int main(int argc, char** argv) {
 }
 
 void printBasicHelp() {
-  cout << "The admin program can be used for user easy system administration." << endl;
-  cout << "The first argument specifies what part of the admin interface will" << endl;
-  cout << "be used." << endl << endl;
-  cout << "Possible arguments are:" << endl;
+  cout << "Please give me more information." << endl;
+  cout << "I accept:" << endl;
   cout << "  password   : change a user's password." << endl;
   cout << "  show       : show a user's details."    << endl;
   cout << "  find       : find a user by name."      << endl;
-  cout << "  add        : add a new user."           << endl;
+  cout << "  user       : add or remove a user."  << endl;
   
   cout << endl;
-  cout << "Type admin <argument> -? for more information about a" << endl;
+  cout << "Type 'admin <argument>' for more information about a" << endl;
   cout << "particular command." << endl;
+}
+
+void printUserHelp() {
+  cout << "Please tell me what you'd like to do. Choose either " << endl;
+  cout << "  add     : add a user to the system."        << endl;
+  cout << "  remove  : remove a user from the system."   << endl;
 }

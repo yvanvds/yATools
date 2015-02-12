@@ -20,16 +20,16 @@ show::show() {
 }
 
 void show::printHelp() {
-  cout << "To show a user's details, you need to supply it's ID." << endl;
-  cout << "first argument: a userID" << endl;
+  cout << "To show a user's details, you need to tell me it's ID." << endl;
+  cout << "<uid> : a userID" << endl;
 }
 
 void show::parse(int argc, char ** argv) {
-  if (argc < 3) {
+  if (argc < 1) {
     printHelp();
     return;
   } else {
-    std::string uid(argv[2]);
+    std::string uid(argv[0]);
     
     if(uid.compare("-?") == 0) {
       printHelp();
@@ -42,15 +42,15 @@ void show::parse(int argc, char ** argv) {
       return;
     } else {
       cout << endl;
-      cout << "DN        : " << account.dn()() << endl;
-      cout << "first name: " << account.cn()() << endl;
-      cout << "surname   : " << account.sn()() << endl;
+      cout << "DN        : " << account.dn      ()() << endl;
+      cout << "first name: " << account.cn      ()() << endl;
+      cout << "surname   : " << account.sn      ()() << endl;
       cout << "full name : " << account.fullName()() << endl;
-      cout << "email     : " << account.mail()() << endl;
+      cout << "email     : " << account.mail    ()() << endl;
       cout << endl;
       cout << "Birthday  : " << account.birthDay().asString() << endl;
-      cout << "Group     : " << account.group()() << endl;
-      cout << "Homedir   : " << account.homeDir()() << endl;
+      cout << "Group     : " << account.group   ()() << endl;
+      cout << "Homedir   : " << account.homeDir ()() << endl;
     }
   }
 }

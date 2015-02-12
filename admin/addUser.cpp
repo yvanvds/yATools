@@ -21,9 +21,9 @@ addUser & AddUser() {
   return s;
 }
 
-void addUser::printHelp(const std::string & process) {
+void addUser::printHelp() {
   cout << "Add will add a user to the ldap database and create a home directory." << endl;
-  cout << "Usage: " << process << " add <cn> <sn> [date] [group] [wisaID]" << endl;
+  cout << "Usage: admin user add <cn> <sn> [date] [group] [wisaID]" << endl;
   cout << endl;
   cout << "<cn>      Given name" << endl;
   cout << "<sn>      Surname" << endl;
@@ -33,13 +33,13 @@ void addUser::printHelp(const std::string & process) {
 }
 
 void addUser::parse(int argc, char** argv) {
-  if(argc < 4) {
-    printHelp(argv[0]);
+  if(argc < 2) {
+    printHelp();
     return;
   }
   
-  std::string cn(argv[2]);
-  std::string sn(argv[3]);
+  std::string cn(argv[0]);
+  std::string sn(argv[1]);
   boost::algorithm::to_lower(cn);
   boost::algorithm::to_lower(sn);
   
@@ -47,7 +47,7 @@ void addUser::parse(int argc, char** argv) {
   account tempAccount;
   
   tempAccount.uid(uid);
-  tempAccount.group(GID(argc > 5 ? argv[5] : "extern"));
+  tempAccount.group(GID(argc > 3 ? argv[3] : "extern"));
     
   // set group id
   if((tempAccount.group()()).compare("extern") == 0) {
@@ -72,8 +72,8 @@ void addUser::parse(int argc, char** argv) {
   fullName += " "; fullName += sn;
   acc.fullName(FULL_NAME(fullName));
   
-  acc.birthDay(DATE      (argc > 4 ? argv[4] : "19700101"  ));
-  acc.wisaID  (WISA_ID   (argc > 6 ? std::stoi(argv[6]) : 0));
+  acc.birthDay(DATE      (argc > 2 ? argv[2] : "19700101"  ));
+  acc.wisaID  (WISA_ID   (argc > 4 ? std::stoi(argv[4]) : 0));
   
   std::string password(y::utils::Security().makePassword(8));
   acc.password(PASSWORD(password));
