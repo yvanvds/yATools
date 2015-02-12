@@ -51,7 +51,7 @@ showInput() {
   message=$(<$DIALOGINPUT) 
  
   case $response in
-    0)  eval $3="$message" 
+    0)  eval $3="'$message'" 
         ;;
   esac
 
