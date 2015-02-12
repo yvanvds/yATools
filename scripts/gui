@@ -48,9 +48,10 @@ showInput() {
          --title "$1" \
          --inputbox "$2" 8 60 2>$DIALOGINPUT
   response=$?
-  
+  message=$(<$DIALOGINPUT) 
+ 
   case $response in
-    0)  eval $3="$(<$DIALOGINPUT)" 
+    0)  eval $3="$message" 
         ;;
   esac
 
