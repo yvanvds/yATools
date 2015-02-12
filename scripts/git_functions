@@ -4,7 +4,11 @@
 
 sendToGit() {
   git add -A
-  git commit -m "automated upload from install script"
+  message="automated upload from install script"
+ 
+  showInput "Git Commit" "Provide a commit message" $message
+
+  git commit -m "$message"
   git push
   if [[ $? == 0 ]]; then
     showMessage "Git Repository" 'everything is in sync now' 
