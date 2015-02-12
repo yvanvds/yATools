@@ -1,0 +1,80 @@
+#!/bin/bash
+. scripts/functions
+. scripts/db_functions
+. scripts/gui
+
+# function to update /etc/hosts with all known hosts
+updateHosts() {
+  showQuestion "System Change Possible" \
+    "Would you like to update /etc/hosts?"
+
+  if [[ $? == 0 ]]
+  then
+    cp data/hosts /etc/hosts
+    echo "127.0.1.1 $hostname" >> /etc/hosts
+    for entry in $(sqlite3 $database "select name, ip from $dbname"); do
+      arr=(${entry//|/ })
+      if [ "$hostname" != "${arr[0]}" ]; then
+        echo "${arr[1]} ${arr[0]}" >> /etc/hosts
+      fi
+    done;
+  fi
+}
+
+
+# basic variables for this server
+basicVariables() {
+  touch /root/admintools/config
+  
+  # load the variables
+  . /root/admintools/config
+  
+  exec 3>&1
+  
+  VALUES=$(dialog --ok-label "Submit" \
+            --backtitle " yvan's admin tools" \
+            --title "Basic Config" \
+            --form "Please update these" \
+            15 50 0 \
+            "Hostname:"    1 1 "$hostname"   1 10 15 0 \
+            "Domain:"      2 1 "$domainname" 2 10 30 0 \
+            "Public IP:"   3 1 "$publicIP"   3 10 15 0 \
+            "BackBone IP:" 4 1 "$backboneIP" 4 10 15 0 \
+  2>&1 1>&3)
+
+  exec 3>&-
+  
+  if [ "$VALUES" != "" ]; then
+    readarray -t v <<<"$VALUES"
+    hostname=${v[0]}
+    domainname=${v[1]}
+    publicIP=${v[2]}
+    backboneIP=${v[3]}
+
+    # store in file again
+    # first var clears file
+    declare -p hostname > /root/admintools/config
+    for var in domainname publicIP backboneIP; do
+       declare -p $var >> /root/admintools/config
+    done
+ 
+    #hostname check
+    hostfile=$(</etc/hostname)
+    if [ "$hostfile" != "$hostname" ]; then
+      echo $hostname > /etc/hostname
+    fi
+
+    # update database if needed
+    dbname=$(tr -dc 'a-z' <<< $domainname)
+    db "create table if not exists $dbname (ID integer primary key, name text, ip text);"   
+    if [ $(dbCount $dbname "name='$hostname'") == 0 ]; then
+      db "insert into $dbname (name, ip) values ('$hostname','$backboneIP');"
+    fi
+    updateHosts
+  fi
+}
+
+sysConfig() {
+  basicVariables
+}
+

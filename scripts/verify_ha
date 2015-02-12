@@ -1,0 +1,89 @@
+#!/bin/bash
+. scripts/functions
+. scripts/verify_drbd
+
+verifyCorosync() {
+    export ais_port=5405
+    export ais_mcast=226.94.1.1
+    export ais_addr=192.168.0.0
+
+    sed -i.bak "s/.*mcastaddr:.*/mcastaddr:\ $ais_mcast/g" /etc/corosync/corosync.conf
+    sed -i.bak "s/.*mcastport:.*/mcastport:\ $ais_port/g" /etc/corosync/corosync.conf
+    sed -i.bak "s/.*bindnetaddr:.*/bindnetaddr:\ $ais_addr/g" /etc/corosync/corosync.conf
+    
+    # add pacemaker service
+    if grep "pacemaker" /etc/corosync/corosync.conf > /dev/null
+    then
+       printSuccess "Check for pacemaker in corosync" "OK"
+    else
+       printChange "Check for pacemaker in corosync" "ADDING"
+       cat /root/github/yATools/data/corosync >> /etc/corosync/corosync.conf
+    fi 
+
+    printSuccess "updating /etc/corosync/corosync.donf" "OK"
+
+    if [ -f /etc/corosync/authkey ]; then
+      printSuccess "Check for authkey in corosync" "OK"
+    else
+      printFailed "Check for authkey in corosync" "FAILED"
+      read -p "An authkey must be copied from an existing server and placed in /etc/corosync. Press [Enter] to continue."
+      
+    fi
+
+    if [ -n "'grep START=yes /etc/default/corosync > /dev/null'" ]; then
+       printSuccess "Check corosync start at boot" "OK"
+    else 
+       cp /root/github/yATools/data/corosync /etc/default/
+       printChange "Check corosync start at boot" "ADDING"
+    fi
+    waitForEnter
+
+    # restart corosync
+    showQuestion "Corosync HA" "Restart Services?"
+    if [[ $? == 0 ]]; then
+      restartService corosync
+      restartService pacemaker
+      waitForEnter
+    fi
+}
+
+#proper shutdown
+exitHaScript() {
+  [ -f $INPUTHA ] && rm $INPUTHA
+  
+}
+
+
+verifyHA() {
+  INPUTHA=/tmp/hamenu.sh.$$
+
+  #trap and delete temp files
+  trap "rm $INPUTHA; exit" SIGHUP SIGINT SIGTERM
+
+  while true
+  do
+  
+  dialog --clear --backtitle "yvan's admin tools" \
+         --title "[ H A - M E N U ]" \
+         --menu "Choose a TASK" 15 60 8 \
+    Corosync "Verify Corosync Configuration" \
+    DRBD "Manage DRBD Resources" \
+    Exit "Exit to Main Menu" 2>"${INPUTHA}"
+
+  opt=$?
+  [[ "$opt" -eq 1 ]] && exitHaScript && return
+
+  menuitem=$(<"${INPUTHA}")
+
+  case $menuitem in
+    Corosync) verifyCorosync;;
+    DRBD) verifyDRBD;;
+    Exit) break;;
+  esac
+ 
+  done
+  exitHaScript
+  
+}
+
+

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ROUTER_IP=192.168.0.250
+( ! ping -c1 $ROUTER_IP >/dev/null 2>&1 ) && service network restart >/dev/null 2>&1
