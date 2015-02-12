@@ -46,7 +46,7 @@ showInput() {
   DIALOGINPUT=/tmp/dialoginput.sh.$$
   dialog --backtitle "yvan's admin tools" \
          --title "$1" \
-         --inputbox "$2" 8 60 2>$DIALOGINPUT
+         --inputbox "$2" 8 60 2 "$3">$DIALOGINPUT
   response=$?
   message=$(<$DIALOGINPUT) 
  
