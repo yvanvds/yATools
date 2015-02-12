@@ -122,7 +122,7 @@ void ldapServerTest::testGetAccounts() {
 void ldapServerTest::testGetGroup() {
   y::ldap::Server().clear();
   // get mailgroup
-  y::ldap::group & mailgroup = y::ldap::Server().getGroup(y::ldap::CN("6INF1"));
+  y::ldap::group & mailgroup = y::ldap::Server().getGroup(y::ldap::CN("6INF1"), false);
   if(mailgroup.members().elms() != 13) {
     CPPUNIT_ASSERT(false);
   }
@@ -130,7 +130,7 @@ void ldapServerTest::testGetGroup() {
     CPPUNIT_ASSERT(false);
   }
   
-  y::ldap::group & newgroup = y::ldap::Server().getGroup(y::ldap::CN("no group"));
+  y::ldap::group & newgroup = y::ldap::Server().getGroup(y::ldap::CN("no group"), false);
   if(newgroup.members().elms()) {
     CPPUNIT_ASSERT(false);
   }
@@ -139,7 +139,7 @@ void ldapServerTest::testGetGroup() {
   }
   
   // get editable mailgroup
-  y::ldap::group & mailgroup2 = y::ldap::Server().getGroup(y::ldap::CN("directie"));
+  y::ldap::group & mailgroup2 = y::ldap::Server().getGroup(y::ldap::CN("directie"), true);
   if(mailgroup2.members().elms() != 3) {
     CPPUNIT_ASSERT(false);
   }

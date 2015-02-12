@@ -193,18 +193,19 @@ y::ldap::group & y::ldap::server::getGroup(const DN& id) {
   return g;
 }
 
-y::ldap::group & y::ldap::server::getGroup(const CN& id) {
+y::ldap::group & y::ldap::server::getGroup(const CN& id, bool editable) {
   // make sure we're in single mode
   if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_SINGLE;
   assert(_ldapMode == LDAP_MODE_SINGLE);
   
   for(int i = 0; i < _groups.elms(); i++) {
-    if(_groups[i].cn() == id) {
+    if(_groups[i].cn() == id && _groups[i].editable() == editable) {
       return _groups[i];
     }
   }
   
   group & g = _groups.New();
+  g.editable(editable);
   g.load(id);
   return g;
 }
@@ -288,7 +289,22 @@ bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) {
   return false;
 }
 
-void y::ldap::server::setData(const DN & dn, dataset & values) {
+void y::ldap::server::printMods(LDAPMod** mods) {
+  for(int i = 0; mods[i] != NULL; i++) {
+    std::cout << "mod" << i << " (";
+    switch (mods[i]->mod_op) {
+      case LDAP_MOD_ADD: std::cout << "ADD)" << std::endl; break;
+      case LDAP_MOD_REPLACE: std::cout << "REPACE)" << std::endl; break;
+      case LDAP_MOD_DELETE: std::cout << "DELETE)" << std::endl; break;
+    }
+    std::cout << "  type: " << mods[i]->mod_type << std::endl;
+    for (int j = 0; mods[i]->mod_vals.modv_strvals[j] != NULL; j++) {
+      std::cout << "  value: " << mods[i]->mod_vals.modv_strvals[j] << std::endl;
+    }
+  }
+}
+
+void y::ldap::server::setData(const DN & dn, dataset & values, bool isNew) {
   LDAPMod ** mods = new LDAPMod*[values.elms() + 1];
   mods[values.elms()] = NULL;
   
@@ -297,6 +313,7 @@ void y::ldap::server::setData(const DN & dn, dataset & values) {
     data & d = values.get(i);
     
     switch (d.getType()) {
+      case NEW: mods[i]->mod_op = 0; break;
       case ADD: mods[i]->mod_op = LDAP_MOD_ADD; break;
       case MODIFY: mods[i]->mod_op = LDAP_MOD_REPLACE; break;
       case DELETE: mods[i]->mod_op = LDAP_MOD_DELETE; break;
@@ -319,11 +336,24 @@ void y::ldap::server::setData(const DN & dn, dataset & values) {
     mods[i]->mod_vals.modv_strvals[d.elms("values")] = NULL;
   }
   
-  if(int result = ldap_modify_ext_s(_server, dn().c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
-    std::string message;
-    message.append("y::ldap::server::setData() : ");
-    message.append(ldap_err2string(result));
-    y::utils::Log().add(message);
+  if(!isNew) {
+    if(int result = ldap_modify_ext_s(_server, dn().c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
+      std::string message;
+      message.append("y::ldap::server::setData() : ");
+      message.append(ldap_err2string(result));
+      y::utils::Log().add(message);
+    }
+  } else {
+    std::cout << std::endl;
+    std::cout << dn() << std::endl;
+    printMods(mods);
+    
+    if(int result = ldap_add_ext_s(_server, dn().c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
+      std::string message;
+      message.append("y::ldap::server::setData() : ");
+      message.append(ldap_err2string(result));
+      y::utils::Log().add(message);
+    }
   }
   
   // release memory
@@ -438,4 +468,13 @@ void y::ldap::server::clear() {
   _accounts.clear();
   _groups.clear();
   _ldapMode = LDAP_MODE_NONE;
+}
+
+void y::ldap::server::removeEntry(const DN& dn) {
+  if(int result = ldap_delete_ext_s(_server, dn().c_str(), NULL, NULL) != LDAP_SUCCESS) {
+    std::string message;
+    message.append("y::ldap::server::removeEntry() : ");
+    message.append(ldap_err2string(result));
+    y::utils::Log().add(message);
+  }
 }

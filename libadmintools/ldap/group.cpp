@@ -16,7 +16,8 @@ y::ldap::group::group()
     _cn(CN("")), 
     _new(true), 
     _editable(true),
-    _flaggedForCommit(false) {
+    _flaggedForCommit(false),
+    _flaggedForDelete(false){
 }
 
 bool y::ldap::group::load(const DN& id) {
@@ -32,9 +33,9 @@ bool y::ldap::group::load(const CN& id) {
   std::string filter;
   filter = "cn="; filter.append(id());
   
-  if(d.create(filter, "ou=mailGroups")) {
+  if(!editable() && d.create(filter, "ou=mailGroups")) {
     load(d.get(0));
-  } else if(d.create(filter, "ou=editableMailGroups")) {
+  } else if(editable() && d.create(filter, "ou=editableMailGroups")) {
     load(d.get(0));
   } else {
     _cn(id);
@@ -82,24 +83,29 @@ void y::ldap::group::flagForCommit() {
 }
 
 const y::ldap::DN & y::ldap::group::dn() {
+  assert(!_flaggedForDelete);
   return _dn();
 }
 
 const y::ldap::CN & y::ldap::group::cn() {
+  assert(!_flaggedForDelete);
   return _cn();
 }
 
 container<std::string> & y::ldap::group::owners() {
+  assert(!_flaggedForDelete);
   return _owners;
 }
 
 container<std::string> & y::ldap::group::members() {
+  assert(!_flaggedForDelete);
   return _members;
 }
 
 y::ldap::group & y::ldap::group::editable(bool value) {
   // make sure this is only used with new groups
   assert(_new);
+  assert(!_flaggedForDelete);
   _editable = value;
   return (*this);
 }
@@ -108,8 +114,31 @@ bool y::ldap::group::editable() {
   return _editable;
 }
 
+bool y::ldap::group::isNew() {
+  return _new;
+}
+
+void y::ldap::group::flagForDelete() {
+  _flaggedForCommit = true; // delete is also a commit
+  _flaggedForDelete = true;
+}
+
+bool y::ldap::group::wilBeDeleted() {
+  return _flaggedForDelete;
+}
+
 bool y::ldap::group::save() {
   if(!_flaggedForCommit) return false;
+  
+  if(_flaggedForDelete) {
+    Server().removeEntry(_dn());
+    // not really needed, but you never know
+    _members.clear();
+    _owners.clear();
+    
+    return true;
+  }
+  
   dataset values;
   
   if(_new) {    
@@ -142,8 +171,9 @@ bool y::ldap::group::saveNew() {
     dn += ",ou=mailGroups,";
   }
   dn += utils::Config().getLdapBaseDN();
+  _dn(DN(dn), true);
 
-  data & d = values.New(ADD);
+  data & d = values.New(NEW);
   d.add("type", "objectClass");
   d.add("values", "top");
   d.add("values", "extensibleObject");
@@ -153,11 +183,11 @@ bool y::ldap::group::saveNew() {
     d.add("values", "groupOfNames");
   }
   
-  data & d1 = values.New(ADD);
+  data & d1 = values.New(NEW);
   d1.add("type", "cn");
   d1.add("values", _cn()());
 
-  data & d2 = values.New(ADD);
+  data & d2 = values.New(NEW);
   if(_editable) {
     d2.add("type", "mail");
   } else {
@@ -169,16 +199,16 @@ bool y::ldap::group::saveNew() {
   
   // if editable, also add as member
   if(_editable) {
-    data & d = values.New(ADD);
-    d.add("type", "rfc822mailmember");
+    data & d = values.New(NEW);
+    d.add("type", "rfc822MailMember");
     for(int i = 0; i < _owners.elms(); i++) {
       d.add("values", _owners[i]);
     }
   }
 
-  data & d3 = values.New(ADD);
+  data & d3 = values.New(NEW);
   if(_editable) {
-    d3.add("type", "rfc822mailmember");
+    d3.add("type", "rfc822MailMember");
   } else {
     d3.add("type", "member");
   }
@@ -187,7 +217,7 @@ bool y::ldap::group::saveNew() {
   }
 
   if(values.elms()) {
-    Server().setData(_dn(), values);
+    Server().setData(_dn(), values, true);
     return true;
   }
   return false;
@@ -223,7 +253,7 @@ bool y::ldap::group::saveUpdate() {
     if(!found) {
       data & d = values.New(DELETE);
       if(_editable) {
-        d.add("type", "rfc822mailmember");
+        d.add("type", "rfc822MailMember");
       } else {
         d.add("type", "member");
       }
@@ -259,7 +289,7 @@ bool y::ldap::group::saveUpdate() {
     if(!found) {
       data & d = values.New(ADD);
       if(_editable) {
-        d.add("type", "rfc822mailmember");
+        d.add("type", "rfc822MailMember");
       } else {
         d.add("type", "member");
       }

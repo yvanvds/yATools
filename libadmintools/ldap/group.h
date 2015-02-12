@@ -22,6 +22,7 @@ namespace y {
       bool load(const data& d);
       
       void flagForCommit();
+      void flagForDelete();
       bool save();
 
       const DN & dn();
@@ -32,6 +33,9 @@ namespace y {
 
       group & editable(bool value); // automatic group or not
       bool    editable();
+      bool    isNew   ();
+      bool    wilBeDeleted();
+      
       
     private:
       bool saveNew   ();
@@ -51,6 +55,7 @@ namespace y {
       bool _new     ; // false if loaded from ldap
       bool _editable;
       bool _flaggedForCommit;
+      bool _flaggedForDelete;
     };
   }
 }

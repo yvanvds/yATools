@@ -35,7 +35,7 @@ namespace y {
       account & getAccount(const DN         & id);
 
       group & getGroup(const DN & id);
-      group & getGroup(const CN & id);
+      group & getGroup(const CN & id, bool editable);
 
       container<account> & getAccounts(); // do not mix with getAccount!
       container<group  > & getGroups  (); // do not mix with getGroup!    
@@ -55,8 +55,11 @@ namespace y {
       
     private:
       bool getData(dataset & rs, bool isDN = false);
-      void setData(const DN & dn, dataset & values);
-
+      void setData(const DN & dn, dataset & values, bool isNew = false);
+      void removeEntry(const DN & dn);
+      
+      void printMods(LDAPMod ** mods); // for debugging only
+      
       container<account> _accounts;
       container<group  > _groups  ;
 
