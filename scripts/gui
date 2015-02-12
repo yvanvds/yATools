@@ -43,15 +43,18 @@ showQuestion() {
 }
 
 showInput() {
+  echo $3
+  waitForEnter
+
   DIALOGINPUT=/tmp/dialoginput.sh.$$
   dialog --backtitle "yvan's admin tools" \
          --title "$1" \
-         --inputbox "$2" 8 60 2 "$3" 2>$DIALOGINPUT
+         --inputbox "$2" 8 60 "$3" 2>$DIALOGINPUT
   response=$?
-  message=$(<$DIALOGINPUT) 
+  INPUT_RESULT="$3"
  
   case $response in
-    0)  eval $3="'$message'" 
+    0)  eval INPUT_RESULT=$(<$DIALOGINPUT)
         ;;
   esac
 
