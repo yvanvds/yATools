@@ -41,4 +41,18 @@ showQuestion() {
          --title "$1" \
          --yesno "$2" 7 60
 }
-        
+
+showInput() {
+  DIALOGINPUT=/tmp/dialoginput.sh.$$
+  dialog --backtitle "yvan's admin tools" \
+         --title "$1" \
+         --inputbox "$2" 8 60 2>$OUTPUT
+  response=$?
+  
+  case $response in
+    0)  eval $3=$(<$DIALOGINPUT) 
+        ;;
+  esac
+
+  rm $DIALOGINPUT
+}        
