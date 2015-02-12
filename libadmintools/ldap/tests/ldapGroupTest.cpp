@@ -288,7 +288,6 @@ void ldapGroupTest::testSave() {
       CPPUNIT_ASSERT(false);
     }
 
-    group.editable(true);
     group.owners().New() = "boss@sanctamaria-aarschot.be";
     group.members().New() = "yvan@sanctamaria-aarschot.be";
     group.flagForCommit();

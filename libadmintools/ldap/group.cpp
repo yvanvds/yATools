@@ -183,37 +183,33 @@ bool y::ldap::group::saveNew() {
     d.add("values", "groupOfNames");
   }
   
-  data & d1 = values.New(NEW);
-  d1.add("type", "cn");
-  d1.add("values", _cn()());
+  data & cn = values.New(NEW);
+  cn.add("type", "cn");
+  cn.add("values", _cn()());
 
-  data & d2 = values.New(NEW);
+  data & own = values.New(NEW);
   if(_editable) {
-    d2.add("type", "mail");
+    own.add("type", "mail");
   } else {
-    d2.add("type", "owner");
+    own.add("type", "owner");
   }
   for(int i = 0; i < _owners.elms(); i++) {
-    d2.add("values", _owners[i]);
+    own.add("values", _owners[i]);
   }
   
   // if editable, also add as member
+  data & mbs = values.New(NEW);
   if(_editable) {
-    data & d = values.New(NEW);
-    d.add("type", "rfc822MailMember");
+    mbs.add("type", "rfc822MailMember");
     for(int i = 0; i < _owners.elms(); i++) {
-      d.add("values", _owners[i]);
+      mbs.add("values", _owners[i]);
     }
-  }
-
-  data & d3 = values.New(NEW);
-  if(_editable) {
-    d3.add("type", "rfc822MailMember");
   } else {
-    d3.add("type", "member");
+    mbs.add("type", "member");
   }
+  
   for(int i = 0; i < _members.elms(); i++) {
-    d3.add("values", _members[i]);
+    mbs.add("values", _members[i]);
   }
 
   if(values.elms()) {
@@ -224,7 +220,10 @@ bool y::ldap::group::saveNew() {
 }
 
 bool y::ldap::group::saveUpdate() {
+  // TODO in editable mailgroups owners should also be members
+  
   dataset values;
+  data * ownerDelete = nullptr;
   // remove owners if needed 
   for(int i = 0; i < _ownersInLDAP.elms(); i++){
     std::string owner = _ownersInLDAP[i];
@@ -233,17 +232,20 @@ bool y::ldap::group::saveUpdate() {
       if(owner.compare(_owners[j]) == 0) found = true;
     }
     if(!found) {
-      data & d = values.New(DELETE);
-      if(_editable) {
-        d.add("type", "mail");
-      } else {
-        d.add("type", "owner");
+      if(!ownerDelete) {
+        ownerDelete = &values.New(DELETE);
+        if(_editable) {
+          ownerDelete->add("type", "mail");
+        } else {
+          ownerDelete->add("type", "owner");
+        }
       }
-      d.add("values", owner);     
+      ownerDelete->add("values", owner);     
     }
   }
   
   // remove members if needed
+  data * memberDelete = nullptr;
   for(int i = 0; i < _membersInLDAP.elms(); i++){
     std::string member = _membersInLDAP[i];
     bool found = false;
@@ -251,17 +253,20 @@ bool y::ldap::group::saveUpdate() {
       if(member.compare(_members[j]) == 0) found = true;
     }
     if(!found) {
-      data & d = values.New(DELETE);
-      if(_editable) {
-        d.add("type", "rfc822MailMember");
-      } else {
-        d.add("type", "member");
+      if(!memberDelete) {
+        memberDelete = &values.New(DELETE);
+        if(_editable) {
+          memberDelete->add("type", "rfc822MailMember");
+        } else {
+          memberDelete->add("type", "member");
+        }
       }
-      d.add("values", member);     
+      memberDelete->add("values", member);     
     }
   }
   
   // add owners if needed
+  data * ownerAdd = nullptr;
   for(int i = 0; i < _owners.elms(); i++){
     std::string owner = _owners[i];
     bool found = false;
@@ -269,17 +274,20 @@ bool y::ldap::group::saveUpdate() {
       if(owner.compare(_ownersInLDAP[j]) == 0) found = true;
     }
     if(!found) {
-      data & d = values.New(ADD);
-      if(_editable) {
-        d.add("type", "mail");
-      } else {
-        d.add("type", "owner");
+      if(!ownerAdd) {
+        ownerAdd = &values.New(ADD);
+        if(_editable) {
+          ownerAdd->add("type", "mail");
+        } else {
+          ownerAdd->add("type", "owner");
+        }
       }
-      d.add("values", owner);     
+      ownerAdd->add("values", owner);     
     }
   }  
   
   // add members if needed
+  data * memberAdd = nullptr;
   for(int i = 0; i < _members.elms(); i++){
     std::string member = _members[i];
     bool found = false;
@@ -287,13 +295,15 @@ bool y::ldap::group::saveUpdate() {
       if(member.compare(_membersInLDAP[j]) == 0) found = true;
     }
     if(!found) {
-      data & d = values.New(ADD);
-      if(_editable) {
-        d.add("type", "rfc822MailMember");
-      } else {
-        d.add("type", "member");
+      if(!memberAdd) {
+        memberAdd = &values.New(ADD);
+        if(_editable) {
+          memberAdd->add("type", "rfc822MailMember");
+        } else {
+          memberAdd->add("type", "member");
+        }
       }
-      d.add("values", member);     
+      memberAdd->add("values", member);     
     }
   }
   
