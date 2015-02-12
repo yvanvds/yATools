@@ -304,7 +304,7 @@ void y::ldap::server::printMods(LDAPMod** mods) {
   }
 }
 
-void y::ldap::server::setData(const DN & dn, dataset & values, bool isNew) {
+LDAPMod ** y::ldap::server::createMods(dataset& values) {
   LDAPMod ** mods = new LDAPMod*[values.elms() + 1];
   mods[values.elms()] = NULL;
   
@@ -336,36 +336,58 @@ void y::ldap::server::setData(const DN & dn, dataset & values, bool isNew) {
     mods[i]->mod_vals.modv_strvals[d.elms("values")] = NULL;
   }
   
-  if(!isNew) {
-    if(int result = ldap_modify_ext_s(_server, dn().c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
-      std::string message;
-      message.append("y::ldap::server::setData() : ");
-      message.append(ldap_err2string(result));
-      y::utils::Log().add(message);
-    }
-  } else {
-    std::cout << std::endl;
-    std::cout << dn() << std::endl;
-    printMods(mods);
-    
-    if(int result = ldap_add_ext_s(_server, dn().c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
-      std::string message;
-      message.append("y::ldap::server::setData() : ");
-      message.append(ldap_err2string(result));
-      y::utils::Log().add(message);
-    }
-  }
-  
-  // release memory
-  for(int i = 0; i < values.elms(); i++) {
+  return mods;
+}
+
+void y::ldap::server::releaseMods(LDAPMod** mods) {
+    for(int i = 0; mods[i] != nullptr; i++) {
     delete[] mods[i]->mod_type;
-    for(int j = 0; j < values.get(i).elms("values"); j++) {
+    for(int j = 0; mods[i]->mod_vals.modv_strvals[j] != nullptr; j++) {
       delete[] mods[i]->mod_vals.modv_strvals[j];
     }
     delete[] mods[i]->mod_vals.modv_strvals;
     delete mods[i];
   }
   delete[] mods;
+}
+
+void y::ldap::server::modify(const DN & dn, dataset & values) {
+  LDAPMod ** mods = createMods(values);
+
+  if(int result = ldap_modify_ext_s(_server, dn().c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
+    std::string message;
+    message.append("y::ldap::server::modify() : ");
+    message.append(ldap_err2string(result));
+    y::utils::Log().add(message);
+  }
+  
+  releaseMods(mods);
+}
+ 
+void y::ldap::server::add(const DN& dn, dataset& values) {
+  LDAPMod ** mods = createMods(values);
+  //std::cout << std::endl;
+  //std::cout << dn() << std::endl;
+  //printMods(mods);
+
+  if(int result = ldap_add_ext_s(_server, dn().c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
+    std::string message;
+    message.append("y::ldap::server::modify() : ");
+    message.append(ldap_err2string(result));
+    y::utils::Log().add(message);
+  }
+  
+  // release memory
+  releaseMods(mods);
+}
+
+void y::ldap::server::remove(const DN& dn) {
+  if(int result = ldap_delete_ext_s(_server, dn().c_str(), NULL, NULL) != LDAP_SUCCESS) {
+    std::string message;
+    message.append("y::ldap::server::removeEntry() : ");
+    message.append(ldap_err2string(result));
+    y::utils::Log().add(message);
+  }
 }
 
 int y::ldap::server::findAccounts(const std::string& query, std::vector<UID_NUMBER> & results) {
@@ -470,11 +492,3 @@ void y::ldap::server::clear() {
   _ldapMode = LDAP_MODE_NONE;
 }
 
-void y::ldap::server::removeEntry(const DN& dn) {
-  if(int result = ldap_delete_ext_s(_server, dn().c_str(), NULL, NULL) != LDAP_SUCCESS) {
-    std::string message;
-    message.append("y::ldap::server::removeEntry() : ");
-    message.append(ldap_err2string(result));
-    y::utils::Log().add(message);
-  }
-}

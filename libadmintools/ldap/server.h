@@ -55,10 +55,13 @@ namespace y {
       
     private:
       bool getData(dataset & rs, bool isDN = false);
-      void setData(const DN & dn, dataset & values, bool isNew = false);
-      void removeEntry(const DN & dn);
+      void modify(const DN & dn, dataset & values);
+      void add   (const DN & dn, dataset & values);
+      void remove(const DN & dn                  );
       
-      void printMods(LDAPMod ** mods); // for debugging only
+      LDAPMod ** createMods (dataset &  values); //always combine with releaseMods!!!
+      void       releaseMods(LDAPMod ** mods  );
+      void       printMods  (LDAPMod ** mods  ); // for debugging only
       
       container<account> _accounts;
       container<group  > _groups  ;

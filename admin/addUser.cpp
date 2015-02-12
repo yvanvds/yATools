@@ -84,14 +84,14 @@ void addUser::parse(int argc, char** argv) {
   
   // add to group
   if(acc.group()().compare("personeel") == 0) {
-    group & mailGroup = Server().getGroup(CN(acc.group()()));
+    group & mailGroup = Server().getGroup(CN(acc.group()()), true);
     mailGroup.members().New() = acc.mail()();
     mailGroup.flagForCommit();
   } else if(acc.group()().compare("extern") != 0) {
     if(acc.group()().compare("externmail") != 0) {
       
       // this is a student belonging to a classgroup
-      group & mailGroup = Server().getGroup(CN(acc.group()()));
+      group & mailGroup = Server().getGroup(CN(acc.group()()), false);
       mailGroup.members().New() = acc.dn()();
       mailGroup.flagForCommit();
     }

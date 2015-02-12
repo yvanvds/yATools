@@ -245,7 +245,7 @@ bool y::ldap::account::save() {
   }
   
   if(values.elms()) {
-    Server().setData(_dn(), values);
+    Server().modify(_dn(), values);
     return true;
   }
   return false;

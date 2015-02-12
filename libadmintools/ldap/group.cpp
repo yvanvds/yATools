@@ -131,7 +131,7 @@ bool y::ldap::group::save() {
   if(!_flaggedForCommit) return false;
   
   if(_flaggedForDelete) {
-    Server().removeEntry(_dn());
+    Server().remove(_dn());
     // not really needed, but you never know
     _members.clear();
     _owners.clear();
@@ -213,7 +213,7 @@ bool y::ldap::group::saveNew() {
   }
 
   if(values.elms()) {
-    Server().setData(_dn(), values, true);
+    Server().add(_dn(), values);
     return true;
   }
   return false;
@@ -308,7 +308,7 @@ bool y::ldap::group::saveUpdate() {
   }
   
   if(values.elms()) {
-    Server().setData(_dn(), values);
+    Server().modify(_dn(), values);
     return true;
   }
   return false;
