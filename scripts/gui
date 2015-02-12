@@ -43,9 +43,6 @@ showQuestion() {
 }
 
 showInput() {
-  echo $3
-  waitForEnter
-
   DIALOGINPUT=/tmp/dialoginput.sh.$$
   dialog --backtitle "yvan's admin tools" \
          --title "$1" \
