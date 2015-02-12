@@ -54,7 +54,7 @@ showInput() {
   INPUT_RESULT="$3"
  
   case $response in
-    0)  eval INPUT_RESULT=$(<$DIALOGINPUT)
+    0)  INPUT_RESULT=$(<$DIALOGINPUT)
         ;;
   esac
 
