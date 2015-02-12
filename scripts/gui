@@ -50,7 +50,7 @@ showInput() {
   response=$?
   
   case $response in
-    0)  eval $3=$(<$DIALOGINPUT) 
+    0)  eval $3="$(<$DIALOGINPUT)" 
         ;;
   esac
 
