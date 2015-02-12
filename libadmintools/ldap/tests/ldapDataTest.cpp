@@ -71,30 +71,30 @@ void ldapDataTest::testGetValue() {
   }
 }
 
-void ldapDataTest::testNameCount() {
+void ldapDataTest::testNamedElms() {
   y::ldap::data _data;
   _data.add("key", "value");
   _data.add("key", "value2");
-  if (_data.nameCount("key") != 2) {
+  if (_data.elms("key") != 2) {
     CPPUNIT_ASSERT(false);
   }
 }
 
-void ldapDataTest::testSize() {
+void ldapDataTest::testElms() {
   y::ldap::data _data;
-  if (_data.size() != 0) {
+  if (_data.elms() != 0) {
     CPPUNIT_ASSERT(false);
   }
   _data.add("key", "value");
-  if (_data.size() != 1) {
+  if (_data.elms() != 1) {
     CPPUNIT_ASSERT(false);
   }
   _data.add("key2", "value");
-  if (_data.size() != 2) {
+  if (_data.elms() != 2) {
     CPPUNIT_ASSERT(false);
   }
   _data.add("key2", "value2");
-  if (_data.size() != 3) {
+  if (_data.elms() != 3) {
     CPPUNIT_ASSERT(false);
   }
 }

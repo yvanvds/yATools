@@ -26,13 +26,15 @@ namespace y {
       const std::string & getLdapTestUidNumber() const;
       const std::string & getLdapTestDN       () const;
       const std::string & getMysqlPassword    () const;
+      const std::string & getDomain           () const;
 
     private:
-      bool configReady;
-      
+          
       boost::program_options::options_description general;
       boost::program_options::options_description file   ;
       boost::program_options::options_description all    ;
+      
+      bool configReady;
       
       boost::program_options::variables_map map;
       
@@ -47,6 +49,7 @@ namespace y {
       std::string ldapTestUidNumber;
       std::string ldapTestDN;
       std::string mysqlPassword;
+      std::string domain;
     };
     
     config & Config();

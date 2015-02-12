@@ -22,6 +22,8 @@ namespace y {
       dataset(const dataset& orig);
 
       bool create(const std::string & filter, const std::string & directory = "");
+      bool createFromDN(const std::string & dn);
+      
       int elms();
       data & get(int index = 0);
       data & New(data_type type);

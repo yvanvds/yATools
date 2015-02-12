@@ -55,6 +55,8 @@
     <logicalFolder name="utils" displayName="utils" projectFiles="true">
       <itemPath>utils/config.cpp</itemPath>
       <itemPath>utils/config.h</itemPath>
+      <itemPath>utils/console.cpp</itemPath>
+      <itemPath>utils/console.h</itemPath>
       <itemPath>utils/container.cpp</itemPath>
       <itemPath>utils/container.h</itemPath>
       <itemPath>utils/convert.cpp</itemPath>
@@ -130,6 +132,14 @@
         <itemPath>ldap/tests/ldapServerTest.cpp</itemPath>
         <itemPath>ldap/tests/ldapServerTest.h</itemPath>
         <itemPath>ldap/tests/ldapServerTestRun.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f13"
+                     displayName="LdapGroupTest"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>ldap/tests/ldapGroupTest.cpp</itemPath>
+        <itemPath>ldap/tests/ldapGroupTest.h</itemPath>
+        <itemPath>ldap/tests/ldapGroupTestRun.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1"
                      displayName="ldp attributes test"
@@ -353,6 +363,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f13">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f13</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <folder path="TestFiles/f2">
         <cTool>
           <commandLine>`cppunit-config --cflags`</commandLine>
@@ -511,6 +535,12 @@
       </item>
       <item path="ldap/tests/ldapDataTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="ldap/tests/ldapGroupTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapGroupTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapGroupTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="ldap/tests/ldapServerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/tests/ldapServerTest.h" ex="false" tool="3" flavor2="0">
@@ -568,6 +598,10 @@
       <item path="utils/config.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="utils/config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/console.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/console.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="utils/container.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -779,6 +813,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f13">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f13</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <folder path="TestFiles/f2">
         <cTool>
           <commandLine>`cppunit-config --cflags`</commandLine>
@@ -937,6 +985,12 @@
       </item>
       <item path="ldap/tests/ldapDataTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="ldap/tests/ldapGroupTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapGroupTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/ldapGroupTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="ldap/tests/ldapServerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/tests/ldapServerTest.h" ex="false" tool="3" flavor2="0">
@@ -994,6 +1048,10 @@
       <item path="utils/config.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="utils/config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/console.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/console.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="utils/container.cpp" ex="false" tool="1" flavor2="0">
       </item>

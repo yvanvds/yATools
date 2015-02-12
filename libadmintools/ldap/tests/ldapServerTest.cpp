@@ -33,6 +33,7 @@ void ldapServerTest::testCommitChanges() {
 }
 
 void ldapServerTest::testGetAccount() {
+  y::ldap::Server().clear();
   // these tests will only work with a valid config file
   // at /etc/yATools.cfg and a working ldap server
   y::ldap::account & a = y::ldap::Server().getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
@@ -53,6 +54,7 @@ void ldapServerTest::testGetAccount() {
     CPPUNIT_ASSERT(false);
   }
   
+  y::ldap::Server().clear();
   y::ldap::account & a4 = y::ldap::Server().getAccount(y::ldap::DN(y::utils::Config().getLdapTestDN()));
   if(a4.isNew()) {
     CPPUNIT_ASSERT(false);
@@ -110,17 +112,75 @@ void ldapServerTest::testGetAccount3() {
 }
 
 void ldapServerTest::testGetAccounts() {
-
+  y::ldap::Server().clear();
+  container<y::ldap::account> & accounts = y::ldap::Server().getAccounts();
+  if(accounts.elms() < 500) {
+    CPPUNIT_ASSERT(false);
+  }
 }
 
 void ldapServerTest::testGetGroup() {
-
+  y::ldap::Server().clear();
+  // get mailgroup
+  y::ldap::group & mailgroup = y::ldap::Server().getGroup(y::ldap::CN("6INF1"));
+  if(mailgroup.members().elms() != 13) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(mailgroup.owners().elms() != 1) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  y::ldap::group & newgroup = y::ldap::Server().getGroup(y::ldap::CN("no group"));
+  if(newgroup.members().elms()) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(newgroup.owners().elms()) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  // get editable mailgroup
+  y::ldap::group & mailgroup2 = y::ldap::Server().getGroup(y::ldap::CN("directie"));
+  if(mailgroup2.members().elms() != 3) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(mailgroup2.owners().elms() != 3) {
+    CPPUNIT_ASSERT(false);
+  }
 }
 
 void ldapServerTest::testGetGroup2() {
-
+  y::ldap::Server().clear();
+  // get mailgroup
+  y::ldap::group & mailgroup = y::ldap::Server().getGroup(y::ldap::DN("cn=6INF1,ou=mailGroups,dc=sanctamaria-aarschot,dc=be"));
+  if(mailgroup.members().elms() != 13) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(mailgroup.owners().elms() != 1) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  y::ldap::group & newgroup = y::ldap::Server().getGroup(y::ldap::DN("cn=6INF4,ou=mailGroups,dc=sanctamaria-aarschot,dc=be"));
+  if(newgroup.members().elms()) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(newgroup.owners().elms()) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  // get editable mailgroup
+  y::ldap::group & mailgroup2 = y::ldap::Server().getGroup(y::ldap::DN("cn=directie,ou=editableMailGroups,dc=sanctamaria-aarschot,dc=be"));
+  if(mailgroup2.members().elms() != 3) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(mailgroup2.owners().elms() != 3) {
+    CPPUNIT_ASSERT(false);
+  }
 }
 
 void ldapServerTest::testGetGroups() {
-
+  y::ldap::Server().clear();
+  container<y::ldap::group> & groups = y::ldap::Server().getGroups();
+  if(groups.elms() < 100) {
+    CPPUNIT_ASSERT(false);
+  }
 }

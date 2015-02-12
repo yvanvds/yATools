@@ -55,6 +55,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/system/process.o \
 	${OBJECTDIR}/system/workDir.o \
 	${OBJECTDIR}/utils/config.o \
+	${OBJECTDIR}/utils/console.o \
 	${OBJECTDIR}/utils/container.o \
 	${OBJECTDIR}/utils/convert.o \
 	${OBJECTDIR}/utils/log.o \
@@ -75,6 +76,7 @@ TESTFILES= \
 	${TESTDIR}/TestFiles/f7 \
 	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f4 \
+	${TESTDIR}/TestFiles/f13 \
 	${TESTDIR}/TestFiles/f1 \
 	${TESTDIR}/TestFiles/f2 \
 	${TESTDIR}/TestFiles/f3 \
@@ -205,6 +207,11 @@ ${OBJECTDIR}/utils/config.o: utils/config.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/config.o utils/config.cpp
 
+${OBJECTDIR}/utils/console.o: utils/console.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/console.o utils/console.cpp
+
 ${OBJECTDIR}/utils/container.o: utils/container.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
 	${RM} "$@.d"
@@ -272,6 +279,10 @@ ${TESTDIR}/TestFiles/f5: ${TESTDIR}/ldap/tests/ldapDataTest.o ${TESTDIR}/ldap/te
 ${TESTDIR}/TestFiles/f4: ${TESTDIR}/ldap/tests/ldapServerTest.o ${TESTDIR}/ldap/tests/ldapServerTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} -lldap -llber -lboost_iostreams -lboost_program_options `cppunit-config --libs`   
+
+${TESTDIR}/TestFiles/f13: ${TESTDIR}/ldap/tests/ldapGroupTest.o ${TESTDIR}/ldap/tests/ldapGroupTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f13 $^ ${LDLIBSOPTIONS} -lldap -llber -lboost_iostreams -lboost_program_options `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/ldap/tests/ldpAttributesTest.o ${TESTDIR}/ldap/tests/ldpAttributesTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
@@ -376,6 +387,18 @@ ${TESTDIR}/ldap/tests/ldapServerTestRun.o: ldap/tests/ldapServerTestRun.cpp
 	${MKDIR} -p ${TESTDIR}/ldap/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldapServerTestRun.o ldap/tests/ldapServerTestRun.cpp
+
+
+${TESTDIR}/ldap/tests/ldapGroupTest.o: ldap/tests/ldapGroupTest.cpp 
+	${MKDIR} -p ${TESTDIR}/ldap/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldapGroupTest.o ldap/tests/ldapGroupTest.cpp
+
+
+${TESTDIR}/ldap/tests/ldapGroupTestRun.o: ldap/tests/ldapGroupTestRun.cpp 
+	${MKDIR} -p ${TESTDIR}/ldap/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldapGroupTestRun.o ldap/tests/ldapGroupTestRun.cpp
 
 
 ${TESTDIR}/ldap/tests/ldpAttributesTest.o: ldap/tests/ldpAttributesTest.cpp 
@@ -698,6 +721,19 @@ ${OBJECTDIR}/utils/config_nomain.o: ${OBJECTDIR}/utils/config.o utils/config.cpp
 	    ${CP} ${OBJECTDIR}/utils/config.o ${OBJECTDIR}/utils/config_nomain.o;\
 	fi
 
+${OBJECTDIR}/utils/console_nomain.o: ${OBJECTDIR}/utils/console.o utils/console.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/console.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/console_nomain.o utils/console.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/utils/console.o ${OBJECTDIR}/utils/console_nomain.o;\
+	fi
+
 ${OBJECTDIR}/utils/container_nomain.o: ${OBJECTDIR}/utils/container.o utils/container.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/container.o`; \
@@ -800,6 +836,7 @@ ${OBJECTDIR}/utils/sha1_nomain.o: ${OBJECTDIR}/utils/sha1.o utils/sha1.cpp
 	    ${TESTDIR}/TestFiles/f7 || true; \
 	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
+	    ${TESTDIR}/TestFiles/f13 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \

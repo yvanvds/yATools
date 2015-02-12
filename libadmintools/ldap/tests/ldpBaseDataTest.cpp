@@ -30,7 +30,7 @@ void ldpBaseDataTest::tearDown() {
 
 void ldpBaseDataTest::testData() {
   y::ldap::data data2(_data);
-  if (data2.size() != 3) {
+  if (data2.elms() != 3) {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -54,16 +54,16 @@ void ldpBaseDataTest::testGetValue() {
 }
 
 void ldpBaseDataTest::testNameCount() {
-  if (_data.nameCount("name") != 1) {
+  if (_data.elms("name") != 1) {
     CPPUNIT_ASSERT(false);
   }
-  if (_data.nameCount("street") != 2) {
+  if (_data.elms("street") != 2) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void ldpBaseDataTest::testSize() {
-  int result = _data.size();
+  int result = _data.elms();
   if (result != 3) {
     CPPUNIT_ASSERT(false);
   }

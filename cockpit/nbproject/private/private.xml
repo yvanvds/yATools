@@ -9,6 +9,8 @@
         <group>
             <file>file:/home/yvan/github/yATools/cockpit/config.cpp</file>
             <file>file:/home/yvan/github/yATools/cockpit/config.h</file>
+            <file>file:/home/yvan/github/yATools/cockpit/validators.cpp</file>
+            <file>file:/home/yvan/github/yATools/cockpit/validators.h</file>
             <file>file:/home/yvan/github/yATools/cockpit/main.cpp</file>
         </group>
     </open-files>

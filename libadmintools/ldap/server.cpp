@@ -57,11 +57,16 @@ y::ldap::server::~server() {
   ldap_unbind_ext(_server, NULL, NULL);
 }
 
-bool y::ldap::server::getData(y::ldap::dataset& rs) {
+bool y::ldap::server::getData(y::ldap::dataset& rs, bool isDN) {
   std::string base(rs.directory);
-  if(rs.directory.size()) base.append(",");
-  base.append(_base);
+  if(!isDN) {
+    if(rs.directory.size()) base.append(",");
+    base.append(_base);
+  }
   LDAPMessage * result;
+  ber_int_t scope = LDAP_SCOPE_SUBTREE;
+  //if(isDN) scope = LDAP_SCOPE_BASE;
+  
   if(ldap_search_ext_s(
           _server, 
           base.c_str(), 
@@ -205,7 +210,7 @@ y::ldap::group & y::ldap::server::getGroup(const CN& id) {
 }
 
 container<y::ldap::account> & y::ldap::server::getAccounts() {
-  // make sure we're in single mode
+  // make sure we're in full mode
   if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_FULL;
   assert(_ldapMode == LDAP_MODE_FULL);
   
@@ -215,15 +220,19 @@ container<y::ldap::account> & y::ldap::server::getAccounts() {
   dataset d;
   d.create("objectClass=*", "ou=people");
   for(int i = 0; i < d.elms(); i++) {
-    account & a = _accounts.New();
-    a.load(d.get(i));
+    data & temp = d.get(i);
+    // if data has no uid, it's not an account
+    if(temp.getValue(TYPE_UID).size()) {
+      account & a = _accounts.New();
+      a.load(temp);
+    }
   }
   
   return _accounts;
 }
 
 container<y::ldap::group> & y::ldap::server::getGroups() {
-  // make sure we're in single mode
+  // make sure we're in full mode
   if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_FULL;
   assert(_ldapMode == LDAP_MODE_FULL);
   
@@ -329,7 +338,7 @@ void y::ldap::server::setData(const DN & dn, dataset & values) {
   delete[] mods;
 }
 
-int y::ldap::server::findAccounts(const std::string& query, std::vector<UID_NUMBER> results) {
+int y::ldap::server::findAccounts(const std::string& query, std::vector<UID_NUMBER> & results) {
   dataset rs;
   rs.filter = query;
   rs.directory = "ou=people";
@@ -341,7 +350,7 @@ int y::ldap::server::findAccounts(const std::string& query, std::vector<UID_NUMB
       
       // search if this account is already loaded in memory
       for(int j = 0; j < _accounts.elms(); j++) {
-        if(std::stoi(d.getValue("uidnumber")) == _accounts[j].uidNumber()()) {
+        if(std::stoi(d.getValue("uidNumber")) == _accounts[j].uidNumber()()) {
           found = true;
           results.push_back(_accounts[j].uidNumber());
           break;
@@ -386,7 +395,30 @@ y::ldap::UID y::ldap::server::createUID(const std::string& cn, const std::string
     counter++;
     test_id = id;
     test_id.append(std::to_string(counter));
+    result.clear();
   }
+}
+
+y::ldap::MAIL y::ldap::server::createMail(const std::string& cn, const std::string& sn) {
+  std::string mail = cn;
+  mail += "."; mail += sn;
+  mail += "@"; mail += y::utils::Config().getDomain();
+  
+  std::string query;
+  query = "(mail="; query += mail; query += ")";
+  std::vector<UID_NUMBER> result;
+  int counter = 0;
+  
+  while(findAccounts(query, result) > 0) {
+    result.clear();
+    counter++;
+    mail = cn;
+    mail += "."; mail += sn; mail += std::to_string(counter);
+    mail += "@"; mail += y::utils::Config().getDomain();   
+    query = "(mail="; query += mail; query += ")";
+  }
+  
+  return MAIL(mail);
 }
 
 bool y::ldap::server::commitChanges() {
@@ -395,5 +427,15 @@ bool y::ldap::server::commitChanges() {
     if(_accounts[i].save()) result = true;
   }
   
+  for(int i = 0; i < _groups.elms(); i++) {
+    if(_groups[i].save()) result = true;
+  }
+  
   return result;
+}
+
+void y::ldap::server::clear() {
+  _accounts.clear();
+  _groups.clear();
+  _ldapMode = LDAP_MODE_NONE;
 }

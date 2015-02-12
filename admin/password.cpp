@@ -9,6 +9,7 @@
 #include <iostream>
 #include "ldap/server.h"
 #include "utils/security.h"
+#include "samba/samba.h"
 
 using namespace std;
 

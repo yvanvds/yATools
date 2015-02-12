@@ -8,6 +8,7 @@
 #include "dataset.h"
 #include "server.h"
 #include <ldap.h>
+#include <boost/algorithm/string.hpp>
 
 y::ldap::dataset::dataset(const dataset& orig) {
   filter = orig.filter;
@@ -19,6 +20,19 @@ bool y::ldap::dataset::create(const std::string & filter, const std::string & di
   this->filter = filter;
   this->directory = directory;
   return Server().getData(*this);
+}
+
+bool y::ldap::dataset::createFromDN(const std::string& dn) {
+  std::vector<std::string> strs;
+  boost::split(strs, dn, boost::is_any_of(","));
+  assert(strs.size() > 1);
+  this->filter = strs[0];
+  this->directory = strs[1];
+  for(int i = 2; i < strs.size(); i++) {
+    this->directory += ",";
+    this->directory += strs[i];
+  }
+  return Server().getData(*this, true);
 }
 
 int y::ldap::dataset::elms() {

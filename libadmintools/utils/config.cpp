@@ -51,6 +51,7 @@ void y::utils::config::load(int argc, char** argv) {
     ("ldapTestUIDNumber", value<std::string>(), "set ldap test account UID number")
     ("ldapTestDN"       , value<std::string>(), "set ldap test account DN")
     ("mysqlRootPassword", value<std::string>(), "set mysql root password")
+    ("domain"           , value<std::string>(), "set network domain"     )
   ;
   
   all.add(general).add(file);
@@ -73,7 +74,7 @@ void y::utils::config::load(int argc, char** argv) {
   
   if(map.count("help")) {
     std::cout << general << std::endl;
-    exit;
+    exit(0);
   }
   
   if(map.count("work-directory")) {
@@ -116,6 +117,10 @@ void y::utils::config::load(int argc, char** argv) {
     mysqlPassword = map["mysqlRootPassword"].as<std::string>();
   }
   
+  if(map.count("domain")) {
+    domain = map["domain"].as<std::string>();
+  }
+  
   configReady = true;
 }
 
@@ -153,4 +158,8 @@ const std::string & y::utils::config::getLdapTestDN() const {
 
 const std::string & y::utils::config::getMysqlPassword() const {
   return mysqlPassword;
+}
+
+const std::string & y::utils::config::getDomain() const {
+  return domain;
 }

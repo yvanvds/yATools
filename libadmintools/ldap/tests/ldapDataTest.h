@@ -17,8 +17,8 @@ class ldapDataTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST(testData);
   CPPUNIT_TEST(testGetType);
   CPPUNIT_TEST(testGetValue);
-  CPPUNIT_TEST(testNameCount);
-  CPPUNIT_TEST(testSize);
+  CPPUNIT_TEST(testNamedElms);
+  CPPUNIT_TEST(testElms);
   CPPUNIT_TEST(testData2);
 
   CPPUNIT_TEST_SUITE_END();
@@ -34,8 +34,8 @@ private:
   void testData();
   void testGetType();
   void testGetValue();
-  void testNameCount();
-  void testSize();
+  void testNamedElms();
+  void testElms();
   void testData2();
 
 };

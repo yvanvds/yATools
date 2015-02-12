@@ -12,6 +12,24 @@
 
 namespace y {
   namespace ldap {
+    // because of issues in the past, our ldap fields for some
+    // values are a bit confusing. This is why we keep a const list
+    // with the intended name mapped to the current ldap field.
+    const std::string TYPE_UID_NUMBER("uidNumber"       );
+    const std::string TYPE_UID       ("uid"             );
+    const std::string TYPE_DN        ("DN"              );
+    const std::string TYPE_CN        ("cn"              );
+    const std::string TYPE_SN        ("sn"              );
+    const std::string TYPE_FULL_NAME ("displayName"     );
+    const std::string TYPE_HOMEDIR   ("homeDirectory"   );
+    const std::string TYPE_WISA_ID   ("employeeNumber"  );
+    const std::string TYPE_MAIL      ("mail"            );
+    const std::string TYPE_PASSWORD  ("title"           );
+    const std::string TYPE_BIRTHDAY  ("roomNumber"      );
+    const std::string TYPE_GID       ("departmentNumber");
+    const std::string TYPE_GID_NUMBER("gidNumber"       );
+    
+    
     class account {
     public:
       account();
@@ -58,6 +76,14 @@ namespace y {
       watch<GID_NUMBER>  _groupID  ;
 
       bool _new; // false if the account is loaded from ldap
+      std::string _passwordClearText; // used to update samba password
+      
+      // new accounts don't have these
+      bool _hasKrbName; 
+      bool _hasGroup;
+      bool _hasWisaID;
+      bool _hasMail;
+      bool _hasBirthday;
       
       friend class server;
     };
