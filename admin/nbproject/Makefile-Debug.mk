@@ -56,27 +56,27 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-Wl,-rpath,/home/yvan/github/yATools/libadmintools/../Debug -L/home/yvan/github/yATools/libadmintools/../Debug -lsystem -lboost_program_options
+LDLIBSOPTIONS=-Wl,-rpath,../libadmintools/../Debug -L../libadmintools/../Debug -lsystem -lboost_program_options
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/admin
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/admin: /home/yvan/github/yATools/libadmintools/../Debug/libsystem.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/admin: ../libadmintools/../Debug/libsystem.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/admin: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/admin ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/1736800395/password.o: /home/yvan/github/yATools/admin/password.cpp 
+${OBJECTDIR}/_ext/1736800395/password.o: password.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1736800395
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1736800395/password.o /home/yvan/github/yATools/admin/password.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1736800395/password.o password.cpp
 
-${OBJECTDIR}/_ext/1736800395/show.o: /home/yvan/github/yATools/admin/show.cpp 
+${OBJECTDIR}/_ext/1736800395/show.o: show.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1736800395
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1736800395/show.o /home/yvan/github/yATools/admin/show.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1736800395/show.o show.cpp
 
 ${OBJECTDIR}/addUser.o: addUser.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -95,7 +95,7 @@ ${OBJECTDIR}/main.o: main.cpp
 
 # Subprojects
 .build-subprojects:
-	cd /home/yvan/github/yATools/libadmintools && ${MAKE}  -f Makefile CONF=Debug
+	cd ../libadmintools && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -104,7 +104,7 @@ ${OBJECTDIR}/main.o: main.cpp
 
 # Subprojects
 .clean-subprojects:
-	cd /home/yvan/github/yATools/libadmintools && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../libadmintools && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

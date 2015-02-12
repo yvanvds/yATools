@@ -79,8 +79,16 @@ installAdmintools(){
   rm /var/log/admintools
   touch /var/log/admintools
   chown www-data:www-data /var/log/admintools
-  printSuccess "admin tools are updated" "OK"
+  printSuccess "admin lib is updated" "OK"
   waitForEnter
+  
+  cd admin
+  make CONF=Release build
+  cp dist/Release/GNU-Linux-x86/admin /sbin
+  cd ..
+  printSuccess "admin command is updated" "OK"
+  waitForEnter
+
 }
 
 installYearbook() {
