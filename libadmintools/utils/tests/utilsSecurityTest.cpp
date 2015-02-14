@@ -10,6 +10,7 @@
 #include "utils/config.h"
 #include "ldap/server.h"
 
+using namespace y::utils;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(utilsSecurityTest);
 
@@ -41,6 +42,42 @@ void utilsSecurityTest::testTest() {
   const std::string wrongpassword = "abcd";
   result = y::utils::Security().test(acc, wrongpassword);
   if (result) {
+    CPPUNIT_ASSERT(false);
+  }
+}
+
+void utilsSecurityTest::testGoodPassword() {
+  if(Security().isGoodPassword("abc") != false) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(Security().isGoodPassword("abcdefgh?") != false) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(Security().isGoodPassword("abcdefgh\"") != false) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(Security().isGoodPassword("abdc(dlej") != false) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(Security().isGoodPassword("abcd!0dn") != false) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(Security().isGoodPassword("p2sSw@rd#l0ngErThisIs2l0ng") != false) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(Security().isGoodPassword("abc123DEF") != false) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(Security().isGoodPassword("AJwlje346") != false) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(Security().isGoodPassword("p2sSw@rd") != true) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(Security().isGoodPassword("abc#$%GH1") != true) {
+    CPPUNIT_ASSERT(false);
+  }
+  if(Security().isGoodPassword("p2sSw@rd#l0ngEr") != true) {
     CPPUNIT_ASSERT(false);
   }
 }

@@ -14,6 +14,7 @@ class utilsSecurityTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST_SUITE(utilsSecurityTest);
 
   CPPUNIT_TEST(testTest);
+  CPPUNIT_TEST(testGoodPassword);
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -25,7 +26,7 @@ public:
 
 private:
   void testTest();
-
+  void testGoodPassword();
 };
 
 #endif	/* UTILSSECURITYTEST_H */

@@ -23,6 +23,7 @@ addUser & AddUser() {
 
 void addUser::printHelp() {
   cout << "Add will add a user to the ldap database and create a home directory." << endl;
+  cout << endl;
   cout << "Usage: admin user add <cn> <sn> [date] [group] [wisaID]" << endl;
   cout << endl;
   cout << "<cn>      Given name" << endl;

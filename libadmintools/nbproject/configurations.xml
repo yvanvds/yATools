@@ -43,6 +43,11 @@
       <itemPath>samba/samba.cpp</itemPath>
       <itemPath>samba/samba.h</itemPath>
     </logicalFolder>
+    <logicalFolder name="f3"
+                   displayName="smartschool"
+                   projectFiles="true"
+                   kind="ROOT">
+    </logicalFolder>
     <logicalFolder name="system" displayName="system" projectFiles="true">
       <itemPath>system/file.cpp</itemPath>
       <itemPath>system/file.h</itemPath>
@@ -233,6 +238,7 @@
             <linkerLibLibItem>ldap</linkerLibLibItem>
             <linkerLibLibItem>lber</linkerLibLibItem>
             <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
+            <linkerOptionItem>-lboost_regex</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

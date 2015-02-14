@@ -14,6 +14,7 @@
 #include "show.h"
 #include "find.h"
 #include "addUser.h"
+#include "removeUser.h"
 
 using namespace std;
 
@@ -55,7 +56,7 @@ int main(int argc, char** argv) {
       AddUser().parse(argc - 3, argv + 3);
       return 0;
     } else if(userCommand.compare("delete") == 0) {
-      
+      RemoveUser().parse(argc - 3, argv + 3);
       return 0;
     }
     return 0;

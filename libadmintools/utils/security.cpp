@@ -8,6 +8,9 @@
 #include "security.h"
 #include <crypt.h>
 #include <string.h>
+#include <boost/regex.hpp>
+#include <cctype>
+
 #include "../utils/random.h"
 
 char consonants[] = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
@@ -46,4 +49,11 @@ std::string y::utils::security::makePassword(int length) {
     vowel = !vowel;
   }
   return result;
+}
+
+
+bool y::utils::security::isGoodPassword(const std::string& password) {
+  // look in header file for explanation of this regex
+  static const boost::regex e("^(?=.*[!@#$%&_])(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,20}$");
+  return boost::regex_match(password, e);
 }

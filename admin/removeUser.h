@@ -10,12 +10,14 @@
 
 class removeUser {
 public:
-  removeUser();
-  removeUser(const removeUser& orig);
-  virtual ~removeUser();
+  void printHelp();
+  
+  void parse(int argc, char** argv);
 private:
 
 };
+
+removeUser & RemoveUser();
 
 #endif	/* REMOVEUSER_H */
 
