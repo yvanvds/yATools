@@ -19,6 +19,8 @@
     <itemPath>main.cpp</itemPath>
     <itemPath>/home/yvan/github/yATools/admin/password.cpp</itemPath>
     <itemPath>/home/yvan/github/yATools/admin/password.h</itemPath>
+    <itemPath>proxyManager.cpp</itemPath>
+    <itemPath>proxyManager.h</itemPath>
     <itemPath>removeUser.cpp</itemPath>
     <itemPath>removeUser.h</itemPath>
     <itemPath>/home/yvan/github/yATools/admin/show.cpp</itemPath>
@@ -90,6 +92,10 @@
       <item path="find.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="proxyManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="proxyManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="removeUser.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -166,6 +172,10 @@
       <item path="find.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="proxyManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="proxyManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="removeUser.cpp" ex="false" tool="1" flavor2="0">
       </item>

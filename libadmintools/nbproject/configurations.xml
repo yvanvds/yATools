@@ -43,10 +43,7 @@
       <itemPath>samba/samba.cpp</itemPath>
       <itemPath>samba/samba.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f3"
-                   displayName="smartschool"
-                   projectFiles="true"
-                   kind="ROOT">
+    <logicalFolder name="f3" displayName="smartschool" projectFiles="true">
     </logicalFolder>
     <logicalFolder name="system" displayName="system" projectFiles="true">
       <itemPath>system/file.cpp</itemPath>
@@ -70,6 +67,8 @@
       <itemPath>utils/log.h</itemPath>
       <itemPath>utils/memcontainer.cpp</itemPath>
       <itemPath>utils/memcontainer.h</itemPath>
+      <itemPath>utils/proxy.cpp</itemPath>
+      <itemPath>utils/proxy.h</itemPath>
       <itemPath>utils/random.cpp</itemPath>
       <itemPath>utils/random.h</itemPath>
       <itemPath>utils/security.cpp</itemPath>
@@ -625,6 +624,10 @@
       </item>
       <item path="utils/memcontainer.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="utils/proxy.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/proxy.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="utils/random.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="utils/random.h" ex="false" tool="3" flavor2="0">
@@ -1074,6 +1077,10 @@
       <item path="utils/memcontainer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="utils/memcontainer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/proxy.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/proxy.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="utils/random.cpp" ex="false" tool="1" flavor2="0">
       </item>

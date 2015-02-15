@@ -25,6 +25,7 @@
 
 #include "webLogin.h"
 #include "accountManager.h"
+#include "proxyManager.h"
 
 webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), loggedIn(false) {
   y::utils::Log().add("start of webLogin app");
@@ -201,7 +202,7 @@ Wt::WWidget * webLogin::accountFunc() {
 }
 
 Wt::WWidget * webLogin::webAccessFunc() {
-  return new Wt::WText("webtoegang");
+  return ProxyManager().get();
 }
 
 Wt::WWidget * webLogin::groupFunc() {

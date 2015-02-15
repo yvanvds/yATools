@@ -60,6 +60,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/utils/convert.o \
 	${OBJECTDIR}/utils/log.o \
 	${OBJECTDIR}/utils/memcontainer.o \
+	${OBJECTDIR}/utils/proxy.o \
 	${OBJECTDIR}/utils/random.o \
 	${OBJECTDIR}/utils/security.o \
 	${OBJECTDIR}/utils/sha1.o
@@ -231,6 +232,11 @@ ${OBJECTDIR}/utils/memcontainer.o: utils/memcontainer.cpp
 	${MKDIR} -p ${OBJECTDIR}/utils
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/memcontainer.o utils/memcontainer.cpp
+
+${OBJECTDIR}/utils/proxy.o: utils/proxy.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/proxy.o utils/proxy.cpp
 
 ${OBJECTDIR}/utils/random.o: utils/random.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
@@ -784,6 +790,19 @@ ${OBJECTDIR}/utils/memcontainer_nomain.o: ${OBJECTDIR}/utils/memcontainer.o util
 	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/memcontainer_nomain.o utils/memcontainer.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/utils/memcontainer.o ${OBJECTDIR}/utils/memcontainer_nomain.o;\
+	fi
+
+${OBJECTDIR}/utils/proxy_nomain.o: ${OBJECTDIR}/utils/proxy.o utils/proxy.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/proxy.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/proxy_nomain.o utils/proxy.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/utils/proxy.o ${OBJECTDIR}/utils/proxy_nomain.o;\
 	fi
 
 ${OBJECTDIR}/utils/random_nomain.o: ${OBJECTDIR}/utils/random.o utils/random.cpp 
