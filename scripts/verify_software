@@ -82,6 +82,13 @@ installBoost() {
 installAdmintools(){
   git pull
   cd libadmintools
+
+  if [ "$cleanFirst" = true ]; then
+		make CONF=Release clean
+		printChange "Cleaning previous build" "CLEANING"
+		waitForEnter
+  fi
+
   make CONF=Release build
   cp dist/Release/GNU-Linux-x86/liblibadmintools.so /usr/lib
   cd ..
@@ -92,6 +99,13 @@ installAdmintools(){
   waitForEnter
   
   cd admin
+
+  if [ "$cleanFirst" = true ]; then
+		printChange "Cleaning previous build" "CLEANING"
+		make CONF=Release clean
+		waitForEnter
+	fi
+
   make CONF=Release build
   cp dist/Release/GNU-Linux-x86/admin /sbin
   cd ..
@@ -103,6 +117,11 @@ installAdmintools(){
 installWebLogin() {
   git pull
   cd weblogin
+
+	if [ "$cleanFirst" = true ]; then
+		make CONF=Release clean
+	fi
+
   make CONF=Release build
 
   # create dirs if they don't exist
@@ -132,18 +151,22 @@ verifyInstalledSoftware() {
            2 "Verify Scripts" on
            3 "Verify WT installation" off
            4 "Verify Boost process" off
-	   5 "Reinstall account admin tools" off
-           6 "Reinstall Web Application" off)
+					 5 "Clean before build" off
+	         6 "Reinstall account admin tools" off
+           7 "Reinstall Web Application" off)
   choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
   clear 
+  
+  cleanFirst=false
   for choice in $choices; do
     case $choice in
       1) installDebianPackages ;;
       2) installScripts ;;
       3) installWT ;;
       4) installBoost ;;
-      5) installAdmintools ;;
-      6) installWebLogin;;
+		  5) cleanFirst=true ;;
+      6) installAdmintools ;;
+      7) installWebLogin;;
    esac
   done
 }
