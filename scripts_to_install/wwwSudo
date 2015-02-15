@@ -1,3 +1,4 @@
 www-data ALL=NOPASSWD: /usr/bin/scp
 www-data ALL=NOPASSWD: /usr/local/bin/pdf2swf
 www-data ALL=NOPASSWD: /sbin/admin
+www-data ALL=NOPASSWD: /usr/sbin/smbldap-passwd
