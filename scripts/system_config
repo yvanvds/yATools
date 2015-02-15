@@ -21,6 +21,68 @@ updateHosts() {
   fi
 }
 
+# check sudoers file
+sudoCheck() {
+  touch /root/admintools/sudoers
+  
+  # load the variables
+  . /root/admintools/sudoers
+  
+  exec 3>&1
+  
+  local VALUES=$(dialog --ok-label "Submit" \
+            --backtitle " yvan's admin tools" \
+            --title "Administrators" \
+            --form "Add up to 5 admins" \
+            15 50 0 \
+            "Admin 1:" 1 1 "$admin1" 1 15 15 0 \
+            "Admin 2:" 2 1 "$admin2" 2 15 15 0 \
+            "Admin 3:" 3 1 "$admin3" 3 15 15 0 \
+            "Admin 4:" 4 1 "$admin4" 4 15 15 0 \
+	    "Admin 5:" 5 1 "$admin5" 5 15 15 0 \
+  2>&1 1>&3)
+
+  exec 3>&-
+  
+  if [ "$VALUES" != "" ]; then
+    readarray -t v <<<"$VALUES"
+    admin1=${v[0]}
+    admin2=${v[1]}
+    admin3=${v[2]}
+    admin4=${v[3]}
+    admin5=${v[4]}
+
+    # store in file again
+    # first var clears file
+    declare -p admin1 > /root/admintools/sudoers
+    for var in admin2 admin3 admin4 admin5; do
+       declare -p $var >> /root/admintools/sudoers
+    done
+  fi
+
+  // check sudoers
+  if [ -n "$admin1" ]; then
+    usermod -a -G sudo "$admin1"
+  fi
+
+  if [ -n "$admin2" ]; then
+    usermod -a -G sudo "$admin2"
+  fi
+
+  if [ -n "$admin3" ]; then
+    usermod -a -G sudo "$admin3"
+  fi
+
+  if [ -n "$admin4" ]; then
+    usermod -a -G sudo "$admin4"
+  fi
+
+  if [ -n "$admin5" ]; then
+    usermod -a -G sudo "$admin5"
+  fi  
+  
+    
+}
 
 # basic variables for this server
 basicVariables() {
@@ -31,15 +93,15 @@ basicVariables() {
   
   exec 3>&1
   
-  VALUES=$(dialog --ok-label "Submit" \
+  local VALUES=$(dialog --ok-label "Submit" \
             --backtitle " yvan's admin tools" \
             --title "Basic Config" \
             --form "Please update these" \
             15 50 0 \
-            "Hostname:"    1 1 "$hostname"   1 10 15 0 \
+            "Hostname:"    1 1 "$hostname"   1 15 15 0 \
             "Domain:"      2 1 "$domainname" 2 10 30 0 \
-            "Public IP:"   3 1 "$publicIP"   3 10 15 0 \
-            "BackBone IP:" 4 1 "$backboneIP" 4 10 15 0 \
+            "Public IP:"   3 1 "$publicIP"   3 15 15 0 \
+            "BackBone IP:" 4 1 "$backboneIP" 4 15 15 0 \
   2>&1 1>&3)
 
   exec 3>&-
@@ -75,6 +137,7 @@ basicVariables() {
 }
 
 sysConfig() {
+  
   basicVariables
 }
 

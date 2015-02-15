@@ -85,9 +85,14 @@ webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), logged
   loginFeedback = new Wt::WText(" ");
   feedbackBox->addWidget(loginFeedback);
   
+#ifdef DEBUG
+  account = &y::ldap::Server().getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
+  loggedIn = true;
+  createContents();
+  root()->addWidget(homePage);
+#else 
   loginDialog->show();
-  
-  
+#endif
 }
 
 void webLogin::loginButtonClicked() {

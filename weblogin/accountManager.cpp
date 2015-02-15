@@ -98,6 +98,11 @@ Wt::WWidget * accountManager::get(y::ldap::account * account) {
   CPW->addWidget(saveButton);
   CPW->addWidget(feedback, 1);
   
+  Wt::WText * aboutPassword = new Wt::WText();
+  aboutPassword->setTextFormat(Wt::XHTMLText);
+  aboutPassword->setText("Een wachtwoord moet 8 tot 20 characters lang zijn. Er moet minstens een hoofdletter, een kleine letter en een cijfer in voorkomen. Het moet minstens een van de volgende symbolen bevatten: !@#$%&_");
+  //aboutPassword->setStyleClass("jumbotron");
+  
   table->elementAt(0,1)->addWidget(firstName);
   table->elementAt(1,1)->addWidget(lastName);
   table->elementAt(2,1)->addWidget(mail);
@@ -107,6 +112,7 @@ Wt::WWidget * accountManager::get(y::ldap::account * account) {
   table->elementAt(6,1)->addWidget(newPassword1);
   table->elementAt(7,1)->addWidget(newPassword2);
   table->elementAt(8,1)->addWidget(CPWC);
+  table->elementAt(9,1)->addWidget(aboutPassword);
   
   for(int i = 0; i < table->rowCount(); i++) {
     for(int j = 0; j < table->columnCount(); j++) {
@@ -123,11 +129,6 @@ Wt::WWidget * accountManager::get(y::ldap::account * account) {
   panel->setTitle("<h3>Mijn Account</h3>");
   panel->setCentralWidget(table);
   panel->setMaximumSize(800, Wt::WLength::Auto);
-  
-  Wt::WText * aboutPassword = new Wt::WText();
-  aboutPassword->setText("<p>Een wachtwoord moet 8 tot 20 characters lang zijn. Er moet minstens een hoofdletter, een kleine letter en een cijfer in voorkomen. Het moet minstens een van de volgende symbolen bevatten: !@#$%&_</p>");
-  aboutPassword->setStyleClass("jumbotron");
-  result->addWidget(aboutPassword);
   
   return result;
 }

@@ -21,15 +21,24 @@ installScripts() {
     fi
 
     # put network checker in place
-    if [ -f /sbin/checkNetwork ]; then
-      printSuccess "verifying network restarter" "OK"
-    else
+    if [ scripts_to_install/checkNetwork -nt /sbin/checkNetwork ]; then
       cp -fr scripts_to_install/checkNetwork /sbin
-      printChange "verifying network restarter" "INSTALLING"
+      printChange "verifying network restarter" "INSTALLING"      
+    else
+      printSuccess "verifying network restarter" "OK"
     fi
 
     addCronJob "*/2 * * * *" "/sbin/checkNetwork"
     printSuccess "adding checkNetwork to cron" "OK"
+
+    # add sudo files
+    if [ scripts_to_install/wwwSudo -nt /etc/sudoers.d/wwwSudo ]; then
+      cp -fr scripts_to_install/wwwSudo /etc/sudoers.d/wwwSudo
+      printChanges "verifying apache sudo" "INSTALLING"
+    else
+      printSuccess "verifying apache sudo" "OK"
+    fi
+
     waitForEnter
 }
 
