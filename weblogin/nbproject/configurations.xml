@@ -124,7 +124,18 @@
             <linkerOptionItem>-lwtfcgi -lwt</linkerOptionItem>
             <linkerOptionItem>-lldap -llber</linkerOptionItem>
             <linkerOptionItem>-lboost_system -lboost-filesystem -lboost-iostreams -lboost_program_options -lboost_signals</linkerOptionItem>
-            <linkerOptionItem>-llibadmintools</linkerOptionItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../libadmintools"
+                            CT="2"
+                            CN="Release"
+                            AC="false"
+                            BL="true"
+                            WD="../libadmintools"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
