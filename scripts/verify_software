@@ -34,7 +34,7 @@ installScripts() {
     # add sudo files
     if [ scripts_to_install/wwwSudo -nt /etc/sudoers.d/wwwSudo ]; then
       cp -fr scripts_to_install/wwwSudo /etc/sudoers.d/wwwSudo
-      printChanges "verifying apache sudo" "INSTALLING"
+      printChange "verifying apache sudo" "INSTALLING"
     else
       printSuccess "verifying apache sudo" "OK"
     fi
