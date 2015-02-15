@@ -66,6 +66,12 @@ installWT() {
       make install
       cd ../../yATools
     fi
+    # adjust file permissions
+    mkdir /var/run/wt
+    chown -R www-data:www-data /var/run/wt
+    touch /var/log/wt_errors.log
+    chown -R www-data:www-data /var/log/wt_errors.log
+    
     waitForEnter
 }
 
@@ -137,8 +143,14 @@ installWebLogin() {
 
   cp -fr yearbook_latex /var/www/apps/weblogin
   chown -R www-data:www-data /var/www/apps/weblogin
-  service apache2 restart
+
   cd ..
+	
+  cp -fr data/resources /var/www/apps/weblogin/
+  chown -R www-data:www-data /var/www/apps/weblogin
+
+  service apache2 restart
+
   printSuccess "Weblogin application is updated" "OK"
   waitForEnter
 }
