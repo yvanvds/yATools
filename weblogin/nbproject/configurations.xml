@@ -123,7 +123,7 @@
           <linkerLibItems>
             <linkerOptionItem>-lwtfcgi -lwt</linkerOptionItem>
             <linkerOptionItem>-lldap -llber</linkerOptionItem>
-            <linkerOptionItem>-lboost_system -lboost-filesystem -lboost-iostreams -lboost_program_options -lboost_signals</linkerOptionItem>
+            <linkerOptionItem>-lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals</linkerOptionItem>
             <linkerLibProjectItem>
               <makeArtifact PL="../libadmintools"
                             CT="2"
