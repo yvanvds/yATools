@@ -95,8 +95,9 @@ Wt::WWidget * accountManager::get(y::ldap::account * account) {
   Wt::WContainerWidget * CPWC = new Wt::WContainerWidget();
   Wt::WHBoxLayout * CPW = new Wt::WHBoxLayout(CPWC);
   CPW->setContentsMargins(0,0,0,0);
+  CPW->addWidget(newPassword2);
   CPW->addWidget(saveButton);
-  CPW->addWidget(feedback, 1);
+  CPW->addWidget(new Wt::WText(), 1);
   
   Wt::WText * aboutPassword = new Wt::WText();
   aboutPassword->setTextFormat(Wt::XHTMLText);
@@ -110,8 +111,8 @@ Wt::WWidget * accountManager::get(y::ldap::account * account) {
   table->elementAt(4,1)->addWidget(birthday);
   table->elementAt(5,1)->addWidget(currentPassword);
   table->elementAt(6,1)->addWidget(newPassword1);
-  table->elementAt(7,1)->addWidget(newPassword2);
-  table->elementAt(8,1)->addWidget(CPWC);
+  table->elementAt(7,1)->addWidget(CPWC);
+  table->elementAt(8,1)->addWidget(feedback);
   table->elementAt(9,1)->addWidget(aboutPassword);
   
   for(int i = 0; i < table->rowCount(); i++) {
@@ -120,6 +121,9 @@ Wt::WWidget * accountManager::get(y::ldap::account * account) {
       table->elementAt(i,j)->setVerticalAlignment(Wt::AlignmentFlag::AlignMiddle);
     }
   }
+  
+  table->elementAt(8,0)->setPadding(20);
+  table->elementAt(8,1)->setPadding(20);
   
   table->setStyleClass("panel-body");
   
@@ -184,6 +188,12 @@ void accountManager::saveButtonClicked() {
     return;
   }
 
-  
-  
+  // if we get here, change the user's password
+  account->password(y::ldap::PASSWORD(newPW1.toUTF8()));
+  y::ldap::Server().commitChanges();
+  feedback->setText("Je wachtwoord is gewijzigd.");
+  feedback->setStyleClass("alert alert-success"); 
+  currentPassword->setText("");
+  newPassword1->setText("");
+  newPassword2->setText("");
 }

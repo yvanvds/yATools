@@ -100,33 +100,27 @@ installAdmintools(){
 
 }
 
-installYearbook() {
+installWebLogin() {
   git pull
-  cd yearBook
+  cd weblogin
   make CONF=Release build
 
   # create dirs if they don't exist
   createDir /var/www/apps
-  createDir /var/www/apps/yearbook
+  createDir /var/www/apps/weblogin
 
   # remove files if they exist
-  if [ -f /var/www/apps/yearbook/yearbook.wt ]; then
-    rm /var/www/apps/yearbook/yearbook.wt
+  if [ -f /var/www/apps/weblogin/weblogin.wt ]; then
+    rm /var/www/apps/weblogin/weblogin.wt
   fi
-  cp dist/Release_fastcgi/GNU-Linux-x86/yearbook /var/www/apps/yearbook/yearbook.wt
-  cd ../yearbookAdmin
-  make CONF=Release build
+  cp dist/Release/GNU-Linux-x86/weblogin /var/www/apps/weblogin/weblogin.wt
 
-  if [ -f /var/www/app/yearbook/yearbookAdmin.wt ]; then
-    rm /var/www/apps/yearbook/yearbookAdmin.wt
-  fi
 
-  cp dist/Release/GNU-Linux-x86/yearbookadmin /var/www/apps/yearbook/yearbookAdmin.wt
-  cp -fr yearbook_latex /var/www/apps/yearbook
-  chown -R www-data:www-data /var/www/apps/yearbook
+  cp -fr yearbook_latex /var/www/apps/weblogin
+  chown -R www-data:www-data /var/www/apps/weblogin
   service apache2 restart
   cd ..
-  printSuccess "Yearbook app is updated" "OK"
+  printSuccess "Weblogin application is updated" "OK"
   waitForEnter
 }
 
@@ -139,7 +133,7 @@ verifyInstalledSoftware() {
            3 "Verify WT installation" off
            4 "Verify Boost process" off
 	   5 "Reinstall account admin tools" off
-           6 "Reinstall Yearbook App" off)
+           6 "Reinstall Web Application" off)
   choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
   clear 
   for choice in $choices; do
@@ -149,7 +143,7 @@ verifyInstalledSoftware() {
       3) installWT ;;
       4) installBoost ;;
       5) installAdmintools ;;
-      6) installYearbook ;;
+      6) installWebLogin;;
    esac
   done
 }

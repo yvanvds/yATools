@@ -7,13 +7,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/config.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/config.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/system/process.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/container.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/memcontainer.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/system/file.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/system/file.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/security.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/tests/utilsSecurityTest.h</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/security.h</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/tests/utilsSecurityTest.cpp</file>
         </group>
     </open-files>
 </project-private>
