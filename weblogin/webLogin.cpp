@@ -167,11 +167,25 @@ void webLogin::createContents() {
           deferCreate(boost::bind(&webLogin::yearbookAdminFunc, this)), 
           Wt::WMenuItem::PreLoading);
   
+  
   mainMenu->setInternalPathEnabled("/");
   mainMenu->itemSelected().connect(this, &webLogin::updateTitle);
   mainMenu->setStyleClass("nav nav-pills nav-stacked");
   
-  hbox->addWidget(mainMenu);
+  Wt::WPushButton * logoutButton = new Wt::WPushButton();
+  logoutButton->setText("Afmelden");
+  logoutButton->setStyleClass("btn btn-danger");
+  logoutButton->clicked().connect(this, &webLogin::logoutFunc);
+  
+  Wt::WVBoxLayout * leftBox = new Wt::WVBoxLayout();
+  leftBox->addWidget(mainMenu);
+  leftBox->addWidget(logoutButton);
+  leftBox->addWidget(new Wt::WText(), 1);
+  
+  Wt::WContainerWidget * leftContainer = new Wt::WContainerWidget();
+  leftContainer->setLayout(leftBox);
+  
+  hbox->addWidget(leftContainer);
   hbox->addWidget(contents, 1);
   
 }
@@ -200,4 +214,9 @@ Wt::WWidget * webLogin::yearbookFunc() {
 
 Wt::WWidget * webLogin::yearbookAdminFunc() {
   return new Wt::WText("yb admin");
+}
+
+void webLogin::logoutFunc() {
+  this->redirect("/");
+  this->quit();
 }

@@ -83,6 +83,8 @@ private:
   Wt::WWidget * yearbookFunc();
   Wt::WWidget * yearbookAdminFunc();
   
+  void logoutFunc();
+  
   void updateTitle();
   Wt::WWidget * wrapView(Wt::WWidget *(webLogin::*createFunction)());
 };
