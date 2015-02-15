@@ -29,7 +29,7 @@ std::string groupName(const y::ldap::GID_NUMBER & id) {
 }
 
 void y::samba::changePassword(const std::string & user, const std::string & password) {
-  std::string command = "/usr/sbin/smbldap-passwd -p ";
+  std::string command = "sudo /usr/sbin/smbldap-passwd -p ";
   command.append(user);
   command.append(" ");
   command.append(password);
