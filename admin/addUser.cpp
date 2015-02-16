@@ -55,7 +55,11 @@ void addUser::parse(int argc, char** argv) {
     tempAccount.groupID(GID_NUMBER(20009));
   } else if(tempAccount.group()().compare("personeel") == 0) {
     tempAccount.groupID(GID_NUMBER(525));
-  } else {
+  } else if(tempAccount.group()().compare("directie") == 0) {
+    // distinction between personeel and directie is only important
+    // for smartschool
+    tempAccount.groupID(GID_NUMBER(525));
+  }else {
     tempAccount.groupID(GID_NUMBER(1000));
   }
   
@@ -84,8 +88,8 @@ void addUser::parse(int argc, char** argv) {
   acc.groupID (GID_NUMBER(tempAccount.groupID()()));
   
   // add to group
-  if(acc.group()().compare("personeel") == 0) {
-    group & mailGroup = Server().getGroup(CN(acc.group()()), true);
+  if(acc.group()().compare("personeel") == 0 || acc.group()().compare("directie") == 0) {
+    group & mailGroup = Server().getGroup(CN("personeel"), true);
     mailGroup.members().New() = acc.mail()();
     mailGroup.flagForCommit();
   } else if(acc.group()().compare("extern") != 0) {

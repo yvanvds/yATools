@@ -59,14 +59,6 @@ void y::smartschool::saveUser(y::ldap::account& account) {
     role = "leerling";
   }
   
-  std::cout << std::to_string(account.uidNumber()()) << std::endl;
-  std::cout << account.uid()() << std::endl;
-  std::cout << account.getPasswordText() << std::endl;
-  std::cout << account.cn()() << std::endl;
-  std::cout << account.sn()() << std::endl;
-  std::cout << account.mail()() << std::endl;
-  std::cout << role << std::endl;
-  
   xsd__anyType * result;
   if(service.saveUser(
           y::utils::Config().getSSPw(),

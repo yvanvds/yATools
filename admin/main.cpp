@@ -38,8 +38,6 @@ int main(int argc, char** argv) {
   
   y::utils::Config().load();
   
-  y::Smartschool().addCourse("mytestcourse", "script testing");
-  
   string command(argv[1]);
 
   if(command.compare("password") == 0) {

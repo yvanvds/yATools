@@ -84,46 +84,68 @@ void y::utils::config::load(int argc, char** argv) {
   
   if(map.count("ldapPasswd")) {
     ldapPasswd = map["ldapPasswd"].as<std::string>();
+  } else {
+    y::utils::Log().add("Config warning: ldap password is not set.");
   }
   
   if(map.count("ldapHost")) {
     ldapHost = map["ldapHost"].as<std::string>();
+  } else {
+    y::utils::Log().add("Config warning: ldap host is not set.");
   }
   
   if(map.count("ldapBaseDN")) {
     ldapBaseDN = map["ldapBaseDN"].as<std::string>();
+  } else {
+    y::utils::Log().add("Config warning: ldap Base DN is not set.");
   }   
   
   if(map.count("ldapAdminDN")) {
     ldapAdminDN = map["ldapAdminDN"].as<std::string>();
+  } else {
+    y::utils::Log().add("Config warning: ldap admin DN is not set.");
   } 
   
   if(map.count("ldapTestUID")) {
     ldapTestUID = map["ldapTestUID"].as<std::string>();
+  } else {
+    y::utils::Log().add("Config warning: ldap test UID is not set.");
   }
   
   if(map.count("ldapTestPassword")) {
     ldapTestPassword = map["ldapTestPassword"].as<std::string>();
+  } else {
+    y::utils::Log().add("Config warning: ldap test password is not set.");
   }
   
   if(map.count("ldapTestUIDNumber")) {
     ldapTestUidNumber = map["ldapTestUIDNumber"].as<std::string>();
+  } else {
+    y::utils::Log().add("Config warning: ldap test UID number is not set.");
   }
   
   if(map.count("ldapTestDN")) {
     ldapTestDN = map["ldapTestDN"].as<std::string>();
+  } else {
+    y::utils::Log().add("Config warning: ldap test DN is not set.");
   }
   
   if(map.count("mysqlRootPassword")) {
     mysqlPassword = map["mysqlRootPassword"].as<std::string>();
+  } else {
+    y::utils::Log().add("Config warning: mysql password is not set.");
   }
   
   if(map.count("domain")) {
     domain = map["domain"].as<std::string>();
+  } else {
+    y::utils::Log().add("Config warning: domain is not set.");
   }
   
   if(map.count("smartschoolPw")) {
     smartschoolPw = map["smartschoolPw"].as<std::string>();
+  } else {
+    y::utils::Log().add("Config warning: smartschool password is not set.");
   }
   
   configReady = true;

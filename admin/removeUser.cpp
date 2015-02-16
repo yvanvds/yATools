@@ -45,7 +45,7 @@ void removeUser::parse(int argc, char** argv) {
   // if we get here, the user exists
   
   // if personeel, remove from that group
-  if (acc.group()().compare("personeel") == 0) {
+  if (acc.group()().compare("personeel") == 0 || acc.group()().compare("directie")) {
     group & personeel = Server().getGroup(CN("personeel"), true);
     container<std::string> & members = personeel.members();
     for(int i = 0; i < members.elms(); i++) {
