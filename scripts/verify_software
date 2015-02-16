@@ -38,7 +38,16 @@ installScripts() {
     else
       printSuccess "verifying apache sudo" "OK"
     fi
+    
+		#add squid controller
+    if [ scripts_to_install/restartSquid -nt /sbin/restartSquid ]; then
+			cp -fr scripts_to_install/restartSquid /sbin
+			printChange "verifying squid restarted" "INSTALLING"
+		else
+			printSuccess "verifying network restarted" "OK"
+		fi
 
+	  # TODO add cron jobs for squid
     waitForEnter
 }
 
