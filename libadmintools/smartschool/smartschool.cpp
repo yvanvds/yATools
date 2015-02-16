@@ -52,12 +52,13 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   if(account.group()().compare("externmail") == 0) return;
   
   if(account.group()().compare("directie") == 0) {
-    role = "direcite";
+    role = "directie";
   } else if(account.group()().compare("personeel") == 0) {
     role = "leerkracht";
   } else {
     role = "leerling";
   }
+  std::cout << role << std::endl;
   
   xsd__anyType * result;
   if(service.saveUser(
@@ -91,4 +92,6 @@ void y::smartschool::saveUser(y::ldap::account& account) {
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
   }
+  
+  
 }
