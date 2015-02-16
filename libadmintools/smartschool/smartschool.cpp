@@ -51,13 +51,13 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   if(account.group()().compare("extern") == 0) return;
   if(account.group()().compare("externmail") == 0) return;
   
-  if(account.group()().compare("directie") == 0) {
-    role = "directie";
-  } else if(account.group()().compare("personeel") == 0) {
-    role = "leerkracht";
-  } else {
+  //if(account.group()().compare("directie") == 0) {
+  //  role = "directie";
+  //} else if(account.group()().compare("personeel") == 0) {
+  //  role = "leerkracht";
+  //} else {
     role = "leerling";
-  }
+  //}
   std::cout << account.getPasswordText() << std::endl;
   
   xsd__anyType * result;
