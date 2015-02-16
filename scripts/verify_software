@@ -39,15 +39,26 @@ installScripts() {
       printSuccess "verifying apache sudo" "OK"
     fi
     
-		#add squid controller
+    #add squid controller
     if [ scripts_to_install/restartSquid -nt /sbin/restartSquid ]; then
-			cp -fr scripts_to_install/restartSquid /sbin
-			printChange "verifying squid restarted" "INSTALLING"
-		else
-			printSuccess "verifying network restarted" "OK"
-		fi
+      cp -fr scripts_to_install/restartSquid /sbin
+      printChange "verifying squid restarted" "INSTALLING"
+    else
+      printSuccess "verifying network restarted" "OK"
+    fi
 
-	  # TODO add cron jobs for squid
+    # add cron jobs for squid
+    addCronJob "30 8 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    addCronJob "20 9 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    addCronJob "15 10 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    addCronJob "10 11 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    addCronJob "0 12 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    addCronJob "50 12 * * *" "/sbin/admin proxy --reset &> /dev/null" 
+    addCronJob "40 13 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    addCronJob "35 14 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    addCronJob "30 15 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    printSuccess "adding squid resets to cron" "OK"
+
     waitForEnter
 }
 
