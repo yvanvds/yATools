@@ -69,7 +69,7 @@ y::utils::proxy::proxy() {
     }
     {
       y::data::row row; row.addString8("ID", "OLC"); 
-      row.addInt("status", 2); row.addInt("defaultValue", 1);
+      row.addInt("status", 2); row.addInt("defaultValue", 0);
       db->addRow(PROXY, row);
     }
     {
