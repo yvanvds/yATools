@@ -10,8 +10,7 @@
 
 class proxyManager {
 public:
-  proxyManager();
-  
+ 
   void printHelp();
   
   void parse(int argc, char** argv);

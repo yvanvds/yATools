@@ -14,21 +14,16 @@
 #include <Wt/WButtonGroup>
 #include <Wt/WRadioButton>
 #include <vector>
+#include "utils/proxy.h"
 
 class room {
 public:
-  
-  enum STATUS {
-    OPEN,
-    FILTER,
-    CLOSED,
-  };
   
   room(const std::string & name);
   void create(Wt::WTableRow * row);
   void buttonClicked(Wt::WRadioButton * selected);
   
-  void setStatus(STATUS status);
+  void setStatus(y::utils::proxy::STATUS status);
   Wt::WButtonGroup * getGroup();
   
 private:

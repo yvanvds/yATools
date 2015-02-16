@@ -15,6 +15,7 @@
 #include "find.h"
 #include "addUser.h"
 #include "removeUser.h"
+#include "proxyManager.h"
 
 using namespace std;
 
@@ -60,6 +61,9 @@ int main(int argc, char** argv) {
       return 0;
     }
     return 0;
+  } else if (command.compare("proxy") == 0) {
+    ProxyManager().parse(argc - 2, argv + 2);
+    return 0;
   }
 
   // if we get here, print help
@@ -73,7 +77,8 @@ void printBasicHelp() {
   cout << "  password   : change a user's password." << endl;
   cout << "  show       : show a user's details."    << endl;
   cout << "  find       : find a user by name."      << endl;
-  cout << "  user       : add or remove a user."  << endl;
+  cout << "  user       : add or remove a user."     << endl;
+  cout << "  proxy      : squid control."            << endl;
   
   cout << endl;
   cout << "Type 'admin <argument>' for more information about a" << endl;

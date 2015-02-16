@@ -14,7 +14,8 @@
 
 namespace y {
   namespace utils {
-    class proxy {
+    class proxy {     
+    public:
       enum STATUS {
         CLOSED,
         FILTER,
@@ -22,9 +23,6 @@ namespace y {
         INVALID,
       };
       
-      const std::string PROXY = "proxy";
-      
-    public:
       proxy();
       
       void getAllRooms(container<y::data::row> & rows);
@@ -38,6 +36,8 @@ namespace y {
     private:
       std::unique_ptr<y::data::server> server;
       std::unique_ptr<y::data::database> db;
+      
+      const std::string PROXY = "proxy";
     };
     
     proxy & Proxy();

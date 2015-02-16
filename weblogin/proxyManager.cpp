@@ -15,6 +15,9 @@
 #include <Wt/WButtonGroup>
 
 #include "proxyManager.h"
+#include "utils/container.h"
+#include "utils/proxy.h"
+#include "data/row.h"
 
 proxyManager & ProxyManager() {
   static proxyManager s;
@@ -28,13 +31,13 @@ void room::create(Wt::WTableRow* row) {
   row->elementAt(0)->addWidget(label);
   bgroup = new Wt::WButtonGroup();
   
-  button1 = new Wt::WRadioButton("open");
+  button1 = new Wt::WRadioButton("dicht");
   button2 = new Wt::WRadioButton("filter");
-  button3 = new Wt::WRadioButton("dicht");
+  button3 = new Wt::WRadioButton("open");
   
-  bgroup->addButton(button1, OPEN);
-  bgroup->addButton(button2, FILTER);
-  bgroup->addButton(button3, CLOSED);
+  bgroup->addButton(button1, y::utils::proxy::CLOSED);
+  bgroup->addButton(button2, y::utils::proxy::FILTER);
+  bgroup->addButton(button3, y::utils::proxy::OPEN);
   
   row->elementAt(1)->addWidget(button1);
   row->elementAt(2)->addWidget(button2);
@@ -46,47 +49,51 @@ void room::create(Wt::WTableRow* row) {
 
 void room::buttonClicked(Wt::WRadioButton * selected) {
   Wt::WButtonGroup * group = selected->group();
-  ProxyManager().getRoom(group)->setStatus((STATUS)group->selectedButtonIndex());
+  ProxyManager().getRoom(group)->setStatus((y::utils::proxy::STATUS)group->selectedButtonIndex());
 }
 
 Wt::WButtonGroup * room::getGroup() {
   return bgroup;
 }
 
-void room::setStatus(STATUS status) {
+void room::setStatus(y::utils::proxy::STATUS status) {
+  assert(status != y::utils::proxy::INVALID);
+  
   switch(status) {
-    case OPEN  : label->setStyleClass("label label-success"); break;
-    case FILTER: label->setStyleClass("label label-warning"); break;
-    case CLOSED: label->setStyleClass("label label-danger" ); break;
+    case y::utils::proxy::OPEN  : {
+      label->setStyleClass("label label-success");
+      bgroup->setSelectedButtonIndex(y::utils::proxy::OPEN);
+      break;
+    }
+    case y::utils::proxy::FILTER: {
+      label->setStyleClass("label label-warning"); 
+      bgroup->setSelectedButtonIndex(y::utils::proxy::FILTER);
+      break;
+    }
+    case y::utils::proxy::CLOSED: {
+      label->setStyleClass("label label-danger" );
+      bgroup->setSelectedButtonIndex(y::utils::proxy::CLOSED);
+      break;
+    }
   }
+  
+  y::utils::Proxy().status(this->name, status);
+  y::utils::Proxy().apply();
 }
 
 Wt::WWidget * proxyManager::get() {
   
   Wt::WTable * table = new Wt::WTable();
   
-  rooms.emplace_back("co112");
-  rooms.back().create(table->rowAt(0));
-  rooms.emplace_back("co114");
-  rooms.back().create(table->rowAt(1));
-  rooms.emplace_back("co116");
-  rooms.back().create(table->rowAt(2));
-  rooms.emplace_back("co117");
-  rooms.back().create(table->rowAt(3));
-  rooms.emplace_back("co126");
-  rooms.back().create(table->rowAt(4));
-  rooms.emplace_back("co127");
-  rooms.back().create(table->rowAt(5));
-  rooms.emplace_back("co137");
-  rooms.back().create(table->rowAt(6));
-  rooms.emplace_back("olc");
-  rooms.back().create(table->rowAt(7));
-  rooms.emplace_back("ec202");
-  rooms.back().create(table->rowAt(8));
-  rooms.emplace_back("ec203");
-  rooms.back().create(table->rowAt(9));
-  rooms.emplace_back("vi215");
-  rooms.back().create(table->rowAt(10));
+  container<y::data::row> rows;
+  y::utils::Proxy().getAllRooms(rows);
+  
+  for(int i = 0; i < rows.elms(); i++) {
+    rooms.emplace_back(rows[i]["ID"].asString8());
+    rooms.back().create(table->rowAt(i));
+    rooms.back().setStatus((y::utils::proxy::STATUS)rows[i]["status"].asInt());
+  }
+  
   
   for(int i = 0; i < table->rowCount(); i++) {
     for(int j = 0; j < table->columnCount(); j++) {
