@@ -53,6 +53,13 @@ void password::parse(int argc, char ** argv) {
         password = y::utils::Security().makePassword(8);
       }
       
+      if(!y::utils::Security().isGoodPassword(password)) {
+        cout << "A password must be between 8-20 character long." << endl;
+        cout << "It must contain one lower and one upper case character." << endl;
+        cout << "It also needs one number and one of the following symbols: !@#$%&_" << endl;
+        return;
+      }
+      
       account.password(y::ldap::PASSWORD(password));
       y::ldap::Server().commitChanges();
       

@@ -64,7 +64,7 @@ bool y::ldap::server::getData(y::ldap::dataset& rs, bool isDN) {
     base.append(_base);
   }
   LDAPMessage * result;
-  ber_int_t scope = LDAP_SCOPE_SUBTREE;
+  //ber_int_t scope = LDAP_SCOPE_SUBTREE;
   //if(isDN) scope = LDAP_SCOPE_BASE;
   
   if(ldap_search_ext_s(

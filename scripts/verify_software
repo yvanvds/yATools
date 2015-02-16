@@ -42,21 +42,25 @@ installScripts() {
     #add squid controller
     if [ scripts_to_install/restartSquid -nt /sbin/restartSquid ]; then
       cp -fr scripts_to_install/restartSquid /sbin
-      printChange "verifying squid restarted" "INSTALLING"
+      printChange "verifying squid restarter" "INSTALLING"
     else
-      printSuccess "verifying network restarted" "OK"
+      printSuccess "verifying squid restarter" "OK"
     fi
 
     # add cron jobs for squid
-    addCronJob "30 8 * * *" "/sbin/admin proxy --reset &> /dev/null"
-    addCronJob "20 9 * * *" "/sbin/admin proxy --reset &> /dev/null"
-    addCronJob "15 10 * * *" "/sbin/admin proxy --reset &> /dev/null"
-    addCronJob "10 11 * * *" "/sbin/admin proxy --reset &> /dev/null"
-    addCronJob "0 12 * * *" "/sbin/admin proxy --reset &> /dev/null"
-    addCronJob "50 12 * * *" "/sbin/admin proxy --reset &> /dev/null" 
-    addCronJob "40 13 * * *" "/sbin/admin proxy --reset &> /dev/null"
-    addCronJob "35 14 * * *" "/sbin/admin proxy --reset &> /dev/null"
-    addCronJob "30 15 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    # TODO make sure this file is loaded in squid.conf
+    touch /etc/squid3/roomfilter.conf
+
+    # TODO this did not work. Why?
+    #addCronJob "30 8 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    #addCronJob "20 9 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    #addCronJob "15 10 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    #addCronJob "10 11 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    #addCronJob "0 12 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    #addCronJob "50 12 * * *" "/sbin/admin proxy --reset &> /dev/null" 
+    #addCronJob "40 13 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    #addCronJob "35 14 * * *" "/sbin/admin proxy --reset &> /dev/null"
+    #addCronJob "30 15 * * *" "/sbin/admin proxy --reset &> /dev/null"
     printSuccess "adding squid resets to cron" "OK"
 
     waitForEnter
@@ -127,10 +131,10 @@ installAdmintools(){
   cd admin
 
   if [ "$cleanFirst" = true ]; then
-		printChange "Cleaning previous build" "CLEANING"
-		make CONF=Release clean
-		waitForEnter
-	fi
+    printChange "Cleaning previous build" "CLEANING"
+    make CONF=Release clean
+    waitForEnter
+  fi
 
   make CONF=Release build
   cp dist/Release/GNU-Linux-x86/admin /sbin
@@ -144,9 +148,9 @@ installWebLogin() {
   git pull
   cd weblogin
 
-	if [ "$cleanFirst" = true ]; then
-		make CONF=Release clean
-	fi
+  if [ "$cleanFirst" = true ]; then
+    make CONF=Release clean
+  fi
 
   make CONF=Release build
 
@@ -175,7 +179,13 @@ installWebLogin() {
   waitForEnter
 }
 
-
+downloadSmartschool() {
+  cd libadmintools/smartschool
+  wsdl2h -o interface.h https://sanctamaria-aarschot.smartschool.be/Webservices/V3?wsdl
+  soapcpp2 -i -C -I/usr/share/gsoap/import/ interface.h
+  printSuccess "Smartschool SOAP api updated" "OK"
+  cd ../..
+}
 
 verifyInstalledSoftware() {
   cmd=(dialog --separate-output --backtitle "yvan's admin tools" --checklist "Choose Actions:" 15 60 8)
@@ -183,9 +193,10 @@ verifyInstalledSoftware() {
            2 "Verify Scripts" on
            3 "Verify WT installation" off
            4 "Verify Boost process" off
-					 5 "Clean before build" off
-	         6 "Reinstall account admin tools" off
-           7 "Reinstall Web Application" off)
+           5 "Clean before build" off
+           6 "download smartschool api (code review needed)" off
+           7 "Reinstall account admin tools" off
+           8 "Reinstall Web Application" off)
   choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
   clear 
   
@@ -196,9 +207,10 @@ verifyInstalledSoftware() {
       2) installScripts ;;
       3) installWT ;;
       4) installBoost ;;
-		  5) cleanFirst=true ;;
-      6) installAdmintools ;;
-      7) installWebLogin;;
+      5) cleanFirst=true ;;
+      6) downloadSmartschool ;;
+      7) installAdmintools ;;
+      8) installWebLogin;;
    esac
   done
 }

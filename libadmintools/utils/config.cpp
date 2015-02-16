@@ -52,6 +52,7 @@ void y::utils::config::load(int argc, char** argv) {
     ("ldapTestDN"       , value<std::string>(), "set ldap test account DN")
     ("mysqlRootPassword", value<std::string>(), "set mysql root password")
     ("domain"           , value<std::string>(), "set network domain"     )
+    ("smartschoolPw"    , value<std::string>(), "set smartschool password")
   ;
   
   all.add(general).add(file);
@@ -121,6 +122,10 @@ void y::utils::config::load(int argc, char** argv) {
     domain = map["domain"].as<std::string>();
   }
   
+  if(map.count("smartschoolPw")) {
+    smartschoolPw = map["smartschoolPw"].as<std::string>();
+  }
+  
   configReady = true;
 }
 
@@ -162,4 +167,8 @@ const std::string & y::utils::config::getMysqlPassword() const {
 
 const std::string & y::utils::config::getDomain() const {
   return domain;
+}
+
+const std::string & y::utils::config::getSSPw() const {
+  return smartschoolPw;
 }

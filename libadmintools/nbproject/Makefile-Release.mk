@@ -51,6 +51,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/ldap/group.o \
 	${OBJECTDIR}/ldap/server.o \
 	${OBJECTDIR}/samba/samba.o \
+	${OBJECTDIR}/smartschool/smartschool.o \
+	${OBJECTDIR}/smartschool/soapC.o \
+	${OBJECTDIR}/smartschool/soapV3BindingProxy.o \
 	${OBJECTDIR}/system/file.o \
 	${OBJECTDIR}/system/process.o \
 	${OBJECTDIR}/system/workDir.o \
@@ -98,7 +101,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lwtfcgi -lwt -lmysqlcppconn-static -lmysqlclient -llber -lldap -lboost_iostreams
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lwtfcgi -lwt -lmysqlcppconn-static -lmysqlclient -llber -lldap -lboost_iostreams -lgsoapssl++
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -187,6 +190,21 @@ ${OBJECTDIR}/samba/samba.o: samba/samba.cpp
 	${MKDIR} -p ${OBJECTDIR}/samba
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/samba/samba.o samba/samba.cpp
+
+${OBJECTDIR}/smartschool/smartschool.o: smartschool/smartschool.cpp 
+	${MKDIR} -p ${OBJECTDIR}/smartschool
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/smartschool/smartschool.o smartschool/smartschool.cpp
+
+${OBJECTDIR}/smartschool/soapC.o: smartschool/soapC.cpp 
+	${MKDIR} -p ${OBJECTDIR}/smartschool
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/smartschool/soapC.o smartschool/soapC.cpp
+
+${OBJECTDIR}/smartschool/soapV3BindingProxy.o: smartschool/soapV3BindingProxy.cpp 
+	${MKDIR} -p ${OBJECTDIR}/smartschool
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/smartschool/soapV3BindingProxy.o smartschool/soapV3BindingProxy.cpp
 
 ${OBJECTDIR}/system/file.o: system/file.cpp 
 	${MKDIR} -p ${OBJECTDIR}/system
@@ -673,6 +691,45 @@ ${OBJECTDIR}/samba/samba_nomain.o: ${OBJECTDIR}/samba/samba.o samba/samba.cpp
 	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/samba/samba_nomain.o samba/samba.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/samba/samba.o ${OBJECTDIR}/samba/samba_nomain.o;\
+	fi
+
+${OBJECTDIR}/smartschool/smartschool_nomain.o: ${OBJECTDIR}/smartschool/smartschool.o smartschool/smartschool.cpp 
+	${MKDIR} -p ${OBJECTDIR}/smartschool
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/smartschool/smartschool.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/smartschool/smartschool_nomain.o smartschool/smartschool.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/smartschool/smartschool.o ${OBJECTDIR}/smartschool/smartschool_nomain.o;\
+	fi
+
+${OBJECTDIR}/smartschool/soapC_nomain.o: ${OBJECTDIR}/smartschool/soapC.o smartschool/soapC.cpp 
+	${MKDIR} -p ${OBJECTDIR}/smartschool
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/smartschool/soapC.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/smartschool/soapC_nomain.o smartschool/soapC.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/smartschool/soapC.o ${OBJECTDIR}/smartschool/soapC_nomain.o;\
+	fi
+
+${OBJECTDIR}/smartschool/soapV3BindingProxy_nomain.o: ${OBJECTDIR}/smartschool/soapV3BindingProxy.o smartschool/soapV3BindingProxy.cpp 
+	${MKDIR} -p ${OBJECTDIR}/smartschool
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/smartschool/soapV3BindingProxy.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/smartschool/soapV3BindingProxy_nomain.o smartschool/soapV3BindingProxy.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/smartschool/soapV3BindingProxy.o ${OBJECTDIR}/smartschool/soapV3BindingProxy_nomain.o;\
 	fi
 
 ${OBJECTDIR}/system/file_nomain.o: ${OBJECTDIR}/system/file.o system/file.cpp 

@@ -44,6 +44,12 @@
       <itemPath>samba/samba.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f3" displayName="smartschool" projectFiles="true">
+      <itemPath>smartschool/smartschool.cpp</itemPath>
+      <itemPath>smartschool/smartschool.h</itemPath>
+      <itemPath>smartschool/soapC.cpp</itemPath>
+      <itemPath>smartschool/soapH.h</itemPath>
+      <itemPath>smartschool/soapV3BindingProxy.cpp</itemPath>
+      <itemPath>smartschool/soapV3BindingProxy.h</itemPath>
     </logicalFolder>
     <logicalFolder name="system" displayName="system" projectFiles="true">
       <itemPath>system/file.cpp</itemPath>
@@ -238,6 +244,7 @@
             <linkerLibLibItem>lber</linkerLibLibItem>
             <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
             <linkerOptionItem>-lboost_regex</linkerOptionItem>
+            <linkerOptionItem>-lgsoapssl++</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -571,6 +578,18 @@
       </item>
       <item path="samba/samba.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="smartschool/smartschool.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="smartschool/smartschool.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="smartschool/soapC.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="smartschool/soapH.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="smartschool/soapV3BindingProxy.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="smartschool/soapV3BindingProxy.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="system/file.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="system/file.h" ex="false" tool="3" flavor2="0">
@@ -694,6 +713,7 @@
             <linkerLibLibItem>lber</linkerLibLibItem>
             <linkerLibLibItem>ldap</linkerLibLibItem>
             <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
+            <linkerOptionItem>-lgsoapssl++</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -1024,6 +1044,18 @@
       <item path="samba/samba.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="samba/samba.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="smartschool/smartschool.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="smartschool/smartschool.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="smartschool/soapC.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="smartschool/soapH.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="smartschool/soapV3BindingProxy.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="smartschool/soapV3BindingProxy.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="system/file.cpp" ex="false" tool="1" flavor2="0">
       </item>

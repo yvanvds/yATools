@@ -5,7 +5,9 @@
  * Created on January 14, 2014, 6:48 PM
  */
 
-#pragma once
+#ifndef LDAPACCOUNT_H
+#define	LDAPACCOUNT_H
+
 #include "utils/watch.h"
 #include "ldap/attributes.h"
 #include "ldap/data.h"
@@ -53,6 +55,9 @@ namespace y {
       const GID        & group    () const; account & group    (const GID        & value);
       const GID_NUMBER & groupID  () const; account & groupID  (const GID_NUMBER & value);
       
+      // returns password if changed during this request, otherwise empty string
+      std::string getPasswordText();
+      
     private:
       bool load(const UID  & id);
       bool load(UID_NUMBER   id);
@@ -89,3 +94,5 @@ namespace y {
     };
   };
 }
+
+#endif	/* LDAPACCOUNT_H */

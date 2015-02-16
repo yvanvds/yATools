@@ -27,6 +27,7 @@ namespace y {
       const std::string & getLdapTestDN       () const;
       const std::string & getMysqlPassword    () const;
       const std::string & getDomain           () const;
+      const std::string & getSSPw             () const;
 
     private:
           
@@ -50,6 +51,7 @@ namespace y {
       std::string ldapTestDN;
       std::string mysqlPassword;
       std::string domain;
+      std::string smartschoolPw;
     };
     
     config & Config();

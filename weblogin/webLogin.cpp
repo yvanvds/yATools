@@ -152,22 +152,25 @@ void webLogin::createContents() {
           deferCreate(boost::bind(&webLogin::accountFunc, this)), 
           Wt::WMenuItem::PreLoading);
   
-  mainMenu->addItem("Web Toegang", 
-          deferCreate(boost::bind(&webLogin::webAccessFunc, this)), 
-          Wt::WMenuItem::PreLoading);
+  if(account->group()().compare("personeel") == 0) {
+    mainMenu->addItem("Web Toegang", 
+            deferCreate(boost::bind(&webLogin::webAccessFunc, this)), 
+            Wt::WMenuItem::PreLoading);
+  }
   
-  mainMenu->addItem("Groepen Admin", 
-          deferCreate(boost::bind(&webLogin::groupFunc, this)), 
-          Wt::WMenuItem::PreLoading);
-  
-  mainMenu->addItem("Jaarboek", 
-          deferCreate(boost::bind(&webLogin::yearbookFunc, this)), 
-          Wt::WMenuItem::PreLoading);
-  
-  mainMenu->addItem("Jaarboek Admin", 
-          deferCreate(boost::bind(&webLogin::yearbookAdminFunc, this)), 
-          Wt::WMenuItem::PreLoading);
-  
+  if(false) {
+    mainMenu->addItem("Groepen Admin", 
+            deferCreate(boost::bind(&webLogin::groupFunc, this)), 
+            Wt::WMenuItem::PreLoading);
+
+    mainMenu->addItem("Jaarboek", 
+            deferCreate(boost::bind(&webLogin::yearbookFunc, this)), 
+            Wt::WMenuItem::PreLoading);
+
+    mainMenu->addItem("Jaarboek Admin", 
+            deferCreate(boost::bind(&webLogin::yearbookAdminFunc, this)), 
+            Wt::WMenuItem::PreLoading);
+  }
   
   mainMenu->setInternalPathEnabled("/");
   mainMenu->itemSelected().connect(this, &webLogin::updateTitle);

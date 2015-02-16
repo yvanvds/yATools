@@ -12,6 +12,7 @@
 #include "utils/sha1.h"
 #include "utils/config.h"
 #include "utils/log.h"
+#include "smartschool/smartschool.h"
 
 y::ldap::account::account() : 
   _uidNumber(UID_NUMBER(0)),
@@ -242,6 +243,7 @@ bool y::ldap::account::save() {
     d.add("type", TYPE_PASSWORD);
     d.add("values", _password()());
     samba::changePassword(_uid()(), _passwordClearText);
+    y::Smartschool().saveUser(*this);
   }
   
   if(values.elms()) {
@@ -386,3 +388,6 @@ y::ldap::account & y::ldap::account::groupID(const GID_NUMBER& value) {
   return *this;
 }
 
+std::string y::ldap::account::getPasswordText() {
+  return _passwordClearText;
+}

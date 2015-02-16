@@ -115,7 +115,7 @@ bool y::sys::GetProcessResult(const std::string& command, std::vector<std::strin
     return false;
   }
   
-  for(int i = 0; i < p.result.size(); i++) {
+  for(unsigned int i = 0; i < p.result.size(); i++) {
     result.push_back(p.result[i]);
   }
   return true;  

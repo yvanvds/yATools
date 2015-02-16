@@ -16,6 +16,7 @@
 #include "addUser.h"
 #include "removeUser.h"
 #include "proxyManager.h"
+#include "smartschool/smartschool.h"
 
 using namespace std;
 
@@ -28,8 +29,7 @@ int main(int argc, char** argv) {
     cout << "You must be root to execute this command!" << endl;
     return 0;
   }
-#endif  
-  
+#endif   
   if(argc < 2) {
     printBasicHelp();
     return 0;
