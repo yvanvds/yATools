@@ -119,7 +119,7 @@ y::utils::proxy::STATUS y::utils::proxy::status(const std::string & room) {
   return (STATUS)rows[0]["status"].asInt();
 }
 
-void y::utils::proxy::reset() {
+y::utils::proxy & y::utils::proxy::reset() {
   container<y::data::row> rows;
   db->getAllRows(PROXY, rows);
   
@@ -131,6 +131,7 @@ void y::utils::proxy::reset() {
     data.addInt("status", rows[i]["defaultValue"].asInt());
     db->setRow(PROXY, data, condition);
   }
+  return *this;
 }
 
 void y::utils::proxy::getAllRooms(container<y::data::row>& rows) {
@@ -152,7 +153,7 @@ void y::utils::proxy::apply() {
     }
   }
   file.close();
-  system("service squid3 reload");
+  system("sudo /sbin/squidReload");
 }
 
 

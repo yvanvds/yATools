@@ -34,7 +34,7 @@ void proxyManager::parse(int argc, char** argv) {
   } else {
     std::string arg(argv[0]);
     if(arg.compare("--reset") == 0) {
-      Proxy().reset();
+      Proxy().reset().apply();
       return;
     } 
     
@@ -60,6 +60,7 @@ void proxyManager::parse(int argc, char** argv) {
             return;
           } else {
             y::utils::Proxy().status(arg, proxy::OPEN);
+            y::utils::Proxy().apply();
             cout << arg << " is now open." << endl;
             return;
           }
@@ -70,6 +71,7 @@ void proxyManager::parse(int argc, char** argv) {
             return;
           } else {
             y::utils::Proxy().status(arg, proxy::FILTER);
+            y::utils::Proxy().apply();
             cout << arg << " is now filtered." << endl;
             return;
           }
@@ -80,6 +82,7 @@ void proxyManager::parse(int argc, char** argv) {
             return;
           } else {
             y::utils::Proxy().status(arg, proxy::CLOSED);
+            y::utils::Proxy().apply();
             cout << arg << " is now closed." << endl;
             return;
           }

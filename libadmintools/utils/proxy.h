@@ -30,7 +30,7 @@ namespace y {
       bool   status(const std::string & room, STATUS status);
       STATUS status(const std::string & room               );
       
-      void reset();
+      proxy & reset();
       void apply();
 
     private:
