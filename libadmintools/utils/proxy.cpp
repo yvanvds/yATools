@@ -153,7 +153,7 @@ void y::utils::proxy::apply() {
     }
   }
   file.close();
-  system("sudo /sbin/squidReload");
+  system("sudo /sbin/restartSquid");
 }
 
 
