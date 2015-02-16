@@ -52,6 +52,7 @@ void password::parse(int argc, char ** argv) {
       } else {
         password = y::utils::Security().makePassword(8);
       }
+      cout << password;
       
       if(!y::utils::Security().isGoodPassword(password)) {
         cout << "A password must be between 8-20 character long." << endl;

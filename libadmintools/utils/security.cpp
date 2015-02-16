@@ -16,6 +16,7 @@
 char consonants[] = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
                      'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z', '\0'}; 
 char vowels[] = {'a', 'e', 'i', 'o', 'u', 'y', '\0'};
+char symbols[] = {'!', '@', '#', '$', '%', '&', '_', '\0'};
 
 y::utils::security & y::utils::Security() {
   static security s;
@@ -40,14 +41,40 @@ bool y::utils::security::test(const y::ldap::account& account, const std::string
 std::string y::utils::security::makePassword(int length) {
   std::string result;
   bool vowel = false;
+  
+  int capitalPos = Random().get(length -1);
+  
+  int symbolPos = Random().get(length - 1);
+  while (capitalPos == symbolPos) {
+    symbolPos = Random().get(length - 1);
+  }
+  
+  int numberPos = Random().get(length -1);
+  while (capitalPos == numberPos || symbolPos == numberPos) {
+    numberPos = Random().get(length -1);
+  }
+  
+  
   for(int i = 0; i < length; i++) {
-    if(vowel) {
+    if(i == symbolPos) {
+      result += symbols[Random().get(6)];
+    } else if (i == numberPos) {
+      result += std::to_string(Random().get(9));
+    } else if(vowel) {
       result += vowels[Random().get(5)];
     } else {
       result += consonants[Random().get(19)];
     }
+    
+    if(i == capitalPos) {
+      char c = result[i];
+      c = (char)toupper(c);
+      result[i] = c;
+    }
+    
     vowel = !vowel;
   }
+   
   return result;
 }
 
