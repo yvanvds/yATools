@@ -16,7 +16,7 @@
 char consonants[] = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
                      'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z', '\0'}; 
 char vowels[] = {'a', 'e', 'i', 'o', 'u', 'y', '\0'};
-char symbols[] = {'!', '@', '#', '$', '%', '&', '_', '\0'};
+
 
 y::utils::security & y::utils::Security() {
   static security s;
@@ -44,21 +44,13 @@ std::string y::utils::security::makePassword(int length) {
   
   int capitalPos = Random().get(length -1);
   
-  int symbolPos = Random().get(length - 1);
-  while (capitalPos == symbolPos) {
-    symbolPos = Random().get(length - 1);
-  }
-  
   int numberPos = Random().get(length -1);
-  while (capitalPos == numberPos || symbolPos == numberPos) {
+  while (capitalPos == numberPos) {
     numberPos = Random().get(length -1);
   }
-  
-  
+   
   for(int i = 0; i < length; i++) {
-    if(i == symbolPos) {
-      result += symbols[Random().get(6)];
-    } else if (i == numberPos) {
+    if (i == numberPos) {
       result += std::to_string(Random().get(9));
     } else if(vowel) {
       result += vowels[Random().get(5)];
@@ -81,6 +73,6 @@ std::string y::utils::security::makePassword(int length) {
 
 bool y::utils::security::isGoodPassword(const std::string& password) {
   // look in header file for explanation of this regex
-  static const boost::regex e("^(?=.*[!@#$%&_])(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,20}$");
+  static const boost::regex e("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,20}$");
   return boost::regex_match(password, e);
 }

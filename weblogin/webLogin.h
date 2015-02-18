@@ -79,6 +79,7 @@ private:
   
   Wt::WWidget * accountFunc();
   Wt::WWidget * webAccessFunc();
+  Wt::WWidget * wisaImportFunc();
   Wt::WWidget * groupFunc();
   Wt::WWidget * yearbookFunc();
   Wt::WWidget * yearbookAdminFunc();

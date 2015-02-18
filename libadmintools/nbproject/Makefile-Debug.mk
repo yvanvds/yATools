@@ -44,6 +44,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/gui/confirmationDialog.o \
 	${OBJECTDIR}/gui/passwordDialog.o \
 	${OBJECTDIR}/gui/session.o \
+	${OBJECTDIR}/gui/stackPage.o \
 	${OBJECTDIR}/ldap/account.o \
 	${OBJECTDIR}/ldap/attributes.o \
 	${OBJECTDIR}/ldap/data.o \
@@ -155,6 +156,11 @@ ${OBJECTDIR}/gui/session.o: gui/session.cpp
 	${MKDIR} -p ${OBJECTDIR}/gui
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/session.o gui/session.cpp
+
+${OBJECTDIR}/gui/stackPage.o: gui/stackPage.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/stackPage.o gui/stackPage.cpp
 
 ${OBJECTDIR}/ldap/account.o: ldap/account.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
@@ -600,6 +606,19 @@ ${OBJECTDIR}/gui/session_nomain.o: ${OBJECTDIR}/gui/session.o gui/session.cpp
 	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/session_nomain.o gui/session.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/gui/session.o ${OBJECTDIR}/gui/session_nomain.o;\
+	fi
+
+${OBJECTDIR}/gui/stackPage_nomain.o: ${OBJECTDIR}/gui/stackPage.o gui/stackPage.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/stackPage.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/stackPage_nomain.o gui/stackPage.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/gui/stackPage.o ${OBJECTDIR}/gui/stackPage_nomain.o;\
 	fi
 
 ${OBJECTDIR}/ldap/account_nomain.o: ${OBJECTDIR}/ldap/account.o ldap/account.cpp 

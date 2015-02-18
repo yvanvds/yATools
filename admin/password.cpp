@@ -57,7 +57,7 @@ void password::parse(int argc, char ** argv) {
       if(!y::utils::Security().isGoodPassword(password)) {
         cout << "A password must be between 8-20 character long." << endl;
         cout << "It must contain one lower and one upper case character." << endl;
-        cout << "It also needs one number and one of the following symbols: !@#$%&_" << endl;
+        cout << "It also needs one or more numbers." << endl;
         return;
       }
       

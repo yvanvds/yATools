@@ -26,6 +26,8 @@
 #include "webLogin.h"
 #include "accountManager.h"
 #include "proxyManager.h"
+#include "wisaImport.h"
+
 
 webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), loggedIn(false) {
   y::utils::Log().add("start of webLogin app");
@@ -158,15 +160,27 @@ void webLogin::createContents() {
             Wt::WMenuItem::PreLoading);
   }
   
+  if(account->uid()().compare("yvanym") == 0) {
+    mainMenu->addItem("Wisa Import",
+            deferCreate(boost::bind(&webLogin::wisaImportFunc, this)),
+            Wt::WMenuItem::LazyLoading);
+  }
+  
   if(false) {
     mainMenu->addItem("Groepen Admin", 
             deferCreate(boost::bind(&webLogin::groupFunc, this)), 
             Wt::WMenuItem::PreLoading);
-
+  }
+  
+  // show this for last year students (or me for testing)
+  std::string group = account->group()();
+  if(group[0] == '6' || group[0] == '7' || (account->uid()().compare("yvanym") == 0)) {
     mainMenu->addItem("Jaarboek", 
             deferCreate(boost::bind(&webLogin::yearbookFunc, this)), 
             Wt::WMenuItem::PreLoading);
-
+  }
+  
+  if(false) {
     mainMenu->addItem("Jaarboek Admin", 
             deferCreate(boost::bind(&webLogin::yearbookAdminFunc, this)), 
             Wt::WMenuItem::PreLoading);
@@ -206,6 +220,10 @@ Wt::WWidget * webLogin::accountFunc() {
 
 Wt::WWidget * webLogin::webAccessFunc() {
   return ProxyManager().get();
+}
+
+Wt::WWidget * webLogin::wisaImportFunc() {
+  return WisaImport().get();
 }
 
 Wt::WWidget * webLogin::groupFunc() {
