@@ -45,6 +45,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/gui/passwordDialog.o \
 	${OBJECTDIR}/gui/session.o \
 	${OBJECTDIR}/gui/stackPage.o \
+	${OBJECTDIR}/gui/stackPageManager.o \
 	${OBJECTDIR}/ldap/account.o \
 	${OBJECTDIR}/ldap/attributes.o \
 	${OBJECTDIR}/ldap/data.o \
@@ -161,6 +162,11 @@ ${OBJECTDIR}/gui/stackPage.o: gui/stackPage.cpp
 	${MKDIR} -p ${OBJECTDIR}/gui
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/stackPage.o gui/stackPage.cpp
+
+${OBJECTDIR}/gui/stackPageManager.o: gui/stackPageManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/stackPageManager.o gui/stackPageManager.cpp
 
 ${OBJECTDIR}/ldap/account.o: ldap/account.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
@@ -619,6 +625,19 @@ ${OBJECTDIR}/gui/stackPage_nomain.o: ${OBJECTDIR}/gui/stackPage.o gui/stackPage.
 	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/stackPage_nomain.o gui/stackPage.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/gui/stackPage.o ${OBJECTDIR}/gui/stackPage_nomain.o;\
+	fi
+
+${OBJECTDIR}/gui/stackPageManager_nomain.o: ${OBJECTDIR}/gui/stackPageManager.o gui/stackPageManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/gui
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/stackPageManager.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/stackPageManager_nomain.o gui/stackPageManager.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/gui/stackPageManager.o ${OBJECTDIR}/gui/stackPageManager_nomain.o;\
 	fi
 
 ${OBJECTDIR}/ldap/account_nomain.o: ${OBJECTDIR}/ldap/account.o ldap/account.cpp 

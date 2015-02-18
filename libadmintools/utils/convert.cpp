@@ -69,6 +69,7 @@ std::u32string str32(const std::u16string& s)
   return converter(s);
 }
 
+
 Wt::WString strWt(const std::u16string& s) {
   return Wt::WString(str8(s), Wt::UTF8);
 }

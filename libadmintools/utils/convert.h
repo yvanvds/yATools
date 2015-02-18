@@ -46,6 +46,7 @@ struct UTF32 {
 #endif
 };
 
+
 template<class T, class F> int storageMultiplier();
 
 template<class T, class F>

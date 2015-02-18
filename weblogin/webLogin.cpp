@@ -223,7 +223,12 @@ Wt::WWidget * webLogin::webAccessFunc() {
 }
 
 Wt::WWidget * webLogin::wisaImportFunc() {
-  return WisaImport().get();
+  Wt::WPanel * panel = new Wt::WPanel();
+  panel->setTitle("<h3>Wisa Import</h3>");
+  panel->setStyleClass("panel panel-primary");
+  panel->setCentralWidget(WisaImport().get());
+  panel->setMaximumSize(800, Wt::WLength::Auto);
+  return panel;
 }
 
 Wt::WWidget * webLogin::groupFunc() {

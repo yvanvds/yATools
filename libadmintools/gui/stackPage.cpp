@@ -11,15 +11,18 @@
 #include <Wt/WPushButton>
 
 #include "stackPage.h"
+#include "stackPageManager.h"
 
-stackPage::stackPage() : createDone(false), showPrevious(false), showNext(false) {
+y::gui::stackPage::stackPage() : createDone(false) {
   
 }
 
-void stackPage::create() {
+void y::gui::stackPage::create(int index, stackPageManager * parent) {
   if(createDone) return;
+  this->pageIndex = index;
+  this->parent = parent;
   
-  Wt::WContainerWidget * content = new Wt::WContainerWidget();
+  Wt::WContainerWidget * content = new Wt::WContainerWidget(parent);
   Wt::WVBoxLayout * box = new Wt::WVBoxLayout();
   content->setLayout(box);
   
@@ -28,34 +31,44 @@ void stackPage::create() {
   // navigation buttons
   Wt::WHBoxLayout * navBox = new Wt::WHBoxLayout();
   
-  if(showPrevious) {
-    previousButton = new Wt::WPushButton("vorige");
-    previousButton->setWidth(150);
-    previousButton->setHeight(35);
-    previousButton->clicked().connect(this, &stackPage::previousClicked);
-    previousButton->setStyleClass("btn btn-primary");
-    navBox->addWidget(previousButton);
-  }
   
-  if(showNext) {
-    nextButton = new Wt::WPushButton("volgende");
-    nextButton->setWidth(150);
-    nextButton->setHeight(35);
-    nextButton->clicked().connect(this, &stackPage::nextClicked);
-    nextButton->setDefault(true);
-    nextButton->setStyleClass("btn btn-primary");
-    navBox->addWidget(nextButton);
-  }
+  previousButton = new Wt::WPushButton("vorige");
+  previousButton->setWidth(150);
+  previousButton->setHeight(35);
+  previousButton->clicked().connect(this, &stackPage::previousClicked);
+  previousButton->setStyleClass("btn btn-primary");
+  navBox->addWidget(previousButton);
+  
+  nextButton = new Wt::WPushButton("volgende");
+  nextButton->setWidth(150);
+  nextButton->setHeight(35);
+  nextButton->clicked().connect(this, &stackPage::nextClicked);
+  nextButton->setDefault(true);
+  nextButton->setStyleClass("btn btn-primary");
+  navBox->addWidget(nextButton);
   
   box->addWidget(new Wt::WText("<p></p>"));
   box->addLayout(navBox);
   
 }
 
-void stackPage::previousClicked() {
-  
+void y::gui::stackPage::showButtons(bool previous, bool next) {
+  if (previous) {
+    previousButton->show();
+  } else {
+    previousButton->hide();
+  }
+  if(next) {
+    nextButton->show();
+  } else { 
+    nextButton->hide();
+  }
 }
 
-void stackPage::nextClicked() {
-  
+void y::gui::stackPage::previousClicked() {
+  parent->showPage(pageIndex-1);
+}
+
+void y::gui::stackPage::nextClicked() {
+  parent->showPage(pageIndex+1);
 }

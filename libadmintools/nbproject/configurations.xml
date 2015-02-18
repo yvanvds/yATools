@@ -24,6 +24,8 @@
       <itemPath>gui/session.h</itemPath>
       <itemPath>gui/stackPage.cpp</itemPath>
       <itemPath>gui/stackPage.h</itemPath>
+      <itemPath>gui/stackPageManager.cpp</itemPath>
+      <itemPath>gui/stackPageManager.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ldap" displayName="ldap" projectFiles="true">
       <logicalFolder name="f1" displayName="base" projectFiles="true">
@@ -523,6 +525,10 @@
       </item>
       <item path="gui/stackPage.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="gui/stackPageManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gui/stackPageManager.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/account.h" ex="false" tool="3" flavor2="0">
@@ -993,6 +999,10 @@
       <item path="gui/stackPage.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="gui/stackPage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="gui/stackPageManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gui/stackPageManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ldap/account.cpp" ex="false" tool="1" flavor2="0">
       </item>
