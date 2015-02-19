@@ -244,7 +244,20 @@ bool y::ldap::account::save() {
     d.add(L"type", TYPE_PASSWORD);
     d.add(L"values", _password()());
     samba::changePassword(_uid()(), _passwordClearText);
-    y::Smartschool().saveUser(*this);
+    
+    if(_group()().compare(L"extern") != 0 && _group()().compare(L"externmail") != 0) {
+      if(y::Smartschool().savePassword(*this) == 12) {
+        // the user does not exist in smartschool
+        y::Smartschool().saveUser(*this);
+        // also set primary group
+        if(_group()().compare(L"personeel")) {
+          y::Smartschool().addUserToGroup(*this, "Leerkrachten", false);
+        } else if (_group()().compare(L"directie")) {
+          y::Smartschool().addUserToGroup(*this, "Directie", false);
+        }
+      }
+    }
+    
   }
   
   if(values.elms()) {

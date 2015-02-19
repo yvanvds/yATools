@@ -22,7 +22,7 @@ namespace y {
    ~smartschool();
    
    // add a new course
-   void addCourse(const std::string & name, const std::string & description);
+   int addCourse(const std::string & name, const std::string & description);
    
    // add class or group to a course
    void addGroupsToCourse(const std::string & courseName, const std::string & courseDescription, container<std::string> & groupIDs);
@@ -30,10 +30,11 @@ namespace y {
    // add teacher to course
    // void addTeacherToCourse(const std::string & courseName, const std::string & courseDescription, const )
   
+   int savePassword(y::ldap::account & account);
    void saveUser(y::ldap::account & account);
+   int addUserToGroup(y::ldap::account & account, const std::string & group, bool keepCurrent);
    
-   // for maintenance
-   void getErrorCodes();
+   std::wstring errorToText(int code);
    
   private:
     V3BindingProxy service;
@@ -42,6 +43,10 @@ namespace y {
     const std::wstring SS_ERRORS = L"smartschool_errors";
     std::unique_ptr<y::data::server> server;
     std::unique_ptr<y::data::database> db;
+    
+    // for maintenance
+    void getErrorCodes();
+    void createErrorCodeTable();
   };
   
   smartschool & Smartschool();

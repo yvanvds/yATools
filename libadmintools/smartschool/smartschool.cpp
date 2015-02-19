@@ -30,24 +30,7 @@ y::smartschool::smartschool() {
   db->use(L"admintools");
   
   if(!db->tableExists(SS_ERRORS)) {
-    y::data::row fields;
-    fields.addInt(L"ID");
-    fields[L"ID"].primaryKey(true).required(true);
-    fields.addString(L"code");
-    fields[L"code"].stringLength(512);
-    
-    db->createTable(SS_ERRORS, fields);
-    
-    // error 0 does not exists, so we abuse this value to
-    // remember the last time we requested the error codes.
-    // This saves us another table
-    
-    y::data::row row;
-    row.addInt(L"ID", 0);
-    time_t now = time(0);
-    row.addString(L"code", std::to_wstring(now));
-    db->addRow(SS_ERRORS, row);
-    getErrorCodes();
+    createErrorCodeTable();
   } else {
     container<y::data::row> rows;
     y::data::field condition;
@@ -57,8 +40,12 @@ y::smartschool::smartschool() {
       std::string::size_type sz;
       int lasttime = std::stoi(rows[0][L"code"].asString(), &sz);
       time_t now = time(0);
-      std::cout << "last " << lasttime << std::endl;
-      std::cout << "now " << now << std::endl;
+      
+      // renew if a day has past
+      if(now - lasttime > 86400) {
+        db->deleteTable(SS_ERRORS);
+        createErrorCodeTable();
+      }
     }
   }
 }
@@ -67,11 +54,14 @@ y::smartschool::~smartschool() {
   service.destroy();
 }
 
-void y::smartschool::addCourse(const std::string& name, const std::string& description) {
+int y::smartschool::addCourse(const std::string& name, const std::string& description) {
   std::string result;
-  if(service.addCourse(str8(y::utils::Config().getSSPw()), name, description, result) == SOAP_OK) {
-  } else {
+  if(service.addCourse(str8(y::utils::Config().getSSPw()), name, description, result) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
+    return -1;
+  } else {
+    // it's a string, but it always returns an int
+    return std::stoi(result);
   } 
 }
 
@@ -88,6 +78,24 @@ void y::smartschool::addGroupsToCourse(const std::string& courseName, const std:
   //if(service.addCourseStudents(y::utils::Config().getSSPw(), courseName, courseDescription, grouplist, result) != SOAP_OK) {
   //  service.soap_stream_fault(std::cerr);
   //}
+}
+
+int y::smartschool::savePassword(y::ldap::account& account) {
+  xsd__anyType * result;
+  if(service.savePassword(
+          str8(y::utils::Config().getSSPw()),
+          str8(account.uid()()),
+          str8(account.getPasswordText()),
+          0,
+          result) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return -1;
+  } else {
+    if(result->soap_type() == SOAP_TYPE_xsd__int) {
+      return ((xsd__int*)(result))->__item;
+    }
+  }
+  return 0;
 }
 
 void y::smartschool::saveUser(y::ldap::account& account) {
@@ -135,8 +143,46 @@ void y::smartschool::saveUser(y::ldap::account& account) {
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
   }
-  
-  
+}
+
+int y::smartschool::addUserToGroup(y::ldap::account& account, const std::string& group, bool keepCurrent) {
+  xsd__anyType * result;
+  if(service.saveUserToClassesAndGroups(
+          str8(y::utils::Config().getSSPw()),
+          str8(account.uid()()),
+          group,
+          keepCurrent,
+          result
+          ) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return -1;
+  } else {
+    if(result->soap_type() == SOAP_TYPE_xsd__int) {
+      return ((xsd__int*)(result))->__item;
+    }
+  }
+  return 0;
+}
+
+void y::smartschool::createErrorCodeTable() {
+  y::data::row fields;
+  fields.addInt(L"ID");
+  fields[L"ID"].primaryKey(true).required(true);
+  fields.addString(L"code");
+  fields[L"code"].stringLength(512);
+
+  db->createTable(SS_ERRORS, fields);
+
+  // error 0 does not exists, so we abuse this value to
+  // remember the last time we requested the error codes.
+  // This saves us another table
+
+  y::data::row row;
+  row.addInt(L"ID", 0);
+  time_t now = time(0);
+  row.addString(L"code", std::to_wstring(now));
+  db->addRow(SS_ERRORS, row);
+  getErrorCodes();
 }
 
 void y::smartschool::getErrorCodes() {
@@ -176,4 +222,16 @@ void y::smartschool::getErrorCodes() {
     }
     
   }
+}
+
+std::wstring y::smartschool::errorToText(int code) {
+  container<y::data::row> rows;
+  y::data::field condition;
+  condition.name(L"ID").setInt(code);
+  db->getRows(SS_ERRORS, rows, condition);
+  if(rows.elms()) {
+    return rows[0][L"code"].asString();
+  } 
+  
+  return L"This error does not exist.";  
 }
