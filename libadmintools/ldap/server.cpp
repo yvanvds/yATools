@@ -36,8 +36,11 @@ y::ldap::server::server() : _connected(false), _ldapMode(LDAP_MODE_NONE) {
   
   // log in as admin
   BerValue credentials;
+  //TODO for some reason this goes wrong if i delete the next two lines???
+  std::string test(str8(utils::Config().getLdapPasswd()));
+  std::string test2(test.c_str());
   // BerValue doesn't take a const char *
-  credentials.bv_val = const_cast<char*>(str8(utils::Config().getLdapPasswd()).c_str());
+  credentials.bv_val = const_cast<char*>(test.c_str());
   credentials.bv_len = strlen(str8(utils::Config().getLdapPasswd()).c_str());
   
   BerValue * serverCred;
