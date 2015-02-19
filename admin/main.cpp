@@ -45,6 +45,9 @@ int main(int argc, char ** argv) {
   
   y::utils::Config().load();
   
+  y::Smartschool();
+  return 0;
+  
   wstring command(strW(argv[1]));
 
   if(command.compare(L"password") == 0) {

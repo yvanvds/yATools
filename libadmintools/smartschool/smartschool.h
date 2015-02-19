@@ -12,6 +12,8 @@
 
 #include "utils/container.h"
 #include "ldap/account.h"
+#include "data/database.h"
+#include "data/sqlserver.h"
 
 namespace y {
   class smartschool {
@@ -30,8 +32,16 @@ namespace y {
   
    void saveUser(y::ldap::account & account);
    
+   // for maintenance
+   void getErrorCodes();
+   
   private:
     V3BindingProxy service;
+    
+    // local database
+    const std::wstring SS_ERRORS = L"smartschool_errors";
+    std::unique_ptr<y::data::server> server;
+    std::unique_ptr<y::data::database> db;
   };
   
   smartschool & Smartschool();
