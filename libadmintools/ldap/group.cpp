@@ -12,8 +12,8 @@
 #include <assert.h>
 
 y::ldap::group::group() 
-  : _dn(DN("")), 
-    _cn(CN("")), 
+  : _dn(DN(L"")), 
+    _cn(CN(L"")), 
     _new(true), 
     _editable(true),
     _flaggedForCommit(false),
@@ -30,12 +30,12 @@ bool y::ldap::group::load(const DN& id) {
 
 bool y::ldap::group::load(const CN& id) {
   dataset d;
-  std::string filter;
-  filter = "cn="; filter.append(id());
+  std::wstring filter;
+  filter = L"cn="; filter.append(id().c_str());
   
-  if(!editable() && d.create(filter, "ou=mailGroups")) {
+  if(!editable() && d.create(filter, L"ou=mailGroups")) {
     load(d.get(0));
-  } else if(editable() && d.create(filter, "ou=editableMailGroups")) {
+  } else if(editable() && d.create(filter, L"ou=editableMailGroups")) {
     load(d.get(0));
   } else {
     _cn(id);
@@ -45,32 +45,32 @@ bool y::ldap::group::load(const CN& id) {
 }
 
 bool y::ldap::group::load(const data& d) {
-  _dn(DN(d.getValue("DN")), true);
-  _cn(CN(d.getValue("cn")), true);
+  _dn(DN(d.getValue(L"DN")), true);
+  _cn(CN(d.getValue(L"cn")), true);
   
-  if(d.elms("owner")) {
+  if(d.elms(L"owner")) {
     _editable = false;
-    for(int i = 0; i < d.elms("owner"); i++) {
-      std::string & owner = _owners.New();
-      owner = d.getValue("owner", i);
+    for(int i = 0; i < d.elms(L"owner"); i++) {
+      std::wstring & owner = _owners.New();
+      owner = d.getValue(L"owner", i);
       _ownersInLDAP.New() = owner;
     }
-    for(int i = 0; i < d.elms("member"); i++) {
-      std::string & member = _members.New();
-      member = d.getValue("member", i);
+    for(int i = 0; i < d.elms(L"member"); i++) {
+      std::wstring & member = _members.New();
+      member = d.getValue(L"member", i);
       _membersInLDAP.New() = member;
     }
     
   } else {
     _editable = true;
-    for(int i = 0; i < d.elms("mail"); i++) {
-      std::string & owner = _owners.New();
-      owner = d.getValue("mail", i);
+    for(int i = 0; i < d.elms(L"mail"); i++) {
+      std::wstring & owner = _owners.New();
+      owner = d.getValue(L"mail", i);
       _ownersInLDAP.New() = owner;
     }
-    for(int i = 0; i < d.elms("rfc822MailMember"); i++) {
-      std::string & member = _members.New();
-      member = d.getValue("rfc822MailMember", i);
+    for(int i = 0; i < d.elms(L"rfc822MailMember"); i++) {
+      std::wstring & member = _members.New();
+      member = d.getValue(L"rfc822MailMember", i);
       _membersInLDAP.New() = member;
     }
   }
@@ -92,12 +92,12 @@ const y::ldap::CN & y::ldap::group::cn() {
   return _cn();
 }
 
-container<std::string> & y::ldap::group::owners() {
+container<std::wstring> & y::ldap::group::owners() {
   assert(!_flaggedForDelete);
   return _owners;
 }
 
-container<std::string> & y::ldap::group::members() {
+container<std::wstring> & y::ldap::group::members() {
   assert(!_flaggedForDelete);
   return _members;
 }
@@ -159,57 +159,57 @@ bool y::ldap::group::saveNew() {
   // add owner if not present
   if(!_editable && !_owners.elms()) {
     // TODO generalize this
-    _owners.New() = "uid=inge,ou=personeel,ou=People,dc=sanctamaria-aarschot,dc=be";
+    _owners.New() = L"uid=inge,ou=personeel,ou=People,dc=sanctamaria-aarschot,dc=be";
   }
 
   // create group first
-  std::string dn;
-  dn = "cn="; dn += _cn()();
+  std::wstring dn;
+  dn = L"cn="; dn += _cn()();
   if(_editable) {
-    dn += ",ou=editableMailGroups,";
+    dn += L",ou=editableMailGroups,";
   } else {
-    dn += ",ou=mailGroups,";
+    dn += L",ou=mailGroups,";
   }
   dn += utils::Config().getLdapBaseDN();
   _dn(DN(dn), true);
 
   data & d = values.New(NEW);
-  d.add("type", "objectClass");
-  d.add("values", "top");
-  d.add("values", "extensibleObject");
+  d.add(L"type", L"objectClass");
+  d.add(L"values", L"top");
+  d.add(L"values", L"extensibleObject");
   if(_editable) {
-    d.add("values", "nisMailAlias");
+    d.add(L"values", L"nisMailAlias");
   } else {
-    d.add("values", "groupOfNames");
+    d.add(L"values", L"groupOfNames");
   }
   
   data & cn = values.New(NEW);
-  cn.add("type", "cn");
-  cn.add("values", _cn()());
+  cn.add(L"type", L"cn");
+  cn.add(L"values", _cn()());
 
   data & own = values.New(NEW);
   if(_editable) {
-    own.add("type", "mail");
+    own.add(L"type", L"mail");
   } else {
-    own.add("type", "owner");
+    own.add(L"type", L"owner");
   }
   for(int i = 0; i < _owners.elms(); i++) {
-    own.add("values", _owners[i]);
+    own.add(L"values", _owners[i]);
   }
   
   // if editable, also add as member
   data & mbs = values.New(NEW);
   if(_editable) {
-    mbs.add("type", "rfc822MailMember");
+    mbs.add(L"type", L"rfc822MailMember");
     for(int i = 0; i < _owners.elms(); i++) {
-      mbs.add("values", _owners[i]);
+      mbs.add(L"values", _owners[i]);
     }
   } else {
-    mbs.add("type", "member");
+    mbs.add(L"type", L"member");
   }
   
   for(int i = 0; i < _members.elms(); i++) {
-    mbs.add("values", _members[i]);
+    mbs.add(L"values", _members[i]);
   }
 
   if(values.elms()) {
@@ -226,7 +226,7 @@ bool y::ldap::group::saveUpdate() {
   data * ownerDelete = nullptr;
   // remove owners if needed 
   for(int i = 0; i < _ownersInLDAP.elms(); i++){
-    std::string owner = _ownersInLDAP[i];
+    std::wstring owner = _ownersInLDAP[i];
     bool found = false;
     for(int j = 0; j < _owners.elms(); j++) {
       if(owner.compare(_owners[j]) == 0) found = true;
@@ -235,19 +235,19 @@ bool y::ldap::group::saveUpdate() {
       if(!ownerDelete) {
         ownerDelete = &values.New(DELETE);
         if(_editable) {
-          ownerDelete->add("type", "mail");
+          ownerDelete->add(L"type", L"mail");
         } else {
-          ownerDelete->add("type", "owner");
+          ownerDelete->add(L"type", L"owner");
         }
       }
-      ownerDelete->add("values", owner);     
+      ownerDelete->add(L"values", owner);     
     }
   }
   
   // remove members if needed
   data * memberDelete = nullptr;
   for(int i = 0; i < _membersInLDAP.elms(); i++){
-    std::string member = _membersInLDAP[i];
+    std::wstring member = _membersInLDAP[i];
     bool found = false;
     for(int j = 0; j < _members.elms(); j++) {
       if(member.compare(_members[j]) == 0) found = true;
@@ -256,19 +256,19 @@ bool y::ldap::group::saveUpdate() {
       if(!memberDelete) {
         memberDelete = &values.New(DELETE);
         if(_editable) {
-          memberDelete->add("type", "rfc822MailMember");
+          memberDelete->add(L"type", L"rfc822MailMember");
         } else {
-          memberDelete->add("type", "member");
+          memberDelete->add(L"type", L"member");
         }
       }
-      memberDelete->add("values", member);     
+      memberDelete->add(L"values", member);     
     }
   }
   
   // add owners if needed
   data * ownerAdd = nullptr;
   for(int i = 0; i < _owners.elms(); i++){
-    std::string owner = _owners[i];
+    std::wstring owner = _owners[i];
     bool found = false;
     for(int j = 0; j < _ownersInLDAP.elms(); j++) {
       if(owner.compare(_ownersInLDAP[j]) == 0) found = true;
@@ -277,19 +277,19 @@ bool y::ldap::group::saveUpdate() {
       if(!ownerAdd) {
         ownerAdd = &values.New(ADD);
         if(_editable) {
-          ownerAdd->add("type", "mail");
+          ownerAdd->add(L"type", L"mail");
         } else {
-          ownerAdd->add("type", "owner");
+          ownerAdd->add(L"type", L"owner");
         }
       }
-      ownerAdd->add("values", owner);     
+      ownerAdd->add(L"values", owner);     
     }
   }  
   
   // add members if needed
   data * memberAdd = nullptr;
   for(int i = 0; i < _members.elms(); i++){
-    std::string member = _members[i];
+    std::wstring member = _members[i];
     bool found = false;
     for(int j = 0; j < _membersInLDAP.elms(); j++) {
       if(member.compare(_membersInLDAP[j]) == 0) found = true;
@@ -298,12 +298,12 @@ bool y::ldap::group::saveUpdate() {
       if(!memberAdd) {
         memberAdd = &values.New(ADD);
         if(_editable) {
-          memberAdd->add("type", "rfc822MailMember");
+          memberAdd->add(L"type", L"rfc822MailMember");
         } else {
-          memberAdd->add("type", "member");
+          memberAdd->add(L"type", L"member");
         }
       }
-      memberAdd->add("values", member);     
+      memberAdd->add(L"values", member);     
     }
   }
   

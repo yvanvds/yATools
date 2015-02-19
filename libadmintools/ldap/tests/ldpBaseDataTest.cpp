@@ -18,9 +18,9 @@ ldpBaseDataTest::~ldpBaseDataTest() {
 }
 
 void ldpBaseDataTest::setUp() {
-  _data.add("name", "myname");
-  _data.add("street", "mystreet");
-  _data.add("street", "secondstreet");
+  _data.add(L"name", L"myname");
+  _data.add(L"street", L"mystreet");
+  _data.add(L"street", L"secondstreet");
   _data.setType(y::ldap::data_type::ADD);
 }
 
@@ -42,22 +42,22 @@ void ldpBaseDataTest::testGetType() {
 }
 
 void ldpBaseDataTest::testGetValue() {
-  if (_data.getValue("name", 0).compare("myname") != 0) {
+  if (_data.getValue(L"name", 0).compare(L"myname") != 0) {
     CPPUNIT_ASSERT(false);
   }
-  if (_data.getValue("street", 0).compare("mystreet") != 0) {
+  if (_data.getValue(L"street", 0).compare(L"mystreet") != 0) {
     CPPUNIT_ASSERT(false);
   }
-  if (_data.getValue("street", 1).compare("secondstreet") != 0) {
+  if (_data.getValue(L"street", 1).compare(L"secondstreet") != 0) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void ldpBaseDataTest::testNameCount() {
-  if (_data.elms("name") != 1) {
+  if (_data.elms(L"name") != 1) {
     CPPUNIT_ASSERT(false);
   }
-  if (_data.elms("street") != 2) {
+  if (_data.elms(L"street") != 2) {
     CPPUNIT_ASSERT(false);
   }
 }

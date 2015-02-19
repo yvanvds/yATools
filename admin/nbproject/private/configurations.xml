@@ -17,7 +17,8 @@
         </gdb_signals>
         <gdb_options>
           <DebugOptions>
-            <option name="debug_command" value="&quot;${OUTPUT_PATH}&quot; add my test"/>
+            <option name="debug_command"
+                    value="&quot;${OUTPUT_PATH}&quot; user add Tädeus Misfit 19809403 5IT"/>
           </DebugOptions>
         </gdb_options>
         <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
@@ -30,8 +31,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" password yvanym konijn</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" find yvan vander</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" </runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" user add Tädeus Misfit 19809403 5IT</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" find yvan vander</runcommand>
+        <runcommand>"${OUTPUT_PATH}" user add Tädeus Misfit 19809403 5IT</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

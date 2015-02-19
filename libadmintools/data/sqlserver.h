@@ -20,9 +20,9 @@ namespace y {
     public:
       server();
  
-      bool drop(const std::string & dbName);
-      bool create(const std::string & dbName);
-      bool hasDatabase(const std::string & dbName);
+      bool drop       (const std::wstring & dbName);
+      bool create     (const std::wstring & dbName);
+      bool hasDatabase(const std::wstring & dbName);
       
     private:
       // the caller is responsible for deleting this, best to use a managed ptr

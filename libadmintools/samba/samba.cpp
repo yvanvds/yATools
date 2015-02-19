@@ -13,6 +13,7 @@
 #include <chrono>
 #include <ctime>
 #include <iomanip>
+#include "utils/convert.h"
 
 std::string groupName(const y::ldap::GID_NUMBER & id) {
   if(id() ==   525) return "personeel";
@@ -28,11 +29,11 @@ std::string groupName(const y::ldap::GID_NUMBER & id) {
   return result;
 }
 
-void y::samba::changePassword(const std::string & user, const std::string & password) {
+void y::samba::changePassword(const std::wstring & user, const std::wstring & password) {
   std::string command = "sudo /usr/sbin/smbldap-passwd -p ";
-  command.append(user);
+  command.append(str8(user));
   command.append(" ");
-  command.append(password);
+  command.append(str8(password));
   /*if(!y::sys::Exec(command, y::sys::stdOut)) {
     assert(false);
   }*/
@@ -45,12 +46,12 @@ void y::samba::addUser(const ldap::account & account) {
   command.append(" -m -d /home/");
   command.append(groupName(account.groupID()));
   command.append("/");
-  command.append(account.uid()());
+  command.append(str8(account.uid()()));
   command.append(" -o ou=");
   command.append(groupName(account.groupID()));
   command.append(" -C '\\\\ATSCHOOL\\homes' -D 'H:' -E ' STARTUP.BAT' -F");
   command.append(" '\\\\ATSCHOOL\\profiles\\Default' -H '[U]' ");
-  command.append(account.uid()());
+  command.append(str8(account.uid()()));
   /*if(!y::sys::Exec(command, y::sys::stdOut)) {
     assert(false);
   }*/
@@ -59,7 +60,7 @@ void y::samba::addUser(const ldap::account & account) {
 
 void y::samba::delUser(const ldap::account& account) {
   std::string command = "/usr/sbin/smbldap-userdel -r ";
-  command.append(account.uid()());
+  command.append(str8(account.uid()()));
   if(!y::sys::Exec(command, y::sys::stdOut)) {
     assert(false);
   }

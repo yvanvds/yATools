@@ -16,16 +16,16 @@ namespace y {
   namespace ldap {
     class DN {
     public:
-      explicit DN(const std::string & val) : val(val) {}
+      explicit DN(const std::wstring & val) : val(val) {}
 
       // operators
-      const std::string & operator()() const; // get value
+      const std::wstring & operator()() const; // get value
       DN & operator=(const DN &ref);
       bool operator==(const DN &ref) const;
       bool operator!=(const DN &ref) const;
 
     private:
-      std::string val;
+      std::wstring val;
     };
 
     class UID_NUMBER {
@@ -49,74 +49,74 @@ namespace y {
 
     class UID {
     public:
-      explicit UID(const std::string & val) : val(val) {}
+      explicit UID(const std::wstring & val) : val(val) {}
 
       // operators
-      const std::string & operator()() const; // get value
+      const std::wstring & operator()() const; // get value
       UID & operator=(const UID &ref);
       bool operator==(const UID &ref) const;
       bool operator!=(const UID &ref) const;
 
     private:
-      std::string val;
+      std::wstring val;
     };
 
     class CN {
     public:
-      explicit CN(const std::string & val) : val(val) {}
+      explicit CN(const std::wstring & val) : val(val) {}
 
       // operators
-      const std::string & operator()() const; // get value
+      const std::wstring & operator()() const; // get value
       CN & operator=(const CN &ref);
       bool operator==(const CN &ref) const;
       bool operator!=(const CN &ref) const;
 
     private:
-      std::string val;
+      std::wstring val;
     };
 
     class SN {
     public:
-      explicit SN(const std::string & val) : val(val) {}
+      explicit SN(const std::wstring & val) : val(val) {}
 
       // operators
-      const std::string & operator()() const; // get value
+      const std::wstring & operator()() const; // get value
       SN & operator=(const SN &ref);
       bool operator==(const SN &ref) const;
       bool operator!=(const SN &ref) const;
 
     private:
-      std::string val;
+      std::wstring val;
     };
 
     class FULL_NAME {
     public:
-      explicit FULL_NAME(const std::string & val) : val(val) {}
+      explicit FULL_NAME(const std::wstring & val) : val(val) {}
       explicit FULL_NAME(const CN & cn, const SN & sn);
 
       // operators
-      const std::string & operator()() const; // get value
+      const std::wstring & operator()() const; // get value
       FULL_NAME & operator=(const FULL_NAME &ref);
       bool operator==(const FULL_NAME &ref) const;
       bool operator!=(const FULL_NAME &ref) const;
 
     private:
-      std::string val;
+      std::wstring val;
     };
 
     // used for class, like 1D, extern, personeel...
     class GID {
     public:
-      explicit GID(const std::string & val) : val(val) {}
+      explicit GID(const std::wstring & val) : val(val) {}
 
       // operators
-      const std::string & operator()() const; // get value
+      const std::wstring & operator()() const; // get value
       GID & operator=(const GID &ref);
       bool operator==(const GID &ref) const;
       bool operator!=(const GID &ref) const;
 
     private:
-      std::string val;
+      std::wstring val;
     };
 
     class GID_NUMBER {
@@ -149,30 +149,30 @@ namespace y {
 
     class MAIL {
     public:
-      explicit MAIL(const std::string & val) : val(val) {}
+      explicit MAIL(const std::wstring & val) : val(val) {}
 
       // operators
-      const std::string & operator()() const; // get value
+      const std::wstring & operator()() const; // get value
       MAIL & operator=(const MAIL &ref);
       bool operator==(const MAIL &ref) const;
       bool operator!=(const MAIL &ref) const;
 
     private:
-      std::string val;
+      std::wstring val;
     };
 
     class PASSWORD {
     public:
-      explicit PASSWORD(const std::string & val) : val(val) {}
+      explicit PASSWORD(const std::wstring & val) : val(val) {}
 
       // operators
-      const std::string & operator()() const; // get value
+      const std::wstring & operator()() const; // get value
       PASSWORD & operator=(const PASSWORD &ref);
       bool operator==(const PASSWORD &ref) const;
       bool operator!=(const PASSWORD &ref) const;
 
     private:
-      std::string val;
+      std::wstring val;
     };
 
     class DAY {
@@ -219,12 +219,12 @@ namespace y {
 
     class DATE {
     public: 
-      explicit DATE(const std::string & ldapDate);
+      explicit DATE(const std::wstring & ldapDate);
       explicit DATE(const DAY & day, const MONTH & month, const YEAR & year);
 
       // operators
       int operator()() const; // get value
-      std::string asString() const;
+      std::wstring asString() const;
       int getDay() const;
       int getMonth() const;
       int getYear() const;
@@ -240,16 +240,16 @@ namespace y {
 
     class HOMEDIR {
     public:
-      explicit HOMEDIR(const std::string & val) : val(val) {}
+      explicit HOMEDIR(const std::wstring & val) : val(val) {}
 
       // operators
-      const std::string & operator()() const; // get value
+      const std::wstring & operator()() const; // get value
       HOMEDIR & operator=(const HOMEDIR &ref);
       bool operator==(const HOMEDIR &ref) const;
       bool operator!=(const HOMEDIR &ref) const;
 
     private:
-      std::string val;
+      std::wstring val;
     };
   }
 }

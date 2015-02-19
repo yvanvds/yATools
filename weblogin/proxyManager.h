@@ -19,16 +19,16 @@
 class room {
 public:
   
-  room(const std::string & name);
+  room(const std::wstring & name);
   void create(Wt::WTableRow * row);
   void buttonClicked(Wt::WRadioButton * selected);
   
-  void setStatus(y::utils::proxy::STATUS status);
+  void setStatus(y::utils::proxy::STATUS status, bool silent = false);
   Wt::WButtonGroup * getGroup();
   
 private:
   int ID;
-  std::string name;
+  std::wstring name;
   Wt::WText * label;
   Wt::WButtonGroup * bgroup;
   Wt::WRadioButton * button1;

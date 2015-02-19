@@ -9,8 +9,9 @@
 #include "utils/log.h"
 #include <sstream>
 #include <stdexcept>
+#include "utils/convert.h"
 
-const std::string & y::ldap::DN::operator ()() const {
+const std::wstring & y::ldap::DN::operator ()() const {
   return val;
 }
 
@@ -39,7 +40,7 @@ bool y::ldap::UID_NUMBER::operator !=(const UID_NUMBER& ref) const{
   return val != ref.val;
 }
 
-const std::string & y::ldap::UID::operator ()() const {
+const std::wstring & y::ldap::UID::operator ()() const {
   return val;
 }
 
@@ -56,7 +57,7 @@ bool y::ldap::UID::operator !=(const UID& ref) const{
   return val.compare(ref.val) != 0;
 }
 
-const std::string & y::ldap::CN::operator ()() const {
+const std::wstring & y::ldap::CN::operator ()() const {
   return val;
 }
 
@@ -73,7 +74,7 @@ bool y::ldap::CN::operator !=(const CN& ref) const{
   return val.compare(ref.val) != 0;
 }
 
-const std::string & y::ldap::SN::operator ()() const {
+const std::wstring & y::ldap::SN::operator ()() const {
   return val;
 }
 
@@ -92,11 +93,11 @@ bool y::ldap::SN::operator !=(const SN& ref) const{
 
 y::ldap::FULL_NAME::FULL_NAME(const CN& cn, const SN& sn) {
   val = cn();
-  val += " ";
+  val += L" ";
   val += sn();
 }
 
-const std::string & y::ldap::FULL_NAME::operator ()() const {
+const std::wstring & y::ldap::FULL_NAME::operator ()() const {
   return val;
 }
 
@@ -113,7 +114,7 @@ bool y::ldap::FULL_NAME::operator !=(const FULL_NAME& ref) const{
   return val.compare(ref.val) != 0;
 }
 
-const std::string & y::ldap::GID::operator ()() const {
+const std::wstring & y::ldap::GID::operator ()() const {
   return val;
 }
 
@@ -164,7 +165,7 @@ bool y::ldap::WISA_ID::operator!=(const WISA_ID &ref) const {
   return val != ref.val;
 }
 
-const std::string & y::ldap::MAIL::operator ()() const {
+const std::wstring & y::ldap::MAIL::operator ()() const {
   return val;
 }
 
@@ -181,7 +182,7 @@ bool y::ldap::MAIL::operator !=(const MAIL & ref) const{
   return val.compare(ref.val) != 0;
 }
 
-const std::string & y::ldap::PASSWORD::operator ()() const {
+const std::wstring & y::ldap::PASSWORD::operator ()() const {
   return val;
 }
 
@@ -261,12 +262,12 @@ bool y::ldap::YEAR::operator!=(const YEAR &ref) const {
 
 
 
-y::ldap::DATE::DATE(const std::string & ldapDate) : day(1), month(1), year(1) {
+y::ldap::DATE::DATE(const std::wstring & ldapDate) : day(1), month(1), year(1) {
   int i;
   try {
-    i = std::stoi(ldapDate);
+    i = std::stoi(str8(ldapDate));
   } catch(const std::invalid_argument &e) {
-    std::string message("Invalid ldap::DATE conversion: ");
+    std::wstring message(L"Invalid ldap::DATE conversion: ");
     message += ldapDate;
     utils::Log().add(message);
     return;
@@ -290,8 +291,8 @@ int y::ldap::DATE::operator ()() const {
   return result;
 }
 
-std::string y::ldap::DATE::asString() const {
-  std::ostringstream result;
+std::wstring y::ldap::DATE::asString() const {
+  std::wstringstream result;
   result << day();
   switch(month()) {
     case 1: result << " januari "; break;
@@ -340,7 +341,7 @@ bool y::ldap::DATE::operator !=(const DATE& ref) const {
   return (day != ref.day || month != ref.month || year != ref.year);
 }
 
-const std::string & y::ldap::HOMEDIR::operator ()() const {
+const std::wstring & y::ldap::HOMEDIR::operator ()() const {
   return val;
 }
 

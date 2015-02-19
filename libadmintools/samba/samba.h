@@ -18,7 +18,7 @@ namespace y {
     // Also, the smbldap-passwd script must be modified
     // to allow changing a password from the command line.
     
-    void changePassword(const std::string & user, const std::string & password);
+    void changePassword(const std::wstring & user, const std::wstring & password);
     void addUser       (const ldap::account & account);
     void delUser       (const ldap::account & account);
   }

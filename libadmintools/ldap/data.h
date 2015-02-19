@@ -33,15 +33,15 @@ namespace y {
 
       void setType(data_type type);
       data_type getType();
-      void add(const std::string & name, const std::string & value);
+      void add(const std::wstring & name, const std::wstring & value);
       int elms();
-      int elms(const std::string & name) const;
-      const std::string & getValue(const std::string & name, int index = 0) const;
+      int elms(const std::wstring & name) const;
+      const std::wstring & getValue(const std::wstring & name, int index = 0) const;
 
     private:
       data_type type;
-      std::multimap<std::string, std::string> attributes;
-      std::string dummy; // to return when asked for non existant value
+      std::multimap<std::wstring, std::wstring> attributes;
+      std::wstring dummy; // to return when asked for non existant value
       
       friend class server;
     };

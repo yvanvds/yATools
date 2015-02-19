@@ -17,70 +17,70 @@ y::data::field::field() : type(UNKNOWN) {
   _primary = false;
 }
 
-y::data::field::field(const std::string & name, bool value) {
+y::data::field::field(const std::wstring & name, bool value) {
   field();
   fieldName = name;
   storage.t_bool = value;
   type = BOOL;
 }
 
-y::data::field::field(const std::string & name, char value) {
+y::data::field::field(const std::wstring & name, char value) {
   field();
   fieldName = name;
   storage.t_char = value;
   type = CHAR;
 }
 
-y::data::field::field(const std::string & name, short value) {
+y::data::field::field(const std::wstring & name, short value) {
   field();
   fieldName = name;
   storage.t_short = value;
   type = SHORT;
 }
 
-y::data::field::field(const std::string & name, int value) {
+y::data::field::field(const std::wstring & name, int value) {
   field();
   fieldName = name;
   storage.t_int = value;
   type = INT;
 }
 
-y::data::field::field(const std::string & name, long value) {
+y::data::field::field(const std::wstring & name, long value) {
   field();
   fieldName = name;
   storage.t_long = value;
   type = LONG;
 }
 
-y::data::field::field(const std::string & name, float value) {
+y::data::field::field(const std::wstring & name, float value) {
   field();
   fieldName = name;
   storage.t_float = value;
   type = FLOAT;
 }
 
-y::data::field::field(const std::string & name, double value) {
+y::data::field::field(const std::wstring & name, double value) {
   field();
   fieldName = name;
   storage.t_double = value;
   type = DOUBLE;
 }
 
-y::data::field::field(const std::string & name, const std::string & value) {
+y::data::field::field(const std::wstring & name, const std::string & value) {
   field();
   fieldName = name;
   t_str8 = value;
   type = STRING8;
 }
 
-y::data::field::field(const std::string & name, const std::u16string & value) {
+y::data::field::field(const std::wstring & name, const std::wstring & value) {
   field();
   fieldName = name;
   t_str16 = value;
   type = STRING;
 }
 
-y::data::field::field(const std::string & name, const dateTime & value) {
+y::data::field::field(const std::wstring & name, const dateTime & value) {
   field();
   fieldName = name;
   date = value;
@@ -123,7 +123,7 @@ const std::string & y::data::field::asString8() {
   return t_str8;
 }
 
-const std::u16string & y::data::field::asString() {
+const std::wstring & y::data::field::asString() {
   return t_str16;
 }
 
@@ -131,7 +131,7 @@ const y::data::dateTime & y::data::field::asDate() {
   return date;
 }
 
-const std::string & y::data::field::name() {
+const std::wstring & y::data::field::name() {
   return fieldName;
 }
 
@@ -183,7 +183,7 @@ y::data::field & y::data::field::setString8(const std::string & value) {
   return *this;
 }
 
-y::data::field & y::data::field::setString(const std::u16string & value) {
+y::data::field & y::data::field::setString(const std::wstring & value) {
   t_str16 = value;
   type = STRING;
   return *this;
@@ -195,7 +195,7 @@ y::data::field & y::data::field::setDate(const dateTime & value) {
   return *this;
 }
 
-y::data::field & y::data::field::name(const std::string& fieldName) {
+y::data::field & y::data::field::name(const std::wstring& fieldName) {
   this->fieldName = fieldName;
   return *this;
 }
@@ -238,24 +238,24 @@ bool y::data::field::primaryKey() {
 
 void y::data::field::print() {
   if(getType() == BOOL) {
-    std::cout << fieldName << ": " << asBool() << std::endl;
+    std::wcout << fieldName << L": " << asBool() << std::endl;
   } else if(getType() == CHAR) {
-    std::cout << fieldName << ": " << asChar() << std::endl;
+    std::wcout << fieldName << L": " << asChar() << std::endl;
   } else if(getType() == SHORT) {
-    std::cout << fieldName << ": " << asShort() << std::endl;
+    std::wcout << fieldName << L": " << asShort() << std::endl;
   } else if(getType() == INT) {
-    std::cout << fieldName << ": " << asInt() << std::endl;
+    std::wcout << fieldName << L": " << asInt() << std::endl;
   } else if(getType() == LONG) {
-    std::cout << fieldName << ": " << asLong() << std::endl;
+    std::wcout << fieldName << L": " << asLong() << std::endl;
   } else if(getType() == FLOAT) {
-    std::cout << fieldName << ": " << asFloat() << std::endl;
+    std::wcout << fieldName << L": " << asFloat() << std::endl;
   } else if(getType() == DOUBLE) {
-    std::cout << fieldName << ": " << asDouble() << std::endl;
+    std::wcout << fieldName << L": " << asDouble() << std::endl;
   } else if(getType() == STRING8) {
-    std::cout << fieldName << ": " << asString8() << std::endl;
+    std::wcout << fieldName << L": " << strW(asString8()) << std::endl;
   } else if(getType() == STRING) {
-    std::cout << fieldName << ": " << str8(asString()) << std::endl;
+    std::wcout << fieldName << L": " << asString() << std::endl;
   } else if(getType() == DATE_TIME) {
-    std::cout << fieldName << ": " << date.dbFormat() << std::endl;
+    std::wcout << fieldName << L": " << date.dbFormat() << std::endl;
   }
 }

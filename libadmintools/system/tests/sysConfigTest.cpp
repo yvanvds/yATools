@@ -31,7 +31,7 @@ sysConfigTest::sysConfigTest() {
                    "uid=user,dc=domain,dc=com",
                    "--mysqlRootPassword",
                    "secret3",
-                   NULL};
+                   nullptr};
   int argc = sizeof(argv) / sizeof(char*) - 1;
   y::utils::Config().load(argc, argv);
 }
@@ -48,64 +48,64 @@ void sysConfigTest::tearDown() {
 
 
 void sysConfigTest::testGetLdapAdminDN() {
-  const std::string& result = y::utils::Config().getLdapAdminDN();
-  if (result.compare("cn=admin,dc=domain,dc=com") != 0) {
+  const std::wstring& result = y::utils::Config().getLdapAdminDN();
+  if (result.compare(L"cn=admin,dc=domain,dc=com") != 0) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void sysConfigTest::testGetLdapBaseDN() {
-  const std::string& result = y::utils::Config().getLdapBaseDN();
-  if (result.compare("dc=domain,dc=com") != 0) {
+  const std::wstring& result = y::utils::Config().getLdapBaseDN();
+  if (result.compare(L"dc=domain,dc=com") != 0) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void sysConfigTest::testGetLdapHost() {
-  const std::string& result = y::utils::Config().getLdapHost();
-  if (result.compare("ldap://localhost") != 0) {
+  const std::wstring& result = y::utils::Config().getLdapHost();
+  if (result.compare(L"ldap://localhost") != 0) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void sysConfigTest::testGetLdapPasswd() {
-  const std::string& result = y::utils::Config().getLdapPasswd();
-  if (result.compare("secret") != 0) {
+  const std::wstring& result = y::utils::Config().getLdapPasswd();
+  if (result.compare(L"secret") != 0) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void sysConfigTest::testGetLdapTestUID() {
-  const std::string& result = y::utils::Config().getLdapTestUID();
-  if (result.compare("testname") != 0) {
+  const std::wstring& result = y::utils::Config().getLdapTestUID();
+  if (result.compare(L"testname") != 0) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void sysConfigTest::testGetLdapTestPassword() {
-  const std::string& result = y::utils::Config().getLdapTestPassword();
-  if (result.compare("secret2") != 0) {
+  const std::wstring& result = y::utils::Config().getLdapTestPassword();
+  if (result.compare(L"secret2") != 0) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void sysConfigTest::testGetLdapTestUidNumber() {
-  const std::string& result = y::utils::Config().getLdapTestUidNumber();
-  if (result.compare("1972") != 0) {
+  const std::wstring& result = y::utils::Config().getLdapTestUidNumber();
+  if (result.compare(L"1972") != 0) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void sysConfigTest::testGetLdapTestDN() {
-  const std::string& result = y::utils::Config().getLdapTestDN();
-  if (result.compare("uid=user,dc=domain,dc=com") != 0) {
+  const std::wstring& result = y::utils::Config().getLdapTestDN();
+  if (result.compare(L"uid=user,dc=domain,dc=com") != 0) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void sysConfigTest::testGetMysqlPassword() {
-  const std::string& result = y::utils::Config().getMysqlPassword();
-  if (result.compare("secret3") != 0) {
+  const std::wstring& result = y::utils::Config().getMysqlPassword();
+  if (result.compare(L"secret3") != 0) {
     CPPUNIT_ASSERT(false);
   }
 }

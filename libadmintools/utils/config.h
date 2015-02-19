@@ -17,17 +17,17 @@ namespace y {
       void load(); // use config file only, no command line arguments
       void load(int argc, char** argv);
       
-      const std::string & getLdapPasswd       () const;
-      const std::string & getLdapHost         () const;
-      const std::string & getLdapBaseDN       () const;
-      const std::string & getLdapAdminDN      () const;
-      const std::string & getLdapTestUID      () const;
-      const std::string & getLdapTestPassword () const;
-      const std::string & getLdapTestUidNumber() const;
-      const std::string & getLdapTestDN       () const;
-      const std::string & getMysqlPassword    () const;
-      const std::string & getDomain           () const;
-      const std::string & getSSPw             () const;
+      const std::wstring & getLdapPasswd       () const;
+      const std::wstring & getLdapHost         () const;
+      const std::wstring & getLdapBaseDN       () const;
+      const std::wstring & getLdapAdminDN      () const;
+      const std::wstring & getLdapTestUID      () const;
+      const std::wstring & getLdapTestPassword () const;
+      const std::wstring & getLdapTestUidNumber() const;
+      const std::wstring & getLdapTestDN       () const;
+      const std::wstring & getMysqlPassword    () const;
+      const std::wstring & getDomain           () const;
+      const std::wstring & getSSPw             () const;
 
     private:
           
@@ -41,17 +41,17 @@ namespace y {
       
       std::string configFile;
       
-      std::string ldapPasswd;
-      std::string ldapAdminDN;
-      std::string ldapHost;
-      std::string ldapBaseDN;
-      std::string ldapTestUID;
-      std::string ldapTestPassword;
-      std::string ldapTestUidNumber;
-      std::string ldapTestDN;
-      std::string mysqlPassword;
-      std::string domain;
-      std::string smartschoolPw;
+      std::wstring ldapPasswd;
+      std::wstring ldapAdminDN;
+      std::wstring ldapHost;
+      std::wstring ldapBaseDN;
+      std::wstring ldapTestUID;
+      std::wstring ldapTestPassword;
+      std::wstring ldapTestUidNumber;
+      std::wstring ldapTestDN;
+      std::wstring mysqlPassword;
+      std::wstring domain;
+      std::wstring smartschoolPw;
     };
     
     config & Config();

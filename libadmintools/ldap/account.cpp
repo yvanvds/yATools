@@ -12,21 +12,22 @@
 #include "utils/sha1.h"
 #include "utils/config.h"
 #include "utils/log.h"
+#include "utils/convert.h"
 #include "smartschool/smartschool.h"
 
 y::ldap::account::account() : 
   _uidNumber(UID_NUMBER(0)),
-  _uid(UID("")),
-  _dn(DN("")),
-  _cn(CN("")),
-  _sn(SN("")),
-  _fullName(FULL_NAME("")),
-  _homeDir(HOMEDIR("")),
+  _uid(UID(L"")),
+  _dn(DN(L"")),
+  _cn(CN(L"")),
+  _sn(SN(L"")),
+  _fullName(FULL_NAME(L"")),
+  _homeDir(HOMEDIR(L"")),
   _wisaID(WISA_ID(0)),
-  _mail(MAIL("")),
+  _mail(MAIL(L"")),
   _birthDay(DATE(DAY(1), MONTH(1), YEAR(1))),
-  _password(PASSWORD("")),
-  _group(GID("")),
+  _password(PASSWORD(L"")),
+  _group(GID(L"")),
   _groupID(GID_NUMBER(0)),
   _new(true),
   _hasKrbName(false),
@@ -41,7 +42,7 @@ bool y::ldap::account::load(const data& d) {
     try {
       _uidNumber(UID_NUMBER(std::stoi(d.getValue(TYPE_UID_NUMBER))), true);
     } catch(const std::invalid_argument &e) {
-      std::string message("Invalid ldap::UID_NUMBER conversion: ");
+      std::wstring message(L"Invalid ldap::UID_NUMBER conversion: ");
       message += d.getValue(TYPE_UID_NUMBER);
       utils::Log().add(message);
       return false;
@@ -65,7 +66,7 @@ bool y::ldap::account::load(const data& d) {
     try {
       _groupID(GID_NUMBER(std::stoi(d.getValue(TYPE_GID_NUMBER))), true);
     } catch(const std::invalid_argument &e) {
-      std::string message("Invalid ldap::GID_NUMBER conversion: ");
+      std::wstring message(L"Invalid ldap::GID_NUMBER conversion: ");
       message += d.getValue(TYPE_GID_NUMBER);
       utils::Log().add(message);
       return false;
@@ -79,7 +80,7 @@ bool y::ldap::account::load(const data& d) {
     _birthDay (DATE(d.getValue(TYPE_BIRTHDAY)), true);
     _hasBirthday = true;
   } else {
-    _birthDay(DATE("0"));
+    _birthDay(DATE(L"0"));
   }
   
   if(d.getValue(TYPE_WISA_ID).size()) {
@@ -87,7 +88,7 @@ bool y::ldap::account::load(const data& d) {
       _wisaID(WISA_ID(std::stoi(d.getValue(TYPE_WISA_ID))), true);
       _hasWisaID = true;
     } catch(const std::invalid_argument &e) {
-      std::string message("Invalid ldap::WISA_ID conversion: ");
+      std::wstring message(L"Invalid ldap::WISA_ID conversion: ");
       message += d.getValue(TYPE_WISA_ID);
       utils::Log().add(message);
       return false;
@@ -96,7 +97,7 @@ bool y::ldap::account::load(const data& d) {
     _wisaID(WISA_ID(0));
   }
 
-  if(d.getValue("krbName"    ).size()) _hasKrbName  = true;
+  if(d.getValue(L"krbName"   ).size()) _hasKrbName  = true;
   if(d.getValue(TYPE_GID     ).size()) _hasGroup    = true;
   if(d.getValue(TYPE_MAIL    ).size()) _hasMail     = true;
   _new = false;
@@ -105,10 +106,10 @@ bool y::ldap::account::load(const data& d) {
 
 bool y::ldap::account::load(const UID & id) {
   dataset d;
-  std::string filter(TYPE_UID);
-  filter += "="; filter.append(id());
+  std::wstring filter(TYPE_UID);
+  filter += L"="; filter.append(id());
   
-  if(d.create(filter, "ou=People")) {
+  if(d.create(filter, L"ou=People")) {
     load(d.get(0));
   }
   
@@ -117,8 +118,8 @@ bool y::ldap::account::load(const UID & id) {
 
 bool y::ldap::account::load(UID_NUMBER id) {
   dataset d;
-  std::string filter(TYPE_UID_NUMBER);
-  filter += "="; filter.append(std::to_string(id()));
+  std::wstring filter(TYPE_UID_NUMBER);
+  filter += L"="; filter.append(std::to_wstring(id()));
   
   if(d.create(filter)) {
     load(d.get(0));
@@ -143,105 +144,105 @@ bool y::ldap::account::save() {
   if(!_hasKrbName) {
     // add kerberos objectClass
     data & d = values.New(ADD);
-    d.add("type", "objectClass");
-    d.add("values", "kerberosSecurityObject");
+    d.add(L"type", L"objectClass");
+    d.add(L"values", L"kerberosSecurityObject");
     
     // add kerberos name (for short mail)
-    std::string krbName(_uid()());
-    krbName += "@";
+    std::wstring krbName(_uid()());
+    krbName += L"@";
     krbName += utils::Config().getDomain();
     data & d1 = values.New(ADD);
-    d1.add("type", "krbName");
-    d1.add("values", krbName);    
+    d1.add(L"type", L"krbName");
+    d1.add(L"values", krbName);    
   }
   
   if(_group.changed()) {
     if(!_hasGroup) {
       data & d = values.New(ADD);
-      d.add("type", TYPE_GID);
-      d.add("values", _group()());
+      d.add(L"type", TYPE_GID);
+      d.add(L"values", _group()());
     } else {
       data & d = values.New(MODIFY);
-      d.add("type", TYPE_GID);
-      d.add("values", _group()());
+      d.add(L"type", TYPE_GID);
+      d.add(L"values", _group()());
     }
   }
   
   if(_wisaID.changed()) {
     if(!_hasWisaID) {
       data & d = values.New(ADD);
-      d.add("type", TYPE_WISA_ID);
-      d.add("values", std::to_string(_wisaID()()));
+      d.add(L"type", TYPE_WISA_ID);
+      d.add(L"values", std::to_wstring(_wisaID()()));
     } else {
       data & d = values.New(MODIFY);
-      d.add("type", TYPE_WISA_ID);
-      d.add("values", std::to_string(_wisaID()()));
+      d.add(L"type", TYPE_WISA_ID);
+      d.add(L"values", std::to_wstring(_wisaID()()));
     }
   }
   
   if(_mail.changed()) {
     if(!_hasMail) {
       data & d = values.New(ADD);
-      d.add("type", TYPE_MAIL);
-      d.add("values", _mail()());
+      d.add(L"type", TYPE_MAIL);
+      d.add(L"values", _mail()());
     } else {
       data & d = values.New(MODIFY);
-      d.add("type", TYPE_MAIL);
-      d.add("values", _mail()());
+      d.add(L"type", TYPE_MAIL);
+      d.add(L"values", _mail()());
     }
   }
   
   if(_birthDay.changed()) {
     if(!_hasBirthday) {
       data & d = values.New(ADD);
-      d.add("type", TYPE_BIRTHDAY);
-      d.add("values",std::to_string(_birthDay()()));
+      d.add(L"type", TYPE_BIRTHDAY);
+      d.add(L"values",std::to_wstring(_birthDay()()));
     } else {
       data & d = values.New(MODIFY);
-      d.add("type", TYPE_BIRTHDAY);
-      d.add("values", std::to_string(_birthDay()()));
+      d.add(L"type", TYPE_BIRTHDAY);
+      d.add(L"values", std::to_wstring(_birthDay()()));
     }
   }
   
   if(_cn.changed()) {
     data & d = values.New(MODIFY);
-    d.add("type", TYPE_CN);
-    d.add("values", _cn()());
+    d.add(L"type", TYPE_CN);
+    d.add(L"values", _cn()());
   }
   
   if(_sn.changed()) {
     data & d = values.New(MODIFY);
-    d.add("type", TYPE_SN);
-    d.add("values", _sn()());
+    d.add(L"type", TYPE_SN);
+    d.add(L"values", _sn()());
   }
   
   if(_fullName.changed()) {
     data & d = values.New(MODIFY);
-    d.add("type", TYPE_FULL_NAME);
-    d.add("values", _fullName()());
+    d.add(L"type", TYPE_FULL_NAME);
+    d.add(L"values", _fullName()());
     
     // this value is also kept in 'gecos' for historical reasons
     data & d1 = values.New(MODIFY);
-    d1.add("type", "gecos");
-    d1.add("values", _fullName()());
+    d1.add(L"type", L"gecos");
+    d1.add(L"values", _fullName()());
   }
   
   if(_homeDir.changed()) {
     data & d = values.New(MODIFY);
-    d.add("type", TYPE_HOMEDIR);
-    d.add("values", _homeDir()());
+    d.add(L"type", TYPE_HOMEDIR);
+    d.add(L"values", _homeDir()());
   }
   
   if(_groupID.changed()) {
     data & d = values.New(MODIFY);
-    d.add("type", TYPE_GID_NUMBER);
-    d.add("values", std::to_string(_groupID()()));
+    d.add(L"type", TYPE_GID_NUMBER);
+    d.add(L"values", std::to_wstring(_groupID()()));
   }
   
   if(_password.changed()) {
     data & d = values.New(MODIFY);
-    d.add("type", TYPE_PASSWORD);
-    d.add("values", _password()());
+    d.add(L"type", TYPE_PASSWORD);
+    d.add(L"values", _password()());
     samba::changePassword(_uid()(), _passwordClearText);
     y::Smartschool().saveUser(*this);
   }
@@ -260,17 +261,17 @@ bool y::ldap::account::isNew() {
 void y::ldap::account::clear() {
   _new = true; 
   _uidNumber(UID_NUMBER(0));
-  _uid(UID(""));
-  _dn(DN(""));
-  _cn(CN(""));
-  _sn(SN(""));
-  _fullName(FULL_NAME(""));
-  _homeDir(HOMEDIR(""));
+  _uid(UID(L""));
+  _dn(DN(L""));
+  _cn(CN(L""));
+  _sn(SN(L""));
+  _fullName(FULL_NAME(L""));
+  _homeDir(HOMEDIR(L""));
   _wisaID(WISA_ID(0));
-  _mail(MAIL(""));
-  _password(PASSWORD(""));
+  _mail(MAIL(L""));
+  _password(PASSWORD(L""));
   _birthDay(DATE(DAY(1), MONTH(1), YEAR(1)));
-  _group(GID(""));
+  _group(GID(L""));
   _groupID(GID_NUMBER(0));
 }
 
@@ -374,7 +375,7 @@ y::ldap::account & y::ldap::account::birthDay(const DATE& value) {
 y::ldap::account & y::ldap::account::password(const PASSWORD& value) {
   _passwordClearText = value();
   
-  _password(PASSWORD(y::utils::sha1(_passwordClearText)));
+  _password(PASSWORD(strW(y::utils::sha1(str8(_passwordClearText)))));
   return *this;
 }
 
@@ -388,6 +389,6 @@ y::ldap::account & y::ldap::account::groupID(const GID_NUMBER& value) {
   return *this;
 }
 
-std::string y::ldap::account::getPasswordText() {
+std::wstring y::ldap::account::getPasswordText() {
   return _passwordClearText;
 }

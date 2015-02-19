@@ -17,7 +17,7 @@ y::data::dateTime::dateTime() :
   _minutes(0),
   _seconds(0) {}
 
-y::data::dateTime::dateTime(const std::string & dbFormat) :
+y::data::dateTime::dateTime(const std::wstring & dbFormat) :
   _day(0),
   _month(0),
   _year(0),
@@ -81,30 +81,30 @@ int y::data::dateTime::seconds() const {
   return _seconds;
 }
 
-std::string y::data::dateTime::dbFormat() const {
-  std::string result;
-  result.append(std::to_string(_year));
-  result.append("-");
-  if(_month < 10) result.append("0");
-  result.append(std::to_string(_month));
-  result.append("-");
-  if(_day < 10) result.append("0");
-  result.append(std::to_string(_day));
-  result.append(" ");
+std::wstring y::data::dateTime::dbFormat() const {
+  std::wstring result;
+  result.append(std::to_wstring(_year));
+  result.append(L"-");
+  if(_month < 10) result.append(L"0");
+  result.append(std::to_wstring(_month));
+  result.append(L"-");
+  if(_day < 10) result.append(L"0");
+  result.append(std::to_wstring(_day));
+  result.append(L" ");
 
-  if(_hours < 10) result.append("0");
-  result.append(std::to_string(_hours));
-  result.append(":");
-  if(_minutes < 10) result.append("0");
-  result.append(std::to_string(_minutes));
-  result.append(":");
-  if(_seconds < 10) result.append("0");
-  result.append(std::to_string(_seconds));
+  if(_hours < 10) result.append(L"0");
+  result.append(std::to_wstring(_hours));
+  result.append(L":");
+  if(_minutes < 10) result.append(L"0");
+  result.append(std::to_wstring(_minutes));
+  result.append(L":");
+  if(_seconds < 10) result.append(L"0");
+  result.append(std::to_wstring(_seconds));
   
   return result;
 }
 
-void y::data::dateTime::dbFormat(const std::string& value) {
+void y::data::dateTime::dbFormat(const std::wstring& value) {
   _year = std::stoi(value.substr(0, 4));
   _month = std::stoi(value.substr(5, 2));
   _day = std::stoi(value.substr(8, 2));

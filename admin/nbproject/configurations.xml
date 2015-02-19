@@ -60,6 +60,7 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerOptionItem>-lboost_program_options</linkerOptionItem>
+            <linkerOptionItem>-lboost_locale</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -140,6 +141,7 @@
                             OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
+            <linkerOptionItem>-lboost_locale</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

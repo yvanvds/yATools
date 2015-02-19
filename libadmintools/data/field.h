@@ -33,16 +33,16 @@ namespace y {
     class field {
     public:
       field();
-      explicit field(const std::string & name, bool   value);
-      explicit field(const std::string & name, char   value);
-      explicit field(const std::string & name, short  value);
-      explicit field(const std::string & name, int    value);
-      explicit field(const std::string & name, long   value);
-      explicit field(const std::string & name, float  value);
-      explicit field(const std::string & name, double value);
-      explicit field(const std::string & name, const std::string    & value);
-      explicit field(const std::string & name, const std::u16string & value);
-      explicit field(const std::string & name, const dateTime       & value);
+      explicit field(const std::wstring & name, bool   value);
+      explicit field(const std::wstring & name, char   value);
+      explicit field(const std::wstring & name, short  value);
+      explicit field(const std::wstring & name, int    value);
+      explicit field(const std::wstring & name, long   value);
+      explicit field(const std::wstring & name, float  value);
+      explicit field(const std::wstring & name, double value);
+      explicit field(const std::wstring & name, const std::string    & value);
+      explicit field(const std::wstring & name, const std::wstring   & value);
+      explicit field(const std::wstring & name, const dateTime       & value);
       
       
       FIELD_TYPE getType();
@@ -55,7 +55,7 @@ namespace y {
       float   asFloat ();
       double  asDouble();
       const std::string    & asString8();
-      const std::u16string & asString ();
+      const std::wstring   & asString ();
       const dateTime       & asDate   ();
       
       field & setBool   (bool   value);
@@ -66,11 +66,11 @@ namespace y {
       field & setFloat  (float  value);
       field & setDouble (double value);
       field & setString8(const  std::string    & value);
-      field & setString (const  std::u16string & value);
+      field & setString (const  std::wstring   & value);
       field & setDate   (const  dateTime       & value);
       
-      const std::string & name();
-      field & name(const std::string & fieldName);
+      const std::wstring & name();
+      field & name(const std::wstring & fieldName);
       
       // these are used when you supply fields to create
       // a new table
@@ -89,7 +89,7 @@ namespace y {
       
     private:
       
-      std::string fieldName;
+      std::wstring fieldName;
       FIELD_TYPE type;
       
       union storage_t {
@@ -103,7 +103,7 @@ namespace y {
       } storage;
       
       std::string    t_str8 ;
-      std::u16string t_str16;
+      std::wstring   t_str16;
       dateTime       date   ;
       
       int str_length;

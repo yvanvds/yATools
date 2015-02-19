@@ -24,7 +24,7 @@ proxyManager & ProxyManager() {
   return s;
 }
 
-room::room(const std::string & name) : name(name){}
+room::room(const std::wstring & name) : name(name){}
 
 void room::create(Wt::WTableRow* row) {
   label = new Wt::WText(name);
@@ -56,7 +56,7 @@ Wt::WButtonGroup * room::getGroup() {
   return bgroup;
 }
 
-void room::setStatus(y::utils::proxy::STATUS status) {
+void room::setStatus(y::utils::proxy::STATUS status, bool silent) {
   assert(status != y::utils::proxy::INVALID);
   
   switch(status) {
@@ -77,8 +77,11 @@ void room::setStatus(y::utils::proxy::STATUS status) {
     }
   }
   
-  y::utils::Proxy().status(this->name, status);
-  y::utils::Proxy().apply();
+  if(!silent) {
+    y::utils::Proxy().status(this->name, status);
+    y::utils::Proxy().apply();
+  }
+  
 }
 
 Wt::WWidget * proxyManager::get() {
@@ -89,9 +92,9 @@ Wt::WWidget * proxyManager::get() {
   y::utils::Proxy().getAllRooms(rows);
   
   for(int i = 0; i < rows.elms(); i++) {
-    rooms.emplace_back(rows[i]["ID"].asString8());
+    rooms.emplace_back(rows[i][L"ID"].asString());
     rooms.back().create(table->rowAt(i));
-    rooms.back().setStatus((y::utils::proxy::STATUS)rows[i]["status"].asInt());
+    rooms.back().setStatus((y::utils::proxy::STATUS)rows[i][L"status"].asInt(), true);
   }
   
   

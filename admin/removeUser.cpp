@@ -11,6 +11,7 @@
 #include "ldap/server.h"
 #include "utils/config.h"
 #include "samba/samba.h"
+#include "utils/convert.h"
 
 using namespace std;
 using namespace y::ldap;
@@ -29,13 +30,13 @@ void removeUser::printHelp() {
   cout << "<uid> the ldap ID of this user" << endl;
 }
 
-void removeUser::parse(int argc, char** argv) {
+void removeUser::parse(int argc, char ** argv) {
   if (argc < 1) {
     printHelp();
     return;
   }
   
-  std::string uid(argv[0]);
+  std::wstring uid(strW(argv[0]));
   account & acc = Server().getAccount(UID(uid));
   if(acc.isNew()) {
     cout << "This user has already entered the void." << endl;
@@ -45,9 +46,9 @@ void removeUser::parse(int argc, char** argv) {
   // if we get here, the user exists
   
   // if personeel, remove from that group
-  if (acc.group()().compare("personeel") == 0 || acc.group()().compare("directie")) {
-    group & personeel = Server().getGroup(CN("personeel"), true);
-    container<std::string> & members = personeel.members();
+  if (acc.group()().compare(L"personeel") == 0 || acc.group()().compare(L"directie")) {
+    group & personeel = Server().getGroup(CN(L"personeel"), true);
+    container<std::wstring> & members = personeel.members();
     for(int i = 0; i < members.elms(); i++) {
       if (members[i].compare(acc.mail()()) == 0) {
         members.remove(i);
@@ -55,8 +56,8 @@ void removeUser::parse(int argc, char** argv) {
         break;
       }
       // for historical reasons members might be added with uid
-      std::string mail(uid);
-      uid += "@";
+      std::wstring mail(uid);
+      uid += L"@";
       uid += y::utils::Config().getDomain();
       if(members[i].compare(mail) == 0) {
         members.remove(i);
@@ -67,9 +68,9 @@ void removeUser::parse(int argc, char** argv) {
   }
   
   // remove from class group
-  if(acc.group()().compare("extern") != 0 && acc.group()().compare("externmail") != 0) {
+  if(acc.group()().compare(L"extern") != 0 && acc.group()().compare(L"externmail") != 0) {
     group & classGroup = Server().getGroup(CN(acc.group()()), false);
-    container<std::string> & members = classGroup.members();
+    container<std::wstring> & members = classGroup.members();
     for(int i = 0; i < members.elms(); i++) {
       if(members[i].compare(acc.dn()()) == 0) {
         members.remove(i);

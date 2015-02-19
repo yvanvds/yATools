@@ -80,6 +80,7 @@
             <linkerOptionItem>-lboost_signals</linkerOptionItem>
             <linkerOptionItem>-llber</linkerOptionItem>
             <linkerOptionItem>-lldap</linkerOptionItem>
+            <linkerOptionItem>-lboost_locale</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -135,7 +136,7 @@
           <linkerLibItems>
             <linkerOptionItem>-lwtfcgi -lwt</linkerOptionItem>
             <linkerOptionItem>-lldap -llber</linkerOptionItem>
-            <linkerOptionItem>-lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals</linkerOptionItem>
+            <linkerOptionItem>-lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals -lboost_locale</linkerOptionItem>
             <linkerLibProjectItem>
               <makeArtifact PL="../libadmintools"
                             CT="2"

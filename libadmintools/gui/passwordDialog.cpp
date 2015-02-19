@@ -79,7 +79,7 @@ void y::gui::passwordDialog::validate() {
   loginName = nameEdit->text();
   loginPass = passEdit->text();
   
-  account = y::ldap::Server().getAccount(y::ldap::UID(loginName.toUTF8()));
+  account = y::ldap::Server().getAccount(y::ldap::UID(loginName));
   if(account.isNew()) {
     loginFeedback->setText("controleer je naam");
     loginFeedback->setStyleClass("alert alert-danger");
@@ -89,7 +89,7 @@ void y::gui::passwordDialog::validate() {
     return;
     
   } else {
-    loginOK = y::ldap::Server().auth(account.dn(), y::ldap::PASSWORD(loginPass.toUTF8()));
+    loginOK = y::ldap::Server().auth(account.dn(), y::ldap::PASSWORD(loginPass));
     if(!loginOK) {
       loginFeedback->setText("controleer je wachtwoord");
       loginFeedback->setStyleClass("alert alert-danger");

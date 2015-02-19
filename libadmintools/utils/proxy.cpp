@@ -18,73 +18,73 @@ y::utils::proxy::proxy() {
   server = std::unique_ptr<y::data::server  >(new y::data::server);
   db     = std::unique_ptr<y::data::database>(new y::data::database(*server));
   
-  if(!server->hasDatabase("admintools")) {
-    server->create("admintools");
+  if(!server->hasDatabase(L"admintools")) {
+    server->create(L"admintools");
   }
-  db->use("admintools");
+  db->use(L"admintools");
   
   if(!db->tableExists(PROXY)) {
     y::data::row rooms;
-    rooms.addString8("ID");
-    rooms["ID"].primaryKey(true).required(true);
-    rooms.addInt("status" );
-    rooms.addInt("defaultValue");
+    rooms.addString(L"ID");
+    rooms[L"ID"].primaryKey(true).required(true);
+    rooms.addInt(L"status" );
+    rooms.addInt(L"defaultValue");
     db->createTable(PROXY, rooms);
     
     // add rooms we know
     {
-      y::data::row row; row.addString8("ID", "CO112"); 
-      row.addInt("status", 1); row.addInt("defaultValue", 1);
+      y::data::row row; row.addString(L"ID", L"CO112"); 
+      row.addInt(L"status", 1); row.addInt(L"defaultValue", 1);
       db->addRow(PROXY, row);
     }
     {
-      y::data::row row; row.addString8("ID", "CO114"); 
-      row.addInt("status", 1); row.addInt("defaultValue", 1);
+      y::data::row row; row.addString(L"ID", L"CO114"); 
+      row.addInt(L"status", 1); row.addInt(L"defaultValue", 1);
       db->addRow(PROXY, row);
     }
     {
-      y::data::row row; row.addString8("ID", "CO116");
-      row.addInt("status", 1); row.addInt("defaultValue", 1);
+      y::data::row row; row.addString(L"ID", L"CO116");
+      row.addInt(L"status", 1); row.addInt(L"defaultValue", 1);
       db->addRow(PROXY, row);
     }
     {
-      y::data::row row; row.addString8("ID", "CO117"); 
-      row.addInt("status", 1); row.addInt("defaultValue", 1);
+      y::data::row row; row.addString(L"ID", L"CO117"); 
+      row.addInt(L"status", 1); row.addInt(L"defaultValue", 1);
       db->addRow(PROXY, row);
     }
     {
-      y::data::row row; row.addString8("ID", "CO126"); 
-      row.addInt("status", 1); row.addInt("defaultValue", 1);
+      y::data::row row; row.addString(L"ID", L"CO126"); 
+      row.addInt(L"status", 1); row.addInt(L"defaultValue", 1);
       db->addRow(PROXY, row);
     }
     {
-      y::data::row row; row.addString8("ID", "CO127"); 
-      row.addInt("status", 1); row.addInt("defaultValue", 1);
+      y::data::row row; row.addString(L"ID", L"CO127"); 
+      row.addInt(L"status", 1); row.addInt(L"defaultValue", 1);
       db->addRow(PROXY, row);
     }
     {
-      y::data::row row; row.addString8("ID", "CO137"); 
-      row.addInt("status", 1); row.addInt("defaultValue", 1);
+      y::data::row row; row.addString(L"ID", L"CO137"); 
+      row.addInt(L"status", 1); row.addInt(L"defaultValue", 1);
       db->addRow(PROXY, row);
     }
     {
-      y::data::row row; row.addString8("ID", "OLC"); 
-      row.addInt("status", 2); row.addInt("defaultValue", 2);
+      y::data::row row; row.addString(L"ID", L"OLC"); 
+      row.addInt(L"status", 2); row.addInt(L"defaultValue", 2);
       db->addRow(PROXY, row);
     }
     {
-      y::data::row row; row.addString8("ID", "EC202"); 
-      row.addInt("status", 1); row.addInt("defaultValue", 1);
+      y::data::row row; row.addString(L"ID", L"EC202"); 
+      row.addInt(L"status", 1); row.addInt(L"defaultValue", 1);
       db->addRow(PROXY, row);
     }
     {
-      y::data::row row; row.addString8("ID", "EC203"); 
-      row.addInt("status", 1); row.addInt("defaultValue", 1);
+      y::data::row row; row.addString(L"ID", L"EC203"); 
+      row.addInt(L"status", 1); row.addInt(L"defaultValue", 1);
       db->addRow(PROXY, row);
     }
     {
-      y::data::row row; row.addString8("ID", "VI215"); 
-      row.addInt("status", 1); row.addInt("defaultValue", 1);
+      y::data::row row; row.addString(L"ID", L"VI215"); 
+      row.addInt(L"status", 1); row.addInt(L"defaultValue", 1);
       db->addRow(PROXY, row);
     }
   }
@@ -92,31 +92,31 @@ y::utils::proxy::proxy() {
   
 }
 
-bool y::utils::proxy::status(const std::string& room, STATUS status) {
+bool y::utils::proxy::status(const std::wstring& room, STATUS status) {
   y::data::field condition;
-  condition.name("ID");
-  condition.setString8(room);
+  condition.name(L"ID");
+  condition.setString(room);
   container<y::data::row> rows;
   
   db->getRows(PROXY, rows, condition);
   if(!rows.elms()) return false;
   
   y::data::row row;
-  row.addInt("status", (int)status);
+  row.addInt(L"status", (int)status);
   db->setRow(PROXY, row, condition);
   return true;
 }
 
-y::utils::proxy::STATUS y::utils::proxy::status(const std::string & room) {
+y::utils::proxy::STATUS y::utils::proxy::status(const std::wstring & room) {
   y::data::field condition;
-  condition.name("ID");
-  condition.setString8(room);
+  condition.name(L"ID");
+  condition.setString(room);
   container<y::data::row> rows;
   
   db->getRows(PROXY, rows, condition);
   if(!rows.elms()) return INVALID;
   
-  return (STATUS)rows[0]["status"].asInt();
+  return (STATUS)rows[0][L"status"].asInt();
 }
 
 y::utils::proxy & y::utils::proxy::reset() {
@@ -125,10 +125,10 @@ y::utils::proxy & y::utils::proxy::reset() {
   
   for (int i = 0; i < rows.elms(); i++) {
     y::data::field condition;
-    condition.name("ID").setString8(rows[i]["ID"].asString8());
+    condition.name(L"ID").setString(rows[i][L"ID"].asString());
     
     y::data::row data;
-    data.addInt("status", rows[i]["defaultValue"].asInt());
+    data.addInt(L"status", rows[i][L"defaultValue"].asInt());
     db->setRow(PROXY, data, condition);
   }
   return *this;
@@ -143,13 +143,13 @@ void y::utils::proxy::apply() {
   db->getAllRows(PROXY, rows);
   
   // open file and remove current content
-  std::ofstream file;
+  std::wofstream file;
   file.open("/etc/squid3/roomfilter.conf", std::ios::out | std::ios::trunc);
   for (int i = 0; i < rows.elms(); i++) {
-    if(rows[i]["status"].asInt() == (int)OPEN) {
-      file << "http_access allow lokaal" << rows[i]["ID"].asString8() << std::endl;
-    } else if (rows[i]["status"].asInt() ==(int)CLOSED) {
-      file << "http_access deny lokaal" << rows[i]["ID"].asString8() << std::endl;
+    if(rows[i][L"status"].asInt() == (int)OPEN) {
+      file << L"http_access allow lokaal" << rows[i][L"ID"].asString() << std::endl;
+    } else if (rows[i][L"status"].asInt() ==(int)CLOSED) {
+      file << L"http_access deny lokaal" << rows[i][L"ID"].asString() << std::endl;
     }
   }
   file.close();

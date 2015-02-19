@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "config.h"
+#include "convert.h"
 #include "../system/workDir.h"
 #include "log.h"
 
@@ -60,10 +61,10 @@ void y::utils::config::load(int argc, char** argv) {
   store(parse_command_line(argc, argv, all), map);
   notify(map);
   
-  std::ifstream ifs(configFile.c_str());
+  std::wifstream ifs(configFile.c_str());
   if(!ifs) {
-    std::string out = "cannot open config file: ";
-    out.append(configFile);
+    std::wstring out = L"cannot open config file: ";
+    out.append(strW(configFile));
     Log().add(out);
   } else {
     /*std::string out = "loading config file: ";
@@ -83,114 +84,114 @@ void y::utils::config::load(int argc, char** argv) {
   }
   
   if(map.count("ldapPasswd")) {
-    ldapPasswd = map["ldapPasswd"].as<std::string>();
+    ldapPasswd = strW(map["ldapPasswd"].as<std::string>());
   } else {
-    y::utils::Log().add("Config warning: ldap password is not set.");
+    y::utils::Log().add(L"Config warning: ldap password is not set.");
   }
   
   if(map.count("ldapHost")) {
-    ldapHost = map["ldapHost"].as<std::string>();
+    ldapHost = strW(map["ldapHost"].as<std::string>());
   } else {
-    y::utils::Log().add("Config warning: ldap host is not set.");
+    y::utils::Log().add(L"Config warning: ldap host is not set.");
   }
   
   if(map.count("ldapBaseDN")) {
-    ldapBaseDN = map["ldapBaseDN"].as<std::string>();
+    ldapBaseDN = strW(map["ldapBaseDN"].as<std::string>());
   } else {
-    y::utils::Log().add("Config warning: ldap Base DN is not set.");
+    y::utils::Log().add(L"Config warning: ldap Base DN is not set.");
   }   
   
   if(map.count("ldapAdminDN")) {
-    ldapAdminDN = map["ldapAdminDN"].as<std::string>();
+    ldapAdminDN = strW(map["ldapAdminDN"].as<std::string>());
   } else {
-    y::utils::Log().add("Config warning: ldap admin DN is not set.");
+    y::utils::Log().add(L"Config warning: ldap admin DN is not set.");
   } 
   
   if(map.count("ldapTestUID")) {
-    ldapTestUID = map["ldapTestUID"].as<std::string>();
+    ldapTestUID = strW(map["ldapTestUID"].as<std::string>());
   } else {
-    y::utils::Log().add("Config warning: ldap test UID is not set.");
+    y::utils::Log().add(L"Config warning: ldap test UID is not set.");
   }
   
   if(map.count("ldapTestPassword")) {
-    ldapTestPassword = map["ldapTestPassword"].as<std::string>();
+    ldapTestPassword = strW(map["ldapTestPassword"].as<std::string>());
   } else {
-    y::utils::Log().add("Config warning: ldap test password is not set.");
+    y::utils::Log().add(L"Config warning: ldap test password is not set.");
   }
   
   if(map.count("ldapTestUIDNumber")) {
-    ldapTestUidNumber = map["ldapTestUIDNumber"].as<std::string>();
+    ldapTestUidNumber = strW(map["ldapTestUIDNumber"].as<std::string>());
   } else {
-    y::utils::Log().add("Config warning: ldap test UID number is not set.");
+    y::utils::Log().add(L"Config warning: ldap test UID number is not set.");
   }
   
   if(map.count("ldapTestDN")) {
-    ldapTestDN = map["ldapTestDN"].as<std::string>();
+    ldapTestDN = strW(map["ldapTestDN"].as<std::string>());
   } else {
-    y::utils::Log().add("Config warning: ldap test DN is not set.");
+    y::utils::Log().add(L"Config warning: ldap test DN is not set.");
   }
   
   if(map.count("mysqlRootPassword")) {
-    mysqlPassword = map["mysqlRootPassword"].as<std::string>();
+    mysqlPassword = strW(map["mysqlRootPassword"].as<std::string>());
   } else {
-    y::utils::Log().add("Config warning: mysql password is not set.");
+    y::utils::Log().add(L"Config warning: mysql password is not set.");
   }
   
   if(map.count("domain")) {
-    domain = map["domain"].as<std::string>();
+    domain = strW(map["domain"].as<std::string>());
   } else {
-    y::utils::Log().add("Config warning: domain is not set.");
+    y::utils::Log().add(L"Config warning: domain is not set.");
   }
   
   if(map.count("smartschoolPw")) {
-    smartschoolPw = map["smartschoolPw"].as<std::string>();
+    smartschoolPw = strW(map["smartschoolPw"].as<std::string>());
   } else {
-    y::utils::Log().add("Config warning: smartschool password is not set.");
+    y::utils::Log().add(L"Config warning: smartschool password is not set.");
   }
   
   configReady = true;
 }
 
-const std::string & y::utils::config::getLdapPasswd() const {
+const std::wstring & y::utils::config::getLdapPasswd() const {
   return ldapPasswd;
 }
 
-const std::string & y::utils::config::getLdapHost() const {
+const std::wstring & y::utils::config::getLdapHost() const {
   return ldapHost;
 }
 
-const std::string & y::utils::config::getLdapBaseDN() const {
+const std::wstring & y::utils::config::getLdapBaseDN() const {
   return ldapBaseDN;
 }
 
-const std::string & y::utils::config::getLdapAdminDN() const {
+const std::wstring & y::utils::config::getLdapAdminDN() const {
   return ldapAdminDN;
 }
 
-const std::string & y::utils::config::getLdapTestUID() const {
+const std::wstring & y::utils::config::getLdapTestUID() const {
   return ldapTestUID;
 }
 
-const std::string & y::utils::config::getLdapTestPassword() const {
+const std::wstring & y::utils::config::getLdapTestPassword() const {
   return ldapTestPassword;
 }
 
-const std::string & y::utils::config::getLdapTestUidNumber() const {
+const std::wstring & y::utils::config::getLdapTestUidNumber() const {
   return ldapTestUidNumber;
 }
 
-const std::string & y::utils::config::getLdapTestDN() const {
+const std::wstring & y::utils::config::getLdapTestDN() const {
   return ldapTestDN;
 }
 
-const std::string & y::utils::config::getMysqlPassword() const {
+const std::wstring & y::utils::config::getMysqlPassword() const {
   return mysqlPassword;
 }
 
-const std::string & y::utils::config::getDomain() const {
+const std::wstring & y::utils::config::getDomain() const {
   return domain;
 }
 
-const std::string & y::utils::config::getSSPw() const {
+const std::wstring & y::utils::config::getSSPw() const {
   return smartschoolPw;
 }

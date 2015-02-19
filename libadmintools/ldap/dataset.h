@@ -21,16 +21,16 @@ namespace y {
       dataset() {}
       dataset(const dataset& orig);
 
-      bool create(const std::string & filter, const std::string & directory = "");
-      bool createFromDN(const std::string & dn);
+      bool create(const std::wstring & filter, const std::wstring & directory = L"");
+      bool createFromDN(const std::wstring & dn);
       
       int elms();
       data & get(int index = 0);
       data & New(data_type type);
 
     private:
-      std::string filter;
-      std::string directory;
+      std::wstring filter;
+      std::wstring directory;
       std::vector<data> content;
       data dummy;
 

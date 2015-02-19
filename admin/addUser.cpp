@@ -8,10 +8,11 @@
 #include "addUser.h"
 #include <string>
 #include <iostream>
-#include <boost/algorithm/string.hpp>
+#include <boost/locale.hpp>
 #include "ldap/server.h"
 #include "utils/security.h"
 #include "samba/samba.h"
+#include "utils/convert.h"
 
 using namespace std;
 using namespace y::ldap;
@@ -33,29 +34,27 @@ void addUser::printHelp() {
   cout << "[wisaID]  Unique wisa ID. Defaults to 0" << endl;
 }
 
-void addUser::parse(int argc, char** argv) {
+void addUser::parse(int argc, char ** argv) {
   if(argc < 2) {
     printHelp();
     return;
   }
   
-  std::string cn(argv[0]);
-  std::string sn(argv[1]);
-  boost::algorithm::to_lower(cn);
-  boost::algorithm::to_lower(sn);
-  
+  std::wstring cn(strW(argv[0]));
+  std::wstring sn(strW(argv[1]));
+
   UID uid(Server().createUID(cn, sn));
   account tempAccount;
   
   tempAccount.uid(uid);
-  tempAccount.group(GID(argc > 3 ? argv[3] : "extern"));
+  tempAccount.group(GID(argc > 3 ? strW(argv[3]) : L"extern"));
     
   // set group id
-  if((tempAccount.group()()).compare("extern") == 0) {
+  if((tempAccount.group()()).compare(L"extern") == 0) {
     tempAccount.groupID(GID_NUMBER(20009));
-  } else if(tempAccount.group()().compare("personeel") == 0) {
+  } else if(tempAccount.group()().compare(L"personeel") == 0) {
     tempAccount.groupID(GID_NUMBER(525));
-  } else if(tempAccount.group()().compare("directie") == 0) {
+  } else if(tempAccount.group()().compare(L"directie") == 0) {
     // distinction between personeel and directie is only important
     // for smartschool
     tempAccount.groupID(GID_NUMBER(525));
@@ -73,14 +72,14 @@ void addUser::parse(int argc, char** argv) {
   acc.cn(CN(cn));
   acc.sn(SN(sn));
   
-  std::string fullName(cn);
-  fullName += " "; fullName += sn;
+  std::wstring fullName(cn);
+  fullName += L" "; fullName += sn;
   acc.fullName(FULL_NAME(fullName));
   
-  acc.birthDay(DATE      (argc > 2 ? argv[2] : "19700101"  ));
+  acc.birthDay(DATE      (argc > 2 ? strW(argv[2]) : L"19700101"  ));
   acc.wisaID  (WISA_ID   (argc > 4 ? std::stoi(argv[4]) : 0));
   
-  std::string password(y::utils::Security().makePassword(8));
+  std::wstring password(strW(y::utils::Security().makePassword(8)));
   acc.password(PASSWORD(password));
   
   acc.mail    (           Server().createMail(cn, sn));
@@ -88,12 +87,12 @@ void addUser::parse(int argc, char** argv) {
   acc.groupID (GID_NUMBER(tempAccount.groupID()()));
   
   // add to group
-  if(acc.group()().compare("personeel") == 0 || acc.group()().compare("directie") == 0) {
-    group & mailGroup = Server().getGroup(CN("personeel"), true);
+  if(acc.group()().compare(L"personeel") == 0 || acc.group()().compare(L"directie") == 0) {
+    group & mailGroup = Server().getGroup(CN(L"personeel"), true);
     mailGroup.members().New() = acc.mail()();
     mailGroup.flagForCommit();
-  } else if(acc.group()().compare("extern") != 0) {
-    if(acc.group()().compare("externmail") != 0) {
+  } else if(acc.group()().compare(L"extern") != 0) {
+    if(acc.group()().compare(L"externmail") != 0) {
       
       // this is a student belonging to a classgroup
       group & mailGroup = Server().getGroup(CN(acc.group()()), false);
@@ -104,8 +103,8 @@ void addUser::parse(int argc, char** argv) {
   
   Server().commitChanges();
   
-  cout << "Added user " << fullName << " to " << acc.group()() << endl;
-  cout << "  Login   : " << acc.uid()() << endl;
-  cout << "  Password: " << password << endl;
-  cout << "  Mail    : " << acc.mail()() << endl;
+  wcout << L"Added user " << fullName << L" to " << acc.group()() << endl;
+  wcout << L"  Login   : " << acc.uid()() << endl;
+  wcout << L"  Password: " << password << endl;
+  wcout << L"  Mail    : " << acc.mail()() << endl;
 }

@@ -25,12 +25,12 @@ void ldpAttributesTest::tearDown() {
 }
 
 void ldpAttributesTest::testDN() {
-  y::ldap::DN item1("cn=name,dc=domain,dc=com");
-  y::ldap::DN item2("cn=name,dc=domain,dc=com");
-  y::ldap::DN item3("cn=name2,dc=domain,dc=com");
+  y::ldap::DN item1(L"cn=name,dc=domain,dc=com");
+  y::ldap::DN item2(L"cn=name,dc=domain,dc=com");
+  y::ldap::DN item3(L"cn=name2,dc=domain,dc=com");
   
   // test if we can get the string back
-  if(item1().compare("cn=name,dc=domain,dc=com") != 0) {
+  if(item1().compare(L"cn=name,dc=domain,dc=com") != 0) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -72,12 +72,12 @@ void ldpAttributesTest::testUID_NUMBER() {
   }
 }
 void ldpAttributesTest::testUID() {
-  y::ldap::UID item1("user1");
-  y::ldap::UID item2("user1");
-  y::ldap::UID item3("user2");
+  y::ldap::UID item1(L"user1");
+  y::ldap::UID item2(L"user1");
+  y::ldap::UID item3(L"user2");
   
   // test if we can get the string back
-  if(item1().compare("user1") != 0) {
+  if(item1().compare(L"user1") != 0) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -95,12 +95,12 @@ void ldpAttributesTest::testUID() {
   }
 }
 void ldpAttributesTest::testCN() {
-  y::ldap::CN item1("user1");
-  y::ldap::CN item2("user1");
-  y::ldap::CN item3("user2");
+  y::ldap::CN item1(L"user1");
+  y::ldap::CN item2(L"user1");
+  y::ldap::CN item3(L"user2");
   
   // test if we can get the string back
-  if(item1().compare("user1") != 0) {
+  if(item1().compare(L"user1") != 0) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -118,12 +118,12 @@ void ldpAttributesTest::testCN() {
   }
 }
 void ldpAttributesTest::testSN() {
-  y::ldap::SN item1("user1");
-  y::ldap::SN item2("user1");
-  y::ldap::SN item3("user2");
+  y::ldap::SN item1(L"user1");
+  y::ldap::SN item2(L"user1");
+  y::ldap::SN item3(L"user2");
   
   // test if we can get the string back
-  if(item1().compare("user1") != 0) {
+  if(item1().compare(L"user1") != 0) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -141,12 +141,12 @@ void ldpAttributesTest::testSN() {
   }
 }
 void ldpAttributesTest::testFULL_NAME() {
-  y::ldap::FULL_NAME item1("yvan vander sanden");
-  y::ldap::FULL_NAME item2("yvan vander sanden");
-  y::ldap::FULL_NAME item3("firstname surname");
+  y::ldap::FULL_NAME item1(L"yvan vander sanden");
+  y::ldap::FULL_NAME item2(L"yvan vander sanden");
+  y::ldap::FULL_NAME item3(L"firstname surname");
   
   // test if we can get the string back
-  if(item1().compare("yvan vander sanden") != 0) {
+  if(item1().compare(L"yvan vander sanden") != 0) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -163,18 +163,18 @@ void ldpAttributesTest::testFULL_NAME() {
     CPPUNIT_ASSERT(false);
   } 
   
-  y::ldap::FULL_NAME item4(y::ldap::CN("yvan"), y::ldap::SN("vander sanden"));
+  y::ldap::FULL_NAME item4(y::ldap::CN(L"yvan"), y::ldap::SN(L"vander sanden"));
   if(item2 != item4) {
     CPPUNIT_ASSERT(false);
   }
 }
 void ldpAttributesTest::testGID() {
-  y::ldap::GID item1("group1");
-  y::ldap::GID item2("group1");
-  y::ldap::GID item3("group2");
+  y::ldap::GID item1(L"group1");
+  y::ldap::GID item2(L"group1");
+  y::ldap::GID item3(L"group2");
   
   // test if we can get the string back
-  if(item1().compare("group1") != 0) {
+  if(item1().compare(L"group1") != 0) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -238,12 +238,12 @@ void ldpAttributesTest::testWISA_ID() {
   }
 }
 void ldpAttributesTest::testMAIL() {
-  y::ldap::MAIL item1("user1@gmail.com");
-  y::ldap::MAIL item2("user1@gmail.com");
-  y::ldap::MAIL item3("user2@gmail.com");
+  y::ldap::MAIL item1(L"user1@gmail.com");
+  y::ldap::MAIL item2(L"user1@gmail.com");
+  y::ldap::MAIL item3(L"user2@gmail.com");
   
   // test if we can get the string back
-  if(item1().compare("user1@gmail.com") != 0) {
+  if(item1().compare(L"user1@gmail.com") != 0) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -261,12 +261,12 @@ void ldpAttributesTest::testMAIL() {
   }
 }
 void ldpAttributesTest::testPASSWORD() {
-  y::ldap::PASSWORD item1("secret1");
-  y::ldap::PASSWORD item2("secret1");
-  y::ldap::PASSWORD item3("secret2");
+  y::ldap::PASSWORD item1(L"secret1");
+  y::ldap::PASSWORD item2(L"secret1");
+  y::ldap::PASSWORD item3(L"secret2");
   
   // test if we can get the string back
-  if(item1().compare("secret1") != 0) {
+  if(item1().compare(L"secret1") != 0) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -413,7 +413,7 @@ void ldpAttributesTest::testDATE() {
     CPPUNIT_ASSERT(false);
   }  
   
-  if(item2.asString().compare("2 april 1980") != 0) {
+  if(item2.asString().compare(L"2 april 1980") != 0) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -430,7 +430,7 @@ void ldpAttributesTest::testDATE() {
   }
   
   // test for ldap date conversion
-  item1 = y::ldap::DATE("19720809");
+  item1 = y::ldap::DATE(L"19720809");
    if(item1.getDay() != 9) {
     CPPUNIT_ASSERT(false);
   }
@@ -445,12 +445,12 @@ void ldpAttributesTest::testDATE() {
 }
 
 void ldpAttributesTest::testHOMEDIR() {
-  y::ldap::HOMEDIR item1("/home/user1");
-  y::ldap::HOMEDIR item2("/home/user1");
-  y::ldap::HOMEDIR item3("/home/user2");
+  y::ldap::HOMEDIR item1(L"/home/user1");
+  y::ldap::HOMEDIR item2(L"/home/user1");
+  y::ldap::HOMEDIR item3(L"/home/user2");
   
   // test if we can get the string back
-  if(item1().compare("/home/user1") != 0) {
+  if(item1().compare(L"/home/user1") != 0) {
     CPPUNIT_ASSERT(false);
   }
   

@@ -68,7 +68,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/utils/proxy.o \
 	${OBJECTDIR}/utils/random.o \
 	${OBJECTDIR}/utils/security.o \
-	${OBJECTDIR}/utils/sha1.o
+	${OBJECTDIR}/utils/sha1.o \
+	${OBJECTDIR}/utils/stringFunctions.o
 
 # Test Directory
 TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
@@ -103,7 +104,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lmysqlcppconn-static -lmysqlclient -lwthttp -lwt -lldap -llber -lboost_iostreams -lboost_regex -lgsoapssl++
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lmysqlcppconn-static -lmysqlclient -lwthttp -lwt -lldap -llber -lboost_iostreams -lboost_regex -lgsoapssl++ -lboost_locale
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -282,6 +283,11 @@ ${OBJECTDIR}/utils/sha1.o: utils/sha1.cpp
 	${MKDIR} -p ${OBJECTDIR}/utils
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/sha1.o utils/sha1.cpp
+
+${OBJECTDIR}/utils/stringFunctions.o: utils/stringFunctions.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/stringFunctions.o utils/stringFunctions.cpp
 
 # Subprojects
 .build-subprojects:
@@ -937,6 +943,19 @@ ${OBJECTDIR}/utils/sha1_nomain.o: ${OBJECTDIR}/utils/sha1.o utils/sha1.cpp
 	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/sha1_nomain.o utils/sha1.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/utils/sha1.o ${OBJECTDIR}/utils/sha1_nomain.o;\
+	fi
+
+${OBJECTDIR}/utils/stringFunctions_nomain.o: ${OBJECTDIR}/utils/stringFunctions.o utils/stringFunctions.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/stringFunctions.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/stringFunctions_nomain.o utils/stringFunctions.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/utils/stringFunctions.o ${OBJECTDIR}/utils/stringFunctions_nomain.o;\
 	fi
 
 # Run Test Targets

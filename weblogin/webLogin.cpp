@@ -30,7 +30,7 @@
 
 
 webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), loggedIn(false) {
-  y::utils::Log().add("start of webLogin app");
+  y::utils::Log().add(L"start of webLogin app");
   
   setTitle("Login Application");
   theme = new Wt::WBootstrapTheme();
@@ -88,30 +88,30 @@ webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), logged
   loginFeedback = new Wt::WText(" ");
   feedbackBox->addWidget(loginFeedback);
   
-#ifdef DEBUG
+/*#ifdef DEBUG
   account = &y::ldap::Server().getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
   loggedIn = true;
   createContents();
   root()->addWidget(homePage);
-#else 
+#else */
   loginDialog->show();
-#endif
+//#endif
 }
 
 void webLogin::loginButtonClicked() {
   Wt::WString id = nameEdit->text();
   Wt::WString passwd = passEdit->text();
   
-  account = &y::ldap::Server().getAccount(y::ldap::UID(id.toUTF8()));
+  account = &y::ldap::Server().getAccount(y::ldap::UID(id));
   if(!account->isNew()) {
     
-    loggedIn =  y::ldap::Server().auth(account->dn(), y::ldap::PASSWORD(passwd.toUTF8()));
+    loggedIn =  y::ldap::Server().auth(account->dn(), y::ldap::PASSWORD(passwd));
 
     if(loggedIn) {
       loginDialog->hide();
       loginFeedback->setStyleClass("");
-      std::string message(account->uid()());
-      message += " has just logged on to the web interface.";
+      std::wstring message(account->uid()());
+      message += L" has just logged on to the web interface.";
       y::utils::Log().add(message);
 
     } else {
@@ -154,13 +154,13 @@ void webLogin::createContents() {
           deferCreate(boost::bind(&webLogin::accountFunc, this)), 
           Wt::WMenuItem::PreLoading);
   
-  if(account->group()().compare("personeel") == 0) {
+  if(account->group()().compare(L"personeel") == 0) {
     mainMenu->addItem("Web Toegang", 
             deferCreate(boost::bind(&webLogin::webAccessFunc, this)), 
             Wt::WMenuItem::PreLoading);
   }
   
-  if(account->uid()().compare("yvanym") == 0) {
+  if(account->uid()().compare(L"yvanym") == 0) {
     mainMenu->addItem("Wisa Import",
             deferCreate(boost::bind(&webLogin::wisaImportFunc, this)),
             Wt::WMenuItem::LazyLoading);
@@ -173,8 +173,8 @@ void webLogin::createContents() {
   }
   
   // show this for last year students (or me for testing)
-  std::string group = account->group()();
-  if(group[0] == '6' || group[0] == '7' || (account->uid()().compare("yvanym") == 0)) {
+  std::string group = str8(account->group()());
+  if(group[0] == '6' || group[0] == '7' || (account->uid()().compare(L"yvanym") == 0)) {
     mainMenu->addItem("Jaarboek", 
             deferCreate(boost::bind(&webLogin::yearbookFunc, this)), 
             Wt::WMenuItem::PreLoading);

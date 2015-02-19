@@ -49,21 +49,21 @@ namespace y {
     public:
       database(server & serverObject);
       
-      bool use(const std::string & dbName);
+      bool use(const std::wstring & dbName);
       
-      bool createTable(const std::string & tableName, row & description);
-      bool deleteTable(const std::string & tableName);
-      bool tableExists(const std::string & tableName);
+      bool createTable(const std::wstring & tableName, row & description);
+      bool deleteTable(const std::wstring & tableName);
+      bool tableExists(const std::wstring & tableName);
       
-      bool getTables(container<std::string> & tables);
-      bool getAllRows(const std::string & table, container<row> & rows, container<order> & order = defaultOrder);
-      bool getRows(const std::string & table, container<row> & rows, field & condition, container<order> & order = defaultOrder, COMPARE c = COMPARE::equal);
+      bool getTables(container<std::wstring> & tables);
+      bool getAllRows(const std::wstring & table, container<row> & rows, container<order> & order = defaultOrder);
+      bool getRows(const std::wstring & table, container<row> & rows, field & condition, container<order> & order = defaultOrder, COMPARE c = COMPARE::equal);
 
-      bool setRow(const std::string & table, row & values, field & condition, COMPARE c = COMPARE::equal);
-      bool addRow(const std::string & table, row & values);
-      bool delRow(const std::string & table, field & condition, COMPARE c = COMPARE::equal);
+      bool setRow(const std::wstring & table, row & values, field & condition, COMPARE c = COMPARE::equal);
+      bool addRow(const std::wstring & table, row & values);
+      bool delRow(const std::wstring & table, field & condition, COMPARE c = COMPARE::equal);
       
-      bool execute(const std::string & query);
+      bool execute(const std::wstring & query);
       
     private:
       void parseRows(std::unique_ptr<sql::ResultSet> & result, container<row> & rows);

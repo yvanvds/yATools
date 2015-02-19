@@ -10,6 +10,7 @@
 #include <string.h>
 #include <boost/regex.hpp>
 #include <cctype>
+#include "utils/convert.h"
 
 #include "../utils/random.h"
 
@@ -25,7 +26,7 @@ y::utils::security & y::utils::Security() {
 
 bool y::utils::security::test(const y::ldap::account& account, const std::string& password) {
   const y::ldap::PASSWORD & p = account.password();
-  std::string removeCrypt = p();
+  std::string removeCrypt = str8(p());
   removeCrypt.erase(0, 7);
   const char * pass = removeCrypt.c_str();
   char * result;

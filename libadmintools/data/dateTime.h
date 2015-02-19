@@ -16,7 +16,7 @@ namespace y {
     class dateTime {
     public:
       dateTime();
-      dateTime(const std::string & dbFormat);
+      dateTime(const std::wstring & dbFormat);
       
       dateTime & day    (int value);
       dateTime & month  (int value);
@@ -32,8 +32,8 @@ namespace y {
       int minutes() const;
       int seconds() const;
       
-      std::string dbFormat(                         ) const;
-      void        dbFormat(const std::string & value)      ;
+      std::wstring dbFormat(                          ) const;
+      void         dbFormat(const std::wstring & value)      ;
       
       int _day    ;
       int _month  ;

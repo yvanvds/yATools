@@ -11,7 +11,10 @@
 #include <vector>
 #include "utils/log.h"
 #include "utils/config.h"
+#include "utils/convert.h"
+#include "utils/stringFunctions.h"
 #include <iostream>
+#include <boost/locale.hpp>
 
 // global object
 y::ldap::server & y::ldap::Server() {
@@ -23,8 +26,8 @@ y::ldap::server::server() : _connected(false), _ldapMode(LDAP_MODE_NONE) {
   // set timeout values
   timeOut.tv_sec = 300L;
   timeOut.tv_usec = 0L;
-  if(ldap_initialize(&_server, y::utils::Config().getLdapHost().c_str())) {
-    y::utils::Log().add("y::ldap::server::server() : unable to initialize LDAP");
+  if(ldap_initialize(&_server, str8(y::utils::Config().getLdapHost()).c_str())) {
+    y::utils::Log().add(L"y::ldap::server::server() : unable to initialize LDAP");
     return;
   }
   
@@ -34,21 +37,21 @@ y::ldap::server::server() : _connected(false), _ldapMode(LDAP_MODE_NONE) {
   // log in as admin
   BerValue credentials;
   // BerValue doesn't take a const char *
-  credentials.bv_val = const_cast<char*>(utils::Config().getLdapPasswd().c_str());
-  credentials.bv_len = strlen(utils::Config().getLdapPasswd().c_str());
+  credentials.bv_val = const_cast<char*>(str8(utils::Config().getLdapPasswd()).c_str());
+  credentials.bv_len = strlen(str8(utils::Config().getLdapPasswd()).c_str());
   
   BerValue * serverCred;
   int result = ldap_sasl_bind_s(_server, 
-          y::utils::Config().getLdapAdminDN().c_str(), 
+          str8(y::utils::Config().getLdapAdminDN()).c_str(), 
           NULL, &credentials, NULL, NULL, &serverCred);
   
   // check login result
   if(result != LDAP_SUCCESS) {
-    y::utils::Log().add("y::ldap::server::server() : unable to bind to LDAP");
+    y::utils::Log().add(L"y::ldap::server::server() : unable to bind to LDAP");
     return;
   }
   //y::utils::Log().add("y::ldap::server::server() : connected to LDAP server");
-  _base = utils::Config().getLdapBaseDN();
+  _base = str8(utils::Config().getLdapBaseDN());
   
 
 }
@@ -58,7 +61,7 @@ y::ldap::server::~server() {
 }
 
 bool y::ldap::server::getData(y::ldap::dataset& rs, bool isDN) {
-  std::string base(rs.directory);
+  std::string base(str8(rs.directory));
   if(!isDN) {
     if(rs.directory.size()) base.append(",");
     base.append(_base);
@@ -71,7 +74,7 @@ bool y::ldap::server::getData(y::ldap::dataset& rs, bool isDN) {
           _server, 
           base.c_str(), 
           LDAP_SCOPE_SUBTREE, 
-          rs.filter.c_str(), 
+          str8(rs.filter).c_str(), 
           NULL, 
           0, 
           NULL, 
@@ -99,7 +102,7 @@ bool y::ldap::server::getData(y::ldap::dataset& rs, bool isDN) {
     
     // add DN
     char * dn = ldap_get_dn(_server, entry);
-    d.add("DN", dn);
+    d.add(L"DN", strW(dn));
     ldap_memfree(dn);
     
     // parse attributes
@@ -113,7 +116,7 @@ bool y::ldap::server::getData(y::ldap::dataset& rs, bool isDN) {
       
       if((values = ldap_get_values_len(_server, entry, attr)) != NULL) {
         for (int i = 0; values[i] != NULL; i++) {
-          d.add(attr, values[i]->bv_val);
+          d.add(strW(attr), strW(values[i]->bv_val));
         }
       }
       
@@ -219,7 +222,7 @@ container<y::ldap::account> & y::ldap::server::getAccounts() {
   assert(_accounts.empty());
   
   dataset d;
-  d.create("objectClass=*", "ou=people");
+  d.create(L"objectClass=*", L"ou=people");
   for(int i = 0; i < d.elms(); i++) {
     data & temp = d.get(i);
     // if data has no uid, it's not an account
@@ -242,7 +245,7 @@ container<y::ldap::group> & y::ldap::server::getGroups() {
   
   {
     dataset d;
-    d.create("objectClass=*", "ou=mailGroups");
+    d.create(L"objectClass=*", L"ou=mailGroups");
     for(int i = 0; i < d.elms(); i++) {
       group & g = _groups.New();
       g.load(d.get(i));
@@ -250,7 +253,7 @@ container<y::ldap::group> & y::ldap::server::getGroups() {
   }
   {
     dataset d;
-    d.create("objectClass=*", "ou=editableMailGroups");
+    d.create(L"objectClass=*", L"ou=editableMailGroups");
     for(int i = 0; i < d.elms(); i++) {
       group & g = _groups.New();
       g.load(d.get(i));
@@ -262,8 +265,8 @@ container<y::ldap::group> & y::ldap::server::getGroups() {
 
 bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) { 
   // setup second connection for auth function
-  if(ldap_initialize(&_authServer, y::utils::Config().getLdapHost().c_str())) {
-    y::utils::Log().add("y::ldap::server::server() : unable to initialize LDAP for auth function");
+  if(ldap_initialize(&_authServer, str8(y::utils::Config().getLdapHost()).c_str())) {
+    y::utils::Log().add(L"y::ldap::server::server() : unable to initialize LDAP for auth function");
     return false;
   }
   
@@ -271,13 +274,16 @@ bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) {
   ldap_set_option(_authServer, LDAP_OPT_PROTOCOL_VERSION, &version);
   
   BerValue credentials;
+  //TODO for some reason this goes wrong if i delete the next two lines???
+  std::string test(str8(password()));
+  std::string test2(test.c_str());
   // BerValue doesn't take a const char *
-  credentials.bv_val = const_cast<char*>(password().c_str());
-  credentials.bv_len = strlen(password().c_str());
+  credentials.bv_val = const_cast<char*>(str8(password()).c_str());
+  credentials.bv_len = strlen(str8(password()).c_str());
   
   BerValue * serverCred;
   int result = ldap_sasl_bind_s(_authServer, 
-          dn().c_str(), 
+          str8(dn()).c_str(), 
           NULL, &credentials, NULL, NULL, &serverCred);
   ldap_unbind_ext(_authServer, NULL, NULL);
   
@@ -320,20 +326,20 @@ LDAPMod ** y::ldap::server::createMods(dataset& values) {
       default: assert(false);
     }
     
-    std::string type = d.getValue("type");
+    std::string type = str8(d.getValue(L"type"));
     mods[i]->mod_type = new char[type.size() + 1];
     std::copy(type.begin(), type.end(), mods[i]->mod_type);
     mods[i]->mod_type[type.size()] = '\0';
     
-    mods[i]->mod_vals.modv_strvals = new char*[d.elms("values") + 1];
-    for(int j = 0; j < d.elms("values"); j++) {
-      std::string value = d.getValue("values", j);
+    mods[i]->mod_vals.modv_strvals = new char*[d.elms(L"values") + 1];
+    for(int j = 0; j < d.elms(L"values"); j++) {
+      std::string value = str8(d.getValue(L"values", j));
       mods[i]->mod_vals.modv_strvals[j] = new char[value.size() + 1];
       std::copy(value.begin(), value.end(), mods[i]->mod_vals.modv_strvals[j]);
       mods[i]->mod_vals.modv_strvals[j][value.size()] = '\0';
     }
     
-    mods[i]->mod_vals.modv_strvals[d.elms("values")] = NULL;
+    mods[i]->mod_vals.modv_strvals[d.elms(L"values")] = NULL;
   }
   
   return mods;
@@ -354,10 +360,10 @@ void y::ldap::server::releaseMods(LDAPMod** mods) {
 void y::ldap::server::modify(const DN & dn, dataset & values) {
   LDAPMod ** mods = createMods(values);
 
-  if(int result = ldap_modify_ext_s(_server, dn().c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
-    std::string message;
-    message.append("y::ldap::server::modify() : ");
-    message.append(ldap_err2string(result));
+  if(int result = ldap_modify_ext_s(_server, str8(dn()).c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
+    std::wstring message;
+    message.append(L"y::ldap::server::modify() : ");
+    message.append(strW(ldap_err2string(result)));
     y::utils::Log().add(message);
   }
   
@@ -370,10 +376,10 @@ void y::ldap::server::add(const DN& dn, dataset& values) {
   //std::cout << dn() << std::endl;
   //printMods(mods);
 
-  if(int result = ldap_add_ext_s(_server, dn().c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
-    std::string message;
-    message.append("y::ldap::server::modify() : ");
-    message.append(ldap_err2string(result));
+  if(int result = ldap_add_ext_s(_server, str8(dn()).c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
+    std::wstring message;
+    message.append(L"y::ldap::server::modify() : ");
+    message.append(strW(ldap_err2string(result)));
     y::utils::Log().add(message);
   }
   
@@ -382,18 +388,18 @@ void y::ldap::server::add(const DN& dn, dataset& values) {
 }
 
 void y::ldap::server::remove(const DN& dn) {
-  if(int result = ldap_delete_ext_s(_server, dn().c_str(), NULL, NULL) != LDAP_SUCCESS) {
-    std::string message;
-    message.append("y::ldap::server::removeEntry() : ");
-    message.append(ldap_err2string(result));
+  if(int result = ldap_delete_ext_s(_server, str8(dn()).c_str(), NULL, NULL) != LDAP_SUCCESS) {
+    std::wstring message;
+    message.append(L"y::ldap::server::removeEntry() : ");
+    message.append(strW(ldap_err2string(result)));
     y::utils::Log().add(message);
   }
 }
 
-int y::ldap::server::findAccounts(const std::string& query, std::vector<UID_NUMBER> & results) {
+int y::ldap::server::findAccounts(const std::wstring& query, std::vector<UID_NUMBER> & results) {
   dataset rs;
   rs.filter = query;
-  rs.directory = "ou=people";
+  rs.directory = L"ou=people";
   
   if(getData(rs)) {
     for(int i = 0; i < rs.elms(); i++) {
@@ -402,7 +408,7 @@ int y::ldap::server::findAccounts(const std::string& query, std::vector<UID_NUMB
       
       // search if this account is already loaded in memory
       for(int j = 0; j < _accounts.elms(); j++) {
-        if(std::stoi(d.getValue("uidNumber")) == _accounts[j].uidNumber()()) {
+        if(std::stoi(str8(d.getValue(L"uidNumber"))) == _accounts[j].uidNumber()()) {
           found = true;
           results.push_back(_accounts[j].uidNumber());
           break;
@@ -421,23 +427,34 @@ int y::ldap::server::findAccounts(const std::string& query, std::vector<UID_NUMB
   return results.size();
 }
 
-y::ldap::UID y::ldap::server::createUID(const std::string& cn, const std::string& sn) {
-  int pos = 0;
-  if(sn.find("de"    ) == 0) pos = 2;
-  if(sn.find("ver"   ) == 0) pos = 3;
-  if(sn.find("van"   ) == 0) pos = 3;
-  if(sn.find("vande" ) == 0) pos = 5;
-  if(sn.find("vander") == 0) pos = 6;
+y::ldap::UID y::ldap::server::createUID(const std::wstring& cn, const std::wstring& sn) {
+  boost::locale::generator gen;
+  std::locale loc = gen("en_US.UTF-8");
+  std::locale::global(loc);
   
-  std::string id = sn.substr(pos, 5);
-  id += cn.substr(0, 1);
+  //std::setlocale(LC_CTYPE, "en_US.UTF-8");
+  std::wstring first(boost::locale::to_lower(cn));
+  std::wstring last(boost::locale::to_lower(sn));
+  
+  y::utils::keepOnlyChars(first);
+  y::utils::keepOnlyChars(last);
+  
+  int pos = 0;
+  if(last.find(L"de"    ) == 0) pos = 2;
+  if(last.find(L"ver"   ) == 0) pos = 3;
+  if(last.find(L"van"   ) == 0) pos = 3;
+  if(last.find(L"vande" ) == 0) pos = 5;
+  if(last.find(L"vander") == 0) pos = 6;
+  
+  std::wstring id = last.substr(pos, 5);
+  id += first.substr(0, 1);
   int counter = 0;
   std::vector<UID_NUMBER> result;
-  std::string test_id(id);
+  std::wstring test_id(id);
   
   while (true) {
-    std::string query;
-    query += "uid=";
+    std::wstring query;
+    query += L"uid=";
     query += test_id;
     
     if(!findAccounts(query, result)) {     
@@ -446,28 +463,38 @@ y::ldap::UID y::ldap::server::createUID(const std::string& cn, const std::string
     
     counter++;
     test_id = id;
-    test_id.append(std::to_string(counter));
+    test_id.append(std::to_wstring(counter));
     result.clear();
   }
 }
 
-y::ldap::MAIL y::ldap::server::createMail(const std::string& cn, const std::string& sn) {
-  std::string mail = cn;
-  mail += "."; mail += sn;
-  mail += "@"; mail += y::utils::Config().getDomain();
+y::ldap::MAIL y::ldap::server::createMail(const std::wstring& cn, const std::wstring& sn) {
+  boost::locale::generator gen;
+  std::locale loc = gen("en_US.UTF-8");
+  std::locale::global(loc);
   
-  std::string query;
-  query = "(mail="; query += mail; query += ")";
+  std::wstring first(boost::locale::to_lower(cn));
+  std::wstring last(boost::locale::to_lower(sn));
+  
+  y::utils::keepOnlyChars(first);
+  y::utils::keepOnlyChars(last);
+  
+  std::wstring mail = first;
+  mail += L"."; mail += last;
+  mail += L"@"; mail += y::utils::Config().getDomain();
+  
+  std::wstring query;
+  query = L"(mail="; query += mail; query += L")";
   std::vector<UID_NUMBER> result;
   int counter = 0;
   
   while(findAccounts(query, result) > 0) {
     result.clear();
     counter++;
-    mail = cn;
-    mail += "."; mail += sn; mail += std::to_string(counter);
-    mail += "@"; mail += y::utils::Config().getDomain();   
-    query = "(mail="; query += mail; query += ")";
+    mail = first;
+    mail += L"."; mail += last; mail += std::to_wstring(counter);
+    mail += L"@"; mail += y::utils::Config().getDomain();   
+    query = L"(mail="; query += mail; query += L")";
   }
   
   return MAIL(mail);

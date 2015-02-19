@@ -20,7 +20,7 @@ namespace y {
        * @param message : The message to add
        * @return 
        */
-      log & add(const std::string & message);
+      log & add(const std::wstring & message);
 
       /**
        * Enable the use of the console for logging
@@ -42,7 +42,7 @@ namespace y {
       bool _useConsole;
       bool _useFile   ;
       std::string _file;
-      std::ofstream _stream;
+      std::wofstream _stream;
     };
 
     // global object (functor)

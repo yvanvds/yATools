@@ -27,42 +27,42 @@ void dataServerTest::tearDown() {
 }
 
 void dataServerTest::testCreate() {
-  if(server->hasDatabase("serverUnitTest")) {
-    server->drop("serverUnitTest");
+  if(server->hasDatabase(L"serverUnitTest")) {
+    server->drop(L"serverUnitTest");
   }
-  if (server->hasDatabase("serverUnitTest")) {
+  if (server->hasDatabase(L"serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
   
-  server->create("serverUnitTest");
+  server->create(L"serverUnitTest");
   
-  if (!server->hasDatabase("serverUnitTest")) {
+  if (!server->hasDatabase(L"serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
-  server->drop("serverUnitTest");
+  server->drop(L"serverUnitTest");
 }
 
 void dataServerTest::testDrop() {
-  if(!server->hasDatabase("serverUnitTest")) {
-    server->create("serverUnitTest");
+  if(!server->hasDatabase(L"serverUnitTest")) {
+    server->create(L"serverUnitTest");
   }
-  if (!server->hasDatabase("serverUnitTest")) {
+  if (!server->hasDatabase(L"serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
-  server->drop("serverUnitTest");
-  if (server->hasDatabase("serverUnitTest")) {
+  server->drop(L"serverUnitTest");
+  if (server->hasDatabase(L"serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void dataServerTest::testHasDatabase() {
-  server->create("serverUnitTest");
-  if (!server->hasDatabase("serverUnitTest")) {
+  server->create(L"serverUnitTest");
+  if (!server->hasDatabase(L"serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
   
-  server->drop("serverUnitTest");
-  if (server->hasDatabase("serverUnitTest")) {
+  server->drop(L"serverUnitTest");
+  if (server->hasDatabase(L"serverUnitTest")) {
     CPPUNIT_ASSERT(false);
   }
 }

@@ -7,6 +7,7 @@
 
 #include "smartschool.h"
 #include "utils/config.h"
+#include "utils/convert.h"
 #include "V3Binding.nsmap"
 //#include "ldap/account.h"
 
@@ -25,7 +26,7 @@ y::smartschool::~smartschool() {
 
 void y::smartschool::addCourse(const std::string& name, const std::string& description) {
   std::string result;
-  if(service.addCourse(y::utils::Config().getSSPw(), name, description, result) == SOAP_OK) {
+  if(service.addCourse(str8(y::utils::Config().getSSPw()), name, description, result) == SOAP_OK) {
   } else {
     service.soap_stream_fault(std::cerr);
   } 
@@ -48,12 +49,12 @@ void y::smartschool::addGroupsToCourse(const std::string& courseName, const std:
 
 void y::smartschool::saveUser(y::ldap::account& account) {
   std::string role;
-  if(account.group()().compare("extern") == 0) return;
-  if(account.group()().compare("externmail") == 0) return;
+  if(account.group()().compare(L"extern") == 0) return;
+  if(account.group()().compare(L"externmail") == 0) return;
   
-  if(account.group()().compare("directie") == 0) {
+  if(account.group()().compare(L"directie") == 0) {
     role = "directie";
-  } else if(account.group()().compare("personeel") == 0) {
+  } else if(account.group()().compare(L"personeel") == 0) {
     role = "leerkracht";
   } else {
     role = "leerling";
@@ -61,14 +62,14 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   
   xsd__anyType * result;
   if(service.saveUser(
-          y::utils::Config().getSSPw(),
+          str8(y::utils::Config().getSSPw()),
           std::to_string(account.uidNumber()()), 
-          account.uid()(),
-          account.getPasswordText(),
+          str8(account.uid()()),
+          str8(account.getPasswordText()),
           "", // password for first co-account
           "", // password for second co-account
-          account.cn()(), // first name
-          account.sn()(), // last name
+          str8(account.cn()()), // first name
+          str8(account.sn()()), // last name
           "", // extra names
           "", // initials
           "", // sex
@@ -79,7 +80,7 @@ void y::smartschool::saveUser(y::ldap::account& account) {
           "", // postal code
           "", // city
           "", // country
-          account.mail()(), // email
+          str8(account.mail()()), // email
           "", // mobile phone
           "", // home phone
           "", // fax

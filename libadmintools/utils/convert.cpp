@@ -7,6 +7,8 @@
 
 #include "convert.h"
 #include <string>
+#include <locale>
+#include <boost/locale.hpp>
 
 template<>
 int storageMultiplier<UTF8, UTF32>() { return 4; }
@@ -26,6 +28,11 @@ int storageMultiplier<UTF32, UTF8>() { return 1; }
 template<>
 int storageMultiplier<UTF32, UTF16>() { return 1; }
 
+template<>
+int storageMultiplier<WCHAR_T, UTF8>() { return 1; }
+
+template<>
+int storageMultiplier<UTF8, WCHAR_T>() { return 4; }
 
 std::string str8(const std::u16string& s)
 {
@@ -39,6 +46,14 @@ std::string str8(const std::u32string& s)
   static Converter<UTF8, UTF32> converter;
 
   return converter(s);
+}
+
+std::string str8(const std::wstring& s) {
+  return boost::locale::conv::from_utf(s, "UTF-8");
+}
+
+std::wstring strW(const std::string& s) {
+  return boost::locale::conv::to_utf<wchar_t>(s, "UTF-8");
 }
 
 std::u16string str16(const std::string& s)

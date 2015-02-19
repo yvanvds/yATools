@@ -12,7 +12,7 @@ class find {
 public:
   void printHelp();
   
-  void parse(int argc, char** argv);
+  void parse(int argc, char ** argv);
   
 private:
 

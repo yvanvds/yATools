@@ -17,19 +17,19 @@ namespace y {
     // because of issues in the past, our ldap fields for some
     // values are a bit confusing. This is why we keep a const list
     // with the intended name mapped to the current ldap field.
-    const std::string TYPE_UID_NUMBER("uidNumber"       );
-    const std::string TYPE_UID       ("uid"             );
-    const std::string TYPE_DN        ("DN"              );
-    const std::string TYPE_CN        ("cn"              );
-    const std::string TYPE_SN        ("sn"              );
-    const std::string TYPE_FULL_NAME ("displayName"     );
-    const std::string TYPE_HOMEDIR   ("homeDirectory"   );
-    const std::string TYPE_WISA_ID   ("employeeNumber"  );
-    const std::string TYPE_MAIL      ("mail"            );
-    const std::string TYPE_PASSWORD  ("title"           );
-    const std::string TYPE_BIRTHDAY  ("roomNumber"      );
-    const std::string TYPE_GID       ("departmentNumber");
-    const std::string TYPE_GID_NUMBER("gidNumber"       );
+    const std::wstring TYPE_UID_NUMBER(L"uidNumber"       );
+    const std::wstring TYPE_UID       (L"uid"             );
+    const std::wstring TYPE_DN        (L"DN"              );
+    const std::wstring TYPE_CN        (L"cn"              );
+    const std::wstring TYPE_SN        (L"sn"              );
+    const std::wstring TYPE_FULL_NAME (L"displayName"     );
+    const std::wstring TYPE_HOMEDIR   (L"homeDirectory"   );
+    const std::wstring TYPE_WISA_ID   (L"employeeNumber"  );
+    const std::wstring TYPE_MAIL      (L"mail"            );
+    const std::wstring TYPE_PASSWORD  (L"title"           );
+    const std::wstring TYPE_BIRTHDAY  (L"roomNumber"      );
+    const std::wstring TYPE_GID       (L"departmentNumber");
+    const std::wstring TYPE_GID_NUMBER(L"gidNumber"       );
     
     
     class account {
@@ -56,7 +56,7 @@ namespace y {
       const GID_NUMBER & groupID  () const; account & groupID  (const GID_NUMBER & value);
       
       // returns password if changed during this request, otherwise empty string
-      std::string getPasswordText();
+      std::wstring getPasswordText();
       
     private:
       bool load(const UID  & id);
@@ -81,7 +81,7 @@ namespace y {
       watch<GID_NUMBER>  _groupID  ;
 
       bool _new; // false if the account is loaded from ldap
-      std::string _passwordClearText; // used to update samba password
+      std::wstring _passwordClearText; // used to update samba password
       
       // new accounts don't have these
       bool _hasKrbName; 

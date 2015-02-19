@@ -148,7 +148,7 @@ void accountManager::saveButtonClicked() {
   feedback->setStyleClass("alert");
   feedback->setText("");
   
-  if (!y::ldap::Server().auth(account->dn(), y::ldap::PASSWORD(currentPW.toUTF8()))) {
+  if (!y::ldap::Server().auth(account->dn(), y::ldap::PASSWORD(currentPW))) {
     currentPassword->setStyleClass("form-control invalid");
     currentPassword->setText("");
     currentPassword->setFocus();
@@ -189,7 +189,7 @@ void accountManager::saveButtonClicked() {
   }
 
   // if we get here, change the user's password
-  account->password(y::ldap::PASSWORD(newPW1.toUTF8()));
+  account->password(y::ldap::PASSWORD(newPW1));
   y::ldap::Server().commitChanges();
   feedback->setText("Je wachtwoord is gewijzigd.");
   feedback->setStyleClass("alert alert-success"); 

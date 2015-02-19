@@ -85,6 +85,8 @@
       <itemPath>utils/security.h</itemPath>
       <itemPath>utils/sha1.cpp</itemPath>
       <itemPath>utils/sha1.h</itemPath>
+      <itemPath>utils/stringFunctions.cpp</itemPath>
+      <itemPath>utils/stringFunctions.h</itemPath>
       <itemPath>utils/watch.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -249,6 +251,7 @@
             <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
             <linkerOptionItem>-lboost_regex</linkerOptionItem>
             <linkerOptionItem>-lgsoapssl++</linkerOptionItem>
+            <linkerOptionItem>-lboost_locale</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -671,6 +674,10 @@
       </item>
       <item path="utils/sha1.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="utils/stringFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/stringFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="utils/tests/utilsSecurityTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="utils/tests/utilsSecurityTest.h" ex="false" tool="3" flavor2="0">
@@ -726,6 +733,7 @@
             <linkerLibLibItem>ldap</linkerLibLibItem>
             <linkerOptionItem>-lboost_iostreams</linkerOptionItem>
             <linkerOptionItem>-lgsoapssl++</linkerOptionItem>
+            <linkerOptionItem>-lboost_locale</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -1145,6 +1153,10 @@
       <item path="utils/sha1.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="utils/sha1.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils/stringFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils/stringFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="utils/tests/utilsSecurityTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

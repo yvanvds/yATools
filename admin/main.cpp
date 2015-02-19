@@ -18,13 +18,20 @@
 #include "proxyManager.h"
 #include "smartschool/smartschool.h"
 #include "ldap/server.h"
+#include "utils/convert.h"
+#include <boost/locale.hpp>
 
 using namespace std;
 
 void printBasicHelp();
 void printUserHelp ();
 
-int main(int argc, char** argv) {
+int main(int argc, char ** argv) {
+  boost::locale::generator gen;
+  std::locale loc = gen("en_US.UTF-8");
+  std::locale::global(loc);
+  std::wcout.imbue(loc);
+
 #ifndef DEBUG
   if(getuid()) {
     cout << "You must be root to execute this command!" << endl;
@@ -38,32 +45,32 @@ int main(int argc, char** argv) {
   
   y::utils::Config().load();
   
-  string command(argv[1]);
+  wstring command(strW(argv[1]));
 
-  if(command.compare("password") == 0) {
+  if(command.compare(L"password") == 0) {
     Password().parse(argc - 2, argv + 2);
     return 0;
-  } else if(command.compare("show") == 0) {
+  } else if(command.compare(L"show") == 0) {
     Show().parse(argc - 2, argv + 2);
     return 0;
-  } else if(command.compare("find") == 0) {
+  } else if(command.compare(L"find") == 0) {
     Find().parse(argc - 2, argv + 2);
     return 0;
-  } else if(command.compare("user") == 0) {
+  } else if(command.compare(L"user") == 0) {
     if(argc < 3) {
       printUserHelp();
       return 0;
     }
-    string userCommand(argv[2]);
-    if(userCommand.compare("add") == 0) {
+    wstring userCommand(strW(argv[2]));
+    if(userCommand.compare(L"add") == 0) {
       AddUser().parse(argc - 3, argv + 3);
       return 0;
-    } else if(userCommand.compare("delete") == 0) {
+    } else if(userCommand.compare(L"delete") == 0) {
       RemoveUser().parse(argc - 3, argv + 3);
       return 0;
     }
     return 0;
-  } else if (command.compare("proxy") == 0) {
+  } else if (command.compare(L"proxy") == 0) {
     ProxyManager().parse(argc - 2, argv + 2);
     return 0;
   }

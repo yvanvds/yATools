@@ -46,6 +46,16 @@ struct UTF32 {
 #endif
 };
 
+struct WCHAR_T {
+  typedef char32_t storage_type;
+  static const char* iconvName()
+#if BYTE_ORDER == BIG_ENDIAN
+    { return "WCHAR_T"; }
+#else
+    { return "WCHAR_T"; }
+#endif
+};
+
 
 template<class T, class F> int storageMultiplier();
 
@@ -85,6 +95,9 @@ class Converter {
 
 extern std::string str8(const std::u16string& s);
 extern std::string str8(const std::u32string& s);
+extern std::string str8(const std::wstring&   s);
+
+extern std::wstring strW(const std::string & s);
 
 extern std::u16string str16(const std::string& s);
 extern std::u16string str16(const std::u32string& s);

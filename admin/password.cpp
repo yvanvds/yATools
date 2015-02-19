@@ -10,6 +10,7 @@
 #include "ldap/server.h"
 #include "utils/security.h"
 #include "samba/samba.h"
+#include "utils/convert.h"
 
 using namespace std;
 
@@ -34,9 +35,9 @@ void password::parse(int argc, char ** argv) {
     printHelp();
     return;
   } else {
-    std::string uid(argv[0]);
+    std::wstring uid(strW(argv[0]));
     
-    if(uid.compare("-?") == 0) {
+    if(uid.compare(L"-?") == 0) {
       printHelp();
       return;
     }
@@ -46,15 +47,14 @@ void password::parse(int argc, char ** argv) {
       cout << "This account does not exist." << endl;
       return;
     } else {
-      std::string password;
+      std::wstring password;
       if(argc > 1) {
-        password = argv[1];
+        password = strW(argv[1]);
       } else {
-        password = y::utils::Security().makePassword(8);
+        password = strW(y::utils::Security().makePassword(8));
       }
-      cout << password;
       
-      if(!y::utils::Security().isGoodPassword(password)) {
+      if(!y::utils::Security().isGoodPassword(str8(password))) {
         cout << "A password must be between 8-20 character long." << endl;
         cout << "It must contain one lower and one upper case character." << endl;
         cout << "It also needs one or more numbers." << endl;
@@ -64,8 +64,8 @@ void password::parse(int argc, char ** argv) {
       account.password(y::ldap::PASSWORD(password));
       y::ldap::Server().commitChanges();
       
-      cout << "user    : " << account.uid()() << endl;
-      cout << "password: " << password        << endl;
+      wcout << L"user    : " << account.uid()() << endl;
+      wcout << L"password: " << password        << endl;
       
     }
   }
