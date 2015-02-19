@@ -250,9 +250,9 @@ bool y::ldap::account::save() {
         // the user does not exist in smartschool
         y::Smartschool().saveUser(*this);
         // also set primary group
-        if(_group()().compare(L"personeel")) {
+        if(_group()().compare(L"personeel") == 0) {
           y::Smartschool().addUserToGroup(*this, "Leerkrachten", false);
-        } else if (_group()().compare(L"directie")) {
+        } else if (_group()().compare(L"directie") == 0) {
           y::Smartschool().addUserToGroup(*this, "Directie", false);
         }
       }
