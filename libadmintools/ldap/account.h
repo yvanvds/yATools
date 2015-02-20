@@ -31,6 +31,11 @@ namespace y {
     const std::wstring TYPE_GID       (L"departmentNumber");
     const std::wstring TYPE_GID_NUMBER(L"gidNumber"       );
     
+    enum WISA_IMPORT {
+      WI_NOT_ACCOUNTED, // initial status
+      WI_ACCOUNTED    , // a wisa account is found for this entry
+      WI_DISCARD      , // don't process in this session  
+    };
     
     class account {
     public:
@@ -55,8 +60,16 @@ namespace y {
       const GID        & group    () const; account & group    (const GID        & value);
       const GID_NUMBER & groupID  () const; account & groupID  (const GID_NUMBER & value);
       
+      // will flag this account for removal during server commit
+      void flagForRemoval   () { _flaggedForRemoval = true; }
+      bool flaggedForRemoval() { return _flaggedForRemoval; }   
+      
       // returns password if changed during this request, otherwise empty string
       std::wstring getPasswordText();
+      
+      // used for wisa import
+      WISA_IMPORT getImportStatus();
+      account & setImportStatus(WISA_IMPORT status);
       
     private:
       bool load(const UID  & id);
@@ -89,6 +102,9 @@ namespace y {
       bool _hasWisaID;
       bool _hasMail;
       bool _hasBirthday;
+      
+      WISA_IMPORT _importStatus;
+      bool _flaggedForRemoval;
       
       friend class server;
     };

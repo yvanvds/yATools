@@ -66,9 +66,12 @@ void y::gui::stackPage::showButtons(bool previous, bool next) {
 }
 
 void y::gui::stackPage::previousClicked() {
-  parent->showPage(pageIndex-1);
+  if (onPrevious()) parent->showPage(pageIndex-1);
 }
 
 void y::gui::stackPage::nextClicked() {
-  parent->showPage(pageIndex+1);
+  if(onNext()) parent->showPage(pageIndex+1);
 }
+
+
+

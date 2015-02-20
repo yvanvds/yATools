@@ -22,7 +22,7 @@ y::ldap::server & y::ldap::Server() {
   return s;
 }
 
-y::ldap::server::server() : _connected(false), _ldapMode(LDAP_MODE_NONE) {
+y::ldap::server::server() : _connected(false), _allAccountsLoaded(false), _allGroupsLoaded(false) {
   // set timeout values
   timeOut.tv_sec = 300L;
   timeOut.tv_usec = 0L;
@@ -133,10 +133,6 @@ bool y::ldap::server::getData(y::ldap::dataset& rs, bool isDN) {
 }
 
 y::ldap::account & y::ldap::server::getAccount(const UID & id) {
-  // make sure we're in single mode
-  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_SINGLE;
-  assert(_ldapMode == LDAP_MODE_SINGLE);
-  
   // first check if already in memory
   for(int i = 0; i < _accounts.elms(); i++) {
     if(_accounts[i].uid() == id) {
@@ -150,10 +146,6 @@ y::ldap::account & y::ldap::server::getAccount(const UID & id) {
 }
 
 y::ldap::account & y::ldap::server::getAccount(UID_NUMBER id) {
-  // make sure we're in single mode
-  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_SINGLE;
-  assert(_ldapMode == LDAP_MODE_SINGLE);
-  
   // first check if already in memory
   for(int i = 0; i < _accounts.elms(); i++) {
     if(_accounts[i].uidNumber() == id) {
@@ -167,10 +159,6 @@ y::ldap::account & y::ldap::server::getAccount(UID_NUMBER id) {
 }
 
 y::ldap::account & y::ldap::server::getAccount(const DN & id) {
-  // make sure we're in single mode
-  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_SINGLE;
-  assert(_ldapMode == LDAP_MODE_SINGLE);
-  
   // first check if already in memory
   for(int i = 0; i < _accounts.elms(); i++) {
     if(_accounts[i].dn() == id) {
@@ -184,9 +172,6 @@ y::ldap::account & y::ldap::server::getAccount(const DN & id) {
 }
 
 y::ldap::group & y::ldap::server::getGroup(const DN& id) {
-  // make sure we're in single mode
-  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_SINGLE;
-  assert(_ldapMode == LDAP_MODE_SINGLE);
   
   for(int i = 0; i < _groups.elms(); i++) {
     if(_groups[i].dn() == id) {
@@ -199,11 +184,7 @@ y::ldap::group & y::ldap::server::getGroup(const DN& id) {
   return g;
 }
 
-y::ldap::group & y::ldap::server::getGroup(const CN& id, bool editable) {
-  // make sure we're in single mode
-  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_SINGLE;
-  assert(_ldapMode == LDAP_MODE_SINGLE);
-  
+y::ldap::group & y::ldap::server::getGroup(const CN& id, bool editable) {  
   for(int i = 0; i < _groups.elms(); i++) {
     if(_groups[i].cn() == id && _groups[i].editable() == editable) {
       return _groups[i];
@@ -217,51 +198,86 @@ y::ldap::group & y::ldap::server::getGroup(const CN& id, bool editable) {
 }
 
 container<y::ldap::account> & y::ldap::server::getAccounts() {
-  // make sure we're in full mode
-  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_FULL;
-  assert(_ldapMode == LDAP_MODE_FULL);
+  // don't do this twice
+  if(_allAccountsLoaded) return _accounts;
   
-  // make sure the accounts are not loaded yet
-  assert(_accounts.empty());
+  // keep track of accounts we've already loaded
+  container<std::wstring> loaded;
+  for(int i = 0; i < _accounts.elms(); i++) {
+    loaded.New() = _accounts[i].uid()();
+  }
   
   dataset d;
   d.create(L"objectClass=*", L"ou=people");
   for(int i = 0; i < d.elms(); i++) {
     data & temp = d.get(i);
     // if data has no uid, it's not an account
-    if(temp.getValue(TYPE_UID).size()) {
-      account & a = _accounts.New();
-      a.load(temp);
+    if(temp.getValue(TYPE_UID).size() && std::stoi(temp.getValue(TYPE_UID_NUMBER)) > 500) {
+      bool found = false;
+      for (int i = 0; i < loaded.elms(); i++) {
+        if(loaded[i].compare(temp.getValue(TYPE_UID)) == 0) {
+          found = true;
+          break;
+        }
+      }
+      if(!found) {
+        account & a = _accounts.New();
+        a.load(temp);
+      }
     }
   }
+  _allAccountsLoaded = true;
   
   return _accounts;
 }
 
 container<y::ldap::group> & y::ldap::server::getGroups() {
-  // make sure we're in full mode
-  if(_ldapMode == LDAP_MODE_NONE) _ldapMode = LDAP_MODE_FULL;
-  assert(_ldapMode == LDAP_MODE_FULL);
+  // don't do this twice
+  if(_allGroupsLoaded) return _groups;
   
-  // make sure the accounts are not loaded yet
-  assert(_groups.empty());
+  // keep track of groups we've already loaded
+  container<std::wstring> loaded;
+  for(int i = 0; i < _groups.elms(); i++) {
+    loaded.New() = _groups[i].cn()();
+  }
   
   {
     dataset d;
     d.create(L"objectClass=*", L"ou=mailGroups");
     for(int i = 0; i < d.elms(); i++) {
-      group & g = _groups.New();
-      g.load(d.get(i));
+      data & temp = d.get(i);
+      bool found = false;
+      for (int i = 0; i < loaded.elms(); i++) {
+        if(loaded[i].compare(temp.getValue(TYPE_CN)) == 0) {
+          found = true;
+          break;
+        }
+      }
+      if(!found) {
+        group & g = _groups.New();
+        g.load(d.get(i));
+      }
     }
   }
   {
     dataset d;
     d.create(L"objectClass=*", L"ou=editableMailGroups");
     for(int i = 0; i < d.elms(); i++) {
-      group & g = _groups.New();
-      g.load(d.get(i));
+      data & temp = d.get(i);
+      bool found = false;
+      for (int i = 0; i < loaded.elms(); i++) {
+        if(loaded[i].compare(temp.getValue(TYPE_CN)) == 0) {
+          found = true;
+          break;
+        }
+      }
+      if(!found) {
+        group & g = _groups.New();
+        g.load(d.get(i));
+      }
     }
   }
+  _allGroupsLoaded = true;
   
   return _groups;
 }
@@ -519,6 +535,7 @@ bool y::ldap::server::commitChanges() {
 void y::ldap::server::clear() {
   _accounts.clear();
   _groups.clear();
-  _ldapMode = LDAP_MODE_NONE;
+  _allAccountsLoaded = false;
+  _allGroupsLoaded = false;
 }
 

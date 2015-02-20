@@ -88,14 +88,14 @@ webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), logged
   loginFeedback = new Wt::WText(" ");
   feedbackBox->addWidget(loginFeedback);
   
-/*#ifdef DEBUG
+#ifdef DEBUG
   account = &y::ldap::Server().getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
   loggedIn = true;
   createContents();
   root()->addWidget(homePage);
-#else */
+#else 
   loginDialog->show();
-//#endif
+#endif
 }
 
 void webLogin::loginButtonClicked() {
@@ -227,7 +227,7 @@ Wt::WWidget * webLogin::wisaImportFunc() {
   panel->setTitle("<h3>Wisa Import</h3>");
   panel->setStyleClass("panel panel-primary");
   panel->setCentralWidget(WisaImport().get());
-  panel->setMaximumSize(800, Wt::WLength::Auto);
+  panel->setMaximumSize(800, 800);
   return panel;
 }
 

@@ -34,7 +34,9 @@ y::ldap::account::account() :
   _hasGroup(false),
   _hasWisaID(false),
   _hasMail(false),
-  _hasBirthday(false)
+  _hasBirthday(false),
+  _importStatus(WI_NOT_ACCOUNTED),
+  _flaggedForRemoval(false)
   {}
 
 bool y::ldap::account::load(const data& d) {
@@ -404,4 +406,14 @@ y::ldap::account & y::ldap::account::groupID(const GID_NUMBER& value) {
 
 std::wstring y::ldap::account::getPasswordText() {
   return _passwordClearText;
+}
+
+
+y::ldap::WISA_IMPORT y::ldap::account::getImportStatus() {
+  return _importStatus;
+}
+
+y::ldap::account & y::ldap::account::setImportStatus(WISA_IMPORT status) {
+  _importStatus = status;
+  return *this;
 }

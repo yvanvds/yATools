@@ -37,8 +37,8 @@ namespace y {
       group & getGroup(const DN & id);
       group & getGroup(const CN & id, bool editable);
 
-      container<account> & getAccounts(); // do not mix with getAccount!
-      container<group  > & getGroups  (); // do not mix with getGroup!    
+      container<account> & getAccounts(); 
+      container<group  > & getGroups  ();     
 
       // uid numbers of accounts found by this query are stored in results.
       // the function returns the number of accounts found
@@ -71,16 +71,13 @@ namespace y {
       LDAP * _server;
       LDAP * _authServer;
       struct timeval timeOut;
-
-      enum LDAP_MODE {
-        LDAP_MODE_NONE,
-        LDAP_MODE_SINGLE,
-        LDAP_MODE_FULL,
-      } _ldapMode;
       
       friend class dataset;
       friend class account;
       friend class group  ;
+      
+      bool _allAccountsLoaded;
+      bool _allGroupsLoaded;
     };
 
     server & Server(); // global object

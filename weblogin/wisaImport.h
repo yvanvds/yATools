@@ -10,6 +10,7 @@
 
 #include "gui/stackPage.h"
 #include "gui/stackPageManager.h"
+#include "ldap/account.h"
 
 class wisaUpload : public y::gui::stackPage {
   public:
@@ -34,7 +35,52 @@ public:
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
 private:
-  Wt::WText * filename;
+  Wt::WTable * entries;
+};
+
+class wisaCompareFile : public y::gui::stackPage {
+public:
+
+  void setContent(Wt::WVBoxLayout * box);
+  void onShow();
+private:
+  Wt::WText * message1;
+  Wt::WText * message2;
+  Wt::WText * message3;
+  Wt::WText * message4;
+};
+
+class wisaNoID : public y::gui::stackPage {
+public:
+  void setContent(Wt::WVBoxLayout * box);
+  void onShow();
+  bool onNext();
+private:
+  Wt::WTable * entries;
+};
+
+class wisaCompareGroups : public y::gui::stackPage {
+public:
+  void setContent(Wt::WVBoxLayout * box);
+  void onShow();
+private:
+  Wt::WTable * entries;
+};
+
+class wisaCompareNames : public y::gui::stackPage {
+public:
+  void setContent(Wt::WVBoxLayout * box);
+  void onShow();
+private:
+  Wt::WTable * entries;
+};
+
+class wisaNewGroups : public y::gui::stackPage {
+public:
+  void setContent(Wt::WVBoxLayout * box);
+  void onShow();
+private:
+  Wt::WText * message;
 };
 
 class wisaImport {
@@ -44,12 +90,14 @@ public:
   std::string getWisaFile();
   
   struct wisaEntry {
+    wisaEntry() : link(nullptr) {}
     void set(std::vector<std::wstring> & line);
     std::wstring cn;
     std::wstring sn;
     std::wstring group;
     std::wstring date;
-    std::wstring ID;
+    int ID;
+    y::ldap::account * link;
   };
   
   container<wisaEntry> & getWisaContents();
@@ -62,6 +110,11 @@ private:
   
   wisaUpload * wUpload;
   wisaParseFile * WParseFile;
+  wisaNoID * WNoID;
+  wisaCompareFile * WCompareFile;
+  wisaCompareGroups * WCompareGroups;
+  wisaCompareNames * WCompareNames;
+  wisaNewGroups * WNewGroups;
 };
 
 wisaImport & WisaImport();

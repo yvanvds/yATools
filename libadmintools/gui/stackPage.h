@@ -24,7 +24,10 @@ namespace y {
       virtual void setContent(Wt::WVBoxLayout * box) = 0;
       virtual void onShow() = 0;
       //virtual void validateAll();
-
+      
+      virtual bool onNext() {return true;}
+      virtual bool onPrevious() {return true;}
+      
       //void showPreviousButton(bool value);
       //void showNextButton(bool value);
       //void showSaveButton(bool value);
