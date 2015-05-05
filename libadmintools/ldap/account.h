@@ -29,13 +29,7 @@ namespace y {
     const std::wstring TYPE_PASSWORD  (L"title"           );
     const std::wstring TYPE_BIRTHDAY  (L"roomNumber"      );
     const std::wstring TYPE_GID       (L"departmentNumber");
-    const std::wstring TYPE_GID_NUMBER(L"gidNumber"       );
-    
-    enum WISA_IMPORT {
-      WI_NOT_ACCOUNTED, // initial status
-      WI_ACCOUNTED    , // a wisa account is found for this entry
-      WI_DISCARD      , // don't process in this session  
-    };
+    const std::wstring TYPE_GID_NUMBER(L"gidNumber"       );   
     
     class account {
     public:

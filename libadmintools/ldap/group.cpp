@@ -17,7 +17,7 @@ y::ldap::group::group()
     _new(true), 
     _editable(true),
     _flaggedForCommit(false),
-    _flaggedForDelete(false){
+    _flaggedForRemoval(false){
 }
 
 bool y::ldap::group::load(const DN& id) {
@@ -82,30 +82,30 @@ void y::ldap::group::flagForCommit() {
   _flaggedForCommit = true;
 }
 
-const y::ldap::DN & y::ldap::group::dn() {
-  assert(!_flaggedForDelete);
+const y::ldap::DN & y::ldap::group::dn() const {
+  assert(!_flaggedForRemoval);
   return _dn();
 }
 
-const y::ldap::CN & y::ldap::group::cn() {
-  assert(!_flaggedForDelete);
+const y::ldap::CN & y::ldap::group::cn() const {
+  assert(!_flaggedForRemoval);
   return _cn();
 }
 
 container<std::wstring> & y::ldap::group::owners() {
-  assert(!_flaggedForDelete);
+  assert(!_flaggedForRemoval);
   return _owners;
 }
 
 container<std::wstring> & y::ldap::group::members() {
-  assert(!_flaggedForDelete);
+  assert(!_flaggedForRemoval);
   return _members;
 }
 
 y::ldap::group & y::ldap::group::editable(bool value) {
   // make sure this is only used with new groups
   assert(_new);
-  assert(!_flaggedForDelete);
+  assert(!_flaggedForRemoval);
   _editable = value;
   return (*this);
 }
@@ -118,19 +118,19 @@ bool y::ldap::group::isNew() {
   return _new;
 }
 
-void y::ldap::group::flagForDelete() {
+void y::ldap::group::flagForRemoval() {
   _flaggedForCommit = true; // delete is also a commit
-  _flaggedForDelete = true;
+  _flaggedForRemoval = true;
 }
 
-bool y::ldap::group::wilBeDeleted() {
-  return _flaggedForDelete;
+bool y::ldap::group::flaggedForRemoval() {
+  return _flaggedForRemoval;
 }
 
 bool y::ldap::group::save() {
   if(!_flaggedForCommit) return false;
   
-  if(_flaggedForDelete) {
+  if(_flaggedForRemoval) {
     Server().remove(_dn());
     // not really needed, but you never know
     _members.clear();

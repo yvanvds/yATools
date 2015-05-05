@@ -11,6 +11,7 @@
 #include "gui/stackPage.h"
 #include "gui/stackPageManager.h"
 #include "ldap/account.h"
+#include "ldap/group.h"
 
 class wisaUpload : public y::gui::stackPage {
   public:
@@ -80,17 +81,13 @@ public:
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
 private:
-  Wt::WText * message;
+  Wt::WTable * entries;
 };
 
 class wisaImport {
 public:
-  y::gui::stackPageManager * get();
-  void setWisaFile(const std::string & file);
-  std::string getWisaFile();
-  
-  struct wisaEntry {
-    wisaEntry() : link(nullptr) {}
+  struct wisaAccount {
+    wisaAccount() : link(nullptr) {}
     void set(std::vector<std::wstring> & line);
     std::wstring cn;
     std::wstring sn;
@@ -100,11 +97,24 @@ public:
     y::ldap::account * link;
   };
   
-  container<wisaEntry> & getWisaContents();
+  struct wisaGroup {
+    wisaGroup() : link(nullptr) {}
+    std::wstring name;
+    y::ldap::group * link;
+  };
+  
+  y::gui::stackPageManager * get();
+  void setWisaFile(const std::string & file);
+  std::string getWisaFile();
+  bool readLines(std::wifstream * stream);
+  
+  container<wisaAccount> & getWisaAccounts();
+  container<wisaGroup> & getWisaGroups();
   
 private:
   std::string wisaFile;
-  container<wisaEntry> wisaContents;
+  container<wisaAccount> wisaAccounts;
+  container<wisaGroup> wisaGroups;
   
   y::gui::stackPageManager * manager;
   

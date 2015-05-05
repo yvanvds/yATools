@@ -251,5 +251,11 @@ namespace y {
     private:
       std::wstring val;
     };
+    
+    enum WISA_IMPORT {
+      WI_NOT_ACCOUNTED, // initial status
+      WI_ACCOUNTED    , // a wisa entry is found for this entry
+      WI_DISCARD      , // don't process in this session  
+    };
   }
 }

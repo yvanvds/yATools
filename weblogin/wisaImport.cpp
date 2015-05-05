@@ -109,7 +109,7 @@ void wisaParseFile::onShow() {
   entries->elementAt(0,3)->setPadding(5);
   entries->elementAt(0,4)->setPadding(5);
   
-  container<wisaImport::wisaEntry> & wisaContent = WisaImport().getWisaContents();
+  container<wisaImport::wisaAccount> & wisaContent = WisaImport().getWisaAccounts();
   
   for(int i = 0; i < wisaContent.elms(); i++) {
     entries->elementAt(i+1, 0)->addWidget(new Wt::WText(wisaContent[i].sn));
@@ -218,7 +218,7 @@ void wisaCompareFile::setContent(Wt::WVBoxLayout* box) {
 
 void wisaCompareFile::onShow() {
   // count accounts in wisa file
-  container<wisaImport::wisaEntry> & wisaContent = WisaImport().getWisaContents();
+  container<wisaImport::wisaAccount> & wisaContent = WisaImport().getWisaAccounts();
   std::wstring m1(L"Nieuw bestand bevat ");
   m1 += std::to_wstring(wisaContent.elms());
   m1 += L" accounts.";
@@ -285,7 +285,7 @@ void wisaCompareGroups::onShow() {
   entries->elementAt(0,3)->addWidget(new Wt::WText(" "));
   entries->elementAt(0,4)->addWidget(new Wt::WText("Nieuwe Klas"));
   
-  container<wisaImport::wisaEntry> & wisaContent = WisaImport().getWisaContents();
+  container<wisaImport::wisaAccount> & wisaContent = WisaImport().getWisaAccounts();
   int row = 1;
   for(int i = 0; i < wisaContent.elms(); i++) {
     if(!wisaContent[i].link) continue;
@@ -332,7 +332,7 @@ void wisaCompareNames::onShow() {
   entries->elementAt(0,3)->setPadding(5);
   entries->elementAt(0,4)->setPadding(5);
   
-  container<wisaImport::wisaEntry> & wisaContent = WisaImport().getWisaContents();
+  container<wisaImport::wisaAccount> & wisaContent = WisaImport().getWisaAccounts();
   int row = 1;
   for(int i = 0; i < wisaContent.elms(); i++) {
     if(!wisaContent[i].link) continue;
@@ -358,15 +358,30 @@ void wisaCompareNames::onShow() {
 
 void wisaNewGroups::setContent(Wt::WVBoxLayout* box) {
   box->addWidget(new Wt::WText("<h4>Deze klassen zijn nieuw.</h4>"));
+    
+  // table scroll
+  Wt::WScrollArea * scroll = new Wt::WScrollArea();
+  box->addWidget(scroll);
   
-  message = new Wt::WText();
-  box->addWidget(message);
+  entries = new Wt::WTable();
+  entries->setHeaderCount(1);
+  entries->setWidth(700);
+  scroll->setWidget(entries);
+  scroll->setMaximumSize(750, 500);
 }
 
 void wisaNewGroups::onShow() {
-  std::string s;
+  entries->clear();
   
-  // TODO create new groups here
+  entries->elementAt(0,0)->addWidget(new Wt::WText("Klas"));
+  entries->elementAt(0,0)->setPadding(5);
+  
+  container<wisaImport::wisaGroup> & wisaGroups = WisaImport().getWisaGroups();
+  int row = 1;
+  for(int i = 0; i < wisaGroups.elms(); i++) {
+    entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaGroups[i].name));
+    row++;     
+  }
 }
 
 y::gui::stackPageManager * wisaImport::get() {
@@ -405,17 +420,45 @@ y::gui::stackPageManager * wisaImport::get() {
 
 void wisaImport::setWisaFile(const std::string& file) {
   wisaFile = file;
-  wisaContents.clear();
+  wisaAccounts.clear();
   
   // get lines from file
   boost::locale::generator gen;
-  std::locale loc = gen("en_US.iso88591");
-  std::locale::global(loc);
-  std::wifstream ifile(file);
-  ifile.imbue(loc);
+  std::locale utf8  = gen("en_US.UTF-8");
+  std::wifstream stream(file);
+  stream.imbue(utf8);
   
+  if(!readLines(&stream)) {
+    // probably the file has another encoding
+    // Try again with latin1
+    std::locale latin = gen("en_US.iso88591");
+    std::wifstream stream2(file);
+    stream2.imbue(latin);
+    readLines(&stream2);
+  }
+  
+  // read groups
+  wisaGroups.clear();
+  
+  for(int i = 0; i < wisaAccounts.elms(); i++) {
+    std::wstring group = wisaAccounts[i].group;
+    bool found = false;
+    for(int j = 0; j < wisaGroups.elms(); j++) {
+      if(group.compare(wisaGroups[j].name) == 0) {
+        found = true;
+        break;
+      }
+    }
+    
+    if(!found) {
+      wisaGroups.New().name = group;
+    }    
+  }
+}
+
+bool wisaImport::readLines(std::wifstream * stream) {
   std::wstring line;
-  while(std::getline(ifile, line)) {
+  while(std::getline(*stream, line)) {
     // tokenize each line
     std::wstring item;
     std::vector<std::wstring> elms;
@@ -432,24 +475,29 @@ void wisaImport::setWisaFile(const std::string& file) {
     
     // add to wisa contents
     if(elms.size()) {
-      wisaContents.New().set(elms);
+      wisaAccounts.New().set(elms);
     }
   }
+  return !wisaAccounts.empty();
 }
 
 std::string wisaImport::getWisaFile() {
   return wisaFile;
 }
 
-container<wisaImport::wisaEntry> & wisaImport::getWisaContents() {
-  return wisaContents;
+container<wisaImport::wisaAccount> & wisaImport::getWisaAccounts() {
+  return wisaAccounts;
 }
 
-void wisaImport::wisaEntry::set(std::vector<std::wstring>& line) {
+void wisaImport::wisaAccount::set(std::vector<std::wstring>& line) {
   if(line.size() != 5) assert(false);
   sn = line[0];
   cn = line[1];
   group = line[2];
   date = line[3];
   ID = std::stoi(line[4]);
+}
+
+container<wisaImport::wisaGroup> & wisaImport::getWisaGroups() {
+  return wisaGroups;
 }
