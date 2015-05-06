@@ -46,5 +46,8 @@
 #include "gui/session.h"
 #include "gui/confirmationDialog.h"
 
+//admin
+#include "admin/userAdmin.h"
+
 #endif	/* ADMINTOOLS_H */
 

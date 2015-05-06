@@ -13,12 +13,17 @@
 #include "ldap/account.h"
 #include "ldap/group.h"
 
+/*****************************************************
+ * Import pages
+ * **************************************************/
+
 class wisaUpload : public y::gui::stackPage {
   public:
     wisaUpload();
     
     void setContent(Wt::WVBoxLayout * box);
     void onShow();
+    void clear();
     
   private:
     Wt::WFileUpload * fileUpload; 
@@ -84,6 +89,29 @@ private:
   Wt::WTable * entries;
 };
 
+class wisaConfirmSubmit : public y::gui::stackPage {
+public:
+  void setContent(Wt::WVBoxLayout * box);
+  void onShow();
+  bool onNext();
+  bool onPrevious();
+private:
+  Wt::WText * message1;
+  Wt::WText * message2;
+  Wt::WText * message3;
+  Wt::WText * message4;
+  Wt::WText * message5;
+  Wt::WText * message6;
+  Wt::WText * message7;
+  Wt::WText * message8;
+  Wt::WText * message9;
+  Wt::WText * message10;
+};
+
+/*****************************************************
+ * Main class
+ * **************************************************/
+
 class wisaImport {
 public:
   struct wisaAccount {
@@ -107,6 +135,7 @@ public:
   void setWisaFile(const std::string & file);
   std::string getWisaFile();
   bool readLines(std::wifstream * stream);
+  void reset();
   
   container<wisaAccount> & getWisaAccounts();
   container<wisaGroup> & getWisaGroups();
@@ -125,6 +154,7 @@ private:
   wisaCompareGroups * WCompareGroups;
   wisaCompareNames * WCompareNames;
   wisaNewGroups * WNewGroups;
+  wisaConfirmSubmit * WConfirmSubmit;
 };
 
 wisaImport & WisaImport();

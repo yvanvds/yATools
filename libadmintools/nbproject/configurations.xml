@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="94">
+<configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f4" displayName="admin" projectFiles="true" kind="ROOT">
+      <itemPath>admin/userAdmin.cpp</itemPath>
+      <itemPath>admin/userAdmin.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="data" displayName="data" projectFiles="true">
       <itemPath>data/database.cpp</itemPath>
       <itemPath>data/database.h</itemPath>
@@ -255,6 +259,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="admin/userAdmin.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="admin/userAdmin.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="admintools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
@@ -737,6 +745,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="admin/userAdmin.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="admin/userAdmin.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="admintools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">

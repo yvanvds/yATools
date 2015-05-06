@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/admin/userAdmin.o \
 	${OBJECTDIR}/data/database.o \
 	${OBJECTDIR}/data/dateTime.o \
 	${OBJECTDIR}/data/field.o \
@@ -113,6 +114,11 @@ LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_file
 ../${CND_CONF}/libsystem.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ../${CND_CONF}
 	${LINK.cc} -o ../${CND_CONF}/libsystem.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
+
+${OBJECTDIR}/admin/userAdmin.o: admin/userAdmin.cpp 
+	${MKDIR} -p ${OBJECTDIR}/admin
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/admin/userAdmin.o admin/userAdmin.cpp
 
 ${OBJECTDIR}/data/database.o: data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
@@ -502,6 +508,19 @@ ${TESTDIR}/utils/tests/utilsSecurityTestRun.o: utils/tests/utilsSecurityTestRun.
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/utils/tests/utilsSecurityTestRun.o utils/tests/utilsSecurityTestRun.cpp
 
+
+${OBJECTDIR}/admin/userAdmin_nomain.o: ${OBJECTDIR}/admin/userAdmin.o admin/userAdmin.cpp 
+	${MKDIR} -p ${OBJECTDIR}/admin
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/admin/userAdmin.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/admin/userAdmin_nomain.o admin/userAdmin.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/admin/userAdmin.o ${OBJECTDIR}/admin/userAdmin_nomain.o;\
+	fi
 
 ${OBJECTDIR}/data/database_nomain.o: ${OBJECTDIR}/data/database.o data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data

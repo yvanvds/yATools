@@ -36,6 +36,10 @@ wisaImport & WisaImport() {
   return w;
 }
 
+/*****************************************************
+ * WisaUpload
+ * **************************************************/
+
 wisaUpload::wisaUpload() : box(nullptr), fileUpload(nullptr) {}
 
 void wisaUpload::setContent(Wt::WVBoxLayout* box) {
@@ -62,6 +66,11 @@ void wisaUpload::cleanUpload() {
   if(box) box->insertWidget(0, fileUpload);
 }
 
+void wisaUpload::clear() {
+  cleanUpload();
+}
+
+
 void wisaUpload::uploadFunc() {
   fileUpload->upload();
 }
@@ -79,6 +88,10 @@ void wisaUpload::uploadedFunc() {
 void wisaUpload::onShow() {
   cleanUpload();
 }
+
+/*****************************************************
+ * Wisa Parse File
+ * **************************************************/
 
 void wisaParseFile::setContent(Wt::WVBoxLayout* box) {
   box->addWidget(new Wt::WText("<h4>Controleer of dit er ok uit ziet. (Let op de accenten!)</h4>"));
@@ -119,6 +132,10 @@ void wisaParseFile::onShow() {
     entries->elementAt(i+1, 4)->addWidget(new Wt::WText(std::to_wstring(wisaContent[i].ID)));
   }
 }
+
+/*****************************************************
+ * Wisa No ID
+ * **************************************************/
 
 void wisaNoID::setContent(Wt::WVBoxLayout* box) {
   box->addWidget(new Wt::WText("<h4>Deze accounts hebben geen Wisa ID.</h4>"));
@@ -204,6 +221,9 @@ bool wisaNoID::onNext() {
   return true;
 }
 
+/*****************************************************
+ * Wisa Compare File
+ * **************************************************/
 
 void wisaCompareFile::setContent(Wt::WVBoxLayout* box) {
   message1 = new Wt::WText();
@@ -261,6 +281,10 @@ void wisaCompareFile::onShow() {
   message4->setText(m4);
 }
 
+/*****************************************************
+ * Wisa Compare Groups
+ * **************************************************/
+
 void wisaCompareGroups::setContent(Wt::WVBoxLayout* box) {
   box->addWidget(new Wt::WText("<h4>De volgende klassen worden aangepast.</h4>"));
   
@@ -302,6 +326,10 @@ void wisaCompareGroups::onShow() {
     }      
   }
 }
+
+/*****************************************************
+ * Wisa Compare names
+ * **************************************************/
 
 void wisaCompareNames::setContent(Wt::WVBoxLayout* box) {
   box->addWidget(new Wt::WText("<h4>De volgende namen worden aangepast.</h4>"));
@@ -356,8 +384,12 @@ void wisaCompareNames::onShow() {
   }
 }
 
+/*****************************************************
+ * Wisa New Groups
+ * **************************************************/
+
 void wisaNewGroups::setContent(Wt::WVBoxLayout* box) {
-  box->addWidget(new Wt::WText("<h4>Deze klassen zijn nieuw.</h4>"));
+  box->addWidget(new Wt::WText("<h4>Wijzigingen aan klassen.</h4>"));
     
   // table scroll
   Wt::WScrollArea * scroll = new Wt::WScrollArea();
@@ -375,14 +407,192 @@ void wisaNewGroups::onShow() {
   
   entries->elementAt(0,0)->addWidget(new Wt::WText("Klas"));
   entries->elementAt(0,0)->setPadding(5);
+  entries->elementAt(0,1)->addWidget(new Wt::WText("Status"));
+  entries->elementAt(0,1)->setPadding(5);
   
+  container<y::ldap::group> & groups = y::ldap::Server().getGroups();
   container<wisaImport::wisaGroup> & wisaGroups = WisaImport().getWisaGroups();
+  
   int row = 1;
+  for(int i = 0; i < groups.elms(); i++) {
+    if(groups[i].editable()) {
+      groups[i].setImportStatus(y::ldap::WI_DISCARD);
+    } else {
+      bool found = false;
+      for(int j = 0; j < wisaGroups.elms(); j++) {
+        if(wisaGroups[j].name.compare(groups[i].cn()()) == 0) {
+          groups[i].setImportStatus(y::ldap::WI_ACCOUNTED);
+          wisaGroups[j].link = &groups[i];
+          found = true;
+          break;
+        }
+      }
+      if(!found) {
+        groups[i].flagForRemoval();
+        entries->elementAt(row, 0)->addWidget(new Wt::WText(groups[i].cn()()));
+        entries->elementAt(row, 1)->addWidget(new Wt::WText("wordt verwijderd"));
+        row++;
+      }
+    }
+  }
+  
   for(int i = 0; i < wisaGroups.elms(); i++) {
-    entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaGroups[i].name));
-    row++;     
+    if(wisaGroups[i].link == nullptr) {
+      entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaGroups[i].name));
+      entries->elementAt(row, 1)->addWidget(new Wt::WText("wordt toegevoegd"));
+      row++;
+    }
   }
 }
+
+/*****************************************************
+ * Wisa Submit
+ * **************************************************/
+
+void wisaConfirmSubmit::setContent(Wt::WVBoxLayout* box) {
+  box->addWidget(new Wt::WText("<h4>Accounts</h4>"));
+  message1 = new Wt::WText();
+  box->addWidget(message1);
+  message2 = new Wt::WText();
+  box->addWidget(message2);
+  message3 = new Wt::WText();
+  box->addWidget(message3);
+  message4 = new Wt::WText();
+  box->addWidget(message4);
+  message5 = new Wt::WText();
+  box->addWidget(message5);
+  
+  box->addWidget(new Wt::WText("<h4>Klassen</h4>"));
+  message6 = new Wt::WText();
+  box->addWidget(message6);
+  message7 = new Wt::WText();
+  box->addWidget(message7);
+  message8 = new Wt::WText();
+  box->addWidget(message8);
+  message9 = new Wt::WText();
+  box->addWidget(message9);
+  message10 = new Wt::WText();
+  box->addWidget(message10);
+}
+
+bool wisaConfirmSubmit::onPrevious() {
+  WisaImport().reset();
+  return false;
+}
+
+bool wisaConfirmSubmit::onNext() {
+  return true;
+}
+
+void wisaConfirmSubmit::onShow() {
+  // overwrite buttons
+  previousButton->setStyleClass("btn btn-success");
+  previousButton->setText("Toch maar niet");
+  
+  nextButton->setStyleClass("btn btn-danger");
+  nextButton->setText("Wijzig Database");
+  
+  // count accounts in wisa file
+  container<wisaImport::wisaAccount> & wisaAccounts = WisaImport().getWisaAccounts();
+  std::wstring m1(L"Nieuw bestand bevat ");
+  m1 += std::to_wstring(wisaAccounts.elms());
+  m1 += L" accounts.";
+  message1->setText(m1);
+  
+  // load all accounts
+  container<y::ldap::account> & accounts = y::ldap::Server().getAccounts();
+  int validAccounts = accounts.elms();
+  int linkedAccounts = 0;
+  int accountsToRemove = 0;
+  
+  for(int i = 0; i < accounts.elms(); i++) {
+    if(accounts[i].getImportStatus() == y::ldap::WI_DISCARD) {
+      validAccounts--;
+      if(accounts[i].flaggedForRemoval()) accountsToRemove++;
+    } 
+  }
+  
+  for(int i = 0; i < wisaAccounts.elms(); i++) {
+    if(wisaAccounts[i].link != nullptr) {
+      linkedAccounts++;
+    }
+  }
+  
+  int newAccounts = wisaAccounts.elms() - linkedAccounts;
+  
+  std::wstring m2(L"De database bevat ");
+  m2 += std::to_wstring(validAccounts);
+  m2 += L" accounts.";
+  message2->setText(m2);
+  
+  std::wstring m3(L"Er bestaat een geldige link voor ");
+  m3 += std::to_wstring(linkedAccounts);
+  m3 += L" accounts.";
+  message3->setText(m3);
+  
+  std::wstring m4;
+  m4 += std::to_wstring(accountsToRemove);
+  m4 += L" accounts worden verwijderd.";
+  message4->setText(m4);
+  
+  std::wstring m5;
+  m5 += std::to_wstring(newAccounts);
+  m5 += L" accounts worden toegevoegd.";
+  message5->setText(m5);
+  
+  // count groups in wisa file
+  container<wisaImport::wisaGroup> & wisaGroups = WisaImport().getWisaGroups();
+  std::wstring m6(L"Nieuw bestand bevat ");
+  m6 += std::to_wstring(wisaGroups.elms());
+  m6 += L" klassen.";
+  message6->setText(m6);
+  
+  // load all accounts
+  container<y::ldap::group> & groups = y::ldap::Server().getGroups();
+  int validGroups = groups.elms();
+  int linkedGroups = 0;
+  int groupsToRemove = 0;
+  
+  for(int i = 0; i < groups.elms(); i++) {
+    if(groups[i].getImportStatus() == y::ldap::WI_DISCARD) {
+      validGroups--;
+    } else {
+      if(groups[i].flaggedForRemoval()) groupsToRemove++;
+    } 
+  }
+  
+  for(int i = 0; i < wisaGroups.elms(); i++) {
+    if(wisaGroups[i].link != nullptr) {
+      linkedGroups++;
+    }
+  }
+  
+  int newGroups = wisaGroups.elms() - linkedGroups;
+  
+  std::wstring m7(L"De database bevat ");
+  m7 += std::to_wstring(validGroups);
+  m7 += L" klassen.";
+  message7->setText(m7);
+  
+  std::wstring m8(L"Er bestaat een geldige link voor ");
+  m8 += std::to_wstring(linkedGroups);
+  m8 += L" klassen.";
+  message8->setText(m8);
+  
+  std::wstring m9;
+  m9 += std::to_wstring(groupsToRemove);
+  m9 += L" klassen worden verwijderd.";
+  message9->setText(m9);
+  
+  std::wstring m10;
+  m10 += std::to_wstring(newGroups);
+  m10 += L" klassen worden toegevoegd.";
+  message10->setText(m10);
+}
+
+/*****************************************************
+ * Wisa Import (Main class)
+ * **************************************************/
 
 y::gui::stackPageManager * wisaImport::get() {
   manager = new y::gui::stackPageManager();  
@@ -414,6 +624,10 @@ y::gui::stackPageManager * wisaImport::get() {
   WNewGroups = new wisaNewGroups();
   manager->addPage(WNewGroups);
   WNewGroups->showButtons(false, true);
+  
+  WConfirmSubmit = new wisaConfirmSubmit();
+  manager->addPage(WConfirmSubmit);
+  WConfirmSubmit->showButtons(true, true);
   
   return manager;
 }
@@ -483,6 +697,12 @@ bool wisaImport::readLines(std::wifstream * stream) {
 
 std::string wisaImport::getWisaFile() {
   return wisaFile;
+}
+
+void wisaImport::reset() {
+  wUpload->clear();
+  y::ldap::Server().clear();
+  manager->showPage(0);
 }
 
 container<wisaImport::wisaAccount> & wisaImport::getWisaAccounts() {

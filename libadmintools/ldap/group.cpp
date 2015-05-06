@@ -17,6 +17,7 @@ y::ldap::group::group()
     _new(true), 
     _editable(true),
     _flaggedForCommit(false),
+    _importStatus(WI_NOT_ACCOUNTED),
     _flaggedForRemoval(false){
 }
 
@@ -83,29 +84,24 @@ void y::ldap::group::flagForCommit() {
 }
 
 const y::ldap::DN & y::ldap::group::dn() const {
-  assert(!_flaggedForRemoval);
   return _dn();
 }
 
 const y::ldap::CN & y::ldap::group::cn() const {
-  assert(!_flaggedForRemoval);
   return _cn();
 }
 
 container<std::wstring> & y::ldap::group::owners() {
-  assert(!_flaggedForRemoval);
   return _owners;
 }
 
 container<std::wstring> & y::ldap::group::members() {
-  assert(!_flaggedForRemoval);
   return _members;
 }
 
 y::ldap::group & y::ldap::group::editable(bool value) {
   // make sure this is only used with new groups
   assert(_new);
-  assert(!_flaggedForRemoval);
   _editable = value;
   return (*this);
 }
@@ -313,4 +309,13 @@ bool y::ldap::group::saveUpdate() {
   }
   return false;
   
+}
+
+y::ldap::WISA_IMPORT y::ldap::group::getImportStatus() {
+  return _importStatus;
+} 
+
+y::ldap::group & y::ldap::group::setImportStatus(WISA_IMPORT status) {
+  _importStatus = status;
+  return *this;
 }
