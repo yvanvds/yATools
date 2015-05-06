@@ -61,7 +61,7 @@ void y::samba::addUser(const ldap::account & account) {
 void y::samba::delUser(const ldap::account& account) {
   std::string command = "/usr/sbin/smbldap-userdel -r ";
   command.append(str8(account.uid()()));
-  std::cout << command << endl;
+  std::cout << command << std::endl;
   if(!y::sys::Exec(command, y::sys::stdOut)) {
     assert(false);
   }
