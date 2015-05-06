@@ -12,6 +12,7 @@
 #include "utils/config.h"
 #include "samba/samba.h"
 #include "utils/convert.h"
+#include "admin/userAdmin.h"
 
 using namespace std;
 using namespace y::ldap;
@@ -44,43 +45,7 @@ void removeUser::parse(int argc, char ** argv) {
   }
   
   // if we get here, the user exists
-  
-  // if personeel, remove from that group
-  if (acc.group()().compare(L"personeel") == 0 || acc.group()().compare(L"directie")) {
-    group & personeel = Server().getGroup(CN(L"personeel"), true);
-    container<std::wstring> & members = personeel.members();
-    for(int i = 0; i < members.elms(); i++) {
-      if (members[i].compare(acc.mail()()) == 0) {
-        members.remove(i);
-        personeel.flagForCommit();
-        break;
-      }
-      // for historical reasons members might be added with uid
-      std::wstring mail(uid);
-      uid += L"@";
-      uid += y::utils::Config().getDomain();
-      if(members[i].compare(mail) == 0) {
-        members.remove(i);
-        personeel.flagForCommit();
-        break;
-      }
-    }
-  }
-  
-  // remove from class group
-  if(acc.group()().compare(L"extern") != 0 && acc.group()().compare(L"externmail") != 0) {
-    group & classGroup = Server().getGroup(CN(acc.group()()), false);
-    container<std::wstring> & members = classGroup.members();
-    for(int i = 0; i < members.elms(); i++) {
-      if(members[i].compare(acc.dn()()) == 0) {
-        members.remove(i);
-        classGroup.flagForCommit();
-        break;
-      }
-    }
-  }
-  
-  y::samba::delUser(acc);
+  y::admin::User().remove(acc);
   Server().commitChanges();
 }
 

@@ -17,6 +17,9 @@ namespace y {
       ldap::account & add(const ldap::CN & cn, const ldap::SN & sn,
                const ldap::GID & gid, const ldap::DATE & dateOfBirth, 
                const ldap::WISA_ID & id, const ldap::PASSWORD & pw);
+      
+      void remove(const ldap::account & acc);
+      
     private:
       
     };

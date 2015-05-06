@@ -7,6 +7,7 @@
 
 #include "userAdmin.h"
 #include "utils/convert.h"
+#include "utils/config.h"
 #include "samba/samba.h"
 #include "ldap/server.h"
 #include "ldap/account.h"
@@ -78,4 +79,44 @@ y::ldap::account & y::admin::userAdmin::add(const y::ldap::CN & cn,
   }
   
   return newAccount;
+}
+
+void y::admin::userAdmin::remove(const y::ldap::account& acc) {
+  // remove from groups first
+  // if personeel, remove from that group
+  if (acc.group()().compare(L"personeel") == 0 || acc.group()().compare(L"directie")) {
+    y::ldap::group & personeel = y::ldap::Server().getGroup(y::ldap::CN(L"personeel"), true);
+    container<std::wstring> & members = personeel.members();
+    for(int i = 0; i < members.elms(); i++) {
+      if (members[i].compare(acc.mail()()) == 0) {
+        members.remove(i);
+        personeel.flagForCommit();
+        break;
+      }
+      // for historical reasons members might be added with uid
+      std::wstring mail(acc.uid()());
+      mail += L"@";
+      mail += y::utils::Config().getDomain();
+      if(members[i].compare(mail) == 0) {
+        members.remove(i);
+        personeel.flagForCommit();
+        break;
+      }
+    }
+  }
+  
+  // remove from class group
+  if(acc.group()().compare(L"extern") != 0 && acc.group()().compare(L"externmail") != 0) {
+    y::ldap::group & classGroup = y::ldap::Server().getGroup(y::ldap::CN(acc.group()()), false);
+    container<std::wstring> & members = classGroup.members();
+    for(int i = 0; i < members.elms(); i++) {
+      if(members[i].compare(acc.dn()()) == 0) {
+        members.remove(i);
+        classGroup.flagForCommit();
+        break;
+      }
+    }
+  }
+  
+  y::samba::delUser(acc);
 }
