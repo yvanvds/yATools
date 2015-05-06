@@ -69,7 +69,7 @@ int main(int argc, char ** argv) {
       RemoveUser().parse(argc - 3, argv + 3);
       return 0;
     }
-    return 0;
+    
   } else if (command.compare(L"proxy") == 0) {
     ProxyManager().parse(argc - 2, argv + 2);
     return 0;
@@ -86,7 +86,7 @@ void printBasicHelp() {
   cout << "  password   : change a user's password." << endl;
   cout << "  show       : show a user's details."    << endl;
   cout << "  find       : find a user by name."      << endl;
-  cout << "  user       : add or remove a user."     << endl;
+  cout << "  user       : add or delete a user."     << endl;
   cout << "  proxy      : squid control."            << endl;
   
   cout << endl;
@@ -97,5 +97,5 @@ void printBasicHelp() {
 void printUserHelp() {
   cout << "Please tell me what you'd like to do. Choose either " << endl;
   cout << "  add     : add a user to the system."        << endl;
-  cout << "  remove  : remove a user from the system."   << endl;
+  cout << "  delete  : delete a user from the system."   << endl;
 }
