@@ -37,12 +37,15 @@ namespace y {
        */
       log & useFile   (bool enable, const std::string & file = "/var/log/admintools");
 
+      log & useFunction(void (*logFunction)(const std::wstring & message) = nullptr);
+      
       log(); 
     private:
       bool _useConsole;
       bool _useFile   ;
       std::string _file;
       std::wofstream _stream;
+      void (*_logFunction)(const std::wstring & message);
     };
 
     // global object (functor)

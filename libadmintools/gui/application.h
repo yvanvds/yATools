@@ -20,17 +20,19 @@ namespace y {
     
     template<class T>
     class application {
+    private:
+    
+      static Wt::WApplication * createApplication(const Wt::WEnvironment& env) {
+        return new T(env);
+      }
+      
     public:
       int run(int argc, char **argv) {
         return Wt::WRun(argc, argv, &createApplication);
       }
     
     private:
-      
-      static Wt::WApplication * createApplication(const Wt::WEnvironment& env) {
-        return new T(env);
-      }
-        
+ 
     };
   }
 }

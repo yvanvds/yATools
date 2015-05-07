@@ -228,6 +228,7 @@ Wt::WWidget * webLogin::wisaImportFunc() {
   panel->setStyleClass("panel panel-primary");
   panel->setCentralWidget(WisaImport().get());
   panel->setMaximumSize(800, 800);
+  WisaImport().setApplication(this); // needed for locking
   return panel;
 }
 

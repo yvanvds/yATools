@@ -41,7 +41,7 @@ void y::samba::changePassword(const std::wstring & user, const std::wstring & pa
 }
 
 void y::samba::addUser(const ldap::account & account) { 
-  std::string command = "/usr/sbin/smbldap-useradd -a -g ";
+  std::string command = "sudo /usr/sbin/smbldap-useradd -a -g ";
   command.append(std::to_string(account.groupID()()));
   command.append(" -m -d /home/");
   command.append(groupName(account.groupID()));
@@ -59,7 +59,7 @@ void y::samba::addUser(const ldap::account & account) {
 }
 
 void y::samba::delUser(const ldap::account& account) {
-  std::string command = "/usr/sbin/smbldap-userdel -r ";
+  std::string command = "sudo /usr/sbin/smbldap-userdel -r ";
   command.append(str8(account.uid()()));
   
   system(command.c_str());

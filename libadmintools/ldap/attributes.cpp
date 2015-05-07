@@ -262,13 +262,43 @@ bool y::ldap::YEAR::operator!=(const YEAR &ref) const {
 
 
 
-y::ldap::DATE::DATE(const std::wstring & ldapDate) : day(1), month(1), year(1) {
+y::ldap::DATE::DATE(const std::wstring & date, bool fromWisa) : day(1), month(1), year(1) {
+  if(fromWisa) {
+    int currentValue = 0;
+    std::wstring value;
+    for(int i = 0; i < date.size(); i++) {
+      if(date[i] != '/') {
+        value += date[i];
+      } else {
+        switch (currentValue) {
+          case 0: {
+            day = DAY(std::stoi(str8(value)));
+            currentValue++;
+            break;
+          }
+          case 1: {
+            month = MONTH(std::stoi(str8(value)));
+            currentValue++;
+            break;
+          }
+          case 2: {
+            year = YEAR(std::stoi(str8(value)));
+            currentValue++;
+            break;
+          }
+        }
+        value.clear();
+      }
+    }
+    return;
+  }
+  
   int i;
   try {
-    i = std::stoi(str8(ldapDate));
+    i = std::stoi(str8(date));
   } catch(const std::invalid_argument &e) {
     std::wstring message(L"Invalid ldap::DATE conversion: ");
-    message += ldapDate;
+    message += date;
     utils::Log().add(message);
     return;
   }

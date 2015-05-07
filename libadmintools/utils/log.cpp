@@ -24,6 +24,9 @@ y::utils::log & y::utils::log::add(const std::wstring& message) {
   if(_useFile) {
     _stream << message << std::endl;
   }
+  if(_logFunction != nullptr) {
+    (*_logFunction)(message);
+  }
   return *this;
 }
 
@@ -40,5 +43,10 @@ y::utils::log & y::utils::log::useFile(bool enable, const std::string& file) {
   if(_useFile) {
     _stream.open(_file, std::ios_base::out | std::ios_base::app);
   }
+  return *this;
+}
+
+y::utils::log & y::utils::log::useFunction(void(*logFunction)(const std::wstring&)) {
+  _logFunction = logFunction;
   return *this;
 }

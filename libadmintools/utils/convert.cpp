@@ -49,7 +49,7 @@ std::string str8(const std::u32string& s)
 }
 
 std::string str8(const std::wstring& s) {
-  return boost::locale::conv::from_utf(s, "UTF-8");
+  return boost::locale::conv::utf_to_utf<char>(s);
 }
 
 std::wstring strW(const std::string& s) {

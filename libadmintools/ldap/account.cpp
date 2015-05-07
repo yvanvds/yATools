@@ -245,7 +245,10 @@ bool y::ldap::account::save() {
     data & d = values.New(MODIFY);
     d.add(L"type", TYPE_PASSWORD);
     d.add(L"values", _password()());
+    
+#ifndef DEBUG
     samba::changePassword(_uid()(), _passwordClearText);
+#endif
     
     if(_group()().compare(L"extern") != 0 && _group()().compare(L"externmail") != 0) {
       if(y::Smartschool().savePassword(*this) == 12) {

@@ -12,105 +12,16 @@
 #include "gui/stackPageManager.h"
 #include "ldap/account.h"
 #include "ldap/group.h"
+#include "wisaImport/wisaCommitChanges.h"
+#include "wisaImport/wisaCompareFile.h"
+#include "wisaImport/wisaCompareGroups.h"
+#include "wisaImport/wisaCompareNames.h"
+#include "wisaImport/wisaConfirmSubmit.h"
+#include "wisaImport/wisaNewGroups.h"
+#include "wisaImport/wisaNoID.h"
+#include "wisaImport/wisaParseFile.h"
+#include "wisaImport/wisaUpload.h"
 
-/*****************************************************
- * Import pages
- * **************************************************/
-
-class wisaUpload : public y::gui::stackPage {
-  public:
-    wisaUpload();
-    
-    void setContent(Wt::WVBoxLayout * box);
-    void onShow();
-    void clear();
-    
-  private:
-    Wt::WFileUpload * fileUpload; 
-    Wt::WText * message;
-    Wt::WVBoxLayout * box;
-    
-    void uploadFunc();
-    void uploadedFunc();
-    void fileTooLargeFunc();
-    void cleanUpload();
-};
-
-class wisaParseFile : public y::gui::stackPage {
-public:
-  void setContent(Wt::WVBoxLayout * box);
-  void onShow();
-private:
-  Wt::WTable * entries;
-};
-
-class wisaCompareFile : public y::gui::stackPage {
-public:
-
-  void setContent(Wt::WVBoxLayout * box);
-  void onShow();
-private:
-  Wt::WText * message1;
-  Wt::WText * message2;
-  Wt::WText * message3;
-  Wt::WText * message4;
-};
-
-class wisaNoID : public y::gui::stackPage {
-public:
-  void setContent(Wt::WVBoxLayout * box);
-  void onShow();
-  bool onNext();
-private:
-  Wt::WTable * entries;
-};
-
-class wisaCompareGroups : public y::gui::stackPage {
-public:
-  void setContent(Wt::WVBoxLayout * box);
-  void onShow();
-private:
-  Wt::WTable * entries;
-};
-
-class wisaCompareNames : public y::gui::stackPage {
-public:
-  void setContent(Wt::WVBoxLayout * box);
-  void onShow();
-private:
-  Wt::WTable * entries;
-};
-
-class wisaNewGroups : public y::gui::stackPage {
-public:
-  void setContent(Wt::WVBoxLayout * box);
-  void onShow();
-private:
-  Wt::WTable * entries;
-};
-
-class wisaConfirmSubmit : public y::gui::stackPage {
-public:
-  void setContent(Wt::WVBoxLayout * box);
-  void onShow();
-  bool onNext();
-  bool onPrevious();
-private:
-  Wt::WText * message1;
-  Wt::WText * message2;
-  Wt::WText * message3;
-  Wt::WText * message4;
-  Wt::WText * message5;
-  Wt::WText * message6;
-  Wt::WText * message7;
-  Wt::WText * message8;
-  Wt::WText * message9;
-  Wt::WText * message10;
-};
-
-/*****************************************************
- * Main class
- * **************************************************/
 
 class wisaImport {
 public:
@@ -134,11 +45,19 @@ public:
   y::gui::stackPageManager * get();
   void setWisaFile(const std::string & file);
   std::string getWisaFile();
-  bool readLines(std::wifstream * stream);
+  bool readLinesUTF8(std::wifstream * stream);
+  bool readLinesLatin(std::ifstream * stream);
+  bool tokenize(const std::wstring & line);
   void reset();
   
   container<wisaAccount> & getWisaAccounts();
   container<wisaGroup> & getWisaGroups();
+  
+  // push updates need access to application
+  void setApplication(Wt::WApplication * app) { this->app = app; }
+  Wt::WApplication * getApplication() { return app; }
+  
+  void showErrorOnScreen(const std::wstring & message);
   
 private:
   std::string wisaFile;
@@ -155,6 +74,9 @@ private:
   wisaCompareNames * WCompareNames;
   wisaNewGroups * WNewGroups;
   wisaConfirmSubmit * WConfirmSubmit;
+  wisaCommitChanges * WCommitChanges;
+  
+  Wt::WApplication * app; // for locking
 };
 
 wisaImport & WisaImport();

@@ -13,10 +13,11 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
-            <option name="debug_command"
-                    value="&quot;${OUTPUT_PATH}&quot; user add Tädeus Misfit 19809403 5IT"/>
+            <option name="debug_command" value="&quot;${OUTPUT_PATH}&quot; group add -e testGroup"/>
           </DebugOptions>
         </gdb_options>
         <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
@@ -31,8 +32,9 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" find yvan vander</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" </runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" user add Tädeus Misfit 19809403 5IT</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" group add testGroup</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" user add Tädeus Misfit 19809403 5IT</runcommand>
+        <runcommand>"${OUTPUT_PATH}" group add testGroup</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

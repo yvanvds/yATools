@@ -37,10 +37,12 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/1736800395/password.o \
 	${OBJECTDIR}/_ext/1736800395/show.o \
+	${OBJECTDIR}/addGroup.o \
 	${OBJECTDIR}/addUser.o \
 	${OBJECTDIR}/find.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/proxyManager.o \
+	${OBJECTDIR}/removeGroup.o \
 	${OBJECTDIR}/removeUser.o
 
 
@@ -80,6 +82,11 @@ ${OBJECTDIR}/_ext/1736800395/show.o: /home/yvan/github/yATools/admin/show.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1736800395/show.o /home/yvan/github/yATools/admin/show.cpp
 
+${OBJECTDIR}/addGroup.o: addGroup.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/addGroup.o addGroup.cpp
+
 ${OBJECTDIR}/addUser.o: addUser.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -99,6 +106,11 @@ ${OBJECTDIR}/proxyManager.o: proxyManager.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/proxyManager.o proxyManager.cpp
+
+${OBJECTDIR}/removeGroup.o: removeGroup.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/removeGroup.o removeGroup.cpp
 
 ${OBJECTDIR}/removeUser.o: removeUser.cpp 
 	${MKDIR} -p ${OBJECTDIR}

@@ -119,6 +119,52 @@ void y::ldap::group::flagForRemoval() {
   _flaggedForRemoval = true;
 }
 
+bool y::ldap::group::removeOwner(const std::wstring& owner) {
+  for(int i = 0; i < _owners.elms(); i++) {
+    if(_owners[i].compare(owner) == 0) {
+      _owners.remove(i);
+      _flaggedForCommit = true;
+      return true;
+    }
+  }
+  return false;
+}
+
+bool y::ldap::group::removeMember(const std::wstring& member) {
+  for (int i = 0; i < _members.elms(); i++) {
+    if(_members[i].compare(member) == 0) {
+      _members.remove(i);
+      _flaggedForCommit = true;
+      return true;
+    }
+  }
+  return false;
+}
+
+bool y::ldap::group::addOwner(const std::wstring& owner) {
+  for(int i = 0; i < _owners.elms(); i++) {
+    if(_owners[i].compare(owner) == 0) {
+      // already in group
+      return false;
+    }
+  }
+  _owners.New() = owner;
+  _flaggedForCommit = true;
+  return true;
+}
+
+bool y::ldap::group::addMember(const std::wstring& member) {
+  for(int i = 0; i < _members.elms(); i++) {
+    if(_members[i].compare(member) == 0) {
+      // already in group
+      return false;
+    }
+  }
+  _members.New() = member;
+  _flaggedForCommit = true;
+  return true;
+}
+
 bool y::ldap::group::flaggedForRemoval() {
   return _flaggedForRemoval;
 }
@@ -150,13 +196,23 @@ bool y::ldap::group::save() {
 bool y::ldap::group::saveNew() {
   dataset values;
   // don't create if there are no members
-  if(_members.elms() == 0) return false;
+  if(_members.elms() == 0) {
+    if(!_editable) {
+      _members.New() = L"uid=gast,ou=People,dc=sanctamaria-aarschot,dc=be";
+    } else {
+      _members.New() = L"dummy@sanctamaria-aarschot.be";
+    }
+  }
 
   // add owner if not present
-  if(!_editable && !_owners.elms()) {
+  if(!_owners.elms()) {
     // TODO generalize this
-    _owners.New() = L"uid=inge,ou=personeel,ou=People,dc=sanctamaria-aarschot,dc=be";
-  }
+    if(!_editable) {
+      _owners.New() = L"uid=inge,ou=personeel,ou=People,dc=sanctamaria-aarschot,dc=be";
+    } else {
+      _owners.New() = L"directie@sanctamaria-aarschot.be";
+    }
+  } 
 
   // create group first
   std::wstring dn;
@@ -246,7 +302,11 @@ bool y::ldap::group::saveUpdate() {
     std::wstring member = _membersInLDAP[i];
     bool found = false;
     for(int j = 0; j < _members.elms(); j++) {
-      if(member.compare(_members[j]) == 0) found = true;
+      if(member.compare(L"uid=gast,ou=People,dc=sanctamaria-aarschot,dc=be") == 0 && _members.elms() > 1) {
+        found = false;
+      } else if(member.compare(L"dummy@sanctamaria-aarschot.be") == 0 && _members.elms() > 1) {
+        found = false;
+      } else if(member.compare(_members[j]) == 0) found = true;
     }
     if(!found) {
       if(!memberDelete) {

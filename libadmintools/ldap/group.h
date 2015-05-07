@@ -26,7 +26,12 @@ namespace y {
 
       container<std::wstring> & owners ();
       container<std::wstring> & members();
-     
+      
+      bool removeOwner(const std::wstring & owner);
+      bool removeMember(const std::wstring & member);
+      
+      bool addOwner(const std::wstring & owner);
+      bool addMember(const std::wstring & member);
 
       group & editable(bool value); // automatic group or not
       bool    editable();

@@ -8,6 +8,7 @@
 #include "ldap/server.h"
 #include <string>
 #include <ldap.h>
+#include <ldap_utf8.h>
 #include <vector>
 #include "utils/log.h"
 #include "utils/config.h"
@@ -315,18 +316,21 @@ bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) {
 }
 
 void y::ldap::server::printMods(LDAPMod** mods) {
+  std::stringstream out;
   for(int i = 0; mods[i] != NULL; i++) {
-    std::cout << "mod" << i << " (";
+    
+    out << "mod" << i << " (";
     switch (mods[i]->mod_op) {
-      case LDAP_MOD_ADD: std::cout << "ADD)" << std::endl; break;
-      case LDAP_MOD_REPLACE: std::cout << "REPACE)" << std::endl; break;
-      case LDAP_MOD_DELETE: std::cout << "DELETE)" << std::endl; break;
+      case LDAP_MOD_ADD: out << "ADD)" << std::endl; break;
+      case LDAP_MOD_REPLACE: out << "REPLACE)" << std::endl; break;
+      case LDAP_MOD_DELETE: out << "DELETE)" << std::endl; break;
     }
-    std::cout << "  type: " << mods[i]->mod_type << std::endl;
+    out << "  type: " << mods[i]->mod_type << std::endl;
     for (int j = 0; mods[i]->mod_vals.modv_strvals[j] != NULL; j++) {
-      std::cout << "  value: " << mods[i]->mod_vals.modv_strvals[j] << std::endl;
+      out << "  value: " << mods[i]->mod_vals.modv_strvals[j] << std::endl;
     }
   }
+  y::utils::Log().add(strW(out.str()));
 }
 
 LDAPMod ** y::ldap::server::createMods(dataset& values) {
@@ -345,14 +349,22 @@ LDAPMod ** y::ldap::server::createMods(dataset& values) {
       default: assert(false);
     }
     
-    std::string type = str8(d.getValue(L"type"));
+    //std::string type = str8(d.getValue(L"type"));
+    char temp[256];
+    int n = ldap_x_wcs_to_utf8s(temp, d.getValue(L"type").c_str(), 256);
+    std::string type(temp);
+    type.resize(n);
     mods[i]->mod_type = new char[type.size() + 1];
     std::copy(type.begin(), type.end(), mods[i]->mod_type);
     mods[i]->mod_type[type.size()] = '\0';
     
     mods[i]->mod_vals.modv_strvals = new char*[d.elms(L"values") + 1];
     for(int j = 0; j < d.elms(L"values"); j++) {
-      std::string value = str8(d.getValue(L"values", j));
+      //std::string value = str8(d.getValue(L"values", j));
+      char temp[256];
+      int n = ldap_x_wcs_to_utf8s(temp, d.getValue(L"values").c_str(), 256);
+      std::string value(temp);
+      value.resize(n);
       mods[i]->mod_vals.modv_strvals[j] = new char[value.size() + 1];
       std::copy(value.begin(), value.end(), mods[i]->mod_vals.modv_strvals[j]);
       mods[i]->mod_vals.modv_strvals[j][value.size()] = '\0';
@@ -381,9 +393,14 @@ void y::ldap::server::modify(const DN & dn, dataset & values) {
 
   if(int result = ldap_modify_ext_s(_server, str8(dn()).c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
     std::wstring message;
+    message.append(L"Error on DN: ");
+    message.append(dn());
+    y::utils::Log().add(message);
+    message.clear();
     message.append(L"y::ldap::server::modify() : ");
     message.append(strW(ldap_err2string(result)));
     y::utils::Log().add(message);
+    printMods(mods);
   }
   
   releaseMods(mods);
@@ -397,9 +414,14 @@ void y::ldap::server::add(const DN& dn, dataset& values) {
 
   if(int result = ldap_add_ext_s(_server, str8(dn()).c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
     std::wstring message;
+    message.append(L"Error on DN: ");
+    message.append(dn());
+    y::utils::Log().add(message);
+    message.clear();
     message.append(L"y::ldap::server::modify() : ");
     message.append(strW(ldap_err2string(result)));
     y::utils::Log().add(message);
+    printMods(mods);
   }
   
   // release memory

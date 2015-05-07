@@ -8,7 +8,8 @@
 #ifndef STACKPAGE_H
 #define	STACKPAGE_H
 
-
+#include <Wt/WObject>
+#include <Wt/WVBoxLayout>
 
 namespace y {
   namespace gui {

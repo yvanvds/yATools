@@ -219,7 +219,7 @@ namespace y {
 
     class DATE {
     public: 
-      explicit DATE(const std::wstring & ldapDate);
+      explicit DATE(const std::wstring & ldapDate, bool fromWisa = false);
       explicit DATE(const DAY & day, const MONTH & month, const YEAR & year);
 
       // operators

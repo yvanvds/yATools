@@ -22,6 +22,26 @@
       <itemPath>webLogin.cpp</itemPath>
       <itemPath>wisaImport.cpp</itemPath>
     </logicalFolder>
+    <logicalFolder name="f1" displayName="wisaImport" projectFiles="true">
+      <itemPath>wisaImport/wisaCommitChanges.cpp</itemPath>
+      <itemPath>wisaImport/wisaCommitChanges.h</itemPath>
+      <itemPath>wisaImport/wisaCompareFile.cpp</itemPath>
+      <itemPath>wisaImport/wisaCompareFile.h</itemPath>
+      <itemPath>wisaImport/wisaCompareGroups.cpp</itemPath>
+      <itemPath>wisaImport/wisaCompareGroups.h</itemPath>
+      <itemPath>wisaImport/wisaCompareNames.cpp</itemPath>
+      <itemPath>wisaImport/wisaCompareNames.h</itemPath>
+      <itemPath>wisaImport/wisaConfirmSubmit.cpp</itemPath>
+      <itemPath>wisaImport/wisaConfirmSubmit.h</itemPath>
+      <itemPath>wisaImport/wisaNewGroups.cpp</itemPath>
+      <itemPath>wisaImport/wisaNewGroups.h</itemPath>
+      <itemPath>wisaImport/wisaNoID.cpp</itemPath>
+      <itemPath>wisaImport/wisaNoID.h</itemPath>
+      <itemPath>wisaImport/wisaParseFile.cpp</itemPath>
+      <itemPath>wisaImport/wisaParseFile.h</itemPath>
+      <itemPath>wisaImport/wisaUpload.cpp</itemPath>
+      <itemPath>wisaImport/wisaUpload.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
                    projectFiles="false"
@@ -50,7 +70,7 @@
             <pElem>/usr/local/include</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>DEBUG=1</Elem>
+            <Elem>DEBUG</Elem>
           </preprocessorList>
         </ccTool>
         <linkerTool>
@@ -101,6 +121,42 @@
       <item path="wisaImport.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="wisaImport.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCommitChanges.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCommitChanges.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareGroups.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareGroups.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareNames.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareNames.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaConfirmSubmit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaConfirmSubmit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaNewGroups.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaNewGroups.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaNoID.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaNoID.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaParseFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaParseFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaUpload.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaUpload.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -169,6 +225,42 @@
       <item path="wisaImport.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="wisaImport.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCommitChanges.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCommitChanges.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareGroups.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareGroups.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareNames.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCompareNames.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaConfirmSubmit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaConfirmSubmit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaNewGroups.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaNewGroups.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaNoID.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaNoID.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaParseFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaParseFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaUpload.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaUpload.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="f4" displayName="admin" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f4" displayName="admin" projectFiles="true">
       <itemPath>admin/userAdmin.cpp</itemPath>
       <itemPath>admin/userAdmin.h</itemPath>
     </logicalFolder>
@@ -234,6 +234,9 @@
             <pElem>/usr/include</pElem>
           </incDir>
           <commandLine>-Wreturn-type</commandLine>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
           <warningLevel>2</warningLevel>
         </ccTool>
         <linkerTool>

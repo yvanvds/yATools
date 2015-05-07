@@ -39,7 +39,16 @@ OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/proxyManager.o \
 	${OBJECTDIR}/webLogin.o \
-	${OBJECTDIR}/wisaImport.o
+	${OBJECTDIR}/wisaImport.o \
+	${OBJECTDIR}/wisaImport/wisaCommitChanges.o \
+	${OBJECTDIR}/wisaImport/wisaCompareFile.o \
+	${OBJECTDIR}/wisaImport/wisaCompareGroups.o \
+	${OBJECTDIR}/wisaImport/wisaCompareNames.o \
+	${OBJECTDIR}/wisaImport/wisaConfirmSubmit.o \
+	${OBJECTDIR}/wisaImport/wisaNewGroups.o \
+	${OBJECTDIR}/wisaImport/wisaNoID.o \
+	${OBJECTDIR}/wisaImport/wisaParseFile.o \
+	${OBJECTDIR}/wisaImport/wisaUpload.o
 
 
 # C Compiler Flags
@@ -92,6 +101,51 @@ ${OBJECTDIR}/wisaImport.o: wisaImport.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport.o wisaImport.cpp
+
+${OBJECTDIR}/wisaImport/wisaCommitChanges.o: wisaImport/wisaCommitChanges.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCommitChanges.o wisaImport/wisaCommitChanges.cpp
+
+${OBJECTDIR}/wisaImport/wisaCompareFile.o: wisaImport/wisaCompareFile.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareFile.o wisaImport/wisaCompareFile.cpp
+
+${OBJECTDIR}/wisaImport/wisaCompareGroups.o: wisaImport/wisaCompareGroups.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareGroups.o wisaImport/wisaCompareGroups.cpp
+
+${OBJECTDIR}/wisaImport/wisaCompareNames.o: wisaImport/wisaCompareNames.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareNames.o wisaImport/wisaCompareNames.cpp
+
+${OBJECTDIR}/wisaImport/wisaConfirmSubmit.o: wisaImport/wisaConfirmSubmit.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaConfirmSubmit.o wisaImport/wisaConfirmSubmit.cpp
+
+${OBJECTDIR}/wisaImport/wisaNewGroups.o: wisaImport/wisaNewGroups.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaNewGroups.o wisaImport/wisaNewGroups.cpp
+
+${OBJECTDIR}/wisaImport/wisaNoID.o: wisaImport/wisaNoID.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaNoID.o wisaImport/wisaNoID.cpp
+
+${OBJECTDIR}/wisaImport/wisaParseFile.o: wisaImport/wisaParseFile.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaParseFile.o wisaImport/wisaParseFile.cpp
+
+${OBJECTDIR}/wisaImport/wisaUpload.o: wisaImport/wisaUpload.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaUpload.o wisaImport/wisaUpload.cpp
 
 # Subprojects
 .build-subprojects:

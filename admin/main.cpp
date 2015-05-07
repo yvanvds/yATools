@@ -15,6 +15,8 @@
 #include "find.h"
 #include "addUser.h"
 #include "removeUser.h"
+#include "addGroup.h"
+#include "removeGroup.h"
 #include "proxyManager.h"
 #include "smartschool/smartschool.h"
 #include "ldap/server.h"
@@ -25,6 +27,7 @@ using namespace std;
 
 void printBasicHelp();
 void printUserHelp ();
+void printGroupHelp();
 
 int main(int argc, char ** argv) {
   boost::locale::generator gen;
@@ -73,6 +76,19 @@ int main(int argc, char ** argv) {
   } else if (command.compare(L"proxy") == 0) {
     ProxyManager().parse(argc - 2, argv + 2);
     return 0;
+  } else if (command.compare(L"group") == 0) {
+    if(argc < 3) {
+      printGroupHelp();
+      return 0;
+    }
+    wstring groupCommand(strW(argv[2]));
+    if(groupCommand.compare(L"add") == 0) {
+      AddGroup().parse(argc - 3, argv + 3);
+      return 0;
+    } else if (groupCommand.compare(L"delete") == 0) {
+      RemoveGroup().parse(argc - 3, argv + 3);
+      return 0;
+    }
   }
 
   // if we get here, print help
@@ -98,4 +114,10 @@ void printUserHelp() {
   cout << "Please tell me what you'd like to do. Choose either " << endl;
   cout << "  add     : add a user to the system."        << endl;
   cout << "  delete  : delete a user from the system."   << endl;
+}
+
+void printGroupHelp() {
+  cout << "Please tell me what you'd like to do. Choose either " << endl;
+  cout << "  add     : add a group to the system."       << endl;
+  cout << "  delete  : delete a group from the system."  << endl;
 }
