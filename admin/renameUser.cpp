@@ -40,16 +40,16 @@ void renameUser::parse(int argc, char ** argv) {
   }
   
   
-  std::wstring uid(L"yvanym");
-  std::wstring cn(boost::locale::conv::utf_to_utf<wchar_t>("Yvén"));
-  std::wstring sn(L"Vander Sanden");
+  std::wstring uid(strW(argv[0]));
+  std::wstring cn(strW(argv[1]));
+  std::wstring sn(strW(argv[2]));
   
   account & acc = Server().getAccount(UID(uid));
   if(acc.isNew()) {
     cout << "This user does not exist." << endl;
     return;
   }
-  cn = acc.cn()();
+
   acc.cn(CN(cn));
   acc.sn(SN(sn));
   
