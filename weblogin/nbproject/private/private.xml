@@ -7,30 +7,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/yvan/github/yATools/weblogin/webLogin.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/main.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaUpload.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaParseFile.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaUpload.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareGroups.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaConfirmSubmit.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareFile.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNewGroups.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitChanges.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNewGroups.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareGroups.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNoID.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaParseFile.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareNames.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareNames.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/webLogin.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNoID.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitChanges.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/accountManager.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareFile.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitChanges.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaConfirmSubmit.h</file>
         </group>
     </open-files>
 </project-private>

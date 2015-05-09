@@ -53,7 +53,7 @@ std::string str8(const std::wstring& s) {
 }
 
 std::wstring strW(const std::string& s) {
-  return boost::locale::conv::to_utf<wchar_t>(s, "UTF-8");
+  return boost::locale::conv::utf_to_utf<wchar_t>(s);
 }
 
 std::u16string str16(const std::string& s)

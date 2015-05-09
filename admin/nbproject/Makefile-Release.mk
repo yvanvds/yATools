@@ -43,7 +43,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/proxyManager.o \
 	${OBJECTDIR}/removeGroup.o \
-	${OBJECTDIR}/removeUser.o
+	${OBJECTDIR}/removeUser.o \
+	${OBJECTDIR}/renameUser.o
 
 
 # C Compiler Flags
@@ -116,6 +117,11 @@ ${OBJECTDIR}/removeUser.o: removeUser.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/removeUser.o removeUser.cpp
+
+${OBJECTDIR}/renameUser.o: renameUser.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/renameUser.o renameUser.cpp
 
 # Subprojects
 .build-subprojects:

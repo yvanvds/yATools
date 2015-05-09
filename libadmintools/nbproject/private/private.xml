@@ -7,47 +7,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldpAttributesTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/system/tests/sysConfigTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/admin/userAdmin.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldapDataTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/data/tests/dataFieldTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/gui/stackPage.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/group.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/gui/confirmationDialog.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/data/field.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/data/sqlserver.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldapGroupTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/account.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/tests/utilsSecurityTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/data/row.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/attributes.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/data/dateTime.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/gui/stackPageManager.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/data/database.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/security.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldpBaseDataTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/smartschool/smartschool.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/watch.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/server.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/smartschool/soapStub.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/proxy.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/account.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldapServerTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/utils/convert.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/data/row.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/data/dateTime.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/admin/userAdmin.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/group.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/server.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/container.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/gui/stackPageManager.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/attributes.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/data/database.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/admin/userAdmin.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/gui/application.h</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/log.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/log.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/data/tests/dataDatabaseTest.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/gui/stackPage.h</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/convert.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/samba/samba.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/ldap/dataset.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/ldap/server.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/ldap/dataset.h</file>
         </group>
     </open-files>
 </project-private>

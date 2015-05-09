@@ -349,25 +349,25 @@ LDAPMod ** y::ldap::server::createMods(dataset& values) {
       default: assert(false);
     }
     
-    //std::string type = str8(d.getValue(L"type"));
-    char temp[256];
-    int n = ldap_x_wcs_to_utf8s(temp, d.getValue(L"type").c_str(), 256);
-    std::string type(temp);
-    type.resize(n);
+    std::string type = str8(d.getValue(L"type"));
     mods[i]->mod_type = new char[type.size() + 1];
     std::copy(type.begin(), type.end(), mods[i]->mod_type);
     mods[i]->mod_type[type.size()] = '\0';
     
     mods[i]->mod_vals.modv_strvals = new char*[d.elms(L"values") + 1];
     for(int j = 0; j < d.elms(L"values"); j++) {
-      //std::string value = str8(d.getValue(L"values", j));
-      char temp[256];
-      int n = ldap_x_wcs_to_utf8s(temp, d.getValue(L"values").c_str(), 256);
-      std::string value(temp);
-      value.resize(n);
-      mods[i]->mod_vals.modv_strvals[j] = new char[value.size() + 1];
+      std::string value = str8(d.getValue(L"values", j));
+      //char temp[256];
+      //int n = ldap_x_wcs_to_utf8s(temp, L"Yv\xC3\xA9", 256);
+      //int n = ldap_x_wcs_to_utf8s(temp, L"Yvan", 256);
+      //std::string value(temp);
+      //value.resize(n);
+      int size = value.size();
+      mods[i]->mod_vals.modv_strvals[j] = new char[size + 1];
+      
       std::copy(value.begin(), value.end(), mods[i]->mod_vals.modv_strvals[j]);
-      mods[i]->mod_vals.modv_strvals[j][value.size()] = '\0';
+      //mods[i]->mod_vals.modv_strvals[j] = "e";
+      mods[i]->mod_vals.modv_strvals[j][size] = '\0';
     }
     
     mods[i]->mod_vals.modv_strvals[d.elms(L"values")] = NULL;

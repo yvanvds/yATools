@@ -15,6 +15,7 @@
 #include "find.h"
 #include "addUser.h"
 #include "removeUser.h"
+#include "renameUser.h"
 #include "addGroup.h"
 #include "removeGroup.h"
 #include "proxyManager.h"
@@ -71,6 +72,9 @@ int main(int argc, char ** argv) {
     } else if(userCommand.compare(L"delete") == 0) {
       RemoveUser().parse(argc - 3, argv + 3);
       return 0;
+    } else if (userCommand.compare(L"rename") == 0) {
+      RenameUser().parse(argc -3, argv + 3);
+      return 0;
     }
     
   } else if (command.compare(L"proxy") == 0) {
@@ -114,6 +118,7 @@ void printUserHelp() {
   cout << "Please tell me what you'd like to do. Choose either " << endl;
   cout << "  add     : add a user to the system."        << endl;
   cout << "  delete  : delete a user from the system."   << endl;
+  cout << "  rename  : change a user's first name and name." << endl;
 }
 
 void printGroupHelp() {

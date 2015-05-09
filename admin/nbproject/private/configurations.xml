@@ -17,7 +17,8 @@
         </gdb_signals>
         <gdb_options>
           <DebugOptions>
-            <option name="debug_command" value="&quot;${OUTPUT_PATH}&quot; group add -e testGroup"/>
+            <option name="debug_command"
+                    value="&quot;${OUTPUT_PATH}&quot; user rename yvanym Yvén &quot;Vander Sandén&quot;"/>
           </DebugOptions>
         </gdb_options>
         <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
@@ -33,8 +34,9 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" </runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" user add Tädeus Misfit 19809403 5IT</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" group add testGroup</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" user rename yvanym Yvén "Vander Sandén"</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" group add testGroup</runcommand>
+        <runcommand>"${OUTPUT_PATH}" user rename yvanym Yvén "Vander Sandén"</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

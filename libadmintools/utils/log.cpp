@@ -7,6 +7,7 @@
 
 #include "log.h"
 #include <iostream>
+#include "convert.h"
 
 y::utils::log & y::utils::Log() {
   static log l;
@@ -19,7 +20,7 @@ y::utils::log::log() : _useConsole(true), _useFile(true), _file("/var/log/admint
 
 y::utils::log & y::utils::log::add(const std::wstring& message) {
   if(_useConsole) {
-    std::wcout << message << std::endl;
+    std::cout << str8(message) << std::endl;
   }
   if(_useFile) {
     _stream << message << std::endl;
