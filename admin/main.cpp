@@ -19,6 +19,7 @@
 #include "addGroup.h"
 #include "removeGroup.h"
 #include "proxyManager.h"
+#include "debugFunctions.h"
 #include "smartschool/smartschool.h"
 #include "ldap/server.h"
 #include "utils/convert.h"
@@ -93,6 +94,9 @@ int main(int argc, char ** argv) {
       RemoveGroup().parse(argc - 3, argv + 3);
       return 0;
     }
+  } else if (command.compare(L"debug") == 0) {
+    DebugFunctions().parse(argc - 2, argv + 2);
+    return 0;
   }
 
   // if we get here, print help

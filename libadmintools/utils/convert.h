@@ -106,6 +106,7 @@ extern std::u32string str32(const std::string& s);
 extern std::u32string str32(const std::u16string& s);
 
 extern Wt::WString strWt(const std::u16string& s);
+extern std::string strSS(const std::wstring& s);
 
 
 #endif	/* CONVERT_H */

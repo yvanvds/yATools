@@ -42,9 +42,7 @@ y::ldap::account & y::admin::userAdmin::add(const y::ldap::CN & cn,
     tempAccount.groupID(y::ldap::GID_NUMBER(1000));
   }
   
-#ifndef DEBUG
   y::samba::addUser(tempAccount);
-#endif
   
   // load ldap account created by samba
   y::ldap::account & newAccount = y::ldap::Server().getAccount(tempAccount.uid());

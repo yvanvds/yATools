@@ -90,10 +90,8 @@ bool y::ldap::account::load(const data& d) {
       _wisaID(WISA_ID(std::stoi(d.getValue(TYPE_WISA_ID))), true);
       _hasWisaID = true;
     } catch(const std::invalid_argument &e) {
-      std::wstring message(L"Invalid ldap::WISA_ID conversion: ");
-      message += d.getValue(TYPE_WISA_ID);
-      utils::Log().add(message);
-      return false;
+      _wisaID(WISA_ID(0));
+      _hasWisaID = true;
     }
   } else {
     _wisaID(WISA_ID(0));
@@ -140,6 +138,15 @@ bool y::ldap::account::load(const DN & id) {
 }
 
 bool y::ldap::account::save() {
+  // remove user if needed
+  if(flaggedForRemoval()) {
+    y::Smartschool().deleteUser(*this);
+    Server().remove(_dn());
+    return true;
+  }
+  
+  
+  // else apply changes
   dataset values;
   
   // on first save, some new entries have to be added
@@ -224,9 +231,9 @@ bool y::ldap::account::save() {
     d.add(L"values", _fullName()());
     
     // this value is also kept in 'gecos' for historical reasons
-    data & d1 = values.New(MODIFY);
-    d1.add(L"type", L"gecos");
-    d1.add(L"values", _fullName()());
+    //data & d1 = values.New(MODIFY);
+    //d1.add(L"type", L"gecos");
+    //d1.add(L"values", _fullName()());
   }
   
   if(_homeDir.changed()) {
@@ -251,15 +258,12 @@ bool y::ldap::account::save() {
 #endif
     
     if(_group()().compare(L"extern") != 0 && _group()().compare(L"externmail") != 0) {
-      if(y::Smartschool().savePassword(*this) == 12) {
-        // the user does not exist in smartschool
-        y::Smartschool().saveUser(*this);
-        // also set primary group
-        if(_group()().compare(L"personeel") == 0) {
-          y::Smartschool().addUserToGroup(*this, "Leerkrachten", false);
-        } else if (_group()().compare(L"directie") == 0) {
-          y::Smartschool().addUserToGroup(*this, "Directie", false);
-        }
+      if(values.elms() == 1) {
+        // this means only the password has changed
+        y::Smartschool().savePassword(*this);
+        std::wstring message(L"Updating smartschool password for user ");
+        message += _fullName()();
+        y::utils::Log().add(message);
       }
     }
     
@@ -267,6 +271,27 @@ bool y::ldap::account::save() {
   
   if(values.elms()) {
     Server().modify(_dn(), values);
+    
+    // check if more than just the password is changed
+    if(_group()().compare(L"extern") != 0 && _group()().compare(L"externmail") != 0) {
+      if(values.elms() > 1 || values.get(0).getValue(L"type").compare(TYPE_PASSWORD) != 0) {
+        y::Smartschool().saveUser(*this);
+        std::wstring message(L"Updating smartschool for user ");
+        message += _fullName()();
+        y::utils::Log().add(message);
+        
+        // add user to group
+        if(this->_groupID()() == 1000) {
+          // this is a student
+          y::Smartschool().addUserToGroup(*this, str8(_group()()), false);
+        } else  if(_group()().compare(L"personeel") == 0) {
+          y::Smartschool().addUserToGroup(*this, "Leerkrachten", false);
+        } else if (_group()().compare(L"directie") == 0) {
+          y::Smartschool().addUserToGroup(*this, "Directie", false);
+        }
+      }
+    }
+    
     return true;
   }
   return false;

@@ -11,6 +11,7 @@
 #include "V3Binding.nsmap"
 #include "utils/stringFunctions.h"
 #include "data/database.h"
+#include "ldap/group.h"
 
 
 //#include "ldap/account.h"
@@ -113,14 +114,14 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   
   xsd__anyType * result;
   if(service.saveUser(
-          str8(y::utils::Config().getSSPw()),
-          std::to_string(account.uidNumber()()), 
-          str8(account.uid()()),
-          str8(account.getPasswordText()),
+          strSS(y::utils::Config().getSSPw()),
+          std::to_string(account.uidNumber()()) , // internal number
+          strSS(account.uid()())                 , // username
+          strSS(account.getPasswordText())       , // password
           "", // password for first co-account
           "", // password for second co-account
-          str8(account.cn()()), // first name
-          str8(account.sn()()), // last name
+          strSS(account.cn()())                  , // first name
+          strSS(account.sn()())                  , // last name
           "", // extra names
           "", // initials
           "", // sex
@@ -131,7 +132,7 @@ void y::smartschool::saveUser(y::ldap::account& account) {
           "", // postal code
           "", // city
           "", // country
-          str8(account.mail()()), // email
+          strSS(account.mail()()), // email
           "", // mobile phone
           "", // home phone
           "", // fax
@@ -158,6 +159,80 @@ int y::smartschool::addUserToGroup(y::ldap::account& account, const std::string&
     return -1;
   } else {
     if(result->soap_type() == SOAP_TYPE_xsd__int) {
+      return ((xsd__int*)(result))->__item;
+    }
+  }
+  return 0;
+}
+
+int y::smartschool::deleteUser(y::ldap::account& account, const std::string & removalDate) {
+  xsd__anyType * result;
+  if(service.delUser(
+          str8(y::utils::Config().getSSPw()),
+          str8(account.uid()()),
+          removalDate, // official date
+          result
+          ) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return -1;
+  } else {
+    if(result->soap_type() == SOAP_TYPE_xsd__int) {
+      return ((xsd__int*)(result))->__item;
+    }
+  }
+  return 0;
+}
+
+int y::smartschool::addClass(y::ldap::group& group) {
+  xsd__anyType * result;
+  std::string parent;
+  
+  switch(group.cn()()[0]) {
+    case 1: parent = "1stejaar"; break;
+    case 2: parent = "2dejaar"; break;
+    case 3: parent = "3dejaar"; break;
+    case 4: parent = "4dejaar"; break;
+    case 5: parent = "5dejaar"; break;
+    case 6: parent = "6dejaar"; break;
+    case 7: parent = "7dejaar"; break;
+  }
+  
+  std::string description("Leerlingen ");
+  description += str8(group.cn()()); 
+  
+  if(service.saveClass(
+          str8(y::utils::Config().getSSPw()), // password smartschool
+          str8(group.cn()())                  , // group name
+          description                         , // group description
+          str8(group.cn()())                  , // unique group ID
+          "0"                              , // parent for this group
+          "0"                                 , // koppeling schoolagenda
+          ""                                 , // institute number
+          ""                                 , // admin number
+          result
+          ) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return -1;
+  } else {
+    if(result->soap_type() == SOAP_TYPE_xsd__int) {
+      return ((xsd__int*)(result))->__item;
+    }
+  }
+  return 0;
+}
+
+int y::smartschool::deleteClass(y::ldap::group& group) {
+  xsd__anyType * result;
+  if(service.delClass(
+          str8(y::utils::Config().getSSPw()), // password smartschool
+          str8(group.cn()())                  , // unique group ID
+          result
+          ) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return -1;
+  } else {
+    if(result->soap_type() == SOAP_TYPE_xsd__int) {
+      std::cout << str8(errorToText(((xsd__int*)(result))->__item)) << std::endl;
       return ((xsd__int*)(result))->__item;
     }
   }

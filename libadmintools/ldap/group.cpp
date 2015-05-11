@@ -9,6 +9,7 @@
 #include "dataset.h"
 #include "utils/config.h"
 #include "server.h"
+#include "smartschool/smartschool.h"
 #include <assert.h>
 
 y::ldap::group::group() 
@@ -173,6 +174,11 @@ bool y::ldap::group::save() {
   if(!_flaggedForCommit) return false;
   
   if(_flaggedForRemoval) {
+    // remove from smartschool if this is a class group
+    if(!editable()) {
+      y::Smartschool().deleteClass(*this);
+    }
+    
     Server().remove(_dn());
     // not really needed, but you never know
     _members.clear();
@@ -183,6 +189,11 @@ bool y::ldap::group::save() {
   
   dataset values;
   
+  // update or add smartschool class if needed
+  if(!editable()) {
+    y::Smartschool().addClass(*this);
+  }
+  
   if(_new) {    
     if(saveNew()) {
       _new = false;
@@ -191,6 +202,8 @@ bool y::ldap::group::save() {
   } else {
     return saveUpdate();
   }
+  
+  
 }
 
 bool y::ldap::group::saveNew() {

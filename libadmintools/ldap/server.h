@@ -59,9 +59,10 @@ namespace y {
       void add   (const DN & dn, dataset & values);
       void remove(const DN & dn                  );
       
-      LDAPMod ** createMods (dataset &  values); //always combine with releaseMods!!!
-      void       releaseMods(LDAPMod ** mods  );
-      void       printMods  (LDAPMod ** mods  ); // for debugging only
+      LDAPMod ** createMods  (dataset &  values); //always combine with releaseMods!!!
+      void       releaseMods (LDAPMod ** mods  );
+      void       printMods   (LDAPMod ** mods  ); // for debugging only
+      void       toLdapModify(const DN & dn, LDAPMod ** mods); // for debugging only
       
       container<account> _accounts;
       container<group  > _groups  ;

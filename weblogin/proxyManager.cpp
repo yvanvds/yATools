@@ -42,6 +42,7 @@ void room::create(Wt::WTableRow* row) {
   row->elementAt(1)->addWidget(button1);
   row->elementAt(2)->addWidget(button2);
   row->elementAt(3)->addWidget(button3);
+  row->addChild(bgroup);
   
   bgroup->setSelectedButtonIndex(0);
   bgroup->checkedChanged().connect(this, &room::buttonClicked);

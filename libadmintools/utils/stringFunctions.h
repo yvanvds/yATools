@@ -13,6 +13,8 @@
 namespace y {
   namespace utils {
     void keepOnlyChars(std::wstring & s);
+    void replaceUTF8Chars(std::wstring & s);
+    
     // tokenize a string based on ';' values
     void parseCSV(const std::wstring & s, container<std::wstring> & list);
   }

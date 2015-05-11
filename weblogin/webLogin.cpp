@@ -141,6 +141,7 @@ void webLogin::loginButtonClicked() {
 void webLogin::createContents() {
   
   homePage = new Wt::WContainerWidget(root());
+
   Wt::WHBoxLayout * hbox = new Wt::WHBoxLayout();
   homePage->setLayout(hbox);
   

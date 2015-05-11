@@ -9,6 +9,8 @@
 #include <string>
 #include <ldap.h>
 #include <ldap_utf8.h>
+#include <locale.h>
+#include <libintl.h>
 #include <vector>
 #include "utils/log.h"
 #include "utils/config.h"
@@ -24,6 +26,8 @@ y::ldap::server & y::ldap::Server() {
 }
 
 y::ldap::server::server() : _connected(false), _allAccountsLoaded(false), _allGroupsLoaded(false) {
+  setlocale(LC_MESSAGES, "");
+  
   // set timeout values
   timeOut.tv_sec = 300L;
   timeOut.tv_usec = 0L;
@@ -108,6 +112,7 @@ bool y::ldap::server::getData(y::ldap::dataset& rs, bool isDN) {
     char * dn = ldap_get_dn(_server, entry);
     d.add(L"DN", strW(dn));
     ldap_memfree(dn);
+    
     
     // parse attributes
     char * attr;
@@ -321,16 +326,45 @@ void y::ldap::server::printMods(LDAPMod** mods) {
     
     out << "mod" << i << " (";
     switch (mods[i]->mod_op) {
-      case LDAP_MOD_ADD: out << "ADD)" << std::endl; break;
-      case LDAP_MOD_REPLACE: out << "REPLACE)" << std::endl; break;
-      case LDAP_MOD_DELETE: out << "DELETE)" << std::endl; break;
+      case LDAP_MOD_ADD | LDAP_MOD_BVALUES: out << "ADD)" << std::endl; break;
+      case LDAP_MOD_REPLACE | LDAP_MOD_BVALUES: out << "REPLACE)" << std::endl; break;
+      case LDAP_MOD_DELETE | LDAP_MOD_BVALUES: out << "DELETE)" << std::endl; break;
     }
     out << "  type: " << mods[i]->mod_type << std::endl;
-    for (int j = 0; mods[i]->mod_vals.modv_strvals[j] != NULL; j++) {
-      out << "  value: " << mods[i]->mod_vals.modv_strvals[j] << std::endl;
+    for (int j = 0; mods[i]->mod_bvalues[j] != NULL; j++) {
+      out << "  value: " << mods[i]->mod_bvalues[j]->bv_val << std::endl;
     }
   }
   y::utils::Log().add(strW(out.str()));
+}
+
+
+void y::ldap::server::toLdapModify(const y::ldap::DN & dn, LDAPMod** mods) {
+  std::ofstream out;
+  out.open("/tmp/tempMods", std::ofstream::out | std::ofstream::trunc);
+  out << "dn: " << str8(dn()).c_str() << std::endl;
+  out << "changetype: modify" << std::endl;
+  
+  for(int i = 0; mods[i] != NULL; i++) {  
+    switch (mods[i]->mod_op) {
+      case LDAP_MOD_ADD | LDAP_MOD_BVALUES: out << "add: "; break;
+      case LDAP_MOD_REPLACE | LDAP_MOD_BVALUES: out << "replace: "; break;
+      case LDAP_MOD_DELETE | LDAP_MOD_BVALUES: out << "delete: "; break;
+    }
+    out << mods[i]->mod_type << std::endl;
+    for (int j = 0; mods[i]->mod_bvalues[j] != NULL; j++) {
+      out << mods[i]->mod_type << ": " << mods[i]->mod_bvalues[j]->bv_val << std::endl;
+    }
+    out << "-" << std::endl;
+  }
+  out.close();
+  std::string command("ldapmodify -a -D ");
+  command += str8(y::utils::Config().getLdapAdminDN());
+  command += " -w ";
+  command += str8(y::utils::Config().getLdapPasswd());
+  command += " -f /tmp/tempMods";
+  //std::cout << command << std::endl;
+  system(command.c_str());
 }
 
 LDAPMod ** y::ldap::server::createMods(dataset& values) {
@@ -342,47 +376,44 @@ LDAPMod ** y::ldap::server::createMods(dataset& values) {
     data & d = values.get(i);
     
     switch (d.getType()) {
-      case NEW: mods[i]->mod_op = 0; break;
-      case ADD: mods[i]->mod_op = LDAP_MOD_ADD; break;
-      case MODIFY: mods[i]->mod_op = LDAP_MOD_REPLACE; break;
-      case DELETE: mods[i]->mod_op = LDAP_MOD_DELETE; break;
+      case NEW: mods[i]->mod_op = 0 | LDAP_MOD_BVALUES; break;
+      case ADD: mods[i]->mod_op = LDAP_MOD_ADD | LDAP_MOD_BVALUES; break;
+      case MODIFY: mods[i]->mod_op = LDAP_MOD_REPLACE | LDAP_MOD_BVALUES; break;
+      case DELETE: mods[i]->mod_op = LDAP_MOD_DELETE | LDAP_MOD_BVALUES; break;
       default: assert(false);
     }
+    mods[i]->mod_type = NULL;
     
     std::string type = str8(d.getValue(L"type"));
     mods[i]->mod_type = new char[type.size() + 1];
     std::copy(type.begin(), type.end(), mods[i]->mod_type);
     mods[i]->mod_type[type.size()] = '\0';
     
-    mods[i]->mod_vals.modv_strvals = new char*[d.elms(L"values") + 1];
+    mods[i]->mod_bvalues = new berval*[d.elms(L"values") + 1];
     for(int j = 0; j < d.elms(L"values"); j++) {
       std::string value = str8(d.getValue(L"values", j));
-      //char temp[256];
-      //int n = ldap_x_wcs_to_utf8s(temp, L"Yv\xC3\xA9", 256);
-      //int n = ldap_x_wcs_to_utf8s(temp, L"Yvan", 256);
-      //std::string value(temp);
-      //value.resize(n);
       int size = value.size();
-      mods[i]->mod_vals.modv_strvals[j] = new char[size + 1];
-      
-      std::copy(value.begin(), value.end(), mods[i]->mod_vals.modv_strvals[j]);
-      //mods[i]->mod_vals.modv_strvals[j] = "e";
-      mods[i]->mod_vals.modv_strvals[j][size] = '\0';
+      mods[i]->mod_bvalues[j] = new berval; 
+      mods[i]->mod_bvalues[j]->bv_val = new char[size + 1];
+      std::copy(value.begin(), value.end(), mods[i]->mod_bvalues[j]->bv_val);
+      mods[i]->mod_bvalues[j]->bv_val[size] = '\0';
+      mods[i]->mod_bvalues[j]->bv_len = size;
     }
     
-    mods[i]->mod_vals.modv_strvals[d.elms(L"values")] = NULL;
+    mods[i]->mod_bvalues[d.elms(L"values")] = NULL;
   }
   
   return mods;
 }
 
 void y::ldap::server::releaseMods(LDAPMod** mods) {
-    for(int i = 0; mods[i] != nullptr; i++) {
+  for(int i = 0; mods[i] != nullptr; i++) {
     delete[] mods[i]->mod_type;
-    for(int j = 0; mods[i]->mod_vals.modv_strvals[j] != nullptr; j++) {
-      delete[] mods[i]->mod_vals.modv_strvals[j];
+    for(int j = 0; mods[i]->mod_bvalues[j] != nullptr; j++) {
+      delete[] mods[i]->mod_bvalues[j]->bv_val;
+      delete[] mods[i]->mod_bvalues[j];
     }
-    delete[] mods[i]->mod_vals.modv_strvals;
+    delete[] mods[i]->mod_bvalues;
     delete mods[i];
   }
   delete[] mods;
@@ -392,15 +423,20 @@ void y::ldap::server::modify(const DN & dn, dataset & values) {
   LDAPMod ** mods = createMods(values);
 
   if(int result = ldap_modify_ext_s(_server, str8(dn()).c_str(), mods, NULL, NULL) != LDAP_SUCCESS) {
-    std::wstring message;
-    message.append(L"Error on DN: ");
-    message.append(dn());
-    y::utils::Log().add(message);
-    message.clear();
-    message.append(L"y::ldap::server::modify() : ");
-    message.append(strW(ldap_err2string(result)));
-    y::utils::Log().add(message);
-    printMods(mods);
+    if(result == LDAP_OPERATIONS_ERROR) {
+      y::utils::Log().add(L"Possible utf8 mismatch detected. Trying again with ldapmodify.");
+      toLdapModify(dn, mods);
+    } else {
+      std::wstring message;
+      message.append(L"Error on DN: ");
+      message.append(dn());
+      y::utils::Log().add(message);
+      message.clear();
+      message.append(L"y::ldap::server::modify() : ");
+      message.append(strW(ldap_err2string(result)));
+      y::utils::Log().add(message);
+      printMods(mods);
+    }
   }
   
   releaseMods(mods);
@@ -473,10 +509,15 @@ y::ldap::UID y::ldap::server::createUID(const std::wstring& cn, const std::wstri
   std::locale loc = gen("en_US.UTF-8");
   std::locale::global(loc);
   
-  //std::setlocale(LC_CTYPE, "en_US.UTF-8");
+  // To lowercase
   std::wstring first(boost::locale::to_lower(cn));
   std::wstring last(boost::locale::to_lower(sn));
   
+  // replace utf8 chars
+  y::utils::replaceUTF8Chars(first);
+  y::utils::replaceUTF8Chars(last);
+  
+  // remove non alphanumeric characters
   y::utils::keepOnlyChars(first);
   y::utils::keepOnlyChars(last);
   
@@ -514,9 +555,15 @@ y::ldap::MAIL y::ldap::server::createMail(const std::wstring& cn, const std::wst
   std::locale loc = gen("en_US.UTF-8");
   std::locale::global(loc);
   
+  // To lowercase
   std::wstring first(boost::locale::to_lower(cn));
   std::wstring last(boost::locale::to_lower(sn));
   
+  // replace utf8 chars
+  y::utils::replaceUTF8Chars(first);
+  y::utils::replaceUTF8Chars(last);
+  
+  // remove non alphanumeric characters
   y::utils::keepOnlyChars(first);
   y::utils::keepOnlyChars(last);
   
@@ -543,14 +590,15 @@ y::ldap::MAIL y::ldap::server::createMail(const std::wstring& cn, const std::wst
 
 bool y::ldap::server::commitChanges() {
   bool result = false;
-  for(int i = 0; i < _accounts.elms(); i++) {
-    if(_accounts[i].save()) result = true;
-  }
   
   for(int i = 0; i < _groups.elms(); i++) {
     if(_groups[i].save()) result = true;
   }
   
+  for(int i = 0; i < _accounts.elms(); i++) {
+    if(_accounts[i].save()) result = true;
+  }
+ 
   return result;
 }
 

@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1736800395/show.o \
 	${OBJECTDIR}/addGroup.o \
 	${OBJECTDIR}/addUser.o \
+	${OBJECTDIR}/debugFunctions.o \
 	${OBJECTDIR}/find.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/proxyManager.o \
@@ -92,6 +93,11 @@ ${OBJECTDIR}/addUser.o: addUser.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/addUser.o addUser.cpp
+
+${OBJECTDIR}/debugFunctions.o: debugFunctions.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/debugFunctions.o debugFunctions.cpp
 
 ${OBJECTDIR}/find.o: find.cpp 
 	${MKDIR} -p ${OBJECTDIR}

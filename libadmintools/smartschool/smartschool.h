@@ -14,6 +14,7 @@
 #include "ldap/account.h"
 #include "data/database.h"
 #include "data/sqlserver.h"
+#include "ldap/group.h"
 
 namespace y {
   class smartschool {
@@ -33,6 +34,10 @@ namespace y {
    int savePassword(y::ldap::account & account);
    void saveUser(y::ldap::account & account);
    int addUserToGroup(y::ldap::account & account, const std::string & group, bool keepCurrent);
+   int deleteUser(y::ldap::account & account, const std::string & removalDate = "00/00/0000");
+   
+   int addClass(y::ldap::group & group);
+   int deleteClass(y::ldap::group & group);
    
    std::wstring errorToText(int code);
    
