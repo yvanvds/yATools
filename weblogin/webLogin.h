@@ -75,6 +75,8 @@ private:
   
   // main contents
   Wt::WMenu * mainMenu;
+  Wt::WMenu * yearbookMenu;
+  
   Wt::WStackedWidget * stack;
   
   Wt::WWidget * accountFunc();
@@ -82,7 +84,9 @@ private:
   Wt::WWidget * wisaImportFunc();
   Wt::WWidget * groupFunc();
   Wt::WWidget * yearbookFunc();
-  Wt::WWidget * yearbookAdminFunc();
+  Wt::WWidget * yearbookReviewFunc();
+  Wt::WWidget * yearbookDownloadFunc();
+  Wt::WWidget * yearbookConfigFunc();
   
   void logoutFunc();
   

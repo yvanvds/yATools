@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="94">
+<configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>data.h</itemPath>
-      <itemPath>step.h</itemPath>
-      <itemPath>step1.h</itemPath>
-      <itemPath>step2.h</itemPath>
-      <itemPath>step3.h</itemPath>
-      <itemPath>step4.h</itemPath>
-      <itemPath>step5.h</itemPath>
-      <itemPath>step6.h</itemPath>
-      <itemPath>stepPhoto.h</itemPath>
       <itemPath>yearBook.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -22,16 +13,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>data.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
-      <itemPath>step.cpp</itemPath>
-      <itemPath>step1.cpp</itemPath>
-      <itemPath>step2.cpp</itemPath>
-      <itemPath>step3.cpp</itemPath>
-      <itemPath>step4.cpp</itemPath>
-      <itemPath>step5.cpp</itemPath>
-      <itemPath>step6.cpp</itemPath>
-      <itemPath>stepPhoto.cpp</itemPath>
       <itemPath>yearBook.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -45,6 +27,25 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>Makefile</itemPath>
+    <itemPath>data.cpp</itemPath>
+    <itemPath>data.h</itemPath>
+    <itemPath>step.cpp</itemPath>
+    <itemPath>step.h</itemPath>
+    <itemPath>step1.cpp</itemPath>
+    <itemPath>step1.h</itemPath>
+    <itemPath>step2.cpp</itemPath>
+    <itemPath>step2.h</itemPath>
+    <itemPath>step3.cpp</itemPath>
+    <itemPath>step3.h</itemPath>
+    <itemPath>step4.cpp</itemPath>
+    <itemPath>step4.h</itemPath>
+    <itemPath>step5.cpp</itemPath>
+    <itemPath>step5.h</itemPath>
+    <itemPath>step6.cpp</itemPath>
+    <itemPath>step6.h</itemPath>
+    <itemPath>stepPhoto.cpp</itemPath>
+    <itemPath>stepPhoto.h</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -95,6 +96,8 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Makefile" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="data.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data.h" ex="false" tool="3" flavor2="0">
@@ -192,6 +195,8 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Makefile" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="data.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data.h" ex="false" tool="3" flavor2="0">
@@ -278,41 +283,43 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="data.cpp" ex="false" tool="1" flavor2="8">
+      <item path="Makefile" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="data.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="step.cpp" ex="false" tool="1" flavor2="8">
+      <item path="step.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="step.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step1.cpp" ex="false" tool="1" flavor2="8">
+      <item path="step1.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="step1.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step2.cpp" ex="false" tool="1" flavor2="8">
+      <item path="step2.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="step2.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step3.cpp" ex="false" tool="1" flavor2="8">
+      <item path="step3.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="step3.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step4.cpp" ex="false" tool="1" flavor2="8">
+      <item path="step4.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="step4.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step5.cpp" ex="false" tool="1" flavor2="8">
+      <item path="step5.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="step5.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="step6.cpp" ex="false" tool="1" flavor2="8">
+      <item path="step6.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="step6.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="stepPhoto.cpp" ex="false" tool="1" flavor2="8">
+      <item path="stepPhoto.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="stepPhoto.h" ex="false" tool="3" flavor2="0">
       </item>

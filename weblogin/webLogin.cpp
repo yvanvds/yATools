@@ -22,18 +22,22 @@
 #include <Wt/WAnimation>
 #include <Wt/WTemplate>
 #include <admintools.h>
+#include <Wt/WMenu>
 
 #include "webLogin.h"
 #include "accountManager.h"
 #include "proxyManager.h"
 #include "wisaImport.h"
-
+#include "yearbook/yearbook.h"
+#include "yearbook/yearbookConfig.h"
+#include "yearbook/yearbookReview.h"
+#include "yearbook/yearbookDownload.h"
 
 webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), loggedIn(false) {
   y::utils::Log().add(L"start of webLogin app");
   
   setTitle("Login Application");
-  theme = new Wt::WBootstrapTheme();
+  theme = new Wt::WBootstrapTheme(this);
   theme->setVersion(Wt::WBootstrapTheme::Version3);
   this->setTheme(theme);
   
@@ -56,7 +60,7 @@ webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), logged
   nameEdit->setWidth(150);
   nameBox->addWidget(nameEdit);
   
-  Wt::WLengthValidator * validator = new Wt::WLengthValidator();
+  Wt::WLengthValidator * validator = new Wt::WLengthValidator(this);
   validator->setMinimumLength(1);
   validator->setInvalidTooShortText("Je hebt WEL een naam!");
   validator->setMandatory(true);
@@ -175,16 +179,30 @@ void webLogin::createContents() {
   
   // show this for last year students (or me for testing)
   std::string group = str8(account->group()());
-  if(group[0] == '6' || group[0] == '7' || (account->uid()().compare(L"yvanym") == 0)) {
+  if(group[0] == '6' || group[0] == '7' || y::utils::Config().isYearbookAdmin(account->uid()())) {
     mainMenu->addItem("Jaarboek", 
             deferCreate(boost::bind(&webLogin::yearbookFunc, this)), 
-            Wt::WMenuItem::PreLoading);
+            Wt::WMenuItem::LazyLoading);
   }
   
-  if(false) {
-    mainMenu->addItem("Jaarboek Admin", 
-            deferCreate(boost::bind(&webLogin::yearbookAdminFunc, this)), 
-            Wt::WMenuItem::PreLoading);
+  if(y::utils::Config().isYearbookAdmin(account->uid()())) {
+    yearbookMenu = new Wt::WMenu(contents, Wt::Vertical);
+    
+    yearbookMenu->addItem("Review", 
+            deferCreate(boost::bind(&webLogin::yearbookReviewFunc, this)), 
+            Wt::WMenuItem::LazyLoading);
+    
+    yearbookMenu->addItem("Download", 
+            deferCreate(boost::bind(&webLogin::yearbookDownloadFunc, this)), 
+            Wt::WMenuItem::LazyLoading);
+    
+    yearbookMenu->addItem("Config", 
+            deferCreate(boost::bind(&webLogin::yearbookConfigFunc, this)), 
+            Wt::WMenuItem::LazyLoading);
+    yearbookMenu->setInternalPathEnabled("/jaarboek-admin/");
+    yearbookMenu->setStyleClass("nav nav-stacked");
+    
+    mainMenu->addMenu("Jaarboek Admin", yearbookMenu);
   }
   
   mainMenu->setInternalPathEnabled("/");
@@ -238,11 +256,44 @@ Wt::WWidget * webLogin::groupFunc() {
 }
 
 Wt::WWidget * webLogin::yearbookFunc() {
-  return new Wt::WText("yearbook");
+  Wt::WPanel * panel = new Wt::WPanel();
+  panel->setTitle("<h3>Jaarboek</h3>");
+  panel->setStyleClass("panel panel-primary");
+  panel->setCentralWidget(Yearbook().get());
+  panel->setMaximumSize(800, 1000);
+  Yearbook().setAccount(account);
+  
+  return panel;
 }
 
-Wt::WWidget * webLogin::yearbookAdminFunc() {
-  return new Wt::WText("yb admin");
+Wt::WWidget * webLogin::yearbookReviewFunc() {
+  Wt::WPanel * panel = new Wt::WPanel();
+  panel->setTitle("<h3>Jaarboek Review</h3>");
+  panel->setStyleClass("panel panel-primary");
+  panel->setCentralWidget(YearbookReview().get());
+  panel->setMaximumSize(800, 1000);
+  
+  return panel;
+}
+
+Wt::WWidget * webLogin::yearbookDownloadFunc() {
+  Wt::WPanel * panel = new Wt::WPanel();
+  panel->setTitle("<h3>Jaarboek Download</h3>");
+  panel->setStyleClass("panel panel-primary");
+  panel->setCentralWidget(YearbookDownload().get());
+  panel->setMaximumSize(800, 1000);
+  
+  return panel;
+}
+
+Wt::WWidget * webLogin::yearbookConfigFunc() {
+  Wt::WPanel * panel = new Wt::WPanel();
+  panel->setTitle("<h3>Jaarboek Configuratie</h3>");
+  panel->setStyleClass("panel panel-primary");
+  panel->setCentralWidget(YearbookConfig().get());
+  panel->setMaximumSize(800, 1000);
+  
+  return panel;
 }
 
 void webLogin::logoutFunc() {

@@ -1,26 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
-      <itemPath>accountManager.h</itemPath>
-      <itemPath>proxyManager.h</itemPath>
-      <itemPath>webLogin.h</itemPath>
-      <itemPath>wisaImport.h</itemPath>
-    </logicalFolder>
-    <logicalFolder name="ResourceFiles"
-                   displayName="Resource Files"
-                   projectFiles="true">
-    </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
+    <logicalFolder name="f3" displayName="accountManager" projectFiles="true">
       <itemPath>accountManager.cpp</itemPath>
-      <itemPath>main.cpp</itemPath>
+      <itemPath>accountManager.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f2" displayName="proxyManager" projectFiles="true">
       <itemPath>proxyManager.cpp</itemPath>
-      <itemPath>webLogin.cpp</itemPath>
-      <itemPath>wisaImport.cpp</itemPath>
+      <itemPath>proxyManager.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f1" displayName="wisaImport" projectFiles="true">
       <itemPath>wisaImport/wisaCommitChanges.cpp</itemPath>
@@ -33,6 +20,8 @@
       <itemPath>wisaImport/wisaCompareNames.h</itemPath>
       <itemPath>wisaImport/wisaConfirmSubmit.cpp</itemPath>
       <itemPath>wisaImport/wisaConfirmSubmit.h</itemPath>
+      <itemPath>wisaImport.cpp</itemPath>
+      <itemPath>wisaImport.h</itemPath>
       <itemPath>wisaImport/wisaNewGroups.cpp</itemPath>
       <itemPath>wisaImport/wisaNewGroups.h</itemPath>
       <itemPath>wisaImport/wisaNoID.cpp</itemPath>
@@ -41,6 +30,28 @@
       <itemPath>wisaImport/wisaParseFile.h</itemPath>
       <itemPath>wisaImport/wisaUpload.cpp</itemPath>
       <itemPath>wisaImport/wisaUpload.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f4" displayName="yearbook" projectFiles="true">
+      <itemPath>yearbook/yearbook.cpp</itemPath>
+      <itemPath>yearbook/yearbook.h</itemPath>
+      <itemPath>yearbook/yearbookConfig.cpp</itemPath>
+      <itemPath>yearbook/yearbookConfig.h</itemPath>
+      <itemPath>yearbook/yearbookConfirmRemove.cpp</itemPath>
+      <itemPath>yearbook/yearbookConfirmRemove.h</itemPath>
+      <itemPath>yearbook/yearbookDB.cpp</itemPath>
+      <itemPath>yearbook/yearbookDB.h</itemPath>
+      <itemPath>yearbook/yearbookDone.cpp</itemPath>
+      <itemPath>yearbook/yearbookDone.h</itemPath>
+      <itemPath>yearbook/yearbookDownload.cpp</itemPath>
+      <itemPath>yearbook/yearbookDownload.h</itemPath>
+      <itemPath>yearbook/yearbookPhoto.cpp</itemPath>
+      <itemPath>yearbook/yearbookPhoto.h</itemPath>
+      <itemPath>yearbook/yearbookQuestion.cpp</itemPath>
+      <itemPath>yearbook/yearbookQuestion.h</itemPath>
+      <itemPath>yearbook/yearbookReview.cpp</itemPath>
+      <itemPath>yearbook/yearbookReview.h</itemPath>
+      <itemPath>yearbook/yearbookVerifyAccount.cpp</itemPath>
+      <itemPath>yearbook/yearbookVerifyAccount.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -53,6 +64,9 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>main.cpp</itemPath>
+    <itemPath>webLogin.cpp</itemPath>
+    <itemPath>webLogin.h</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -158,6 +172,46 @@
       </item>
       <item path="wisaImport/wisaUpload.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="yearbook/yearbook.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbook.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookConfig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookConfirmRemove.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookConfirmRemove.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDone.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDone.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDownload.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDownload.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookPhoto.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookPhoto.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookQuestion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookQuestion.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookReview.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookReview.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookVerifyAccount.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookVerifyAccount.h" ex="false" tool="3" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -261,6 +315,46 @@
       <item path="wisaImport/wisaUpload.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="wisaImport/wisaUpload.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbook.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbook.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookConfig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookConfirmRemove.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookConfirmRemove.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDone.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDone.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDownload.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookDownload.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookPhoto.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookPhoto.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookQuestion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookQuestion.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookReview.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookReview.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookVerifyAccount.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="yearbook/yearbookVerifyAccount.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

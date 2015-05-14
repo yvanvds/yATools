@@ -55,9 +55,14 @@ void fileDownload::addMessage(const std::wstring& message) {
   messages.New() = message;
 }
 
+bool fileDownload::empty() {
+  return messages.empty();
+}
+
 void wisaCommitChanges::setContent(Wt::WVBoxLayout* box) {
   this->box = box;
-  box->addWidget(new Wt::WText("<h4>Wijzigingen worden uitgevoerd...</h4>"));
+  progress = new Wt::WText("<h4>Wijzigingen worden uitgevoerd...</h4>");
+  box->addWidget(progress);
     
   // table scroll
   Wt::WScrollArea * scroll = new Wt::WScrollArea();
@@ -70,7 +75,6 @@ void wisaCommitChanges::setContent(Wt::WVBoxLayout* box) {
   scroll->setMaximumSize(750, 500);
   
   download = new fileDownload(entries);
-  
 }
 
 void WisaShowErrorOnScreen(const std::wstring & message) {
@@ -222,13 +226,18 @@ void wisaCommitChanges::addMessage(const std::wstring& message, bool lastUpdate)
       WisaImport().getApplication()->triggerUpdate();
       streamCounter = 0;
     }
+    
     if(lastUpdate) {
-      Wt::WPushButton * button = new Wt::WPushButton();
-      box->addWidget(button);
+      if(!download->empty()) {
+        Wt::WPushButton * button = new Wt::WPushButton();
+        box->addWidget(button);
       
-      button->setStyleClass("btn btn-success");
-      button->setText("Download lijst");
-      button->setLink(Wt::WLink(download));    
+        button->setStyleClass("btn btn-success");
+        button->setText("Download Nieuwe Logins");
+        button->setLink(Wt::WLink(download));  
+      }
+      
+      progress->setText("<h4>Klaar</h4>");
       WisaImport().getApplication()->triggerUpdate();
     }
   }  

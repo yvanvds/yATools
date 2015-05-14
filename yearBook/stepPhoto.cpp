@@ -89,7 +89,7 @@ void stepPhoto::setUpload() {
     p.arg(out);
     p.run(consOut);*/
     if (!system(NULL)) {
-      y::utils::Log().add("command not available");
+      //y::utils::Log().add("command not available");
     } else {
       std::string cmd;
       cmd = "cp ";
@@ -100,7 +100,7 @@ void stepPhoto::setUpload() {
       int i = system(cmd.c_str());
       std::string result = "system returned ";
       result.append(std::to_string(i));
-      y::utils::Log().add(result);
+     //y::utils::Log().add(result);
     }
     std::string out ="userImages/";
     out += parent->store.ID().toUTF8();

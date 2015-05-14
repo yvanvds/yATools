@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <vector>
 #include "config.h"
 #include "convert.h"
 #include "../system/workDir.h"
@@ -54,6 +55,7 @@ void y::utils::config::load(int argc, char** argv) {
     ("mysqlRootPassword", value<std::string>(), "set mysql root password")
     ("domain"           , value<std::string>(), "set network domain"     )
     ("smartschoolPw"    , value<std::string>(), "set smartschool password")
+    ("yearbookAdmin"    , value< std::vector<std::string> >(), "set yearbook administrators" )
   ;
   
   all.add(general).add(file);
@@ -149,6 +151,13 @@ void y::utils::config::load(int argc, char** argv) {
     y::utils::Log().add(L"Config warning: smartschool password is not set.");
   }
   
+  if(map.count("yearbookAdmin")) {
+    const std::vector<std::string> & admin = map["yearbookAdmin"].as< std::vector<std::string> >();
+    for(int i = 0; i < admin.size(); i++) {
+      yearbookAdmin.New() = strW(admin[i]);
+    }
+  }
+  
   configReady = true;
 }
 
@@ -194,4 +203,12 @@ const std::wstring & y::utils::config::getDomain() const {
 
 const std::wstring & y::utils::config::getSSPw() const {
   return smartschoolPw;
+}
+
+bool y::utils::config::isYearbookAdmin(const std::wstring& uid) {
+  for(int i = 0; i < yearbookAdmin.elms(); i++) {
+    if(yearbookAdmin[i].compare(uid) == 0) return true;
+  }
+  
+  return false;
 }

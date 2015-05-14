@@ -61,7 +61,7 @@ y::ldap::server::server() : _connected(false), _allAccountsLoaded(false), _allGr
   //y::utils::Log().add("y::ldap::server::server() : connected to LDAP server");
   _base = str8(utils::Config().getLdapBaseDN());
   
-
+  
 }
 
 y::ldap::server::~server() {

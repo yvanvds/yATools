@@ -7,10 +7,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitChanges.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/webLogin.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaParseFile.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookConfig.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDB.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/proxyManager.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDownload.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookPhoto.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitChanges.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookReview.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookReview.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDB.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDownload.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookConfig.cpp</file>
         </group>
     </open-files>
 </project-private>

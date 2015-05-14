@@ -6,7 +6,20 @@ ldapBaseDN = dc=domain,dc=com
 ldapAdminDN = cn=admin,dc=domain,dc=com 
 
 #provide an account that can be used for unit testing
-ldapTestUID = auser
+ldapTestUID = aUser
 ldapTestPassword = secret
+ldapTextUIDNumber = 500
+ldapTestDN = uid=name,ou=people,dc=domain,dc=com
 
+# values for mysql access
 mysqlRootPassword = secret
+domain = your.domain.name
+
+#smartschool
+smartschoolPw = yourPW
+
+#yearbook app
+yearbookAdmin = uid1
+yearbookAdmin = uid2
+
+

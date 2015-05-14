@@ -35,7 +35,7 @@
 using namespace y;
 
 yearBook::yearBook(const Wt::WEnvironment& env) : Wt::WApplication(env) {
-  y::utils::Log().add("start of yearbook app");
+  /*y::utils::Log().add("start of yearbook app");
   loggedIn = false;
   currentStep = 0;
   
@@ -139,9 +139,9 @@ yearBook::yearBook(const Wt::WEnvironment& env) : Wt::WApplication(env) {
   //Wt::WAnimation * animation = new Wt::WAnimation(Wt::WAnimation::SlideInFromRight);
   //stack->setTransitionAnimation(*animation);
   
-  //stack->hide();
+  //stack->hide();*/
 }
-
+/*
 void yearBook::loginButtonClicked() {
   Wt::WString id = nameEdit->text();
   Wt::WString passwd = passEdit->text();
@@ -249,3 +249,5 @@ void yearBook::setAction(action message) {
     }
   }
 }
+
+*/

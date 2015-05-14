@@ -29,15 +29,15 @@ enum action {
 class yearBook : public Wt::WApplication {
 public:
   yearBook(const Wt::WEnvironment & env);
-  void loginButtonClicked();
-  void setAction(action message);
+  //void loginButtonClicked();
+  //void setAction(action message);
   
   
-  bool loggedIn;
-  y::ldap::account account;
+  /*bool loggedIn;
+  //y::ldap::account account;
   
   //data
-  dataconnect store;
+  //dataconnect store;
   Wt::WString name;
   Wt::WString surname;
   Wt::WString group;
@@ -48,9 +48,10 @@ public:
   Wt::WString answer2;
   Wt::WString answer3;
   Wt::WString answer4;
-  
+  */
 private:
-  Wt::WBootstrapTheme * theme;
+  /*
+   * Wt::WBootstrapTheme * theme;
   
   // auth
   Wt::WDialog * loginDialog;
@@ -66,7 +67,7 @@ private:
   std::vector<std::unique_ptr<step>> steps;
   Wt::WStackedWidget * stack;
   int currentStep;
-  
+  */
   
   
 };

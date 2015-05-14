@@ -7,6 +7,7 @@
  */
 
 #include <boost/program_options.hpp>
+#include "container.h"
 
 namespace y {
   namespace utils {
@@ -28,6 +29,8 @@ namespace y {
       const std::wstring & getMysqlPassword    () const;
       const std::wstring & getDomain           () const;
       const std::wstring & getSSPw             () const;
+      
+      bool isYearbookAdmin(const std::wstring & uid);
 
     private:
           
@@ -52,6 +55,8 @@ namespace y {
       std::wstring mysqlPassword;
       std::wstring domain;
       std::wstring smartschoolPw;
+      
+      container<std::wstring> yearbookAdmin;
     };
     
     config & Config();

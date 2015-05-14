@@ -48,7 +48,17 @@ OBJECTFILES= \
 	${OBJECTDIR}/wisaImport/wisaNewGroups.o \
 	${OBJECTDIR}/wisaImport/wisaNoID.o \
 	${OBJECTDIR}/wisaImport/wisaParseFile.o \
-	${OBJECTDIR}/wisaImport/wisaUpload.o
+	${OBJECTDIR}/wisaImport/wisaUpload.o \
+	${OBJECTDIR}/yearbook/yearbook.o \
+	${OBJECTDIR}/yearbook/yearbookConfig.o \
+	${OBJECTDIR}/yearbook/yearbookConfirmRemove.o \
+	${OBJECTDIR}/yearbook/yearbookDB.o \
+	${OBJECTDIR}/yearbook/yearbookDone.o \
+	${OBJECTDIR}/yearbook/yearbookDownload.o \
+	${OBJECTDIR}/yearbook/yearbookPhoto.o \
+	${OBJECTDIR}/yearbook/yearbookQuestion.o \
+	${OBJECTDIR}/yearbook/yearbookReview.o \
+	${OBJECTDIR}/yearbook/yearbookVerifyAccount.o
 
 
 # C Compiler Flags
@@ -146,6 +156,56 @@ ${OBJECTDIR}/wisaImport/wisaUpload.o: wisaImport/wisaUpload.cpp
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaUpload.o wisaImport/wisaUpload.cpp
+
+${OBJECTDIR}/yearbook/yearbook.o: yearbook/yearbook.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbook.o yearbook/yearbook.cpp
+
+${OBJECTDIR}/yearbook/yearbookConfig.o: yearbook/yearbookConfig.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookConfig.o yearbook/yearbookConfig.cpp
+
+${OBJECTDIR}/yearbook/yearbookConfirmRemove.o: yearbook/yearbookConfirmRemove.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookConfirmRemove.o yearbook/yearbookConfirmRemove.cpp
+
+${OBJECTDIR}/yearbook/yearbookDB.o: yearbook/yearbookDB.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookDB.o yearbook/yearbookDB.cpp
+
+${OBJECTDIR}/yearbook/yearbookDone.o: yearbook/yearbookDone.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookDone.o yearbook/yearbookDone.cpp
+
+${OBJECTDIR}/yearbook/yearbookDownload.o: yearbook/yearbookDownload.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookDownload.o yearbook/yearbookDownload.cpp
+
+${OBJECTDIR}/yearbook/yearbookPhoto.o: yearbook/yearbookPhoto.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookPhoto.o yearbook/yearbookPhoto.cpp
+
+${OBJECTDIR}/yearbook/yearbookQuestion.o: yearbook/yearbookQuestion.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookQuestion.o yearbook/yearbookQuestion.cpp
+
+${OBJECTDIR}/yearbook/yearbookReview.o: yearbook/yearbookReview.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookReview.o yearbook/yearbookReview.cpp
+
+${OBJECTDIR}/yearbook/yearbookVerifyAccount.o: yearbook/yearbookVerifyAccount.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookVerifyAccount.o yearbook/yearbookVerifyAccount.cpp
 
 # Subprojects
 .build-subprojects:

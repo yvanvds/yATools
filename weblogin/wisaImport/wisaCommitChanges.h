@@ -22,6 +22,7 @@ class fileDownload : public Wt::WResource {
     void handleRequest(const Wt::Http::Request& request, Wt::Http::Response& response);
     
     void addMessage(const std::wstring & message);
+    bool empty();
     
     private:
       container<std::wstring> messages;
@@ -38,6 +39,7 @@ public:
 private:
   Wt::WTable * entries;
   Wt::WVBoxLayout * box;
+  Wt::WText * progress;
   int rowCounter;
   int streamCounter;
   fileDownload * download;
