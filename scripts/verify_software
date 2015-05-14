@@ -157,6 +157,7 @@ installWebLogin() {
   # create dirs if they don't exist
   createDir /var/www/apps
   createDir /var/www/apps/weblogin
+	createDir /var/www/apps/yearbookImages
 
   # remove files if they exist
   if [ -f /var/www/apps/weblogin/weblogin.wt ]; then
