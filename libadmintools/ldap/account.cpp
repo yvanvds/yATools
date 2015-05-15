@@ -450,6 +450,7 @@ void y::ldap::account::convertToNewAccount() {
   std::cout << str8(_dn()()) << std::endl;
   if(_password()().length() == 0) {  
     std::cout << "is an old account" << std::endl;
+    return;
   }
   std::cout << "will be converted" << std::endl;
   
@@ -480,7 +481,7 @@ void y::ldap::account::convertToNewAccount() {
   
   {
     data & d = values.New(ADD);
-    d.add(L"type", L"role");
+    d.add(L"type", L"schoolRole");
     if(_group()().compare(L"extern") == 0) {
       d.add(L"values", L"extern");
     } else if (_group()().compare(L"externmail") == 0) {
