@@ -18,6 +18,7 @@
 #include "utils/stringFunctions.h"
 #include <iostream>
 #include <boost/locale.hpp>
+#include "defines.h"
 
 // global object
 y::ldap::server & y::ldap::Server() {
@@ -41,7 +42,8 @@ y::ldap::server::server() : _connected(false), _allAccountsLoaded(false), _allGr
   
   // log in as admin
   BerValue credentials;
-  //TODO for some reason this goes wrong if i delete the next two lines???
+  
+  TODO(for some reason this goes wrong if i delete the next two lines)
   std::string test(str8(utils::Config().getLdapPasswd()));
   std::string test2(test.c_str());
   // BerValue doesn't take a const char *
@@ -190,16 +192,16 @@ y::ldap::group & y::ldap::server::getGroup(const DN& id) {
   return g;
 }
 
-y::ldap::group & y::ldap::server::getGroup(const CN& id, bool editable) {  
+y::ldap::group & y::ldap::server::getGroup(const std::wstring & cn, bool editable) {  
   for(int i = 0; i < _groups.elms(); i++) {
-    if(_groups[i].cn() == id && _groups[i].editable() == editable) {
+    if(_groups[i].cn() == cn && _groups[i].editable() == editable) {
       return _groups[i];
     }
   }
   
   group & g = _groups.New();
   g.editable(editable);
-  g.load(id);
+  g.load(cn);
   return g;
 }
 
@@ -244,7 +246,7 @@ container<y::ldap::group> & y::ldap::server::getGroups() {
   // keep track of groups we've already loaded
   container<std::wstring> loaded;
   for(int i = 0; i < _groups.elms(); i++) {
-    loaded.New() = _groups[i].cn()();
+    loaded.New() = _groups[i].cn();
   }
   
   {
@@ -299,7 +301,7 @@ bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) {
   ldap_set_option(_authServer, LDAP_OPT_PROTOCOL_VERSION, &version);
   
   BerValue credentials;
-  //TODO for some reason this goes wrong if i delete the next two lines???
+  TODO(for some reason this goes wrong if i delete the next two lines?)
   std::string test(str8(password()));
   std::string test2(test.c_str());
   // BerValue doesn't take a const char *

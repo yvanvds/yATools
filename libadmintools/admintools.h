@@ -8,6 +8,8 @@
 #ifndef ADMINTOOLS_H
 #define	ADMINTOOLS_H
 
+#include "defines.h"
+
 //data
 #include "data/dateTime.h"
 #include "data/database.h"
@@ -39,6 +41,7 @@
 #include "utils/random.h"
 #include "utils/security.h"
 #include "utils/watch.h"
+
 
 //gui
 #include "gui/application.h"

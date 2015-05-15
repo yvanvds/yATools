@@ -26,8 +26,9 @@ void y::utils::keepOnlyChars(std::wstring& s) {
   }
 }
 
+#pragma GCC diagnostic ignored "-Wmultichar"
 void y::utils::replaceUTF8Chars(std::wstring& s) {
-  for(int i = 0; i < s.length(); i++) {
+  for(unsigned int i = 0; i < s.length(); i++) {
     switch (s[i]) {
       case 'à': s[i] = 'a'; break;
       case 'á': s[i] = 'a'; break;

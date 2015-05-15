@@ -209,6 +209,7 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
     <itemPath>admintools.h</itemPath>
+    <itemPath>defines.h</itemPath>
   </logicalFolder>
   <sourceRootList>
     <Elem>/home/yvan/github/yATools/libadmintools/ldap</Elem>
@@ -317,6 +318,8 @@
       <item path="data/tests/dataServerTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/tests/dataServerTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="defines.h" ex="false" tool="3" flavor2="0">
       </item>
       <folder path="TestFiles">
         <linkerTool>
@@ -803,6 +806,8 @@
       <item path="data/tests/dataServerTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/tests/dataServerTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="defines.h" ex="false" tool="3" flavor2="0">
       </item>
       <folder path="TestFiles">
         <linkerTool>

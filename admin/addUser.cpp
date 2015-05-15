@@ -49,7 +49,7 @@ void addUser::parse(int argc, char ** argv) {
   y::ldap::WISA_ID id(argc > 4 ? std::stoi(argv[4]) : 0);
   std::wstring password(strW(y::utils::Security().makePassword(8)));
   
-  y::ldap::account & account = y::admin::User().add(CN(cn), SN(sn), gid, date, id, PASSWORD(password));
+  y::ldap::account & account = y::admin::User().add(cn, sn, gid, date, id, PASSWORD(password));
 
   Server().commitChanges();
   

@@ -35,7 +35,7 @@ namespace y {
       account & getAccount(const DN         & id);
 
       group & getGroup(const DN & id);
-      group & getGroup(const CN & id, bool editable);
+      group & getGroup(const std::wstring & cn, bool editable);
 
       container<account> & getAccounts(); 
       container<group  > & getGroups  ();     

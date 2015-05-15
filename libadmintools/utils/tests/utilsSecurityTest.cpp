@@ -10,6 +10,7 @@
 #include "utils/config.h"
 #include "utils/convert.h"
 #include "ldap/server.h"
+#include "defines.h"
 
 using namespace y::utils;
 
@@ -29,7 +30,8 @@ void utilsSecurityTest::tearDown() {
 }
 
 void utilsSecurityTest::testTest() {
-  return; // TODO this test is outdated
+  return; TODO(this test is outdated)
+          
   y::ldap::UID uid(y::utils::Config().getLdapTestUID());
   
   y::ldap::account & acc = y::ldap::Server().getAccount(uid);

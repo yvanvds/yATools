@@ -61,38 +61,10 @@ namespace y {
       std::wstring val;
     };
 
-    class CN {
-    public:
-      explicit CN(const std::wstring & val) : val(val) {}
-
-      // operators
-      const std::wstring & operator()() const; // get value
-      CN & operator=(const CN &ref);
-      bool operator==(const CN &ref) const;
-      bool operator!=(const CN &ref) const;
-
-    private:
-      std::wstring val;
-    };
-
-    class SN {
-    public:
-      explicit SN(const std::wstring & val) : val(val) {}
-
-      // operators
-      const std::wstring & operator()() const; // get value
-      SN & operator=(const SN &ref);
-      bool operator==(const SN &ref) const;
-      bool operator!=(const SN &ref) const;
-
-    private:
-      std::wstring val;
-    };
-
     class FULL_NAME {
     public:
       explicit FULL_NAME(const std::wstring & val) : val(val) {}
-      explicit FULL_NAME(const CN & cn, const SN & sn);
+      explicit FULL_NAME(const std::wstring & cn, const std::wstring & sn);
 
       // operators
       const std::wstring & operator()() const; // get value

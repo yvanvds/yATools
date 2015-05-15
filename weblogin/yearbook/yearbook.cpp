@@ -56,8 +56,8 @@ void yearbook::setAccount(y::ldap::account * account) {
   this->account = account;
   if(!YearbookDB().loadUser(str8(account->uid()()))) {
     YearbookDB().ID(account->uid()());    
-    YearbookDB().name(account->cn()());
-    YearbookDB().surname(account->sn()());
+    YearbookDB().name(account->cn());
+    YearbookDB().surname(account->sn());
     YearbookDB().servername(account->fullName()());
     YearbookDB().group(account->group()());
     Wt::WDate date;

@@ -44,8 +44,8 @@ void show::parse(int argc, char ** argv) {
     } else {
       wcout << endl;
       wcout << L"DN        : " << account.dn      ()() << endl;
-      wcout << L"first name: " << account.cn      ()() << endl;
-      wcout << L"surname   : " << account.sn      ()() << endl;
+      wcout << L"first name: " << account.cn      () << endl;
+      wcout << L"surname   : " << account.sn      () << endl;
       wcout << L"full name : " << account.fullName()() << endl;
       wcout << L"email     : " << account.mail    ()() << endl;
       wcout << endl;

@@ -57,44 +57,10 @@ bool y::ldap::UID::operator !=(const UID& ref) const{
   return val.compare(ref.val) != 0;
 }
 
-const std::wstring & y::ldap::CN::operator ()() const {
-  return val;
-}
-
-y::ldap::CN & y::ldap::CN::operator =(const CN& ref) {
-  if(this != &ref) val = ref.val;
-  return *this;
-}
-
-bool y::ldap::CN::operator ==(const CN& ref) const{
-  return val.compare(ref.val) == 0;
-}
-
-bool y::ldap::CN::operator !=(const CN& ref) const{
-  return val.compare(ref.val) != 0;
-}
-
-const std::wstring & y::ldap::SN::operator ()() const {
-  return val;
-}
-
-y::ldap::SN & y::ldap::SN::operator =(const SN& ref) {
-  if(this != &ref) val = ref.val;
-  return *this;
-}
-
-bool y::ldap::SN::operator ==(const SN& ref) const{
-  return val.compare(ref.val) == 0;
-}
-
-bool y::ldap::SN::operator !=(const SN& ref) const{
-  return val.compare(ref.val) != 0;
-}
-
-y::ldap::FULL_NAME::FULL_NAME(const CN& cn, const SN& sn) {
-  val = cn();
+y::ldap::FULL_NAME::FULL_NAME(const std::wstring & cn, const std::wstring & sn) {
+  val = cn;
   val += L" ";
-  val += sn();
+  val += sn;
 }
 
 const std::wstring & y::ldap::FULL_NAME::operator ()() const {
@@ -266,7 +232,7 @@ y::ldap::DATE::DATE(const std::wstring & date, bool fromWisa) : day(1), month(1)
   if(fromWisa) {
     int currentValue = 0;
     std::wstring value;
-    for(int i = 0; i < date.size(); i++) {
+    for(unsigned int i = 0; i < date.size(); i++) {
       if(date[i] != '/') {
         value += date[i];
       } else {

@@ -88,7 +88,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
   container<wisaImport::wisaGroup> & wisaGroups = WisaImport().getWisaGroups();
   for (int i = 0; i < wisaGroups.elms(); i++) {
     if(wisaGroups[i].link == nullptr) {
-      y::ldap::group & g = y::ldap::Server().getGroup(y::ldap::CN(wisaGroups[i].name), false);
+      y::ldap::group & g = y::ldap::Server().getGroup(wisaGroups[i].name, false);
       g.flagForCommit();
       std::wstring message(L"Klas ");
       message += wisaGroups[i].name;
@@ -102,8 +102,8 @@ void commitThreadFunc(wisaCommitChanges * caller) {
     wisaImport::wisaAccount & account = wisaAccounts[i];
     if(account.link == nullptr) {
       // create new account
-      y::ldap::CN cn(account.cn);
-      y::ldap::SN sn(account.sn);
+      std::wstring cn(account.cn);
+      std::wstring sn(account.sn);
       y::ldap::GID gid(account.group);
       y::ldap::DATE date(account.date, true);
       y::ldap::WISA_ID id(account.ID);
@@ -136,16 +136,16 @@ void commitThreadFunc(wisaCommitChanges * caller) {
     } else {
       // account exists, but may not be up to date
       bool namechanged = false;
-      if(account.link->sn()().compare(account.sn) != 0) {
-        account.link->sn(y::ldap::SN(account.sn));
+      if(account.link->sn().compare(account.sn) != 0) {
+        account.link->sn(account.sn);
         std::wstring message(L"Naam voor ");
         message += account.link->fullName()();
         message += L" werd gewijzigd";
         caller->addMessage(message);
         namechanged = true;
       }
-      if(account.link->cn()().compare(account.cn) != 0) {
-        account.link->cn(y::ldap::CN(account.cn));
+      if(account.link->cn().compare(account.cn) != 0) {
+        account.link->cn(account.cn);
         std::wstring message(L"Voornaam voor ");
         message += account.link->fullName()();
         message += L" werd gewijzigd";
@@ -168,9 +168,9 @@ void commitThreadFunc(wisaCommitChanges * caller) {
         caller->addMessage(message);
       }
       if(account.link->group()().compare(account.group)) {
-        y::ldap::group & oldGroup = y::ldap::Server().getGroup(y::ldap::CN(account.link->group()()), false);
+        y::ldap::group & oldGroup = y::ldap::Server().getGroup(account.link->group()(), false);
         oldGroup.removeMember(account.link->dn()());
-        y::ldap::group & newGroup = y::ldap::Server().getGroup(y::ldap::CN(account.group), false);
+        y::ldap::group & newGroup = y::ldap::Server().getGroup(account.group, false);
         newGroup.addMember(account.link->dn()());
         account.link->group(y::ldap::GID(account.group));
         std::wstring message(L"Klas voor ");

@@ -22,7 +22,7 @@ namespace y {
       bool save ();
       
       const DN & dn() const;
-      const CN & cn() const;
+      const std::wstring & cn() const;
 
       container<std::wstring> & owners ();
       container<std::wstring> & members();
@@ -46,7 +46,7 @@ namespace y {
       
     private:
       bool load(const DN & id);
-      bool load(const CN & id);
+      bool load(const std::wstring & cn);
       bool load(const data& d);
       
       bool saveNew   ();
@@ -54,7 +54,7 @@ namespace y {
       void retrieveData(const data& d);
       
       watch<DN> _dn;
-      watch<CN> _cn;
+      watch<std::wstring> _cn;
 
       container<std::wstring> _owners ;
       container<std::wstring> _members;

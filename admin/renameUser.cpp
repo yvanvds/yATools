@@ -50,8 +50,8 @@ void renameUser::parse(int argc, char ** argv) {
     return;
   }
 
-  acc.cn(CN(cn));
-  acc.sn(SN(sn));
+  acc.cn(cn);
+  acc.sn(sn);
   
   std::wstring fullname(cn);
   fullname += L" ";

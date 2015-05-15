@@ -14,7 +14,7 @@ namespace y {
     
     class userAdmin {
     public:
-      ldap::account & add(const ldap::CN & cn, const ldap::SN & sn,
+      ldap::account & add(const std::wstring & cn, const std::wstring & sn,
                const ldap::GID & gid, const ldap::DATE & dateOfBirth, 
                const ldap::WISA_ID & id, const ldap::PASSWORD & pw);
       

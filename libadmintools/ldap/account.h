@@ -11,6 +11,7 @@
 #include "utils/watch.h"
 #include "ldap/attributes.h"
 #include "ldap/data.h"
+#include "defines.h"
 
 namespace y {
   namespace ldap {
@@ -43,8 +44,8 @@ namespace y {
       const UID_NUMBER & uidNumber() const; account & uidNumber(const UID_NUMBER & value);
       const UID        & uid      () const; account & uid      (const UID        & value);
       const DN         & dn       () const; 
-      const CN         & cn       () const; account & cn       (const CN         & value);
-      const SN         & sn       () const; account & sn       (const SN         & value);
+      const std::wstring & cn       () const; account & cn       (const std::wstring & value);
+      const std::wstring & sn       () const; account & sn       (const std::wstring & value);
       const FULL_NAME  & fullName () const; account & fullName (const FULL_NAME  & value);
       const HOMEDIR    & homeDir  () const; account & homeDir  (const HOMEDIR    & value);
       const WISA_ID    & wisaID   () const; account & wisaID   (const WISA_ID    & value);
@@ -65,6 +66,10 @@ namespace y {
       WISA_IMPORT getImportStatus();
       account & setImportStatus(WISA_IMPORT status);
       
+      TODO(remove after account conversion is complete)
+      void convertToNewAccount();
+      void removeOldAccountDetails();
+      
     private:
       bool load(const UID  & id);
       bool load(UID_NUMBER   id);
@@ -76,8 +81,8 @@ namespace y {
       watch<UID_NUMBER>  _uidNumber;
       watch<UID       >  _uid      ;
       watch<DN        >  _dn       ;
-      watch<CN        >  _cn       ;
-      watch<SN        >  _sn       ;
+      watch<std::wstring>  _cn       ;
+      watch<std::wstring>  _sn       ;
       watch<FULL_NAME >  _fullName ;
       watch<HOMEDIR   >  _homeDir  ;
       watch<WISA_ID   >  _wisaID   ;

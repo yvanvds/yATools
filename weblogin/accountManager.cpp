@@ -39,13 +39,13 @@ Wt::WWidget * accountManager::get(y::ldap::account * account) {
   firstName->setWidth(400);
   firstName->setHeight(35);
   firstName->disable();
-  firstName->setText(account->cn()());
+  firstName->setText(account->cn());
   
   lastName = new Wt::WLineEdit();
   lastName->setWidth(400);
   lastName->setHeight(35);
   lastName->disable();
-  lastName->setText(account->sn()());
+  lastName->setText(account->sn());
   
   mail = new Wt::WLineEdit();
   mail->setWidth(400);

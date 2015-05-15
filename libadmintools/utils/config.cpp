@@ -153,7 +153,7 @@ void y::utils::config::load(int argc, char** argv) {
   
   if(map.count("yearbookAdmin")) {
     const std::vector<std::string> & admin = map["yearbookAdmin"].as< std::vector<std::string> >();
-    for(int i = 0; i < admin.size(); i++) {
+    for(unsigned int i = 0; i < admin.size(); i++) {
       yearbookAdmin.New() = strW(admin[i]);
     }
   }

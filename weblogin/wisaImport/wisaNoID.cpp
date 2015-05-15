@@ -56,8 +56,8 @@ void wisaNoID::onShow() {
     } else if(accounts[i].group()().size() == 0) {
       accounts[i].setImportStatus(y::ldap::WI_DISCARD);
     } else if(accounts[i].wisaID()() == 0 ) {
-      entries->elementAt(row, 0)->addWidget(new Wt::WText(accounts[i].sn()()));
-      entries->elementAt(row, 1)->addWidget(new Wt::WText(accounts[i].cn()()));
+      entries->elementAt(row, 0)->addWidget(new Wt::WText(accounts[i].sn()));
+      entries->elementAt(row, 1)->addWidget(new Wt::WText(accounts[i].cn()));
       entries->elementAt(row, 2)->addWidget(new Wt::WText(accounts[i].group()()));
       Wt::WLineEdit * wisaEdit = new Wt::WLineEdit();
       wisaEdit->setId(str8(accounts[i].uid()()));

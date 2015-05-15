@@ -19,8 +19,8 @@ y::ldap::account::account() :
   _uidNumber(UID_NUMBER(0)),
   _uid(UID(L"")),
   _dn(DN(L"")),
-  _cn(CN(L"")),
-  _sn(SN(L"")),
+  _cn(L""),
+  _sn(L""),
   _fullName(FULL_NAME(L"")),
   _homeDir(HOMEDIR(L"")),
   _wisaID(WISA_ID(0)),
@@ -56,8 +56,8 @@ bool y::ldap::account::load(const data& d) {
   
   _uid      (UID       (          d.getValue(TYPE_UID       ) ), true);
   _dn       (DN        (          d.getValue(TYPE_DN        ) ), true);
-  _cn       (CN        (          d.getValue(TYPE_CN        ) ), true);
-  _sn       (SN        (          d.getValue(TYPE_SN        ) ), true);
+  _cn       (d.getValue(TYPE_CN        ), true);
+  _sn       (d.getValue(TYPE_SN        ), true);
   _fullName (FULL_NAME (          d.getValue(TYPE_FULL_NAME ) ), true);
   _homeDir  (HOMEDIR   (          d.getValue(TYPE_HOMEDIR   ) ), true);
   _mail     (MAIL      (          d.getValue(TYPE_MAIL      ) ), true);
@@ -216,13 +216,13 @@ bool y::ldap::account::save() {
   if(_cn.changed()) {
     data & d = values.New(MODIFY);
     d.add(L"type", TYPE_CN);
-    d.add(L"values", _cn()());
+    d.add(L"values", _cn());
   }
   
   if(_sn.changed()) {
     data & d = values.New(MODIFY);
     d.add(L"type", TYPE_SN);
-    d.add(L"values", _sn()());
+    d.add(L"values", _sn());
   }
   
   if(_fullName.changed()) {
@@ -306,8 +306,8 @@ void y::ldap::account::clear() {
   _uidNumber(UID_NUMBER(0));
   _uid(UID(L""));
   _dn(DN(L""));
-  _cn(CN(L""));
-  _sn(SN(L""));
+  _cn(L"");
+  _sn(L"");
   _fullName(FULL_NAME(L""));
   _homeDir(HOMEDIR(L""));
   _wisaID(WISA_ID(0));
@@ -330,11 +330,11 @@ const y::ldap::DN & y::ldap::account::dn() const {
   return _dn();
 }
 
-const y::ldap::CN & y::ldap::account::cn() const {
+const std::wstring & y::ldap::account::cn() const {
   return _cn();
 }
 
-const y::ldap::SN & y::ldap::account::sn() const {
+const std::wstring & y::ldap::account::sn() const {
   return _sn();
 }
 
@@ -380,12 +380,12 @@ y::ldap::account & y::ldap::account::uid(const UID& value) {
   return *this;
 }
 
-y::ldap::account & y::ldap::account::cn(const CN& value) {
+y::ldap::account & y::ldap::account::cn(const std::wstring & value) {
   _cn(value);
   return *this;
 }
 
-y::ldap::account & y::ldap::account::sn(const SN& value) {
+y::ldap::account & y::ldap::account::sn(const std::wstring & value) {
   _sn(value);
   return *this;
 }
@@ -444,4 +444,71 @@ y::ldap::WISA_IMPORT y::ldap::account::getImportStatus() {
 y::ldap::account & y::ldap::account::setImportStatus(WISA_IMPORT status) {
   _importStatus = status;
   return *this;
+}
+
+void y::ldap::account::convertToNewAccount() {
+  std::cout << str8(_dn()()) << std::endl;
+  if(_password()().length() == 0) {  
+    std::cout << "is an old account" << std::endl;
+  }
+  std::cout << "will be converted" << std::endl;
+  
+  dataset values;
+  
+  {
+    data & d = values.New(ADD);
+    d.add(L"type", L"objectClass");
+    d.add(L"values", L"schoolPerson");
+  }
+  
+  std::wstring krbName(_uid()());
+  krbName += L"@";
+  krbName += utils::Config().getDomain();
+  {
+    data & d = values.New(ADD);
+    d.add(L"type", L"mailAlias");
+    d.add(L"values", krbName);
+  }
+  
+  {
+    data & d = values.New(ADD);
+    d.add(L"type", L"gMailPassword");
+    d.add(L"values", _password()());
+  }
+  
+  
+  
+  {
+    data & d = values.New(ADD);
+    d.add(L"type", L"role");
+    if(_group()().compare(L"extern") == 0) {
+      d.add(L"values", L"extern");
+    } else if (_group()().compare(L"externmail") == 0) {
+      d.add(L"values", L"externmail");
+    } else if (_group()().compare(L"personeel") == 0) {
+      d.add(L"values", L"teacher");
+    } else {
+      d.add(L"values", L"student");
+      {
+        data & d = values.New(ADD);
+        d.add(L"type", L"class");
+        d.add(L"values", _group()());
+      }
+    }
+  }
+  
+  if(_wisaID()() > 0){
+    data & d = values.New(ADD);
+    d.add(L"type", L"wisaID");
+    d.add(L"values", std::to_wstring(_wisaID()()));
+  }
+  
+  {
+    data & d = values.New(ADD);
+    d.add(L"type", L"birthday");
+    d.add(L"values", std::to_wstring(_birthDay()()));
+  }
+  
+  
+  Server().modify(_dn(), values);
 }

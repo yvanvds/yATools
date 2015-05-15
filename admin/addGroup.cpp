@@ -50,7 +50,7 @@ void addGroup::parse(int argc, char** argv) {
     name = arg;
   }
   
-  group & grp = Server().getGroup(CN(name), editable);
+  group & grp = Server().getGroup(name, editable);
   if(!grp.isNew()) {
     cout << "This group already exists." << endl;
     return;

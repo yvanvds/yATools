@@ -24,6 +24,7 @@ void debugFunctions::printHelp() {
   cout << "You should never use these!!!" << std::endl;
   cout << "  removeAllStudents" << std::endl;
   cout << "  groupsToSmartschool" << std::endl;
+  cout << "  convert" << std::endl;
 }
 
 void debugFunctions::parse(int argc, char ** argv) {
@@ -36,6 +37,8 @@ void debugFunctions::parse(int argc, char ** argv) {
     removeAllStudents();
   } else if(std::string(argv[0]).compare("groupsToSmartschool") == 0) {
     groupsToSmartschool();
+  } else if(std::string(argv[0]).compare("convert") == 0) {
+    convertToNewAccount();
   }
 }
 
@@ -50,12 +53,19 @@ void debugFunctions::removeAllStudents() {
   Server().commitChanges();
 }
 
+void debugFunctions::convertToNewAccount() {
+  container<account> & accounts = Server().getAccounts();
+  for(int i = 0; i < accounts.elms(); i++) {
+    accounts[i].convertToNewAccount();
+  }
+}
+
 void debugFunctions::groupsToSmartschool() {
   container<group> & groups = Server().getGroups();
   for(int i = 0; i < groups.elms(); i++) {
     if(!groups[i].editable()) {
       y::Smartschool().addClass(groups[i]);
-      std::cout << "Adding group: " << str8(groups[i].cn()()) << std::endl;
+      std::cout << "Adding group: " << str8(groups[i].cn()) << std::endl;
     }
   }
   
@@ -67,3 +77,4 @@ void debugFunctions::groupsToSmartschool() {
     }
   }
 }
+

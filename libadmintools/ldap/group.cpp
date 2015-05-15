@@ -11,15 +11,16 @@
 #include "server.h"
 #include "smartschool/smartschool.h"
 #include <assert.h>
+#include "defines.h"
 
 y::ldap::group::group() 
   : _dn(DN(L"")), 
-    _cn(CN(L"")), 
+    _cn(L""), 
     _new(true), 
     _editable(true),
     _flaggedForCommit(false),
-    _importStatus(WI_NOT_ACCOUNTED),
-    _flaggedForRemoval(false){
+    _flaggedForRemoval(false),
+    _importStatus(WI_NOT_ACCOUNTED) {
 }
 
 bool y::ldap::group::load(const DN& id) {
@@ -30,17 +31,17 @@ bool y::ldap::group::load(const DN& id) {
   return !_new;
 }
 
-bool y::ldap::group::load(const CN& id) {
+bool y::ldap::group::load(const std::wstring & cn) {
   dataset d;
   std::wstring filter;
-  filter = L"cn="; filter.append(id().c_str());
+  filter = L"cn="; filter.append(cn.c_str());
   
   if(!editable() && d.create(filter, L"ou=mailGroups")) {
     load(d.get(0));
   } else if(editable() && d.create(filter, L"ou=editableMailGroups")) {
     load(d.get(0));
   } else {
-    _cn(id);
+    _cn(cn);
   }
   
   return !_new;
@@ -48,7 +49,7 @@ bool y::ldap::group::load(const CN& id) {
 
 bool y::ldap::group::load(const data& d) {
   _dn(DN(d.getValue(L"DN")), true);
-  _cn(CN(d.getValue(L"cn")), true);
+  _cn(d.getValue(L"cn"), true);
   
   if(d.elms(L"owner")) {
     _editable = false;
@@ -88,7 +89,7 @@ const y::ldap::DN & y::ldap::group::dn() const {
   return _dn();
 }
 
-const y::ldap::CN & y::ldap::group::cn() const {
+const std::wstring & y::ldap::group::cn() const {
   return _cn();
 }
 
@@ -219,7 +220,7 @@ bool y::ldap::group::saveNew() {
 
   // add owner if not present
   if(!_owners.elms()) {
-    // TODO generalize this
+    TODO(generalize this)
     if(!_editable) {
       _owners.New() = L"uid=inge,ou=personeel,ou=People,dc=sanctamaria-aarschot,dc=be";
     } else {
@@ -229,7 +230,7 @@ bool y::ldap::group::saveNew() {
 
   // create group first
   std::wstring dn;
-  dn = L"cn="; dn += _cn()();
+  dn = L"cn="; dn += _cn();
   if(_editable) {
     dn += L",ou=editableMailGroups,";
   } else {
@@ -250,7 +251,7 @@ bool y::ldap::group::saveNew() {
   
   data & cn = values.New(NEW);
   cn.add(L"type", L"cn");
-  cn.add(L"values", _cn()());
+  cn.add(L"values", _cn());
 
   data & own = values.New(NEW);
   if(_editable) {
@@ -285,7 +286,7 @@ bool y::ldap::group::saveNew() {
 }
 
 bool y::ldap::group::saveUpdate() {
-  // TODO in editable mailgroups owners should also be members
+  TODO(in editable mailgroups owners should also be members)
   
   dataset values;
   data * ownerDelete = nullptr;
