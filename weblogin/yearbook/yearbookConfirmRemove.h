@@ -14,7 +14,8 @@ class yearbookReview;
 
 class yearbookConfirmRemove : public y::gui::confirmationDialog {
 public:
-  yearbookConfirmRemove(yearbookReview * parent);
+  yearbookConfirmRemove();
+  void setParent(yearbookReview * parent) { this->parent = parent; }
   virtual void handleOK();
   
 private:

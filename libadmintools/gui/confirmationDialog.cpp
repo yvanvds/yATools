@@ -6,6 +6,7 @@
  */
 
 #include <Wt/WObject>
+#include <Wt/WDialog>
 
 #include "confirmationDialog.h"
 
@@ -40,7 +41,7 @@ void y::gui::confirmationDialog::handleCancel() {
 }
 
 void y::gui::confirmationDialog::show() {
-  dialog->show();
+  dialog->setHidden(false);
 }
 
 void y::gui::confirmationDialog::handleResult(Wt::WDialog::DialogCode code) {

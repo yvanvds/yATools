@@ -9,7 +9,7 @@
 #include "yearbookReview.h"
 
 
-yearbookConfirmRemove::yearbookConfirmRemove(yearbookReview * parent) : parent(parent),
+yearbookConfirmRemove::yearbookConfirmRemove() : 
 y::gui::confirmationDialog("Ben je zeker?") {
   setContents("Je staat op het punt deze inzending te verwijderen!");
 }

@@ -18,8 +18,7 @@
 #include "yearbookDB.h"
 
 yearbookReview::yearbookReview(yearbookDB* ptr) : db(ptr) {
-  warningAtRemove = new yearbookConfirmRemove(this);
-  this->addChild(warningAtRemove);
+  
 }
 
 Wt::WWidget * yearbookReview::get() {
@@ -27,6 +26,8 @@ Wt::WWidget * yearbookReview::get() {
   db->loadAllUsers("name", true);
   
   mainWidget = new Wt::WContainerWidget();
+  this->addChild(mainWidget);
+  
   //mainWidget->addStyleClass("well");
   mainWidget->setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
   mainWidget->setOverflow(Wt::WContainerWidget::OverflowScroll, Wt::Orientation::Vertical);
@@ -44,6 +45,11 @@ Wt::WWidget * yearbookReview::get() {
   loadTableContent();
   createDialog();
  
+  
+  warningAtRemove = new yearbookConfirmRemove();
+  this->addChild(warningAtRemove);
+  warningAtRemove->setParent(this);
+  
   return mainWidget;
 }
 
@@ -224,7 +230,9 @@ void yearbookReview::entryCancel() {
 
 void yearbookReview::entryRemove() {
   dialog->hide();
-  warningAtRemove->show();
+  TODO(show warning again)
+  //warningAtRemove.show();
+  removeCurrentEntry();
 }
 
 void yearbookReview::entrySave() {
