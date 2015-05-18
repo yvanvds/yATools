@@ -11,18 +11,18 @@
 #include "yearbookDB.h"
 #include "yearbookQuestion.h"
 
-yearbookQuestion::yearbookQuestion(int ID) : questionID(ID) {
+yearbookQuestion::yearbookQuestion(int ID, yearbookDB * ptr) : questionID(ID), db(ptr) {
 }
 
 void yearbookQuestion::setContent(Wt::WVBoxLayout* box) {
-  std::string title("<h3>Stap ");
-  title += std::to_string(questionID + 1);
+  string title("<h3>Stap ");
+  title += (questionID + 1);
   title += "</h3>";
-  box->addWidget(new Wt::WText(title));
-  std::wstring question(L"<p>");
-  question += YearbookDB().getQuestion(questionID-1);
-  question += L"</p>";
-  box->addWidget(new Wt::WText(question));
+  box->addWidget(new Wt::WText(title.wt()));
+  string question("<p>");
+  question += db->getQuestion(questionID-1);
+  question += "</p>";
+  box->addWidget(new Wt::WText(question.wt()));
   textArea = new Wt::WTextArea();
   textArea->setColumns(60);
   textArea->setRows(10);
@@ -35,13 +35,12 @@ void yearbookQuestion::setContent(Wt::WVBoxLayout* box) {
   
   textArea->keyPressed().connect(std::bind([=] (const Wt::WKeyEvent & e) {
     int count = 256 - textArea->text().toUTF8().length();
-    Wt::WString out;
-    out = std::to_string(count);
+    string out(count);
     out += " characters remaining";
-    hint->setText(out);
+    hint->setText(out.wt());
     if (count < 1) {
-      out = textArea->text();
-      std::string in = out.toUTF8();
+      out = string(textArea->text());
+      std::string in = out.utf8();
       in.resize(256);
       textArea->setText(in);
     }
@@ -54,24 +53,24 @@ void yearbookQuestion::setContent(Wt::WVBoxLayout* box) {
 
 void yearbookQuestion::onShow() {
   switch(questionID) {
-    case 1: textArea->setText(YearbookDB().answer1()); break;
-    case 2: textArea->setText(YearbookDB().answer2()); break;
-    case 3: textArea->setText(YearbookDB().answer3()); break;
-    case 4: textArea->setText(YearbookDB().answer4()); break;  
+    case 1: textArea->setText(db->answer1().wt()); break;
+    case 2: textArea->setText(db->answer2().wt()); break;
+    case 3: textArea->setText(db->answer3().wt()); break;
+    case 4: textArea->setText(db->answer4().wt()); break;  
   }
   textArea->setFocus();
 }
 
 void yearbookQuestion::contentChanged() {
   switch(questionID) {
-    case 1: YearbookDB().answer1(textArea->text()); break;
-    case 2: YearbookDB().answer2(textArea->text()); break;
-    case 3: YearbookDB().answer3(textArea->text()); break;
-    case 4: YearbookDB().answer4(textArea->text()); break;
+    case 1: db->answer1(textArea->text()); break;
+    case 2: db->answer2(textArea->text()); break;
+    case 3: db->answer3(textArea->text()); break;
+    case 4: db->answer4(textArea->text()); break;
   }
 }
 
 bool yearbookQuestion::onNext() {
-  YearbookDB().saveUser();
+  db->saveUser();
   return true;
 }

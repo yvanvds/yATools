@@ -20,6 +20,7 @@
 #include "utils/security.h"
 #include "utils/convert.h"
 #include "utils/log.h"
+#include "utils/string.h"
 #include "admin/userAdmin.h"
 #include <boost/algorithm/string.hpp>
 
@@ -42,7 +43,7 @@ void fileDownload::handleRequest(const Wt::Http::Request& request, Wt::Http::Res
 
   int last = std::min(iteration + 50, messages.elms());
   for (int i = iteration; i < last; ++i) {
-    response.out() << str8(messages[i]) << std::endl;
+    response.out() << messages[i] << std::endl;
   }
 
   if(last < messages.elms()) {
@@ -51,7 +52,7 @@ void fileDownload::handleRequest(const Wt::Http::Request& request, Wt::Http::Res
   }
 }
 
-void fileDownload::addMessage(const std::wstring& message) {
+void fileDownload::addMessage(const string& message) {
   messages.New() = message;
 }
 
@@ -77,7 +78,7 @@ void wisaCommitChanges::setContent(Wt::WVBoxLayout* box) {
   download = new fileDownload(entries);
 }
 
-void WisaShowErrorOnScreen(const std::wstring & message) {
+void WisaShowErrorOnScreen(const string & message) {
   WisaImport().showErrorOnScreen(message);
 }
 
@@ -90,9 +91,9 @@ void commitThreadFunc(wisaCommitChanges * caller) {
     if(wisaGroups[i].link == nullptr) {
       y::ldap::group & g = y::ldap::Server().getGroup(wisaGroups[i].name, false);
       g.flagForCommit();
-      std::wstring message(L"Klas ");
+      string message("Klas ");
       message += wisaGroups[i].name;
-      message += L" werd toegevoegd";
+      message += " werd toegevoegd";
       caller->addMessage(message);
     }
   }
@@ -102,82 +103,97 @@ void commitThreadFunc(wisaCommitChanges * caller) {
     wisaImport::wisaAccount & account = wisaAccounts[i];
     if(account.link == nullptr) {
       // create new account
-      std::wstring cn(account.cn);
-      std::wstring sn(account.sn);
+      string cn(account.cn);
+      string sn(account.sn);
       y::ldap::GID gid(account.group);
       y::ldap::DATE date(account.date, true);
       y::ldap::WISA_ID id(account.ID);
-      std::wstring password(strW(y::utils::Security().makePassword(8)));
+      string password(y::utils::Security().makePassword(8));
       
       
       y::ldap::account & acc = y::admin::User().add(cn, sn, gid, date, id, y::ldap::PASSWORD(password));
-      std::wstring message(L"Account voor ");
+      string message("Account voor ");
       message += acc.fullName()();
-      message += L" werd toegevoegd";
+      message += " werd toegevoegd";
       caller->addMessage(message);
       
       message = account.group;
-      message += L" ";
+      message += " ";
       message += acc.fullName()();
       caller->addNewAccountMessage(message);
-      message = L"Login: ";
+      message = "Login: ";
       message += acc.uid()();
       caller->addNewAccountMessage(message);
-      message = L"Wachtwoord: ";
+      message = "Wachtwoord: ";
       message += password;
       caller->addNewAccountMessage(message);
-      message = L"Mail Adres: ";
+      message = "Mail Adres: ";
       message += acc.mail()();
       caller->addNewAccountMessage(message);
-      message = L" ";
+      message = " ";
       caller->addNewAccountMessage(message);
       caller->addNewAccountMessage(message);
       
     } else {
       // account exists, but may not be up to date
       bool namechanged = false;
-      if(account.link->sn().compare(account.sn) != 0) {
+      if(account.link->sn() != account.sn) {
         account.link->sn(account.sn);
-        std::wstring message(L"Naam voor ");
+        string message("Naam voor ");
         message += account.link->fullName()();
-        message += L" werd gewijzigd";
+        message += " werd gewijzigd";
         caller->addMessage(message);
         namechanged = true;
       }
-      if(account.link->cn().compare(account.cn) != 0) {
+      if(account.link->cn() != account.cn) {
         account.link->cn(account.cn);
-        std::wstring message(L"Voornaam voor ");
+        string message("Voornaam voor ");
         message += account.link->fullName()();
-        message += L" werd gewijzigd";
+        message += " werd gewijzigd";
         caller->addMessage(message);
         namechanged = true;
       }
       
       if(namechanged) {
-        std::wstring name(account.cn);
-        name += L" ";
+        string name(account.cn);
+        name += " ";
         name += account.sn;
         account.link->fullName(y::ldap::FULL_NAME(name));
       }
       
       if(account.link->wisaID()() != account.ID) {
         account.link->wisaID(y::ldap::WISA_ID(account.ID));
-        std::wstring message(L"Wisa ID voor ");
+        string message("Wisa ID voor ");
         message += account.link->fullName()();
-        message += L" werd gewijzigd";
+        message += " werd gewijzigd";
         caller->addMessage(message);
       }
-      if(account.link->group()().compare(account.group)) {
+      
+      if(account.link->group()() != account.group) {
         y::ldap::group & oldGroup = y::ldap::Server().getGroup(account.link->group()(), false);
         oldGroup.removeMember(account.link->dn()());
         y::ldap::group & newGroup = y::ldap::Server().getGroup(account.group, false);
         newGroup.addMember(account.link->dn()());
         account.link->group(y::ldap::GID(account.group));
-        std::wstring message(L"Klas voor ");
+        string message("Klas voor ");
         message += account.link->fullName()();
-        message += L" werd gewijzigd";
+        message += " werd gewijzigd";
         caller->addMessage(message);
-      }        
+      }
+      
+      y::ldap::DATE date(account.date, true);
+      string message("birthday: ");
+      message += account.link->birthDay()();
+      message += " ";
+      message += date();
+      caller->addMessage(message);
+      if(account.link->birthDay() != date) {
+        account.link->birthDay(date);
+        string message("Verjaardag voor ");
+        message += account.link->fullName()();
+        message += " werd gewijzigd";
+        caller->addMessage(message);
+      }
     }
   }
   
@@ -185,14 +201,14 @@ void commitThreadFunc(wisaCommitChanges * caller) {
   for(int i = 0; i < ldapAcc.elms(); i++) {
     if(ldapAcc[i].flaggedForRemoval()) {
       y::admin::User().remove(ldapAcc[i]);
-      std::wstring message(L"Gebruiker ");
+      string message("Gebruiker ");
       message += ldapAcc[i].fullName()();
-      message += L" werd verwijderd";
+      message += " werd verwijderd";
       caller->addMessage(message);
     }
   }
   y::ldap::Server().commitChanges();
-  caller->addMessage(L"Alle wijzigingen zijn voltooid.", true);
+  caller->addMessage("Alle wijzigingen zijn voltooid.", true);
   
   y::utils::Log().useFunction();
 }
@@ -215,10 +231,10 @@ void wisaCommitChanges::onShow() {
 }
 
 
-void wisaCommitChanges::addMessage(const std::wstring& message, bool lastUpdate) {
+void wisaCommitChanges::addMessage(const string& message, bool lastUpdate) {
   Wt::WApplication::UpdateLock lock(WisaImport().getApplication());
   if(lock) {
-    entries->elementAt(rowCounter,0)->addWidget(new Wt::WText(message));
+    entries->elementAt(rowCounter,0)->addWidget(new Wt::WText(message.wt()));
     entries->elementAt(rowCounter,0)->setPadding(5);
     rowCounter++;
     streamCounter++;
@@ -243,7 +259,7 @@ void wisaCommitChanges::addMessage(const std::wstring& message, bool lastUpdate)
   }  
 }
 
-void wisaCommitChanges::addNewAccountMessage(const std::wstring& message) {
+void wisaCommitChanges::addNewAccountMessage(const string& message) {
   download->addMessage(message);
 }
 

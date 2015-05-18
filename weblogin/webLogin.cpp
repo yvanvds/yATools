@@ -33,8 +33,8 @@
 #include "yearbook/yearbookReview.h"
 #include "yearbook/yearbookDownload.h"
 
-webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), loggedIn(false) {
-  y::utils::Log().add(L"start of webLogin app");
+webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), loggedIn(false), yearbookDBPtr(nullptr) {
+  y::utils::Log().add("start of webLogin app");
   
   setTitle("Login Application");
   theme = new Wt::WBootstrapTheme(this);
@@ -93,10 +93,11 @@ webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), logged
   feedbackBox->addWidget(loginFeedback);
   
 #ifdef DEBUG
-  account = &y::ldap::Server().getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
-  loggedIn = true;
-  createContents();
-  root()->addWidget(homePage);
+  //account = &y::ldap::Server().getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
+  //loggedIn = true;
+  //createContents();
+  //root()->addWidget(homePage);
+  loginDialog->show();
 #else 
   loginDialog->show();
 #endif
@@ -114,8 +115,8 @@ void webLogin::loginButtonClicked() {
     if(loggedIn) {
       loginDialog->hide();
       loginFeedback->setStyleClass("");
-      std::wstring message(account->uid()());
-      message += L" has just logged on to the web interface.";
+      string message(account->uid()());
+      message += " has just logged on to the web interface.";
       y::utils::Log().add(message);
 
     } else {
@@ -159,13 +160,13 @@ void webLogin::createContents() {
           deferCreate(boost::bind(&webLogin::accountFunc, this)), 
           Wt::WMenuItem::PreLoading);
   
-  if(account->group()().compare(L"personeel") == 0) {
+  if(account->group()() == "personeel") {
     mainMenu->addItem("Web Toegang", 
             deferCreate(boost::bind(&webLogin::webAccessFunc, this)), 
             Wt::WMenuItem::PreLoading);
   }
   
-  if(account->uid()().compare(L"yvanym") == 0) {
+  if(account->uid()() == "yvanym") {
     mainMenu->addItem("Wisa Import",
             deferCreate(boost::bind(&webLogin::wisaImportFunc, this)),
             Wt::WMenuItem::LazyLoading);
@@ -178,7 +179,7 @@ void webLogin::createContents() {
   }
   
   // show this for last year students (or me for testing)
-  std::string group = str8(account->group()());
+  string group = account->group()();
   if(group[0] == '6' || group[0] == '7' || y::utils::Config().isYearbookAdmin(account->uid()())) {
     mainMenu->addItem("Jaarboek", 
             deferCreate(boost::bind(&webLogin::yearbookFunc, this)), 
@@ -256,41 +257,57 @@ Wt::WWidget * webLogin::groupFunc() {
 }
 
 Wt::WWidget * webLogin::yearbookFunc() {
+  createYearbookDB();
+  
   Wt::WPanel * panel = new Wt::WPanel();
   panel->setTitle("<h3>Jaarboek</h3>");
   panel->setStyleClass("panel panel-primary");
-  panel->setCentralWidget(Yearbook().get());
+  yearbookPtr = new yearbook(yearbookDBPtr);
+  this->addChild(yearbookPtr);
+  panel->setCentralWidget(yearbookPtr->get());
   panel->setMaximumSize(800, 1000);
-  Yearbook().setAccount(account);
+  yearbookPtr->setAccount(account);
   
   return panel;
 }
 
 Wt::WWidget * webLogin::yearbookReviewFunc() {
+  createYearbookDB();
+  
   Wt::WPanel * panel = new Wt::WPanel();
   panel->setTitle("<h3>Jaarboek Review</h3>");
   panel->setStyleClass("panel panel-primary");
-  panel->setCentralWidget(YearbookReview().get());
+  yearbookReviewPtr = new yearbookReview(yearbookDBPtr);
+  this->addChild(yearbookReviewPtr);
+  panel->setCentralWidget(yearbookReviewPtr->get());
   panel->setMaximumSize(800, 1000);
   
   return panel;
 }
 
 Wt::WWidget * webLogin::yearbookDownloadFunc() {
+  createYearbookDB();
+  
   Wt::WPanel * panel = new Wt::WPanel();
   panel->setTitle("<h3>Jaarboek Download</h3>");
   panel->setStyleClass("panel panel-primary");
-  panel->setCentralWidget(YearbookDownload().get());
+  yearbookDownloadPtr = new yearbookDownload(yearbookDBPtr);
+  this->addChild(yearbookDownloadPtr);
+  panel->setCentralWidget(yearbookDownloadPtr->get());
   panel->setMaximumSize(800, 1000);
   
   return panel;
 }
 
 Wt::WWidget * webLogin::yearbookConfigFunc() {
+  createYearbookDB();
+  
   Wt::WPanel * panel = new Wt::WPanel();
   panel->setTitle("<h3>Jaarboek Configuratie</h3>");
   panel->setStyleClass("panel panel-primary");
-  panel->setCentralWidget(YearbookConfig().get());
+  yearbookConfigPtr = new yearbookConfig(yearbookDBPtr);
+  this->addChild(yearbookConfigPtr);
+  panel->setCentralWidget(yearbookConfigPtr->get());
   panel->setMaximumSize(800, 1000);
   
   return panel;
@@ -299,4 +316,12 @@ Wt::WWidget * webLogin::yearbookConfigFunc() {
 void webLogin::logoutFunc() {
   this->redirect("/");
   this->quit();
+}
+
+void webLogin::createYearbookDB() {
+  if(yearbookDBPtr == nullptr) {
+    yearbookDBPtr = new yearbookDB();
+    yearbookDBPtr->loadConfig();
+    this->addChild(yearbookDBPtr);
+  }
 }

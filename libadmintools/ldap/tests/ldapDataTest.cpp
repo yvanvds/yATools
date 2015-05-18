@@ -25,8 +25,8 @@ void ldapDataTest::tearDown() {
 
 void ldapDataTest::testAdd() {
   y::ldap::data _data;
-  _data.add(L"key", L"value");
-  if (_data.getValue(L"key").compare(L"value") != 0) {
+  _data.add("key", "value");
+  if (_data.getValue("key") != "value") {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -34,14 +34,14 @@ void ldapDataTest::testAdd() {
 void ldapDataTest::testData() {
   y::ldap::data item1;
   item1.setType(y::ldap::data_type::RESULT);
-  item1.add(L"key", L"value");
+  item1.add("key", "value");
   y::ldap::data item2(item1);
   
   if (item2.getType() != y::ldap::data_type::RESULT) {
     CPPUNIT_ASSERT(false);
   }
   
-  if (item2.getValue(L"key").compare(L"value") != 0) {
+  if (item2.getValue("key") != "value") {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -61,21 +61,21 @@ void ldapDataTest::testGetType() {
 
 void ldapDataTest::testGetValue() {
   y::ldap::data _data;
-  _data.add(L"key", L"value");
-  if (_data.getValue(L"key").compare(L"value") != 0) {
+  _data.add("key", "value");
+  if (_data.getValue("key") != "value") {
     CPPUNIT_ASSERT(false);
   }
-  _data.add(L"key", L"value2");
-  if (_data.getValue(L"key", 1).compare(L"value2") != 0) {
+  _data.add("key", "value2");
+  if (_data.getValue("key", 1) != "value2") {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void ldapDataTest::testNamedElms() {
   y::ldap::data _data;
-  _data.add(L"key", L"value");
-  _data.add(L"key", L"value2");
-  if (_data.elms(L"key") != 2) {
+  _data.add("key", "value");
+  _data.add("key", "value2");
+  if (_data.elms("key") != 2) {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -85,15 +85,15 @@ void ldapDataTest::testElms() {
   if (_data.elms() != 0) {
     CPPUNIT_ASSERT(false);
   }
-  _data.add(L"key", L"value");
+  _data.add("key", "value");
   if (_data.elms() != 1) {
     CPPUNIT_ASSERT(false);
   }
-  _data.add(L"key2", L"value");
+  _data.add("key2", "value");
   if (_data.elms() != 2) {
     CPPUNIT_ASSERT(false);
   }
-  _data.add(L"key2", L"value2");
+  _data.add("key2", "value2");
   if (_data.elms() != 3) {
     CPPUNIT_ASSERT(false);
   }

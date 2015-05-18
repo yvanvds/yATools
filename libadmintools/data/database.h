@@ -15,6 +15,7 @@
 #include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>
 #include "../utils/container.h"
+#include "../utils/string.h"
 #include "row.h"
 #include "sqlserver.h"
 
@@ -34,11 +35,11 @@ namespace y {
     class order {
     public:
       order();
-      order & setKey(const std::string & key);
+      order & setKey(const string & key);
       order & descending(); 
       order & ascending(); // this is the default direction
     private:
-      std::string key;
+      string key;
       bool ascend;
       friend class database;
     };
@@ -49,21 +50,21 @@ namespace y {
     public:
       database(server & serverObject);
       
-      bool use(const std::wstring & dbName);
+      bool use(const string & dbName);
       
-      bool createTable(const std::wstring & tableName, row & description);
-      bool deleteTable(const std::wstring & tableName);
-      bool tableExists(const std::wstring & tableName);
+      bool createTable(const string & tableName, row & description);
+      bool deleteTable(const string & tableName);
+      bool tableExists(const string & tableName);
       
-      bool getTables(container<std::wstring> & tables);
-      bool getAllRows(const std::wstring & table, container<row> & rows, container<order> & order = defaultOrder);
-      bool getRows(const std::wstring & table, container<row> & rows, field & condition, container<order> & order = defaultOrder, COMPARE c = COMPARE::equal);
+      bool getTables(container<string> & tables);
+      bool getAllRows(const string & table, container<row> & rows, container<order> & order = defaultOrder);
+      bool getRows(const string & table, container<row> & rows, field & condition, container<order> & order = defaultOrder, COMPARE c = COMPARE::equal);
 
-      bool setRow(const std::wstring & table, row & values, field & condition, COMPARE c = COMPARE::equal);
-      bool addRow(const std::wstring & table, row & values);
-      bool delRow(const std::wstring & table, field & condition, COMPARE c = COMPARE::equal);
+      bool setRow(const string & table, row & values, field & condition, COMPARE c = COMPARE::equal);
+      bool addRow(const string & table, row & values);
+      bool delRow(const string & table, field & condition, COMPARE c = COMPARE::equal);
       
-      bool execute(const std::wstring & query);
+      bool execute(const string & query);
       
     private:
       void parseRows(std::unique_ptr<sql::ResultSet> & result, container<row> & rows);

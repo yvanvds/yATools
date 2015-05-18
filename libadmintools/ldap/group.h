@@ -22,16 +22,16 @@ namespace y {
       bool save ();
       
       const DN & dn() const;
-      const std::wstring & cn() const;
+      const string & cn() const;
 
-      container<std::wstring> & owners ();
-      container<std::wstring> & members();
+      container<string> & owners ();
+      container<string> & members();
       
-      bool removeOwner(const std::wstring & owner);
-      bool removeMember(const std::wstring & member);
+      bool removeOwner(const string & owner);
+      bool removeMember(const string & member);
       
-      bool addOwner(const std::wstring & owner);
-      bool addMember(const std::wstring & member);
+      bool addOwner(const string & owner);
+      bool addMember(const string & member);
 
       group & editable(bool value); // automatic group or not
       bool    editable();
@@ -46,7 +46,7 @@ namespace y {
       
     private:
       bool load(const DN & id);
-      bool load(const std::wstring & cn);
+      bool load(const string & cn);
       bool load(const data& d);
       
       bool saveNew   ();
@@ -54,14 +54,14 @@ namespace y {
       void retrieveData(const data& d);
       
       watch<DN> _dn;
-      watch<std::wstring> _cn;
+      watch<string> _cn;
 
-      container<std::wstring> _owners ;
-      container<std::wstring> _members;
+      container<string> _owners ;
+      container<string> _members;
       
       // these are to compare with ldap data on save
-      container<std::wstring> _ownersInLDAP;
-      container<std::wstring> _membersInLDAP;
+      container<string> _ownersInLDAP;
+      container<string> _membersInLDAP;
 
       bool _new     ; // false if loaded from ldap
       bool _editable;

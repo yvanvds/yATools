@@ -17,14 +17,14 @@
 #include "yearbookReview.h"
 #include "yearbookDB.h"
 
-yearbookReview & YearbookReview() {
-  static yearbookReview s;
-  return s;
+yearbookReview::yearbookReview(yearbookDB* ptr) : db(ptr) {
+  warningAtRemove = new yearbookConfirmRemove(this);
+  this->addChild(warningAtRemove);
 }
 
 Wt::WWidget * yearbookReview::get() {
-  YearbookDB().loadConfig();
-  YearbookDB().loadAllUsers("name", true);
+  db->loadConfig();
+  db->loadAllUsers("name", true);
   
   mainWidget = new Wt::WContainerWidget();
   //mainWidget->addStyleClass("well");
@@ -32,10 +32,10 @@ Wt::WWidget * yearbookReview::get() {
   mainWidget->setOverflow(Wt::WContainerWidget::OverflowScroll, Wt::Orientation::Vertical);
   mainWidget->setHeight(600);
   
-  Wt::WString s = "<h3>";
-  s += std::to_string(YearbookDB().getEntries().elms());
+  string s = "<h3>";
+  s += db->getEntries().elms();
   s += " inzendingen</h3>";
-  title = new Wt::WText(s);
+  title = new Wt::WText(s.wt());
   title->addStyleClass("page-header");
   mainWidget->addWidget(title);
   
@@ -103,39 +103,39 @@ void yearbookReview::createDialog() {
       dialogTable->elementAt(i, j)->setVerticalAlignment(Wt::AlignMiddle);
     }
   }
-  Wt::WString s;
+  string s;
   s = "<p>";
-  s += YearbookDB().getQuestion(0);
+  s += db->getQuestion(0);
   s += "</p>";
-  dialogContainer->addWidget(new Wt::WText(s));
+  dialogContainer->addWidget(new Wt::WText(s.wt()));
   answer1 = new Wt::WTextArea();
   answer1->setRows(4);
   answer1->setColumns(60);
   dialogContainer->addWidget(answer1);
   
   s = "<p>";
-  s += YearbookDB().getQuestion(1);
+  s += db->getQuestion(1);
   s += "</p>";
   dialogContainer->addWidget(new Wt::WBreak());
-  dialogContainer->addWidget(new Wt::WText(s));
+  dialogContainer->addWidget(new Wt::WText(s.wt()));
   answer2 = new Wt::WTextArea();
   answer2->setRows(4);
   answer2->setColumns(60);
   dialogContainer->addWidget(answer2);
   
   s = "<p>";
-  s += YearbookDB().getQuestion(2);
+  s += db->getQuestion(2);
   s += "</p>";
-  dialogContainer->addWidget(new Wt::WText(s));
+  dialogContainer->addWidget(new Wt::WText(s.wt()));
   answer3 = new Wt::WTextArea();
   answer3->setRows(4);
   answer3->setColumns(60);
   dialogContainer->addWidget(answer3);
   
   s = "<p>";
-  s += YearbookDB().getQuestion(3);
+  s += db->getQuestion(3);
   s += "</p>";
-  dialogContainer->addWidget(new Wt::WText(s));
+  dialogContainer->addWidget(new Wt::WText(s.wt()));
   answer4 = new Wt::WTextArea();
   answer4->setRows(4);
   answer4->setColumns(60);
@@ -169,51 +169,51 @@ void yearbookReview::createDialog() {
 
 void yearbookReview::openDialog(int withEntry) {
   currentEntry = withEntry;
-  if(currentEntry < YearbookDB().getEntries().elms()) {
+  if(currentEntry < db->getEntries().elms()) {
     loadDialogContent();
     dialog->show();
   }
 }
 
 void yearbookReview::loadDialogContent() {
-  std::wstring s(L"<h3>");
-  s += strW(std::to_string(YearbookDB().getEntries().elms()));
-  s += L" inzendingen</h3>";
-  title->setText(s);
+  string s("<h3>");
+  s += db->getEntries().elms();
+  s += " inzendingen</h3>";
+  title->setText(s.wt());
   
-  std::wstring title;
-  title = YearbookDB().getEntries()[currentEntry].name;
-  title += L" ";
-  title += YearbookDB().getEntries()[currentEntry].surname;
-  dialog->setWindowTitle(title);
+  string title;
+  title = db->getEntries()[currentEntry].name;
+  title += " ";
+  title += db->getEntries()[currentEntry].surname;
+  dialog->setWindowTitle(title.wt());
   
-  if(YearbookDB().getEntries()[currentEntry].photo.empty()) {
+  if(db->getEntries()[currentEntry].photo.empty()) {
     dialogImage->setImageLink("http://placehold.it/600x400");
   } else {
-    std::string s = str8(YearbookDB().getEntries()[currentEntry].photo);
-    Wt::WFileResource * r = new Wt::WFileResource(s);
+    string s = db->getEntries()[currentEntry].photo;
+    Wt::WFileResource * r = new Wt::WFileResource(s.utf8());
     dialogImage->setImageLink(r);
     dialogImage->setWidth("300px");
   }
   
-  dialogName->setText(YearbookDB().getEntries()[currentEntry].name);
-  dialogSurname->setText(YearbookDB().getEntries()[currentEntry].surname);
-  dialogClass->setText(YearbookDB().getEntries()[currentEntry].group);
+  dialogName->setText(db->getEntries()[currentEntry].name.wt());
+  dialogSurname->setText(db->getEntries()[currentEntry].surname.wt());
+  dialogClass->setText(db->getEntries()[currentEntry].group.wt());
 
-  y::data::dateTime date = YearbookDB().getEntries()[currentEntry].birthday;
+  y::data::dateTime date = db->getEntries()[currentEntry].birthday;
   y::ldap::DATE dldap(y::ldap::DAY(date.day()), y::ldap::MONTH(date.month()), y::ldap::YEAR(date.year()));      
-  dialogBirthday->setText(dldap.asString());
+  dialogBirthday->setText(dldap.asString().wt());
   
-  dialogEmail->setText(str8(YearbookDB().getEntries()[currentEntry].mail));
+  dialogEmail->setText(db->getEntries()[currentEntry].mail.wt());
   
-  answer1->setText(YearbookDB().getEntries()[currentEntry].answer1);
-  answer2->setText(YearbookDB().getEntries()[currentEntry].answer2);
-  answer3->setText(YearbookDB().getEntries()[currentEntry].answer3);
-  answer4->setText(YearbookDB().getEntries()[currentEntry].answer4);
-  std::string script;
+  answer1->setText(db->getEntries()[currentEntry].answer1.wt());
+  answer2->setText(db->getEntries()[currentEntry].answer2.wt());
+  answer3->setText(db->getEntries()[currentEntry].answer3.wt());
+  answer4->setText(db->getEntries()[currentEntry].answer4.wt());
+  string script;
   script = dialogContainer->jsRef();
   script += ".scrollTop = 0";
-  dialogContainer->doJavaScript(script);
+  dialogContainer->doJavaScript(script.utf8());
 }
 
 
@@ -224,13 +224,13 @@ void yearbookReview::entryCancel() {
 
 void yearbookReview::entryRemove() {
   dialog->hide();
-  warningAtRemove.show();
+  warningAtRemove->show();
 }
 
 void yearbookReview::entrySave() {
   saveCurrentEntry();
   currentEntry++;
-  if(currentEntry < YearbookDB().getEntries().elms()) {
+  if(currentEntry < db->getEntries().elms()) {
     loadDialogContent();
   } else {
     dialog->hide();
@@ -241,7 +241,7 @@ void yearbookReview::entrySave() {
 void yearbookReview::entryApprove() {
   saveCurrentEntry(true);
   currentEntry++;
-  if(currentEntry < YearbookDB().getEntries().elms()) {
+  if(currentEntry < db->getEntries().elms()) {
     loadDialogContent();
   } else {
     dialog->hide();
@@ -250,7 +250,7 @@ void yearbookReview::entryApprove() {
 }
 
 void yearbookReview::removeCurrentEntry() {
-  YearbookDB().removeUser(currentEntry);
+  db->removeUser(currentEntry);
   loadTableContent();
 }
 
@@ -276,19 +276,19 @@ void yearbookReview::loadTableContent() {
   table->columnAt(2)->setWidth("200px");
   table->columnAt(3)->setWidth("100px");
 
-  container<yearbookDB::entry> & entries = YearbookDB().getEntries();
+  container<yearbookDB::entry> & entries = db->getEntries();
   for(int i = 0; i < entries.elms(); i++) {
 
-    Wt::WString str = entries[i].name;
+    string str = entries[i].name;
     str += " ";
     str += entries[i].surname;
-    table->elementAt(i+1, 0)->addWidget(new Wt::WText(str));
+    table->elementAt(i+1, 0)->addWidget(new Wt::WText(str.wt()));
 
-    table->elementAt(i+1, 1)->addWidget(new Wt::WText(entries[i].group));
+    table->elementAt(i+1, 1)->addWidget(new Wt::WText(entries[i].group.wt()));
     
     y::data::dateTime date = entries[i].submitDate;
     y::ldap::DATE dldap(y::ldap::DAY(date.day()), y::ldap::MONTH(date.month()), y::ldap::YEAR(date.year()));
-    table->elementAt(i+1, 2)->addWidget(new Wt::WText(dldap.asString()));
+    table->elementAt(i+1, 2)->addWidget(new Wt::WText(dldap.asString().wt()));
 
     Wt::WPushButton * button = new Wt::WPushButton("view");
     button->setWidth("80px");
@@ -314,34 +314,34 @@ void yearbookReview::loadTableContent() {
 }
 
 void yearbookReview::saveCurrentEntry(bool approve) {
-  yearbookDB::entry & e = YearbookDB().getEntries()[currentEntry];
-  e.name = strW(dialogName->text().toUTF8());
-  e.surname = strW(dialogSurname->text().toUTF8());
-  e.group = strW(dialogClass->text().toUTF8());
-  e.answer1 = strW(answer1->text().toUTF8());
-  e.answer2 = strW(answer2->text().toUTF8());
-  e.answer3 = strW(answer3->text().toUTF8());
-  e.answer4 = strW(answer4->text().toUTF8());
+  yearbookDB::entry & e = db->getEntries()[currentEntry];
+  e.name = string(dialogName->text());
+  e.surname = string(dialogSurname->text());
+  e.group = string(dialogClass->text());
+  e.answer1 = string(answer1->text());
+  e.answer2 = string(answer2->text());
+  e.answer3 = string(answer3->text());
+  e.answer4 = string(answer4->text());
   e.approved = approve;
-  YearbookDB().saveUser(e);
+  db->saveUser(e);
 }
 
 void yearbookReview::onDateClicked() {
-  YearbookDB().loadAllUsers("submitDate", true);
+  db->loadAllUsers("submitDate", true);
   loadTableContent();
 }
 
 void yearbookReview::onGroupClicked() {
-  YearbookDB().loadAllUsers("classgroup", true);
+  db->loadAllUsers("classgroup", true);
   loadTableContent();
 }
 
 void yearbookReview::onNameClicked() {
-  YearbookDB().loadAllUsers("name", true);
+  db->loadAllUsers("name", true);
   loadTableContent();
 }
 
 void yearbookReview::removeImage() {
-  YearbookDB().getEntries()[currentEntry].photo.clear();
+  db->getEntries()[currentEntry].photo.clear();
   dialogImage->setImageLink("http://placekitten.com/200/200");
 }

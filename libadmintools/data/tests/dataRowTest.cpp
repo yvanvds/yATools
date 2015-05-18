@@ -25,8 +25,8 @@ void dataRowTest::tearDown() {
 
 void dataRowTest::testAddBool() {
   y::data::row _row;
- _row.addBool(L"field1", true);
-  if (!_row[L"field1"].asBool()) {
+ _row.addBool("field1", true);
+  if (!_row["field1"].asBool()) {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -34,8 +34,8 @@ void dataRowTest::testAddBool() {
 void dataRowTest::testAddChar() {
   char value = 45;
   y::data::row _row;
- _row.addChar(L"field1", value);
-  if (_row[L"field1"].asChar() != 45) {
+ _row.addChar("field1", value);
+  if (_row["field1"].asChar() != 45) {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -43,8 +43,8 @@ void dataRowTest::testAddChar() {
 void dataRowTest::testAddDouble() {
   double value = 45.6;
   y::data::row _row;
- _row.addDouble(L"field1", value);
-  if (_row[L"field1"].asDouble() != 45.6) {
+ _row.addDouble("field1", value);
+  if (_row["field1"].asDouble() != 45.6) {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -52,8 +52,8 @@ void dataRowTest::testAddDouble() {
 void dataRowTest::testAddFloat() {
   float value = 3.14;
   y::data::row _row;
- _row.addFloat(L"field1", value);
-  if (_row[L"field1"].asFloat() != value) {
+ _row.addFloat("field1", value);
+  if (_row["field1"].asFloat() != value) {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -61,8 +61,8 @@ void dataRowTest::testAddFloat() {
 void dataRowTest::testAddInt() {
   int value = 42;
   y::data::row _row;
- _row.addInt(L"field1", value);
-  if (_row[L"field1"].asInt() != value) {
+ _row.addInt("field1", value);
+  if (_row["field1"].asInt() != value) {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -70,8 +70,8 @@ void dataRowTest::testAddInt() {
 void dataRowTest::testAddLong() {
   long value = 42;
   y::data::row _row;
- _row.addLong(L"field1", value);
-  if (_row[L"field1"].asLong() != value) {
+ _row.addLong("field1", value);
+  if (_row["field1"].asLong() != value) {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -79,35 +79,26 @@ void dataRowTest::testAddLong() {
 void dataRowTest::testAddShort() {
   short value = 42;
   y::data::row _row;
- _row.addShort(L"field1", value);
-  if (_row[L"field1"].asShort() != value) {
+ _row.addShort("field1", value);
+  if (_row["field1"].asShort() != value) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void dataRowTest::testAddString() {
-  std::wstring value = L"test";
+  string value = "test";
   y::data::row _row;
- _row.addString(L"field1", value);
-  if (_row[L"field1"].asString().compare(value) != 0) {
-    CPPUNIT_ASSERT(false);
-  }
-}
-
-void dataRowTest::testAddString8() {
-  std::string value = "test";
-  y::data::row _row;
-  _row.addString8(L"field1", value);
-  if (_row[L"field1"].asString8().compare(value) != 0) {
+ _row.addString("field1", value);
+  if (_row["field1"].asString() != value) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void dataRowTest::testClear() {
   y::data::row _row;
-  _row.addInt(L"field1", 1);
-  _row.addInt(L"field2", 1);
-  _row.addInt(L"field3", 1);
+  _row.addInt("field1", 1);
+  _row.addInt("field2", 1);
+  _row.addInt("field3", 1);
   _row.clear();
   if (_row.elms()) {
     CPPUNIT_ASSERT(false);
@@ -116,9 +107,9 @@ void dataRowTest::testClear() {
 
 void dataRowTest::testElms() {
   y::data::row _row;
-  _row.addInt(L"field1", 1);
-  _row.addInt(L"field2", 1);
-  _row.addInt(L"field3", 1);
+  _row.addInt("field1", 1);
+  _row.addInt("field2", 1);
+  _row.addInt("field3", 1);
   if (_row.elms() != 3) {
     CPPUNIT_ASSERT(false);
   }

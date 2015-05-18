@@ -35,9 +35,9 @@ void password::parse(int argc, char ** argv) {
     printHelp();
     return;
   } else {
-    std::wstring uid(strW(argv[0]));
+    ::string uid(argv[0]);
     
-    if(uid.compare(L"-?") == 0) {
+    if(uid == "-?") {
       printHelp();
       return;
     }
@@ -47,14 +47,14 @@ void password::parse(int argc, char ** argv) {
       cout << "This account does not exist." << endl;
       return;
     } else {
-      std::wstring password;
+      ::string password;
       if(argc > 1) {
-        password = strW(argv[1]);
+        password = argv[1];
       } else {
-        password = strW(y::utils::Security().makePassword(8));
+        password = y::utils::Security().makePassword(8);
       }
       
-      if(!y::utils::Security().isGoodPassword(str8(password))) {
+      if(!y::utils::Security().isGoodPassword(password)) {
         cout << "A password must be between 8-20 character long." << endl;
         cout << "It must contain one lower and one upper case character." << endl;
         cout << "It also needs one or more numbers." << endl;
@@ -64,8 +64,8 @@ void password::parse(int argc, char ** argv) {
       account.password(y::ldap::PASSWORD(password));
       y::ldap::Server().commitChanges();
       
-      wcout << L"user    : " << account.uid()() << endl;
-      wcout << L"password: " << password        << endl;
+      cout << "user    : " << account.uid()() << endl;
+      cout << "password: " << password        << endl;
       
     }
   }

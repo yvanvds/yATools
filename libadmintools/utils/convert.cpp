@@ -85,10 +85,10 @@ std::u32string str32(const std::u16string& s)
 }
 
 
-Wt::WString strWt(const std::u16string& s) {
-  return Wt::WString(str8(s), Wt::UTF8);
+Wt::WString strWt(const std::string& s) {
+  return Wt::WString(s, Wt::UTF8);
 }
 
-std::string strSS(const std::wstring & s) {
-  return boost::locale::conv::from_utf(str8(s), "Latin1");
+std::string strSS(const std::string & s) {
+  return boost::locale::conv::from_utf(s, "Latin1");
 }

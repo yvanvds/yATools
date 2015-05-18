@@ -8,6 +8,7 @@
 
 #include <boost/program_options.hpp>
 #include "container.h"
+#include "string.h"
 
 namespace y {
   namespace utils {
@@ -18,19 +19,19 @@ namespace y {
       void load(); // use config file only, no command line arguments
       void load(int argc, char** argv);
       
-      const std::wstring & getLdapPasswd       () const;
-      const std::wstring & getLdapHost         () const;
-      const std::wstring & getLdapBaseDN       () const;
-      const std::wstring & getLdapAdminDN      () const;
-      const std::wstring & getLdapTestUID      () const;
-      const std::wstring & getLdapTestPassword () const;
-      const std::wstring & getLdapTestUidNumber() const;
-      const std::wstring & getLdapTestDN       () const;
-      const std::wstring & getMysqlPassword    () const;
-      const std::wstring & getDomain           () const;
-      const std::wstring & getSSPw             () const;
+      const string & getLdapPasswd       () const;
+      const string & getLdapHost         () const;
+      const string & getLdapBaseDN       () const;
+      const string & getLdapAdminDN      () const;
+      const string & getLdapTestUID      () const;
+      const string & getLdapTestPassword () const;
+      const string & getLdapTestUidNumber() const;
+      const string & getLdapTestDN       () const;
+      const string & getMysqlPassword    () const;
+      const string & getDomain           () const;
+      const string & getSSPw             () const;
       
-      bool isYearbookAdmin(const std::wstring & uid);
+      bool isYearbookAdmin(const string & uid);
 
     private:
           
@@ -44,19 +45,19 @@ namespace y {
       
       std::string configFile;
       
-      std::wstring ldapPasswd;
-      std::wstring ldapAdminDN;
-      std::wstring ldapHost;
-      std::wstring ldapBaseDN;
-      std::wstring ldapTestUID;
-      std::wstring ldapTestPassword;
-      std::wstring ldapTestUidNumber;
-      std::wstring ldapTestDN;
-      std::wstring mysqlPassword;
-      std::wstring domain;
-      std::wstring smartschoolPw;
+      string ldapPasswd;
+      string ldapAdminDN;
+      string ldapHost;
+      string ldapBaseDN;
+      string ldapTestUID;
+      string ldapTestPassword;
+      string ldapTestUidNumber;
+      string ldapTestDN;
+      string mysqlPassword;
+      string domain;
+      string smartschoolPw;
       
-      container<std::wstring> yearbookAdmin;
+      container<string> yearbookAdmin;
     };
     
     config & Config();

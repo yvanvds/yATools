@@ -27,8 +27,8 @@ namespace y {
       
       void getAllRooms(container<y::data::row> & rows);
       
-      bool   status(const std::wstring & room, STATUS status);
-      STATUS status(const std::wstring & room               );
+      bool   status(const string & room, STATUS status);
+      STATUS status(const string & room               );
       
       proxy & reset();
       void apply();
@@ -37,7 +37,7 @@ namespace y {
       std::unique_ptr<y::data::server> server;
       std::unique_ptr<y::data::database> db;
       
-      const std::wstring PROXY = L"proxy";
+      const string PROXY = "proxy";
     };
     
     proxy & Proxy();

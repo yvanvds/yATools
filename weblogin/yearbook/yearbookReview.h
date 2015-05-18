@@ -9,9 +9,12 @@
 #define	YEARBOOKREVIEW_H
 
 #include "yearbookConfirmRemove.h"
+#include "yearbookDB.h"
 
 class yearbookReview : public Wt::WObject {
 public:
+  yearbookReview(yearbookDB * ptr);
+  
   Wt::WWidget * get();
   
   void removeCurrentEntry();
@@ -36,6 +39,7 @@ private:
   
   int currentEntry;
   
+  yearbookDB * db;
   Wt::WContainerWidget * mainWidget;
   
   Wt::WText * title;
@@ -53,11 +57,10 @@ private:
   Wt::WTextArea * answer4;
   Wt::WTable * table;
   Wt::WContainerWidget * dialogContainer;
-  yearbookConfirmRemove warningAtRemove;
+  yearbookConfirmRemove * warningAtRemove;
   
 };
 
-yearbookReview & YearbookReview();
 
 #endif	/* YEARBOOKREVIEW_H */
 

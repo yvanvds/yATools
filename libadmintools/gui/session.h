@@ -14,8 +14,7 @@
 #include <Wt/WMenu>
 #include <Wt/WMenuItem>
 #include <Wt/WStackedWidget>
-#include <string>
-#include "passwordDialog.h"
+#include "admintools.h"
 
 namespace y {
   namespace gui {
@@ -23,7 +22,7 @@ namespace y {
     class session : public Wt::WApplication {
     public:
       session(const Wt::WEnvironment & env);
-      void setTitle(const std::string & title);
+      void setTitle(const string & title);
       passwordDialog & login();
       
       virtual bool validate() = 0;

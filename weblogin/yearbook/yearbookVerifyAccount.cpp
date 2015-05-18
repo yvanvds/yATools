@@ -77,17 +77,17 @@ void yearbookVerifyAccount::setContent(Wt::WVBoxLayout* box) {
 }
 
 void yearbookVerifyAccount::onShow() {
-  nameEdit->setText(YearbookDB().name());
-  surnameEdit->setText(YearbookDB().surname());
-  groupEdit->setText(YearbookDB().group());
-  dateEdit->setDate(YearbookDB().birthday());
-  mailEdit->setText(YearbookDB().mail());
+  nameEdit->setText(db->name().wt());
+  surnameEdit->setText(db->surname().wt());
+  groupEdit->setText(db->group().wt());
+  dateEdit->setDate(db->birthday());
+  mailEdit->setText(db->mail().wt());
   nameEdit->setFocus();
 }
 
 void yearbookVerifyAccount::nameEditChanged() {
   if(nameEdit->validate() == Wt::WValidator::Valid) {
-    YearbookDB().name(nameEdit->text());
+    db->name(nameEdit->text());
     feedback->setText("Je naam werd gewijzigd.");
     feedback->setStyleClass("alert alert-success");
     nameEdit->setStyleClass("form-control");
@@ -106,7 +106,7 @@ void yearbookVerifyAccount::surnameEditChanged() {
     feedback->setText("Je familienaam werd gewijzigd.");
     feedback->setStyleClass("alert alert-success");
     nameEdit->setStyleClass("form-control");
-    YearbookDB().surname(surnameEdit->text());
+    db->surname(surnameEdit->text());
     allOK = true;
   } else {
     feedback->setText("Zo kort kan een naam niet zijn.");
@@ -123,7 +123,7 @@ void yearbookVerifyAccount::groupEditChanged() {
 
 void yearbookVerifyAccount::dateEditChanged() {
   if(dateEdit->date().isValid()) {
-    YearbookDB().birthday(dateEdit->date());
+    db->birthday(dateEdit->date());
     feedback->setText("Je geboortedatum werd gewijzigd.");
     feedback->setStyleClass("alert alert-success");
     dateEdit->setStyleClass("form-control");
@@ -162,7 +162,7 @@ void yearbookVerifyAccount::mailEditChanged() {
     message = "dit adres wordt binnenkort afgesloten";
   }
   if(valid) {
-    YearbookDB().mail(mailEdit->text());
+    db->mail(mailEdit->text());
     feedback->setText("Je email adres werd gewijzigd.");
     feedback->setStyleClass("alert alert-success");
     mailEdit->setStyleClass("form-control");
@@ -188,6 +188,6 @@ bool yearbookVerifyAccount::onNext() {
   mailEditChanged();
   if(!allOK) return false;
   
-  YearbookDB().saveUser();
+  db->saveUser();
   return true;  
 }

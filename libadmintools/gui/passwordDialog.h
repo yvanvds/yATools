@@ -14,7 +14,8 @@
 #include <Wt/WLineEdit>
 #include <Wt/WText>
 #include <Wt/WPushButton>
-#include "../ldap/account.h"
+#include "ldap/account.h"
+#include "utils/string.h"
 
 namespace y {
   namespace gui {
@@ -23,13 +24,13 @@ namespace y {
     class passwordDialog : public Wt::WObject {
     public:
       void create(session * parent);
-      void setTitle(const std::string & value);
+      void setTitle(const string & value);
       void show();
       void hide();
       
-      const Wt::WString & getName();
-      const Wt::WString & getPassword();
-      void setErrorMessage(const std::string & message);
+      string getName();
+      string getPassword();
+      void setErrorMessage(const string & message);
       
       y::ldap::account & getAccount();
     private:
@@ -46,7 +47,7 @@ namespace y {
       y::ldap::account account;
       bool loginOK;
       
-      Wt::WString errorMessage;
+      string errorMessage;
       Wt::WString loginName;
       Wt::WString loginPass;
     };   

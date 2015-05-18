@@ -8,7 +8,6 @@
 #ifndef DEBUGFUNCTIONS_H
 #define	DEBUGFUNCTIONS_H
 
-#include <string>
 
 class debugFunctions {
 public:

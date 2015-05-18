@@ -34,22 +34,22 @@ void proxyManager::parse(int argc, char ** argv) {
     printHelp();
     return;
   } else {
-    std::wstring arg(strW(argv[0]));
-    if(arg.compare(L"--reset") == 0) {
+    ::string arg(argv[0]);
+    if(arg == "--reset") {
       Proxy().reset().apply();
       return;
     } 
     
-    if(arg.compare(L"--show") == 0) {
+    if(arg == "--show") {
       container<y::data::row> rows;
       y::utils::Proxy().getAllRooms(rows);
       for (int i = 0; i < rows.elms(); i++) {
-        wcout << rows[i][L"ID"].asString() << " is ";
-        y::utils::proxy::STATUS status = (y::utils::proxy::STATUS)rows[i][L"status"].asInt();
+        cout << rows[i]["ID"].asString() << " is ";
+        y::utils::proxy::STATUS status = (y::utils::proxy::STATUS)rows[i]["status"].asInt();
         switch (status) {
-          case y::utils::proxy::CLOSED: wcout << L"closed." << endl; break;
-          case y::utils::proxy::FILTER: wcout << L"filtered." << endl; break;
-          case y::utils::proxy::OPEN: wcout << L"open." << endl; break;
+          case y::utils::proxy::CLOSED: cout << "closed." << endl; break;
+          case y::utils::proxy::FILTER: cout << "filtered." << endl; break;
+          case y::utils::proxy::OPEN: cout << "open." << endl; break;
         }
       }
       return;
@@ -65,42 +65,42 @@ void proxyManager::parse(int argc, char ** argv) {
       if(argc < 2) {
         // just display current status
         switch(status) {
-          case proxy::OPEN  : wcout << arg << L" is open."     << endl; break;
-          case proxy::FILTER: wcout << arg << L" is filtered." << endl; break;
-          case proxy::CLOSED: wcout << arg << L" is closed."   << endl; break;
+          case proxy::OPEN  : cout << arg << " is open."     << endl; break;
+          case proxy::FILTER: cout << arg << " is filtered." << endl; break;
+          case proxy::CLOSED: cout << arg << " is closed."   << endl; break;
         }
       } else {
-        wstring newStatus = strW(argv[1]);
-        if(newStatus.compare(L"OPEN") == 0) {
+        ::string newStatus = argv[1];
+        if(newStatus == "OPEN") {
           if(status == proxy::OPEN) {
-            wcout << arg << L" is already open." << endl;
+            cout << arg << " is already open." << endl;
             return;
           } else {
             y::utils::Proxy().status(arg, proxy::OPEN);
             y::utils::Proxy().apply();
-            wcout << arg << L" is now open." << endl;
+            cout << arg << " is now open." << endl;
             return;
           }
         }
-        if(newStatus.compare(L"FILTER") == 0) {
+        if(newStatus == "FILTER") {
           if(status == proxy::FILTER) {
-            wcout << arg << L" is already filtered." << endl;
+            cout << arg << " is already filtered." << endl;
             return;
           } else {
             y::utils::Proxy().status(arg, proxy::FILTER);
             y::utils::Proxy().apply();
-            wcout << arg << L" is now filtered." << endl;
+            cout << arg << " is now filtered." << endl;
             return;
           }
         }
-        if(newStatus.compare(L"CLOSED") == 0) {
+        if(newStatus == "CLOSED") {
           if(status == proxy::CLOSED) {
-            wcout << arg << L" is already closed." << endl;
+            cout << arg << " is already closed." << endl;
             return;
           } else {
             y::utils::Proxy().status(arg, proxy::CLOSED);
             y::utils::Proxy().apply();
-            wcout << arg << L" is now closed." << endl;
+            cout << arg << " is now closed." << endl;
             return;
           }
         }

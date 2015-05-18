@@ -5,6 +5,8 @@
  * Created on May 24, 2014, 1:20 PM
  */
 
+#include <Wt/WObject>
+
 #include "confirmationDialog.h"
 
 y::gui::confirmationDialog::confirmationDialog(const Wt::WString& title) {
@@ -12,6 +14,11 @@ y::gui::confirmationDialog::confirmationDialog(const Wt::WString& title) {
   text = new Wt::WText("", dialog->contents());
   cancel = new Wt::WPushButton("annuleer", dialog->footer());
   ok = new Wt::WPushButton("ok", dialog->footer());
+  
+  this->addChild(dialog);
+  this->addChild(text);
+  this->addChild(cancel);
+  this->addChild(ok);
   
   ok->clicked().connect(dialog, &Wt::WDialog::accept);
   cancel->clicked().connect(dialog, &Wt::WDialog::reject);
@@ -22,7 +29,6 @@ y::gui::confirmationDialog::confirmationDialog(const Wt::WString& title) {
 
 y::gui::confirmationDialog::~confirmationDialog() {
   dialog->hide();
-  delete dialog;
 }
 
 void y::gui::confirmationDialog::setContents(const Wt::WString& text) {

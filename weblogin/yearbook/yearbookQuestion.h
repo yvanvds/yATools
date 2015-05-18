@@ -9,16 +9,19 @@
 #define	YEARBOOKQUESTION_H
 
 #include "gui/stackPage.h"
+#include "yearbookDB.h"
 
 class yearbookQuestion : public y::gui::stackPage {
 public:
-  yearbookQuestion(int ID);
+  yearbookQuestion(int ID, yearbookDB * ptr);
   virtual void setContent(Wt::WVBoxLayout * box);
   virtual void onShow();
   bool onNext();
   
 private:
   void contentChanged();
+  
+  yearbookDB * db;
   
   Wt::WTextArea * textArea;
   Wt::WText * hint;

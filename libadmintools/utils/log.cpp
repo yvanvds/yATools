@@ -15,15 +15,15 @@ y::utils::log & y::utils::Log() {
 }
 
 y::utils::log::log() : _useConsole(true), _useFile(true), _file("/var/log/admintools") {
-  _stream.open(_file, std::ios_base::out | std::ios_base::app);
+  _stream.open(_file.utf8(), std::ios_base::out | std::ios_base::app);
 }
 
-y::utils::log & y::utils::log::add(const std::wstring& message) {
+y::utils::log & y::utils::log::add(const string& message) {
   if(_useConsole) {
-    std::cout << str8(message) << std::endl;
+    std::cout << message.utf8() << std::endl;
   }
   if(_useFile) {
-    _stream << message << std::endl;
+    _stream << message.wide() << std::endl;
   }
   if(_logFunction != nullptr) {
     (*_logFunction)(message);
@@ -36,18 +36,18 @@ y::utils::log & y::utils::log::useConsole(bool enable) {
   return *this;
 }
 
-y::utils::log & y::utils::log::useFile(bool enable, const std::string& file) {
+y::utils::log & y::utils::log::useFile(bool enable, const string& file) {
   if(_useFile) {
     _stream.close();
   }
   _useFile = enable;
   if(_useFile) {
-    _stream.open(_file, std::ios_base::out | std::ios_base::app);
+    _stream.open(_file.utf8(), std::ios_base::out | std::ios_base::app);
   }
   return *this;
 }
 
-y::utils::log & y::utils::log::useFunction(void(*logFunction)(const std::wstring&)) {
+y::utils::log & y::utils::log::useFunction(void(*logFunction)(const string&)) {
   _logFunction = logFunction;
   return *this;
 }

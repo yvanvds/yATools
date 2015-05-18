@@ -24,9 +24,9 @@ y::utils::security & y::utils::Security() {
   return s;
 }
 
-bool y::utils::security::test(const y::ldap::account& account, const std::string& password) {
+bool y::utils::security::test(const y::ldap::account& account, const string& password) {
   const y::ldap::PASSWORD & p = account.password();
-  std::string removeCrypt = str8(p());
+  std::string removeCrypt = p().utf8();
   removeCrypt.erase(0, 7);
   const char * pass = removeCrypt.c_str();
   char * result;
@@ -39,8 +39,8 @@ bool y::utils::security::test(const y::ldap::account& account, const std::string
   return false;
 }
 
-std::string y::utils::security::makePassword(int length) {
-  std::string result;
+string y::utils::security::makePassword(int length) {
+  string result;
   bool vowel = false;
   
   int capitalPos = Random().get(length -1);
@@ -52,7 +52,7 @@ std::string y::utils::security::makePassword(int length) {
    
   for(int i = 0; i < length; i++) {
     if (i == numberPos) {
-      result += std::to_string(Random().get(9));
+      result += Random().get(9);
     } else if(vowel) {
       result += vowels[Random().get(5)];
     } else {
@@ -72,8 +72,8 @@ std::string y::utils::security::makePassword(int length) {
 }
 
 
-bool y::utils::security::isGoodPassword(const std::string& password) {
+bool y::utils::security::isGoodPassword(const string& password) {
   // look in header file for explanation of this regex
   static const boost::regex e("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,20}$");
-  return boost::regex_match(password, e);
+  return boost::regex_match(password.utf8(), e);
 }

@@ -16,26 +16,20 @@
 #include "yearbookDB.h"
 
 
-yearbookConfig & YearbookConfig() {
-  static yearbookConfig s;
-  return s;
-}
-
 void yearbookConfig::loadContent() {
-  openDate->setDate(YearbookDB().getOpenDate());
-  closeDate->setDate(YearbookDB().getCloseDate());
+  openDate->setDate(db->getOpenDate());
+  closeDate->setDate(db->getCloseDate());
   calculateStatus();
   
-  question1->setText(YearbookDB().getQuestion(0));
-  question2->setText(YearbookDB().getQuestion(1));
-  question3->setText(YearbookDB().getQuestion(2));
-  question4->setText(YearbookDB().getQuestion(3));
+  question1->setText(db->getQuestion(0).wt());
+  question2->setText(db->getQuestion(1).wt());
+  question3->setText(db->getQuestion(2).wt());
+  question4->setText(db->getQuestion(3).wt());
 }
 
 Wt::WWidget * yearbookConfig::get() { 
   tabs = new Wt::WTabWidget();
-  YearbookDB().loadConfig();
-  YearbookDB().loadAllUsers("name", true);
+  db->loadAllUsers("name", true);
   
   /***************************************************************
    Activation
@@ -139,15 +133,15 @@ Wt::WWidget * yearbookConfig::get() {
     
     Wt::WTable * table = new Wt::WTable(group);
     int tableIndex = 0;
-    container<yearbookDB::entry> & entries = YearbookDB().getEntries();
+    container<yearbookDB::entry> & entries = db->getEntries();
     
     for (int i = 0; i < entries.elms(); i++) {
-      std::wstring group = entries[i].group;
+      string group = entries[i].group;
       bool inList = false;
       
       // see if we have this group in our list
       for (int j = 0; j < replacements.elms(); j++) {
-        if (replacements[j].key.compare(group) == 0) {
+        if (replacements[j].key == group) {
           inList = true;
         }
       }
@@ -158,15 +152,15 @@ Wt::WWidget * yearbookConfig::get() {
         r.key = group;
         r.value = new Wt::WLineEdit();
         r.value->setWidth("150px");
-        table->elementAt(tableIndex, 0)->addWidget(new Wt::WText(r.key));
+        table->elementAt(tableIndex, 0)->addWidget(new Wt::WText(r.key.wt()));
         table->elementAt(tableIndex, 1)->addWidget(r.value);
         tableIndex++;
         
         // see if this exists in the database
-        for(int j = 0; j < YearbookDB().getReplacements().elms(); j++) {
-          if(YearbookDB().getReplacements()[j][L"original"].asString().compare(r.key) == 0) {
+        for(int j = 0; j < db->getReplacements().elms(); j++) {
+          if(db->getReplacements()[j]["original"].asString() == r.key) {
             r.value->setText(
-              YearbookDB().getReplacements()[j][L"replacement"].asString()
+              db->getReplacements()[j]["replacement"].asString().wt()
             );
             break;
           }
@@ -192,12 +186,12 @@ Wt::WWidget * yearbookConfig::get() {
 }
 
 void yearbookConfig::openDateChanged() {
-  YearbookDB().setOpenDate(openDate->date());
+  db->setOpenDate(openDate->date());
   calculateStatus();
 }
 
 void yearbookConfig::closeDateChanged() {
-  YearbookDB().setCloseDate(closeDate->date());
+  db->setCloseDate(closeDate->date());
   calculateStatus();
 }
 
@@ -217,23 +211,23 @@ void yearbookConfig::calculateStatus() {
 }
 
 void yearbookConfig::question1Changed() {
-  YearbookDB().setQuestion(0, question1->text());
+  db->setQuestion(0, question1->text());
 }
 
 void yearbookConfig::question2Changed() {
-  YearbookDB().setQuestion(1, question2->text());
+  db->setQuestion(1, question2->text());
 }
 
 void yearbookConfig::question3Changed() {
-  YearbookDB().setQuestion(2, question3->text());
+  db->setQuestion(2, question3->text());
 }
 
 void yearbookConfig::question4Changed() {
-  YearbookDB().setQuestion(3, question4->text());
+  db->setQuestion(3, question4->text());
 }
 
 void yearbookConfig::replacementChange() {
   for (int i = 0; i < replacements.elms(); i++) {
-    YearbookDB().replace(replacements[i].key, (replacements[i].value->text()));
+    db->replace(replacements[i].key, (replacements[i].value->text()));
   }
 }

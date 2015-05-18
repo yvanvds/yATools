@@ -8,29 +8,29 @@
 #ifndef LDAPACCOUNT_H
 #define	LDAPACCOUNT_H
 
-#include "utils/watch.h"
-#include "ldap/attributes.h"
-#include "ldap/data.h"
+#include "attributes.h"
 #include "defines.h"
+#include "data.h"
+#include "utils/watch.h"
 
 namespace y {
   namespace ldap {
     // because of issues in the past, our ldap fields for some
     // values are a bit confusing. This is why we keep a const list
     // with the intended name mapped to the current ldap field.
-    const std::wstring TYPE_UID_NUMBER(L"uidNumber"       );
-    const std::wstring TYPE_UID       (L"uid"             );
-    const std::wstring TYPE_DN        (L"DN"              );
-    const std::wstring TYPE_CN        (L"cn"              );
-    const std::wstring TYPE_SN        (L"sn"              );
-    const std::wstring TYPE_FULL_NAME (L"displayName"     );
-    const std::wstring TYPE_HOMEDIR   (L"homeDirectory"   );
-    const std::wstring TYPE_WISA_ID   (L"employeeNumber"  );
-    const std::wstring TYPE_MAIL      (L"mail"            );
-    const std::wstring TYPE_PASSWORD  (L"title"           );
-    const std::wstring TYPE_BIRTHDAY  (L"roomNumber"      );
-    const std::wstring TYPE_GID       (L"departmentNumber");
-    const std::wstring TYPE_GID_NUMBER(L"gidNumber"       );   
+    const string TYPE_UID_NUMBER("uidNumber"       );
+    const string TYPE_UID       ("uid"             );
+    const string TYPE_DN        ("DN"              );
+    const string TYPE_CN        ("cn"              );
+    const string TYPE_SN        ("sn"              );
+    const string TYPE_FULL_NAME ("displayName"     );
+    const string TYPE_HOMEDIR   ("homeDirectory"   );
+    const string TYPE_WISA_ID   ("employeeNumber"  );
+    const string TYPE_MAIL      ("mail"            );
+    const string TYPE_PASSWORD  ("title"           );
+    const string TYPE_BIRTHDAY  ("roomNumber"      );
+    const string TYPE_GID       ("departmentNumber");
+    const string TYPE_GID_NUMBER("gidNumber"       );   
     
     class account {
     public:
@@ -44,8 +44,8 @@ namespace y {
       const UID_NUMBER & uidNumber() const; account & uidNumber(const UID_NUMBER & value);
       const UID        & uid      () const; account & uid      (const UID        & value);
       const DN         & dn       () const; 
-      const std::wstring & cn       () const; account & cn       (const std::wstring & value);
-      const std::wstring & sn       () const; account & sn       (const std::wstring & value);
+      const string & cn       () const; account & cn       (const string & value);
+      const string & sn       () const; account & sn       (const string & value);
       const FULL_NAME  & fullName () const; account & fullName (const FULL_NAME  & value);
       const HOMEDIR    & homeDir  () const; account & homeDir  (const HOMEDIR    & value);
       const WISA_ID    & wisaID   () const; account & wisaID   (const WISA_ID    & value);
@@ -60,7 +60,7 @@ namespace y {
       bool flaggedForRemoval() { return _flaggedForRemoval; }   
       
       // returns password if changed during this request, otherwise empty string
-      std::wstring getPasswordText();
+      string getPasswordText();
       
       // used for wisa import
       WISA_IMPORT getImportStatus();
@@ -81,8 +81,8 @@ namespace y {
       watch<UID_NUMBER>  _uidNumber;
       watch<UID       >  _uid      ;
       watch<DN        >  _dn       ;
-      watch<std::wstring>  _cn       ;
-      watch<std::wstring>  _sn       ;
+      watch<string>  _cn       ;
+      watch<string>  _sn       ;
       watch<FULL_NAME >  _fullName ;
       watch<HOMEDIR   >  _homeDir  ;
       watch<WISA_ID   >  _wisaID   ;
@@ -93,7 +93,7 @@ namespace y {
       watch<GID_NUMBER>  _groupID  ;
 
       bool _new; // false if the account is loaded from ldap
-      std::wstring _passwordClearText; // used to update samba password
+      string _passwordClearText; // used to update samba password
       
       // new accounts don't have these
       bool _hasKrbName; 

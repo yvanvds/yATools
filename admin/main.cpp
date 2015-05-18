@@ -24,6 +24,7 @@
 #include "ldap/server.h"
 #include "utils/convert.h"
 #include <boost/locale.hpp>
+#include "utils/string.h"
 
 using namespace std;
 
@@ -50,51 +51,51 @@ int main(int argc, char ** argv) {
   
   y::utils::Config().load();
   
-  wstring command(strW(argv[1]));
+  ::string command(argv[1]);
 
-  if(command.compare(L"password") == 0) {
+  if(command == "password") {
     Password().parse(argc - 2, argv + 2);
     return 0;
-  } else if(command.compare(L"show") == 0) {
+  } else if(command == "show") {
     Show().parse(argc - 2, argv + 2);
     return 0;
-  } else if(command.compare(L"find") == 0) {
+  } else if(command == "find") {
     Find().parse(argc - 2, argv + 2);
     return 0;
-  } else if(command.compare(L"user") == 0) {
+  } else if(command == "user") {
     if(argc < 3) {
       printUserHelp();
       return 0;
     }
-    wstring userCommand(strW(argv[2]));
-    if(userCommand.compare(L"add") == 0) {
+    ::string userCommand(argv[2]);
+    if(userCommand == "add") {
       AddUser().parse(argc - 3, argv + 3);
       return 0;
-    } else if(userCommand.compare(L"delete") == 0) {
+    } else if(userCommand == "delete") {
       RemoveUser().parse(argc - 3, argv + 3);
       return 0;
-    } else if (userCommand.compare(L"rename") == 0) {
+    } else if (userCommand == "rename") {
       RenameUser().parse(argc -3, argv + 3);
       return 0;
     }
     
-  } else if (command.compare(L"proxy") == 0) {
+  } else if (command == "proxy") {
     ProxyManager().parse(argc - 2, argv + 2);
     return 0;
-  } else if (command.compare(L"group") == 0) {
+  } else if (command == "group") {
     if(argc < 3) {
       printGroupHelp();
       return 0;
     }
-    wstring groupCommand(strW(argv[2]));
-    if(groupCommand.compare(L"add") == 0) {
+    ::string groupCommand(argv[2]);
+    if(groupCommand == "add") {
       AddGroup().parse(argc - 3, argv + 3);
       return 0;
-    } else if (groupCommand.compare(L"delete") == 0) {
+    } else if (groupCommand == "delete") {
       RemoveGroup().parse(argc - 3, argv + 3);
       return 0;
     }
-  } else if (command.compare(L"debug") == 0) {
+  } else if (command == "debug") {
     DebugFunctions().parse(argc - 2, argv + 2);
     return 0;
   }

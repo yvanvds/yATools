@@ -21,7 +21,6 @@ class dataFieldTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST(testAsLong);
   CPPUNIT_TEST(testAsShort);
   CPPUNIT_TEST(testAsString);
-  CPPUNIT_TEST(testAsString8);
   CPPUNIT_TEST(testAutoIncrement);
   CPPUNIT_TEST(testGetType);
   CPPUNIT_TEST(testName);
@@ -36,7 +35,6 @@ class dataFieldTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST(testSetLong);
   CPPUNIT_TEST(testSetShort);
   CPPUNIT_TEST(testSetString);
-  CPPUNIT_TEST(testSetString8);
   CPPUNIT_TEST(testStringLength);
 
   CPPUNIT_TEST_SUITE_END();
@@ -56,7 +54,6 @@ private:
   void testAsLong();
   void testAsShort();
   void testAsString();
-  void testAsString8();
   void testAutoIncrement();
   void testGetType();
   void testName();
@@ -71,7 +68,6 @@ private:
   void testSetLong();
   void testSetShort();
   void testSetString();
-  void testSetString8();
   void testStringLength();
 
 };

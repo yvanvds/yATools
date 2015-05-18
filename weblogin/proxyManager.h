@@ -19,7 +19,7 @@
 class room {
 public:
   
-  room(const std::wstring & name);
+  room(const string & name);
   void create(Wt::WTableRow * row);
   void buttonClicked(Wt::WRadioButton * selected);
   
@@ -28,7 +28,7 @@ public:
   
 private:
   int ID;
-  std::wstring name;
+  string name;
   Wt::WText * label;
   Wt::WButtonGroup * bgroup;
   Wt::WRadioButton * button1;

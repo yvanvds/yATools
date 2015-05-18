@@ -47,20 +47,20 @@ void wisaNoID::onShow() {
   Wt::WIntValidator * validator = new Wt::WIntValidator(0, 100000);
   
   for(int i = 0; i < accounts.elms(); i++) {
-    if(accounts[i].group()().compare(L"personeel") == 0) {
+    if(accounts[i].group()() == "personeel") {
       accounts[i].setImportStatus(y::ldap::WI_DISCARD);
-    } else if(accounts[i].group()().compare(L"extern") == 0) {
+    } else if(accounts[i].group()() == "extern") {
       accounts[i].setImportStatus(y::ldap::WI_DISCARD);
-    } else if(accounts[i].group()().compare(L"externmail") == 0) {
+    } else if(accounts[i].group()() == "externmail") {
       accounts[i].setImportStatus(y::ldap::WI_DISCARD);
     } else if(accounts[i].group()().size() == 0) {
       accounts[i].setImportStatus(y::ldap::WI_DISCARD);
     } else if(accounts[i].wisaID()() == 0 ) {
-      entries->elementAt(row, 0)->addWidget(new Wt::WText(accounts[i].sn()));
-      entries->elementAt(row, 1)->addWidget(new Wt::WText(accounts[i].cn()));
-      entries->elementAt(row, 2)->addWidget(new Wt::WText(accounts[i].group()()));
+      entries->elementAt(row, 0)->addWidget(new Wt::WText(accounts[i].sn().wt()));
+      entries->elementAt(row, 1)->addWidget(new Wt::WText(accounts[i].cn().wt()));
+      entries->elementAt(row, 2)->addWidget(new Wt::WText(accounts[i].group()().wt()));
       Wt::WLineEdit * wisaEdit = new Wt::WLineEdit();
-      wisaEdit->setId(str8(accounts[i].uid()()));
+      wisaEdit->setId(accounts[i].uid()().utf8());
       wisaEdit->setValidator(validator);
       wisaEdit->setStyleClass("alert alert-warning");
       wisaEdit->setHeight(5);
@@ -77,7 +77,7 @@ bool wisaNoID::onNext() {
     Wt::WLineEdit * le = (Wt::WLineEdit*)entries->rowAt(i)->elementAt(3)->widget(0);
     Wt::WCheckBox * cb = (Wt::WCheckBox*)entries->rowAt(i)->elementAt(4)->widget(0);
     if(cb->isChecked()) {
-      y::ldap::account & acc = y::ldap::Server().getAccount(y::ldap::UID(strW(le->id())));
+      y::ldap::account & acc = y::ldap::Server().getAccount(y::ldap::UID(string(le->id())));
       acc.flagForRemoval();
       acc.setImportStatus(y::ldap::WI_DISCARD);
     } else if(le->validate() != Wt::WValidator::Valid) {
@@ -92,7 +92,7 @@ bool wisaNoID::onNext() {
         } catch (boost::bad_lexical_cast) {
           return false;
         }
-        y::ldap::account & acc = y::ldap::Server().getAccount(y::ldap::UID(strW(le->id())));
+        y::ldap::account & acc = y::ldap::Server().getAccount(y::ldap::UID(string(le->id())));
         acc.wisaID(y::ldap::WISA_ID(newID));
         le->setStyleClass("alert alert-success");
         le->setHeight(5);

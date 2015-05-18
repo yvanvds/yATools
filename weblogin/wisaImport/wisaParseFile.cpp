@@ -46,10 +46,10 @@ void wisaParseFile::onShow() {
   container<wisaImport::wisaAccount> & wisaContent = WisaImport().getWisaAccounts();
   
   for(int i = 0; i < wisaContent.elms(); i++) {
-    entries->elementAt(i+1, 0)->addWidget(new Wt::WText(wisaContent[i].sn));
-    entries->elementAt(i+1, 1)->addWidget(new Wt::WText(wisaContent[i].cn));
-    entries->elementAt(i+1, 2)->addWidget(new Wt::WText(wisaContent[i].group));
-    entries->elementAt(i+1, 3)->addWidget(new Wt::WText(wisaContent[i].date));
+    entries->elementAt(i+1, 0)->addWidget(new Wt::WText(wisaContent[i].sn.wt()));
+    entries->elementAt(i+1, 1)->addWidget(new Wt::WText(wisaContent[i].cn.wt()));
+    entries->elementAt(i+1, 2)->addWidget(new Wt::WText(wisaContent[i].group.wt()));
+    entries->elementAt(i+1, 3)->addWidget(new Wt::WText(wisaContent[i].date.wt()));
     entries->elementAt(i+1, 4)->addWidget(new Wt::WText(std::to_wstring(wisaContent[i].ID)));
   }
 }

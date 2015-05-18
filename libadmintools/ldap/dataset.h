@@ -11,6 +11,7 @@
 #include <map>
 #include <vector>
 #include "data.h"
+#include "utils/string.h"
 
 namespace y {
   namespace ldap {
@@ -21,16 +22,16 @@ namespace y {
       dataset() {}
       dataset(const dataset& orig);
 
-      bool create(const std::wstring & filter, const std::wstring & directory = L"");
-      bool createFromDN(const std::wstring & dn);
+      bool create(const string & filter, const string & directory = string(""));
+      bool createFromDN(const string & dn);
       
       int elms();
       data & get(int index = 0);
       data & New(data_type type);
 
     private:
-      std::wstring filter;
-      std::wstring directory;
+      string filter;
+      string directory;
       std::vector<data> content;
       data dummy;
 

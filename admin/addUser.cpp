@@ -9,11 +9,7 @@
 #include <string>
 #include <iostream>
 #include <boost/locale.hpp>
-#include "ldap/server.h"
-#include "utils/security.h"
-#include "samba/samba.h"
-#include "utils/convert.h"
-#include "admin/userAdmin.h"
+#include "admintools.h"
 
 using namespace std;
 using namespace y::ldap;
@@ -41,20 +37,20 @@ void addUser::parse(int argc, char ** argv) {
     return;
   }
   
-  std::wstring cn(strW(argv[0]));
-  std::wstring sn(strW(argv[1]));
+  ::string cn(argv[0]);
+  ::string sn(argv[1]);
   
-  y::ldap::GID gid(argc > 3 ? strW(argv[3]) : L"extern");
-  y::ldap::DATE date(argc > 2 ? strW(argv[2]) : L"19700101");
+  y::ldap::GID gid(argc > 3 ? argv[3] : "extern");
+  y::ldap::DATE date(argc > 2 ? argv[2] : "19700101");
   y::ldap::WISA_ID id(argc > 4 ? std::stoi(argv[4]) : 0);
-  std::wstring password(strW(y::utils::Security().makePassword(8)));
+  ::string password(y::utils::Security().makePassword(8));
   
   y::ldap::account & account = y::admin::User().add(cn, sn, gid, date, id, PASSWORD(password));
 
   Server().commitChanges();
   
-  wcout << L"Added user "  << account.fullName()() << L" to " << account.group()() << endl;
-  wcout << L"  Login   : " << account.uid()()  << endl;
-  wcout << L"  Password: " << password         << endl;
-  wcout << L"  Mail    : " << account.mail()() << endl;
+  cout << "Added user "  << account.fullName()() << " to " << account.group()() << endl;
+  cout << "  Login   : " << account.uid()()  << endl;
+  cout << "  Password: " << password         << endl;
+  cout << "  Mail    : " << account.mail()() << endl;
 }

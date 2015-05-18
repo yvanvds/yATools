@@ -14,11 +14,6 @@
 #include "yearbookDownload.h"
 #include "yearbookDB.h"
 
-yearbookDownload & YearbookDownload() {
-  static yearbookDownload s;
-  return s;
-}
-
 Wt::WWidget * yearbookDownload::get() {
   mainWidget = new Wt::WContainerWidget();
   
@@ -56,22 +51,22 @@ void yearbookDownload::generatePDF() {
   std::fstream content;
   content.open("yearbook_latex/content.tex", std::ios::out | std::ios::trunc);
   
-  YearbookDB().loadAllUsers("classgroup", true);
+  db->loadAllUsers("classgroup", true);
   
-  std::wstring currentGroup;
+  string currentGroup;
   
-  container<yearbookDB::entry> & entries = YearbookDB().getEntries();
+  container<yearbookDB::entry> & entries = db->getEntries();
   
   for(int i = 0; i < entries.elms(); i++) {
     yearbookDB::entry & currentEntry = entries[i];
     
-    if (currentGroup.compare(currentEntry.group) != 0) {
+    if (currentGroup != currentEntry.group) {
       // new group
       currentGroup = currentEntry.group;
-      std::string groupName = str8(currentEntry.group);
-      for (int i = 0; i < YearbookDB().getReplacements().elms(); i++) {
-        if(YearbookDB().getReplacements()[i][L"original"].asString().compare(currentEntry.group) == 0) {
-          groupName = str8(YearbookDB().getReplacements()[i][L"replacement"].asString());
+      string groupName = currentEntry.group;
+      for (int i = 0; i < db->getReplacements().elms(); i++) {
+        if(db->getReplacements()[i]["original"].asString() == currentEntry.group) {
+          groupName = db->getReplacements()[i]["replacement"].asString();
         }
       }
       content << std::endl << "\\chapterimage{Pictures/chapter_head_2}" << std::endl;
@@ -84,13 +79,13 @@ void yearbookDownload::generatePDF() {
       content << "\\begin{itemize}" << std::endl;
       content << "\\Large" << std::endl;
       
-      for (int j = i; j < YearbookDB().getEntries().elms(); j++) {
-        yearbookDB::entry & tempEntry = YearbookDB().getEntries()[j];
-        if(currentGroup.compare(tempEntry.group) != 0) {
+      for (int j = i; j < db->getEntries().elms(); j++) {
+        yearbookDB::entry & tempEntry = db->getEntries()[j];
+        if(currentGroup != tempEntry.group) {
           break;
         }
  
-        content << "\\item " << str8(tempEntry.name) << " " << str8(tempEntry.surname) << std::endl;
+        content << "\\item " << tempEntry.name << " " << tempEntry.surname << std::endl;
         
       }
       content << "\\end{itemize}" << std::endl;
@@ -98,20 +93,20 @@ void yearbookDownload::generatePDF() {
       content << std::endl << "\\newpage" << std::endl;
     }
     
-    content << std::endl << "\\section*{\\sectionformat " << str8(currentEntry.name) << " " << str8(currentEntry.surname) << "}" << std::endl;
+    content << std::endl << "\\section*{\\sectionformat " << currentEntry.name << " " << currentEntry.surname << "}" << std::endl;
     content << "\\hrule\\bigskip" << std::endl;
     
     content << std::endl << "\\centering" << std::endl;
     content << "\\begin{varwidth}{\\textwidth}" << std::endl;
     content << "\\begin{itemize}" << std::endl;
     y::ldap::DATE date = y::ldap::DATE(y::ldap::DAY(currentEntry.birthday.day()), y::ldap::MONTH(currentEntry.birthday.month()), y::ldap::YEAR(currentEntry.birthday.year()));
-    content << std::endl << "\\bday \\Large " << str8(date.asString()) << std::endl;
+    content << std::endl << "\\bday \\Large " << date.asString() << std::endl;
     content << "\\end{itemize}" << std::endl;
     content << "\\end{varwidth}" << std::endl;
     
     content << std::endl << "\\bigskip" << std::endl;
     
-    std::string mail = str8(currentEntry.mail);
+    std::string mail = currentEntry.mail.utf8();
     std::replace(mail.begin(), mail.end(), '%', ' ');
     
     content << "\\begin{varwidth}{\\textwidth}" << std::endl;
@@ -124,7 +119,7 @@ void yearbookDownload::generatePDF() {
     std::string picture;
     if (currentEntry.photo.size() > 0) {
       
-      picture = "../" + str8(currentEntry.photo);
+      picture = "../" + currentEntry.photo.utf8();
       boost::algorithm::replace_first(picture, "userImages", "yearbookImages");
       boost::algorithm::erase_last(picture, ".png");
     } else {
@@ -135,36 +130,36 @@ void yearbookDownload::generatePDF() {
     
     content << std::endl << "\\justifying" << std::endl;
     
-    content << std::endl << str8(YearbookDB().getQuestion(0)) << std::endl;
+    content << std::endl << db->getQuestion(0) << std::endl;
     content << std::endl << "\\begin{exercise}" << std::endl;
-    content << std::endl << "\\detokenize{" << str8(currentEntry.answer1) << "}" << std::endl;
+    content << std::endl << "\\detokenize{" << currentEntry.answer1 << "}" << std::endl;
     content << std::endl << "\\end{exercise}" << std::endl;
     
-    content << std::endl << str8(YearbookDB().getQuestion(1)) << std::endl;
+    content << std::endl << db->getQuestion(1) << std::endl;
     content << std::endl << "\\begin{exercise}" << std::endl;
-    content << std::endl << "\\detokenize{" << str8(currentEntry.answer2) << "}" << std::endl;
+    content << std::endl << "\\detokenize{" << currentEntry.answer2 << "}" << std::endl;
     content << std::endl << "\\end{exercise}" << std::endl;
     
-    content << std::endl << str8(YearbookDB().getQuestion(2)) << std::endl;
+    content << std::endl << db->getQuestion(2) << std::endl;
     content << std::endl << "\\begin{exercise}" << std::endl;
-    content << std::endl << "\\detokenize{" << str8(currentEntry.answer3) << "}" << std::endl;
+    content << std::endl << "\\detokenize{" << currentEntry.answer3 << "}" << std::endl;
     content << std::endl << "\\end{exercise}" << std::endl;
     
-    content << std::endl << str8(YearbookDB().getQuestion(3)) << std::endl;
+    content << std::endl << db->getQuestion(3) << std::endl;
     content << std::endl << "\\begin{exercise}" << std::endl;
-    content << std::endl << "\\detokenize{" << str8(currentEntry.answer4) << "}" << std::endl;
+    content << std::endl << "\\detokenize{" << currentEntry.answer4 << "}" << std::endl;
     content << std::endl << "\\end{exercise}" << std::endl;
     content << std::endl << "\\newpage" << std::endl;
   }
   
   content.close();
   
-  std::string cmd;
+  string cmd;
 	cmd =  "export PATH=\"$PATH:/usr/sbin:/usr/bin:/sbin:/bin\"; "; 
 	cmd += "cd yearbook_latex; ";
   cmd += "xelatex main; cd ..;";
-  system(cmd.c_str());
-  system(cmd.c_str());
+  cmd.execute();
+  cmd.execute();
   
   downloadFile->setFileName("yearbook_latex/main.pdf");
   downloadFile->setMimeType("application/pdf");

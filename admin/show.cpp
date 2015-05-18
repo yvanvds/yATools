@@ -30,9 +30,9 @@ void show::parse(int argc, char ** argv) {
     printHelp();
     return;
   } else {
-    std::wstring uid(strW(argv[0]));
+    ::string uid(argv[0]);
     
-    if(uid.compare(L"-?") == 0) {
+    if(uid == "-?") {
       printHelp();
       return;
     }
@@ -42,16 +42,16 @@ void show::parse(int argc, char ** argv) {
       cout << "This account does not exist." << endl;
       return;
     } else {
-      wcout << endl;
-      wcout << L"DN        : " << account.dn      ()() << endl;
-      wcout << L"first name: " << account.cn      () << endl;
-      wcout << L"surname   : " << account.sn      () << endl;
-      wcout << L"full name : " << account.fullName()() << endl;
-      wcout << L"email     : " << account.mail    ()() << endl;
-      wcout << endl;
-      wcout << L"Birthday  : " << account.birthDay().asString() << endl;
-      wcout << L"Group     : " << account.group   ()() << endl;
-      wcout << L"Homedir   : " << account.homeDir ()() << endl;
+      cout << endl;
+      cout << "DN        : " << account.dn      ()() << endl;
+      cout << "first name: " << account.cn      () << endl;
+      cout << "surname   : " << account.sn      () << endl;
+      cout << "full name : " << account.fullName()() << endl;
+      cout << "email     : " << account.mail    ()() << endl;
+      cout << endl;
+      cout << "Birthday  : " << account.birthDay().asString() << endl;
+      cout << "Group     : " << account.group   ()() << endl;
+      cout << "Homedir   : " << account.homeDir ()() << endl;
     }
   }
 }

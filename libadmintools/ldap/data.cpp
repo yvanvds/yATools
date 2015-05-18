@@ -12,29 +12,29 @@ y::ldap::data::data(const data& orig) {
   type = orig.type;
 }
 
-void y::ldap::data::add(const std::wstring & name, const std::wstring & value) {
-  attributes.emplace(std::wstring(name), std::wstring(value));
+void y::ldap::data::add(const string & name, const string & value) {
+  attributes.emplace(string(name), string(value));
 }
 
 int y::ldap::data::elms() {
   return attributes.size();
 }
 
-int y::ldap::data::elms(const std::wstring& name) const {
+int y::ldap::data::elms(const string& name) const {
   return attributes.count(name);
 }
 
-const std::wstring & y::ldap::data::getValue(const std::wstring& name, int index) const {
+const string & y::ldap::data::getValue(const string& name, int index) const {
   // return dummy if index is not valid
   if (attributes.count(name) <= static_cast<unsigned int>(index)) return dummy;
   
   // get range
-  std::pair<std::multimap<std::wstring, std::wstring>::const_iterator,
-          std::multimap<std::wstring, std::wstring>::const_iterator> range;
+  std::pair<std::multimap<string, string>::const_iterator,
+          std::multimap<string, string>::const_iterator> range;
   range = attributes.equal_range(name);
   
   // move to index
-  std::multimap<std::wstring, std::wstring>::const_iterator it = range.first;
+  std::multimap<string, string>::const_iterator it = range.first;
   for (int i = 0; i < index; i++) {
     ++it;
   }

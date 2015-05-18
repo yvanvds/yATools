@@ -12,10 +12,11 @@
 #include "../utils/convert.h"
 #include "dateTime.h"
 #include "field.h"
+#include "utils/string.h"
 
 y::data::order::order() : ascend(true) {}
 
-y::data::order & y::data::order::setKey(const std::string & key) {
+y::data::order & y::data::order::setKey(const string & key) {
   this->key = key;
   return *this;
 }
@@ -38,17 +39,17 @@ y::data::database::database(y::data::server & serverObject) : serverObject(serve
   handle = std::unique_ptr<sql::Statement>(connection->createStatement());
 }
 
-bool y::data::database::use(const std::wstring& dbName) {
+bool y::data::database::use(const string & dbName) {
   if(!serverObject.hasDatabase(dbName)) {
     connected = false;
   } else {
-    connection->setSchema(str8(dbName));
+    connection->setSchema(dbName.db());
     connected = true;
   }
   return connected;
 }
 
-bool y::data::database::createTable(const std::wstring& tableName, row & description) {
+bool y::data::database::createTable(const string & tableName, row & description) {
   // check if we're in a database
   if (!connected) return false;
   
@@ -67,14 +68,14 @@ bool y::data::database::createTable(const std::wstring& tableName, row & descrip
   // form query
   sql::SQLString query;
   query.append("CREATE TABLE ");
-  query.append(str8(tableName));
+  query.append(tableName.db());
   query.append(" (");
   for(int i = 0; i < description.elms(); i++) {
     // add comma
     if(i>0) query.append(", ");
     
     // add field name
-    query.append(str8(description[i].name()));
+    query.append(description[i].name().db());
     
     // add field type
     switch(description[i].getType()) {
@@ -150,12 +151,12 @@ bool y::data::database::createTable(const std::wstring& tableName, row & descrip
   return handle->execute(query);
 }
 
-bool y::data::database::deleteTable(const std::wstring& tableName) {
+bool y::data::database::deleteTable(const string & tableName) {
   if(!connected) return false;
   bool result = false;
   
   try {
-    result = handle->execute("DROP TABLE " + str8(tableName));
+    result = handle->execute("DROP TABLE " + tableName.db());
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -166,12 +167,12 @@ bool y::data::database::deleteTable(const std::wstring& tableName) {
   return result;
 }
 
-bool y::data::database::tableExists(const std::wstring& tableName) {
+bool y::data::database::tableExists(const string & tableName) {
   if(!connected) return false;
   std::unique_ptr<sql::ResultSet> result;
   
   try {
-    result = std::unique_ptr<sql::ResultSet>(handle->executeQuery("SHOW TABLES LIKE '" + str8(tableName) + "'"));
+    result = std::unique_ptr<sql::ResultSet>(handle->executeQuery("SHOW TABLES LIKE '" + tableName.db() + "'"));
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -183,7 +184,7 @@ bool y::data::database::tableExists(const std::wstring& tableName) {
   return false;
 }
 
-bool y::data::database::getTables(container<std::wstring>& tables) {
+bool y::data::database::getTables(container<string>& tables) {
   if(!connected) return false;
   std::unique_ptr<sql::ResultSet> result;
   
@@ -198,19 +199,19 @@ bool y::data::database::getTables(container<std::wstring>& tables) {
     
   int i = 0;
   while(result->next()) {
-    tables[i++] = strW(result->getString(1));
+    tables[i++] = result->getString(1);
   }
   if (!result->rowsCount()) return false;
   return true;
 }
 
-bool y::data::database::getAllRows(const std::wstring& table, container<row>& rows, container<order>& orderBy) {
+bool y::data::database::getAllRows(const string & table, container<row>& rows, container<order>& orderBy) {
   if(!connected) return false;
   std::unique_ptr<sql::ResultSet> result;
   
-  std::string query;
+  string query;
   query = "SELECT * FROM ";
-  query += str8(table);
+  query += table;
   if(!orderBy.empty()) {
     query += " ORDER BY ";
     for(int i = 0; i < orderBy.elms(); i++) {
@@ -225,7 +226,7 @@ bool y::data::database::getAllRows(const std::wstring& table, container<row>& ro
   }
   
   try {
-    result = std::unique_ptr<sql::ResultSet>(handle->executeQuery(query));
+    result = std::unique_ptr<sql::ResultSet>(handle->executeQuery(query.db()));
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -240,18 +241,20 @@ bool y::data::database::getAllRows(const std::wstring& table, container<row>& ro
   return true;
 }
 
-bool y::data::database::getRows(const std::wstring & table, container<row> & rows, field & condition, container<order>& orderBy, COMPARE c) {
+bool y::data::database::getRows(const string & table, container<row> & rows, field & condition, container<order>& orderBy, COMPARE c) {
   if(!connected) return false;
   std::unique_ptr<sql::ResultSet> result;
   
-  std::string query;
-  query = "SELECT * FROM " + str8(table) + " WHERE ";
-  query.append(str8(condition.name()));
+  string query;
+  query = "SELECT * FROM ";
+  query += table;
+  query += " WHERE ";
+  query += condition.name();
   switch(c) {
     case COMPARE::equal: 
-      query.append("="); break;
+      query += "="; break;
   }
-  query.append("?");
+  query += "?";
 
   if(!orderBy.empty()) {
     query += " ORDER BY ";
@@ -266,7 +269,7 @@ bool y::data::database::getRows(const std::wstring & table, container<row> & row
     }
   }  
   
-  STATEMENT(statement, query);
+  STATEMENT(statement, query.db());
   addToStatement(statement, condition, 1);
   
   try {
@@ -288,63 +291,59 @@ void y::data::database::parseRows(std::unique_ptr<sql::ResultSet>& result, conta
   // NOTE: mysql column indexing is 1-based not zero-based!
   
   sql::ResultSetMetaData * meta = result->getMetaData();
-  container<std::wstring> columnNames;
-  container<std::wstring> columnTypes;
+  container<string> columnNames;
+  container<string> columnTypes;
   for(unsigned int i = 1; i <= meta->getColumnCount(); i++) {
-    columnNames[i-1] = strW(meta->getColumnName(i));
-    columnTypes[i-1] = strW(meta->getColumnTypeName(i));
+    columnNames[i-1] = meta->getColumnName(i);
+    columnTypes[i-1] = meta->getColumnTypeName(i);
   }
   while(result->next()) {
     row & entry = rows.New();
     for(int i = 0; i < columnNames.elms(); i++) {
-      if(columnTypes[i].compare(L"BIT") == 0) {
+      if(columnTypes[i] == "BIT") {
         entry.addBool(columnNames[i], result->getBoolean(i+1));
-      } else if(columnTypes[i].compare(L"TINYINT") == 0) {
+      } else if(columnTypes[i] == "TINYINT") {
         entry.addChar(columnNames[i], result->getInt(i+1));
-      } else if(columnTypes[i].compare(L"SMALLINT") == 0) {
+      } else if(columnTypes[i] == "SMALLINT") {
         entry.addShort(columnNames[i], result->getInt(i+1));
-      } else if(columnTypes[i].compare(L"INT") == 0) {
+      } else if(columnTypes[i] == "INT") {
         entry.addInt(columnNames[i], result->getInt(i+1));
-      } else if(columnTypes[i].compare(L"BIGINT") == 0) {
+      } else if(columnTypes[i] == "BIGINT") {
         entry.addLong(columnNames[i], result->getInt64(i+1));
-      } else if(columnTypes[i].compare(L"FLOAT") == 0) {
+      } else if(columnTypes[i] == "FLOAT") {
         entry.addFloat(columnNames[i], result->getDouble(i+1));
-      } else if(columnTypes[i].compare(L"DOUBLE") == 0) {
+      } else if(columnTypes[i] == "DOUBLE") {
         entry.addDouble(columnNames[i], result->getDouble(i+1));
-      } else if(columnTypes[i].compare(L"CHAR") == 0) {
-        entry.addString8(columnNames[i], result->getString(i+1));
-      } else if(columnTypes[i].compare(L"VARCHAR") == 0) {
-        entry.addString(columnNames[i], strW(result->getString(i+1)));
-      } else if(columnTypes[i].compare(L"DATETIME") == 0) {
+      } else if(columnTypes[i] == "VARCHAR") {
+        entry.addString(columnNames[i], string(result->getString(i+1)));
+      } else if(columnTypes[i] == "DATETIME") {
         dateTime d;
-        d.dbFormat(strW(result->getString(i+1)));
+        d.dbFormat(string(result->getString(i+1)));
         entry.addDate(columnNames[i], d);
       }
     }
   }
 }
 
-bool y::data::database::setRow(const std::wstring & table, row & values, field & condition, y::data::COMPARE c){
+bool y::data::database::setRow(const string & table, row & values, field & condition, y::data::COMPARE c){
   if(!connected) return false;
   if(!values.elms()) return false;
   
-  sql::SQLString query;
-  query.append("UPDATE ");
-  query.append(str8(table));
-  query.append(" SET ");
+  string query("UPDATE ");
+  query += table + " SET ";
   for(int i = 0; i < values.elms(); i++) {
-    if(i > 0) query.append(", ");
-    query.append(str8(values[i].name()));
-    query.append("=?");
+    if(i > 0) query += ", ";
+    query += values[i].name();
+    query += "=?";
   }
-  query.append(" WHERE ");
-  query.append(str8(condition.name()));
+  query += " WHERE ";
+  query += condition.name();
   switch (c) {
-    case COMPARE::equal: query.append("="); break;
+    case COMPARE::equal: query += "="; break;
   }
-  query.append("?");
+  query += "?";
   
-  STATEMENT(statement, query);
+  STATEMENT(statement, query.db());
   
   int i = 0;
   for(; i < values.elms(); i++) {
@@ -363,26 +362,24 @@ bool y::data::database::setRow(const std::wstring & table, row & values, field &
   return true;
 }
 
-bool y::data::database::addRow(const std::wstring& table, row& values) {
+bool y::data::database::addRow(const string& table, row& values) {
   if(!connected) return false;
   if(!values.elms()) return false;
   
-  sql::SQLString query;
-  query.append("INSERT INTO ");
-  query.append(str8(table));
-  query.append(" (");
+  string query("INSERT INTO ");
+  query += table + " (";
   for(int i = 0; i < values.elms(); i++) {
-    if(i > 0) query.append(", ");
-    query.append(str8(values[i].name()));
+    if(i > 0) query += ", ";
+    query += values[i].name();
   }
-  query.append(") VALUES (");
+  query += ") VALUES (";
   for(int i = 0; i < values.elms(); i++) {
-    if(i > 0) query.append(", ");
-    query.append("?");
+    if(i > 0) query += ", ";
+    query += "?";
   }
-  query.append(")");
+  query += ")";
 
-  STATEMENT(statement, query);
+  STATEMENT(statement, query.db());
   
   for(int i = 0; i < values.elms(); i++) {
     addToStatement(statement, values[i], i+1);
@@ -400,18 +397,18 @@ bool y::data::database::addRow(const std::wstring& table, row& values) {
   return true;
 }
 
-bool y::data::database::delRow(const std::wstring & table, field & condition, y::data::COMPARE c) {
+bool y::data::database::delRow(const string & table, field & condition, y::data::COMPARE c) {
   if(!connected) return false;
-  sql::SQLString query = "DELETE FROM ";
-  query.append(str8(table));
-  query.append(" WHERE ");
-  query.append(str8(condition.name()));
+  string query("DELETE FROM ");
+  query += table;
+  query += " WHERE ";
+  query += condition.name();
   switch (c) {
-    case COMPARE::equal: query.append("=");
+    case COMPARE::equal: query += "=";
   } 
-  query.append("?");
+  query += "?";
 
-  STATEMENT(statement, query);
+  STATEMENT(statement, query.db());
 
   addToStatement(statement, condition, 1);
 
@@ -428,11 +425,11 @@ bool y::data::database::delRow(const std::wstring & table, field & condition, y:
   return true;
 }
 
-bool y::data::database::execute(const std::wstring& query) {
+bool y::data::database::execute(const string & query) {
   if(!connected) return false;
   
   try {
-    handle->execute(str8(query));
+    handle->execute(query.db());
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -475,15 +472,11 @@ void y::data::database::addToStatement(std::unique_ptr<sql::PreparedStatement>& 
       break;
     }
     case STRING: {
-      statement->setString(position, str8(condition.asString()));
-      break;
-    }
-    case STRING8: {
-      statement->setString(position, condition.asString8());
+      statement->setString(position, condition.asString().db());
       break;
     }
     case DATE_TIME: {
-      statement->setDateTime(position, str8(condition.asDate().dbFormat()));
+      statement->setDateTime(position, condition.asDate().dbFormat().db());
       break;
     }
     default: return;

@@ -70,6 +70,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/utils/random.o \
 	${OBJECTDIR}/utils/security.o \
 	${OBJECTDIR}/utils/sha1.o \
+	${OBJECTDIR}/utils/string.o \
 	${OBJECTDIR}/utils/stringFunctions.o
 
 # Test Directory
@@ -289,6 +290,11 @@ ${OBJECTDIR}/utils/sha1.o: utils/sha1.cpp
 	${MKDIR} -p ${OBJECTDIR}/utils
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -DDEBUG -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/sha1.o utils/sha1.cpp
+
+${OBJECTDIR}/utils/string.o: utils/string.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -DDEBUG -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/string.o utils/string.cpp
 
 ${OBJECTDIR}/utils/stringFunctions.o: utils/stringFunctions.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
@@ -962,6 +968,19 @@ ${OBJECTDIR}/utils/sha1_nomain.o: ${OBJECTDIR}/utils/sha1.o utils/sha1.cpp
 	    $(COMPILE.cc) -g -Wall -DDEBUG -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/sha1_nomain.o utils/sha1.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/utils/sha1.o ${OBJECTDIR}/utils/sha1_nomain.o;\
+	fi
+
+${OBJECTDIR}/utils/string_nomain.o: ${OBJECTDIR}/utils/string.o utils/string.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/string.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -DDEBUG -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/string_nomain.o utils/string.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/utils/string.o ${OBJECTDIR}/utils/string_nomain.o;\
 	fi
 
 ${OBJECTDIR}/utils/stringFunctions_nomain.o: ${OBJECTDIR}/utils/stringFunctions.o utils/stringFunctions.cpp 

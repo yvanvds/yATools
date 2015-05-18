@@ -24,10 +24,10 @@ proxyManager & ProxyManager() {
   return s;
 }
 
-room::room(const std::wstring & name) : name(name){}
+room::room(const string & name) : name(name){}
 
 void room::create(Wt::WTableRow* row) {
-  label = new Wt::WText(name);
+  label = new Wt::WText(name.wt());
   row->elementAt(0)->addWidget(label);
   bgroup = new Wt::WButtonGroup();
   
@@ -93,9 +93,9 @@ Wt::WWidget * proxyManager::get() {
   y::utils::Proxy().getAllRooms(rows);
   
   for(int i = 0; i < rows.elms(); i++) {
-    rooms.emplace_back(rows[i][L"ID"].asString());
+    rooms.emplace_back(rows[i]["ID"].asString());
     rooms.back().create(table->rowAt(i));
-    rooms.back().setStatus((y::utils::proxy::STATUS)rows[i][L"status"].asInt(), true);
+    rooms.back().setStatus((y::utils::proxy::STATUS)rows[i]["status"].asInt(), true);
   }
   
   

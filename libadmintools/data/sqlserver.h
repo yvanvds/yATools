@@ -13,6 +13,7 @@
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
+#include "utils/string.h"
 
 namespace y {
   namespace data {
@@ -20,9 +21,9 @@ namespace y {
     public:
       server();
  
-      bool drop       (const std::wstring & dbName);
-      bool create     (const std::wstring & dbName);
-      bool hasDatabase(const std::wstring & dbName);
+      bool drop       (const string & dbName);
+      bool create     (const string & dbName);
+      bool hasDatabase(const string & dbName);
       
     private:
       // the caller is responsible for deleting this, best to use a managed ptr

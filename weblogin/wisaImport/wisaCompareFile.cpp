@@ -29,10 +29,10 @@ void wisaCompareFile::setContent(Wt::WVBoxLayout* box) {
 void wisaCompareFile::onShow() {
   // count accounts in wisa file
   container<wisaImport::wisaAccount> & wisaContent = WisaImport().getWisaAccounts();
-  std::wstring m1(L"Nieuw bestand bevat ");
-  m1 += std::to_wstring(wisaContent.elms());
-  m1 += L" accounts.";
-  message1->setText(m1);
+  string m1("Nieuw bestand bevat ");
+  m1 += wisaContent.elms();
+  m1 += " accounts.";
+  message1->setText(m1.wt());
   
   // load all accounts
   container<y::ldap::account> & accounts = y::ldap::Server().getAccounts();
@@ -55,18 +55,18 @@ void wisaCompareFile::onShow() {
     }
   }
   
-  std::wstring m2(L"De database bevat ");
-  m2 += std::to_wstring(validAccounts);
-  m2 += L" accounts.";
-  message2->setText(m2);
+  string m2("De database bevat ");
+  m2 += validAccounts;
+  m2 += " accounts.";
+  message2->setText(m2.wt());
   
-  std::wstring m3(L"Er bestaat een geldige link voor ");
-  m3 += std::to_wstring(accountedFor);
-  m3 += L" accounts.";
-  message3->setText(m3);
+  string m3("Er bestaat een geldige link voor ");
+  m3 += accountedFor;
+  m3 += " accounts.";
+  message3->setText(m3.wt());
   
-  std::wstring m4;
-  m4 += std::to_wstring(accountsToRemove);
-  m4 += L" accounts worden verwijderd.";
-  message4->setText(m4);
+  string m4;
+  m4 += accountsToRemove;
+  m4 += " accounts worden verwijderd.";
+  message4->setText(m4.wt());
 }

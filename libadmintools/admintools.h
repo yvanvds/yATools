@@ -35,12 +35,15 @@
 
 //utils
 #include "utils/config.h"
+#include "utils/console.h"
 #include "utils/container.h"
 #include "utils/convert.h"
 #include "utils/log.h"
 #include "utils/random.h"
 #include "utils/security.h"
 #include "utils/watch.h"
+#include "utils/string.h"
+#include "utils/stringFunctions.h"
 
 
 //gui
@@ -48,9 +51,13 @@
 #include "gui/passwordDialog.h"
 #include "gui/session.h"
 #include "gui/confirmationDialog.h"
+#include "gui/stackPage.h"
+#include "gui/stackPageManager.h"
 
 //admin
 #include "admin/userAdmin.h"
 
+//smartschool
+#include "smartschool/smartschool.h"
 #endif	/* ADMINTOOLS_H */
 

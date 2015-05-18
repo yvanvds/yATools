@@ -39,31 +39,31 @@ Wt::WWidget * accountManager::get(y::ldap::account * account) {
   firstName->setWidth(400);
   firstName->setHeight(35);
   firstName->disable();
-  firstName->setText(account->cn());
+  firstName->setText(account->cn().wt());
   
   lastName = new Wt::WLineEdit();
   lastName->setWidth(400);
   lastName->setHeight(35);
   lastName->disable();
-  lastName->setText(account->sn());
+  lastName->setText(account->sn().wt());
   
   mail = new Wt::WLineEdit();
   mail->setWidth(400);
   mail->setHeight(35);
   mail->disable();
-  mail->setText(account->mail()());
+  mail->setText(account->mail()().wt());
   
   group = new Wt::WLineEdit();
   group->setWidth(400);
   group->setHeight(35);
   group->disable();
-  group->setText(account->group()());
+  group->setText(account->group()().wt());
   
   birthday = new Wt::WLineEdit();
   birthday->setWidth(400);
   birthday->setHeight(35);
   birthday->disable();
-  birthday->setText(account->birthDay().asString());
+  birthday->setText(account->birthDay().asString().wt());
   
   currentPassword = new Wt::WLineEdit();
   currentPassword->setWidth(150);
@@ -173,7 +173,7 @@ void accountManager::saveButtonClicked() {
     return;
   }
   
-  if(!y::utils::Security().isGoodPassword(newPW1.toUTF8())) {
+  if(!y::utils::Security().isGoodPassword(newPW1)) {
     newPassword1->setStyleClass("form-control invalid");
     feedback->setText("Dit wachtwoord voldoet niet aan de voorwaarden.");
     feedback->setStyleClass("alert alert-danger"); 

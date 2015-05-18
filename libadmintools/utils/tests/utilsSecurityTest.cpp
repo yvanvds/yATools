@@ -36,13 +36,13 @@ void utilsSecurityTest::testTest() {
   
   y::ldap::account & acc = y::ldap::Server().getAccount(uid);
   
-  const std::string & password = str8(y::utils::Config().getLdapTestPassword());
+  string password = y::utils::Config().getLdapTestPassword();
   
   bool result = y::utils::Security().test(acc, password);
   if (!result) {
     CPPUNIT_ASSERT(false);
   }
-  const std::string wrongpassword = "abcd";
+  const string wrongpassword = "abcd";
   result = y::utils::Security().test(acc, wrongpassword);
   if (result) {
     CPPUNIT_ASSERT(false);

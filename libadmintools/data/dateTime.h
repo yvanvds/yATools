@@ -8,7 +8,7 @@
 #ifndef DATETIME_H
 #define	DATETIME_H
 
-#include <string>
+#include "utils/string.h"
 
 namespace y {
   namespace data {
@@ -16,7 +16,7 @@ namespace y {
     class dateTime {
     public:
       dateTime();
-      dateTime(const std::wstring & dbFormat);
+      dateTime(const string & dbFormat);
       
       dateTime & day    (int value);
       dateTime & month  (int value);
@@ -32,8 +32,8 @@ namespace y {
       int minutes() const;
       int seconds() const;
       
-      std::wstring dbFormat(                          ) const;
-      void         dbFormat(const std::wstring & value)      ;
+      string dbFormat(                    ) const;
+      void   dbFormat(const string & value)      ;
       
       int _day    ;
       int _month  ;

@@ -13,15 +13,18 @@
 #include <Wt/WImage>
 #include <Wt/WVBoxLayout>
 #include <Wt/WText>
+#include "yearbookDB.h"
 
 class yearbookPhoto : public y::gui::stackPage {
 public:
+  yearbookPhoto(yearbookDB * db) : db(db) {}
   virtual void setContent(Wt::WVBoxLayout * box);
   virtual void onShow();
   bool onNext();
   void setUpload();
   
 private:
+  yearbookDB * db;
   Wt::WVBoxLayout * box;
   Wt::WFileUpload * fileUpload;
   Wt::WText * hint;

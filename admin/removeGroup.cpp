@@ -34,16 +34,16 @@ void removeGroup::parse(int argc, char** argv) {
     return;
   }
   
-  std::wstring arg(strW(argv[0]));
-  std::wstring name;
+  ::string arg(argv[0]);
+  ::string name;
   bool editable = false;
   
-  if(arg.compare(L"-e") == 0) {
+  if(arg == "-e") {
     if(argc < 2) {
       printHelp();
       return;
     } else {
-      name = strW(argv[1]);
+      name = argv[1];
       editable = true;
     }
   } else {
@@ -60,5 +60,5 @@ void removeGroup::parse(int argc, char** argv) {
   grp.flagForRemoval();
   grp.flagForCommit();
   Server().commitChanges();
-  cout << "Group " << str8(name) << " deleted." << endl;
+  cout << "Group " << name << " deleted." << endl;
 }

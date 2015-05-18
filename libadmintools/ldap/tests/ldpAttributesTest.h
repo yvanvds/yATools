@@ -16,8 +16,6 @@ class ldpAttributesTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST(testDN);
   CPPUNIT_TEST(testUID_NUMBER);
   CPPUNIT_TEST(testUID);
-  CPPUNIT_TEST(testCN);
-  CPPUNIT_TEST(testSN);
   CPPUNIT_TEST(testFULL_NAME);
   CPPUNIT_TEST(testGID);
   CPPUNIT_TEST(testGID_NUMBER);
@@ -42,8 +40,6 @@ private:
   void testDN();
   void testUID_NUMBER();
   void testUID();
-  void testCN();
-  void testSN();
   void testFULL_NAME();
   void testGID();
   void testGID_NUMBER();

@@ -69,6 +69,7 @@
             </linkerLibProjectItem>
             <linkerOptionItem>-lboost_program_options</linkerOptionItem>
             <linkerOptionItem>-lboost_locale</linkerOptionItem>
+            <linkerOptionItem>-lboost_system</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

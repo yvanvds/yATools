@@ -6,10 +6,7 @@
  */
 
 #include "debugFunctions.h"
-#include "ldap/server.h"
-#include "ldap/account.h"
-#include "smartschool/smartschool.h"
-#include "utils/convert.h"
+#include "admintools.h"
 #include <iostream>
 
 using namespace std;
@@ -33,11 +30,11 @@ void debugFunctions::parse(int argc, char ** argv) {
     return;
   }
   
-  if(std::string(argv[0]).compare("removeAllStudents") == 0) {
+  if(::string(argv[0]) == "removeAllStudents") {
     removeAllStudents();
-  } else if(std::string(argv[0]).compare("groupsToSmartschool") == 0) {
+  } else if(::string(argv[0]) == "groupsToSmartschool") {
     groupsToSmartschool();
-  } else if(std::string(argv[0]).compare("convert") == 0) {
+  } else if(::string(argv[0]) == "convert") {
     convertToNewAccount();
   }
 }
@@ -65,15 +62,15 @@ void debugFunctions::groupsToSmartschool() {
   for(int i = 0; i < groups.elms(); i++) {
     if(!groups[i].editable()) {
       y::Smartschool().addClass(groups[i]);
-      std::cout << "Adding group: " << str8(groups[i].cn()) << std::endl;
+      std::cout << "Adding group: " << groups[i].cn() << std::endl;
     }
   }
   
   container<account> & accounts = Server().getAccounts();
   for(int i = 0; i < accounts.elms(); i++) {
     if(accounts[i].groupID()() == 1000) {
-      y::Smartschool().addUserToGroup(accounts[i], str8(accounts[i].group()()), false);
-      std::cout << "Adding " << str8(accounts[i].fullName()()) << " to group " << str8(accounts[i].group()()) << std::endl;
+      y::Smartschool().addUserToGroup(accounts[i], accounts[i].group()(), false);
+      std::cout << "Adding " << accounts[i].fullName()() << " to group " << accounts[i].group()() << std::endl;
     }
   }
 }

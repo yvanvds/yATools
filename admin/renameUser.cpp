@@ -40,9 +40,9 @@ void renameUser::parse(int argc, char ** argv) {
   }
   
   
-  std::wstring uid(strW(argv[0]));
-  std::wstring cn(strW(argv[1]));
-  std::wstring sn(strW(argv[2]));
+  ::string uid(argv[0]);
+  ::string cn (argv[1]);
+  ::string sn (argv[2]);
   
   account & acc = Server().getAccount(UID(uid));
   if(acc.isNew()) {
@@ -53,12 +53,11 @@ void renameUser::parse(int argc, char ** argv) {
   acc.cn(cn);
   acc.sn(sn);
   
-  std::wstring fullname(cn);
-  fullname += L" ";
-  fullname += sn;
+  ::string fullname(cn);
+  fullname += " " + sn;
   
-  cout << "Name "           << str8(acc.fullName()()) 
-       << " replaced with " << str8(fullname        ) << endl;
+  cout << "Name "           << acc.fullName()() 
+       << " replaced with " << fullname         << endl;
   
   acc.fullName(y::ldap::FULL_NAME(fullname));
   Server().commitChanges();

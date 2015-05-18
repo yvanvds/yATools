@@ -42,12 +42,12 @@ void wisaCompareGroups::onShow() {
   int row = 1;
   for(int i = 0; i < wisaContent.elms(); i++) {
     if(!wisaContent[i].link) continue;
-    if(wisaContent[i].link->group()().compare(wisaContent[i].group) != 0) {
-      entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaContent[i].sn));
-      entries->elementAt(row, 1)->addWidget(new Wt::WText(wisaContent[i].cn));
-      entries->elementAt(row, 2)->addWidget(new Wt::WText(wisaContent[i].link->group()()));
+    if(wisaContent[i].link->group()() != wisaContent[i].group) {
+      entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaContent[i].sn.wt()));
+      entries->elementAt(row, 1)->addWidget(new Wt::WText(wisaContent[i].cn.wt()));
+      entries->elementAt(row, 2)->addWidget(new Wt::WText(wisaContent[i].link->group()().wt()));
       entries->elementAt(row, 3)->addWidget(new Wt::WText("=>"));
-      entries->elementAt(row, 4)->addWidget(new Wt::WText(wisaContent[i].group));
+      entries->elementAt(row, 4)->addWidget(new Wt::WText(wisaContent[i].group.wt()));
       row++;
     }      
   }

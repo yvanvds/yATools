@@ -21,30 +21,30 @@
 #include "wisaImport/wisaNoID.h"
 #include "wisaImport/wisaParseFile.h"
 #include "wisaImport/wisaUpload.h"
-
+#include "utils/string.h"
 
 class wisaImport {
 public:
   struct wisaAccount {
     wisaAccount() : link(nullptr) {}
     void set(std::vector<std::wstring> & line);
-    std::wstring cn;
-    std::wstring sn;
-    std::wstring group;
-    std::wstring date;
+    string cn;
+    string sn;
+    string group;
+    string date;
     int ID;
     y::ldap::account * link;
   };
   
   struct wisaGroup {
     wisaGroup() : link(nullptr) {}
-    std::wstring name;
+    string name;
     y::ldap::group * link;
   };
   
   y::gui::stackPageManager * get();
-  void setWisaFile(const std::string & file);
-  std::string getWisaFile();
+  void setWisaFile(const string & file);
+  string getWisaFile();
   bool readLinesUTF8(std::wifstream * stream);
   bool readLinesLatin(std::ifstream * stream);
   bool tokenize(const std::wstring & line);
@@ -57,10 +57,10 @@ public:
   void setApplication(Wt::WApplication * app) { this->app = app; }
   Wt::WApplication * getApplication() { return app; }
   
-  void showErrorOnScreen(const std::wstring & message);
+  void showErrorOnScreen(const string & message);
   
 private:
-  std::string wisaFile;
+  string wisaFile;
   container<wisaAccount> wisaAccounts;
   container<wisaGroup> wisaGroups;
   

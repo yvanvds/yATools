@@ -37,7 +37,7 @@ void removeUser::parse(int argc, char ** argv) {
     return;
   }
   
-  std::wstring uid(strW(argv[0]));
+  ::string uid(argv[0]);
   account & acc = Server().getAccount(UID(uid));
   if(acc.isNew()) {
     cout << "This user has already entered the void." << endl;

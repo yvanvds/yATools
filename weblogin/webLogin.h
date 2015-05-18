@@ -15,6 +15,11 @@
 #include <Wt/WTable>
 #include <Wt/WDate>
 #include <Wt/WStackedWidget>
+#include "yearbook/yearbook.h"
+#include "yearbook/yearbookConfig.h"
+#include "yearbook/yearbookReview.h"
+#include "yearbook/yearbookDownload.h"
+#include "yearbook/yearbookDB.h"
 
 using namespace y;
 
@@ -87,6 +92,15 @@ private:
   Wt::WWidget * yearbookReviewFunc();
   Wt::WWidget * yearbookDownloadFunc();
   Wt::WWidget * yearbookConfigFunc();
+  
+  // sub objects
+  yearbook * yearbookPtr;
+  yearbookConfig * yearbookConfigPtr;
+  yearbookDownload * yearbookDownloadPtr;
+  yearbookReview * yearbookReviewPtr;
+  yearbookDB * yearbookDBPtr;
+  
+  void createYearbookDB();
   
   void logoutFunc();
   

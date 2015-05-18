@@ -13,12 +13,14 @@
 #include <Wt/WDateEdit>
 #include <Wt/WLineEdit>
 #include "utils/container.h"
+#include "utils/string.h"
+#include "yearbookDB.h"
 
 class yearbookConfig : public Wt::WObject {
 public:
-  
+  yearbookConfig(yearbookDB * ptr) : db(ptr) {}
   struct replacement {
-    std::wstring key;
+    string key;
     Wt::WLineEdit * value;
   };
   
@@ -41,6 +43,8 @@ private:
   
   void refreshUsers();
   
+  yearbookDB * db;
+  
   Wt::WTabWidget * tabs;
   
   Wt::WDateEdit * openDate;
@@ -57,7 +61,6 @@ private:
   void replacementChange();
 };
 
-yearbookConfig & YearbookConfig();
 
 #endif	/* YEARBOOKCONFIG_H */
 

@@ -14,16 +14,19 @@
 #include "yearbookQuestion.h"
 #include "yearbookPhoto.h"
 #include "yearbookDone.h"
+#include "yearbookDB.h"
 #include "ldap/account.h"
 
-class yearbook {
+class yearbook : public Wt::WObject {
 public:
-  yearbook();
+  yearbook(yearbookDB * ptr);
   
   y::gui::stackPageManager * get();
   void setAccount(y::ldap::account * account);
   
 private:
+  yearbookDB  * db;
+  
   y::gui::stackPageManager * manager;
   y::ldap::account * account;
   
@@ -36,7 +39,6 @@ private:
   yearbookDone * ybDone;
 };
 
-yearbook & Yearbook();
 
 #endif	/* YEARBOOK_H */
 

@@ -65,8 +65,8 @@ void y::utils::config::load(int argc, char** argv) {
   
   std::wifstream ifs(configFile.c_str());
   if(!ifs) {
-    std::wstring out = L"cannot open config file: ";
-    out.append(strW(configFile));
+    string out("cannot open config file: ");
+    out += configFile.c_str();
     Log().add(out);
   } else {
     /*std::string out = "loading config file: ";
@@ -86,128 +86,128 @@ void y::utils::config::load(int argc, char** argv) {
   }
   
   if(map.count("ldapPasswd")) {
-    ldapPasswd = strW(map["ldapPasswd"].as<std::string>());
+    ldapPasswd = map["ldapPasswd"].as<std::string>();
   } else {
-    y::utils::Log().add(L"Config warning: ldap password is not set.");
+    y::utils::Log().add("Config warning: ldap password is not set.");
   }
   
   if(map.count("ldapHost")) {
-    ldapHost = strW(map["ldapHost"].as<std::string>());
+    ldapHost = map["ldapHost"].as<std::string>();
   } else {
-    y::utils::Log().add(L"Config warning: ldap host is not set.");
+    y::utils::Log().add("Config warning: ldap host is not set.");
   }
   
   if(map.count("ldapBaseDN")) {
-    ldapBaseDN = strW(map["ldapBaseDN"].as<std::string>());
+    ldapBaseDN = map["ldapBaseDN"].as<std::string>();
   } else {
-    y::utils::Log().add(L"Config warning: ldap Base DN is not set.");
+    y::utils::Log().add("Config warning: ldap Base DN is not set.");
   }   
   
   if(map.count("ldapAdminDN")) {
-    ldapAdminDN = strW(map["ldapAdminDN"].as<std::string>());
+    ldapAdminDN = map["ldapAdminDN"].as<std::string>();
   } else {
-    y::utils::Log().add(L"Config warning: ldap admin DN is not set.");
+    y::utils::Log().add("Config warning: ldap admin DN is not set.");
   } 
   
   if(map.count("ldapTestUID")) {
-    ldapTestUID = strW(map["ldapTestUID"].as<std::string>());
+    ldapTestUID = map["ldapTestUID"].as<std::string>();
   } else {
-    y::utils::Log().add(L"Config warning: ldap test UID is not set.");
+    y::utils::Log().add("Config warning: ldap test UID is not set.");
   }
   
   if(map.count("ldapTestPassword")) {
-    ldapTestPassword = strW(map["ldapTestPassword"].as<std::string>());
+    ldapTestPassword = map["ldapTestPassword"].as<std::string>();
   } else {
-    y::utils::Log().add(L"Config warning: ldap test password is not set.");
+    y::utils::Log().add("Config warning: ldap test password is not set.");
   }
   
   if(map.count("ldapTestUIDNumber")) {
-    ldapTestUidNumber = strW(map["ldapTestUIDNumber"].as<std::string>());
+    ldapTestUidNumber = map["ldapTestUIDNumber"].as<std::string>();
   } else {
-    y::utils::Log().add(L"Config warning: ldap test UID number is not set.");
+    y::utils::Log().add("Config warning: ldap test UID number is not set.");
   }
   
   if(map.count("ldapTestDN")) {
-    ldapTestDN = strW(map["ldapTestDN"].as<std::string>());
+    ldapTestDN = map["ldapTestDN"].as<std::string>();
   } else {
-    y::utils::Log().add(L"Config warning: ldap test DN is not set.");
+    y::utils::Log().add("Config warning: ldap test DN is not set.");
   }
   
   if(map.count("mysqlRootPassword")) {
-    mysqlPassword = strW(map["mysqlRootPassword"].as<std::string>());
+    mysqlPassword = map["mysqlRootPassword"].as<std::string>();
   } else {
-    y::utils::Log().add(L"Config warning: mysql password is not set.");
+    y::utils::Log().add("Config warning: mysql password is not set.");
   }
   
   if(map.count("domain")) {
-    domain = strW(map["domain"].as<std::string>());
+    domain = map["domain"].as<std::string>();
   } else {
-    y::utils::Log().add(L"Config warning: domain is not set.");
+    y::utils::Log().add("Config warning: domain is not set.");
   }
   
   if(map.count("smartschoolPw")) {
-    smartschoolPw = strW(map["smartschoolPw"].as<std::string>());
+    smartschoolPw = map["smartschoolPw"].as<std::string>();
   } else {
-    y::utils::Log().add(L"Config warning: smartschool password is not set.");
+    y::utils::Log().add("Config warning: smartschool password is not set.");
   }
   
   if(map.count("yearbookAdmin")) {
     const std::vector<std::string> & admin = map["yearbookAdmin"].as< std::vector<std::string> >();
     for(unsigned int i = 0; i < admin.size(); i++) {
-      yearbookAdmin.New() = strW(admin[i]);
+      yearbookAdmin.New() = admin[i];
     }
   }
   
   configReady = true;
 }
 
-const std::wstring & y::utils::config::getLdapPasswd() const {
+const string & y::utils::config::getLdapPasswd() const {
   return ldapPasswd;
 }
 
-const std::wstring & y::utils::config::getLdapHost() const {
+const string & y::utils::config::getLdapHost() const {
   return ldapHost;
 }
 
-const std::wstring & y::utils::config::getLdapBaseDN() const {
+const string & y::utils::config::getLdapBaseDN() const {
   return ldapBaseDN;
 }
 
-const std::wstring & y::utils::config::getLdapAdminDN() const {
+const string & y::utils::config::getLdapAdminDN() const {
   return ldapAdminDN;
 }
 
-const std::wstring & y::utils::config::getLdapTestUID() const {
+const string & y::utils::config::getLdapTestUID() const {
   return ldapTestUID;
 }
 
-const std::wstring & y::utils::config::getLdapTestPassword() const {
+const string & y::utils::config::getLdapTestPassword() const {
   return ldapTestPassword;
 }
 
-const std::wstring & y::utils::config::getLdapTestUidNumber() const {
+const string & y::utils::config::getLdapTestUidNumber() const {
   return ldapTestUidNumber;
 }
 
-const std::wstring & y::utils::config::getLdapTestDN() const {
+const string & y::utils::config::getLdapTestDN() const {
   return ldapTestDN;
 }
 
-const std::wstring & y::utils::config::getMysqlPassword() const {
+const string & y::utils::config::getMysqlPassword() const {
   return mysqlPassword;
 }
 
-const std::wstring & y::utils::config::getDomain() const {
+const string & y::utils::config::getDomain() const {
   return domain;
 }
 
-const std::wstring & y::utils::config::getSSPw() const {
+const string & y::utils::config::getSSPw() const {
   return smartschoolPw;
 }
 
-bool y::utils::config::isYearbookAdmin(const std::wstring& uid) {
+bool y::utils::config::isYearbookAdmin(const string& uid) {
   for(int i = 0; i < yearbookAdmin.elms(); i++) {
-    if(yearbookAdmin[i].compare(uid) == 0) return true;
+    if(yearbookAdmin[i] == uid) return true;
   }
   
   return false;

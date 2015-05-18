@@ -12,7 +12,7 @@
 #include "stringFunctions.h"
 
 
-void y::utils::keepOnlyChars(std::wstring& s) {
+void y::utils::keepOnlyChars(std::string& s) {
   size_t i = 0;
   size_t len = s.length();
   
@@ -27,7 +27,7 @@ void y::utils::keepOnlyChars(std::wstring& s) {
 }
 
 #pragma GCC diagnostic ignored "-Wmultichar"
-void y::utils::replaceUTF8Chars(std::wstring& s) {
+void y::utils::replaceUTF8Chars(std::string& s) {
   for(unsigned int i = 0; i < s.length(); i++) {
     switch (s[i]) {
       case 'à': s[i] = 'a'; break;

@@ -9,9 +9,11 @@
 #define	YEARBOOKVERIFYACCOUNT_H
 
 #include "gui/stackPage.h"
+#include "yearbookDB.h"
 
 class yearbookVerifyAccount : public y::gui::stackPage {
 public:
+  yearbookVerifyAccount(yearbookDB * ptr) : db(ptr) {}
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
   bool onNext();
@@ -22,6 +24,8 @@ private:
   void groupEditChanged();
   void dateEditChanged();
   void mailEditChanged();
+  
+  yearbookDB * db;
   
   Wt::WTable * table;
   Wt::WLineEdit * nameEdit;

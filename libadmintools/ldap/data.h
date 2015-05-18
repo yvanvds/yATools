@@ -6,7 +6,7 @@
  */
 
 #include <map>
-#include <string>
+#include "utils/string.h"
 
 #ifndef DATA_H
 #define	DATA_H
@@ -33,15 +33,15 @@ namespace y {
 
       void setType(data_type type);
       data_type getType();
-      void add(const std::wstring & name, const std::wstring & value);
+      void add(const string & name, const string & value);
       int elms();
-      int elms(const std::wstring & name) const;
-      const std::wstring & getValue(const std::wstring & name, int index = 0) const;
+      int elms(const string & name) const;
+      const string & getValue(const string & name, int index = 0) const;
 
     private:
       data_type type;
-      std::multimap<std::wstring, std::wstring> attributes;
-      std::wstring dummy; // to return when asked for non existant value
+      std::multimap<string, string> attributes;
+      string dummy; // to return when asked for non existant value
       
       friend class server;
     };

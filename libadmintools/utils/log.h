@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include <string>
+#include "utils/string.h"
 #include <fstream>
 
 namespace y {
@@ -20,7 +20,7 @@ namespace y {
        * @param message : The message to add
        * @return 
        */
-      log & add(const std::wstring & message);
+      log & add(const string & message);
 
       /**
        * Enable the use of the console for logging
@@ -35,17 +35,17 @@ namespace y {
        * @param file   : absolute path to the file used for logging
        * @return 
        */
-      log & useFile   (bool enable, const std::string & file = "/var/log/admintools");
+      log & useFile   (bool enable, const string & file = string("/var/log/admintools"));
 
-      log & useFunction(void (*logFunction)(const std::wstring & message) = nullptr);
+      log & useFunction(void (*logFunction)(const string & message) = nullptr);
       
       log(); 
     private:
       bool _useConsole;
       bool _useFile   ;
-      std::string _file;
+      string _file;
       std::wofstream _stream;
-      void (*_logFunction)(const std::wstring & message);
+      void (*_logFunction)(const string & message);
     };
 
     // global object (functor)

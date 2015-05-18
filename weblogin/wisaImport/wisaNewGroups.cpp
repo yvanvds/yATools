@@ -48,7 +48,7 @@ void wisaNewGroups::onShow() {
     } else {
       bool found = false;
       for(int j = 0; j < wisaGroups.elms(); j++) {
-        if(wisaGroups[j].name.compare(groups[i].cn()) == 0) {
+        if(wisaGroups[j].name == groups[i].cn()) {
           groups[i].setImportStatus(y::ldap::WI_ACCOUNTED);
           wisaGroups[j].link = &groups[i];
           found = true;
@@ -57,7 +57,7 @@ void wisaNewGroups::onShow() {
       }
       if(!found) {
         groups[i].flagForRemoval();
-        entries->elementAt(row, 0)->addWidget(new Wt::WText(groups[i].cn()));
+        entries->elementAt(row, 0)->addWidget(new Wt::WText(groups[i].cn().wt()));
         entries->elementAt(row, 1)->addWidget(new Wt::WText("wordt verwijderd"));
         row++;
       }
@@ -66,7 +66,7 @@ void wisaNewGroups::onShow() {
   
   for(int i = 0; i < wisaGroups.elms(); i++) {
     if(wisaGroups[i].link == nullptr) {
-      entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaGroups[i].name));
+      entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaGroups[i].name.wt()));
       entries->elementAt(row, 1)->addWidget(new Wt::WText("wordt toegevoegd"));
       row++;
     }

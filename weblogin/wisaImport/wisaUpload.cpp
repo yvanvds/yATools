@@ -58,7 +58,7 @@ void wisaUpload::fileTooLargeFunc() {
 }
 
 void wisaUpload::uploadedFunc() {
-  WisaImport().setWisaFile(fileUpload->spoolFileName());
+  WisaImport().setWisaFile(string(fileUpload->spoolFileName()));
   parent->showPage(pageIndex + 1);
 }
 

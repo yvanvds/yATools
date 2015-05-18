@@ -15,52 +15,49 @@
 #include <iomanip>
 #include "utils/convert.h"
 
-std::string groupName(const y::ldap::GID_NUMBER & id) {
+string groupName(const y::ldap::GID_NUMBER & id) {
   if(id() ==   525) return "personeel";
   if(id() == 20009) return "extern"   ;
   
   // of none of the above, calculate according to year
-  std::string result("y");
+  string result("y");
   auto now = std::chrono::system_clock::now();
   time_t tt = std::chrono::system_clock::to_time_t(now);
   tm local_time = *std::localtime(&tt);
   int year = 1900 + local_time.tm_year;
-  result += std::to_string(year);
+  result += year;
   return result;
 }
 
-void y::samba::changePassword(const std::wstring & user, const std::wstring & password) {
-  std::string command = "sudo /usr/sbin/smbldap-passwd -p ";
-  command.append(str8(user));
-  command.append(" ");
-  command.append(str8(password));
+void y::samba::changePassword(const string & user, const string & password) {
+  string command("sudo /usr/sbin/smbldap-passwd -p ");
+  command += user + " ";
+  command += password;
   /*if(!y::sys::Exec(command, y::sys::stdOut)) {
     assert(false);
   }*/
-  system(command.c_str());
+  command.execute();
 }
 
 void y::samba::addUser(const ldap::account & account) { 
-  std::string command = "sudo /usr/sbin/smbldap-useradd -a -g ";
-  command.append(std::to_string(account.groupID()()));
-  command.append(" -m -d /home/");
-  command.append(groupName(account.groupID()));
-  command.append("/");
-  command.append(str8(account.uid()()));
-  command.append(" -o ou=");
-  command.append(groupName(account.groupID()));
-  command.append(" -C '\\\\ATSCHOOL\\homes' -D 'H:' -E ' STARTUP.BAT' -F");
-  command.append(" '\\\\ATSCHOOL\\profiles\\Default' -H '[U]' ");
-  command.append(str8(account.uid()()));
+  string command("sudo /usr/sbin/smbldap-useradd -a -g ");
+  command += account.groupID()();
+  command += " -m -d /home/";
+  command += groupName(account.groupID());
+  command += "/";
+  command += account.uid()();
+  command += " -o ou=";
+  command += groupName(account.groupID());
+  command += " -C '\\\\ATSCHOOL\\homes' -D 'H:' -E ' STARTUP.BAT' -F";
+  command += " '\\\\ATSCHOOL\\profiles\\Default' -H '[U]' ";
+  command += account.uid()();
   /*if(!y::sys::Exec(command, y::sys::stdOut)) {
     assert(false);
   }*/
-  system(command.c_str());
+  command.execute();
 }
 
 void y::samba::delUser(const ldap::account& account) {
-  std::string command = "sudo /usr/sbin/smbldap-userdel -r ";
-  command.append(str8(account.uid()()));
-  
-  system(command.c_str());
+  string command("sudo /usr/sbin/smbldap-userdel -r " + account.uid()());
+  command.execute();
 }

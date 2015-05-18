@@ -13,6 +13,7 @@
 #include <Wt/Http/Response>
 #include <Wt/Http/ResponseContinuation>
 #include "utils/container.h"
+#include "utils/string.h"
 
 class fileDownload : public Wt::WResource {
   public:
@@ -21,11 +22,11 @@ class fileDownload : public Wt::WResource {
     
     void handleRequest(const Wt::Http::Request& request, Wt::Http::Response& response);
     
-    void addMessage(const std::wstring & message);
+    void addMessage(const string & message);
     bool empty();
     
     private:
-      container<std::wstring> messages;
+      container<string> messages;
 };
 
 class wisaCommitChanges : public y::gui::stackPage {
@@ -33,8 +34,8 @@ public:
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
   bool onNext();
-  void addMessage(const std::wstring & message, bool lastUpdate = false);
-  void addNewAccountMessage(const std::wstring & message);
+  void addMessage(const string & message, bool lastUpdate = false);
+  void addNewAccountMessage(const string & message);
   
 private:
   Wt::WTable * entries;

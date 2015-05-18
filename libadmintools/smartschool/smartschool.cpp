@@ -10,6 +10,7 @@
 #include "utils/convert.h"
 #include "V3Binding.nsmap"
 #include "utils/stringFunctions.h"
+#include "utils/string.h"
 #include "data/database.h"
 #include "ldap/group.h"
 
@@ -25,21 +26,21 @@ y::smartschool::smartschool() {
   server = std::unique_ptr<y::data::server  >(new y::data::server);
   db     = std::unique_ptr<y::data::database>(new y::data::database(*server));
   
-  if(!server->hasDatabase(L"admintools")) {
-    server->create(L"admintools");
+  if(!server->hasDatabase("admintools")) {
+    server->create("admintools");
   }
-  db->use(L"admintools");
+  db->use("admintools");
   
   if(!db->tableExists(SS_ERRORS)) {
     createErrorCodeTable();
   } else {
     container<y::data::row> rows;
     y::data::field condition;
-    condition.name(L"ID").setInt(0);
+    condition.name("ID").setInt(0);
     db->getRows(SS_ERRORS, rows, condition);
     if(rows.elms()) {
       std::string::size_type sz;
-      int lasttime = std::stoi(rows[0][L"code"].asString(), &sz);
+      int lasttime = std::stoi(rows[0]["code"].asString().utf8(), &sz);
       time_t now = time(0);
       
       // renew if a day has past
@@ -55,9 +56,9 @@ y::smartschool::~smartschool() {
   service.destroy();
 }
 
-int y::smartschool::addCourse(const std::string& name, const std::string& description) {
+int y::smartschool::addCourse(const string& name, const string& description) {
   std::string result;
-  if(service.addCourse(str8(y::utils::Config().getSSPw()), name, description, result) != SOAP_OK) {
+  if(service.addCourse(y::utils::Config().getSSPw().ss(), name.ss(), description.ss(), result) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
     return -1;
   } else {
@@ -66,9 +67,9 @@ int y::smartschool::addCourse(const std::string& name, const std::string& descri
   } 
 }
 
-void y::smartschool::addGroupsToCourse(const std::string& courseName, const std::string& courseDescription, container<std::string>& groupIDs) {
+void y::smartschool::addGroupsToCourse(const string& courseName, const string& courseDescription, container<string>& groupIDs) {
   std::string result;
-  std::string grouplist;
+  string grouplist;
   for(int i = 0; i < groupIDs.elms(); i++) {
     grouplist += groupIDs[i];
     if(i < groupIDs.elms() - 1);
@@ -84,9 +85,9 @@ void y::smartschool::addGroupsToCourse(const std::string& courseName, const std:
 int y::smartschool::savePassword(y::ldap::account& account) {
   xsd__anyType * result;
   if(service.savePassword(
-          str8(y::utils::Config().getSSPw()),
-          str8(account.uid()()),
-          str8(account.getPasswordText()),
+          y::utils::Config().getSSPw().ss(),
+          account.uid()().ss(),
+          account.getPasswordText().ss(),
           0,
           result) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
@@ -101,12 +102,12 @@ int y::smartschool::savePassword(y::ldap::account& account) {
 
 void y::smartschool::saveUser(y::ldap::account& account) {
   std::string role;
-  if(account.group()().compare(L"extern") == 0) return;
-  if(account.group()().compare(L"externmail") == 0) return;
+  if(account.group()() == "extern") return;
+  if(account.group()() == "externmail") return;
   
-  if(account.group()().compare(L"directie") == 0) {
+  if(account.group()() == "directie") {
     role = "directie";
-  } else if(account.group()().compare(L"personeel") == 0) {
+  } else if(account.group()() == "personeel") {
     role = "leerkracht";
   } else {
     role = "leerling";
@@ -114,14 +115,14 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   
   xsd__anyType * result;
   if(service.saveUser(
-          strSS(y::utils::Config().getSSPw()),
+          y::utils::Config().getSSPw().ss(),
           std::to_string(account.uidNumber()()) , // internal number
-          strSS(account.uid()())                 , // username
-          strSS(account.getPasswordText())       , // password
+          account.uid()().ss()                 , // username
+          account.getPasswordText().ss()       , // password
           "", // password for first co-account
           "", // password for second co-account
-          strSS(account.cn())                  , // first name
-          strSS(account.sn())                  , // last name
+          account.cn().ss()                  , // first name
+          account.sn().ss()                  , // last name
           "", // extra names
           "", // initials
           "", // sex
@@ -132,7 +133,7 @@ void y::smartschool::saveUser(y::ldap::account& account) {
           "", // postal code
           "", // city
           "", // country
-          strSS(account.mail()()), // email
+          account.mail()().ss(), // email
           "", // mobile phone
           "", // home phone
           "", // fax
@@ -146,12 +147,12 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   }
 }
 
-int y::smartschool::addUserToGroup(y::ldap::account& account, const std::string& group, bool keepCurrent) {
+int y::smartschool::addUserToGroup(y::ldap::account& account, const string& group, bool keepCurrent) {
   xsd__anyType * result;
   if(service.saveUserToClassesAndGroups(
-          str8(y::utils::Config().getSSPw()),
-          str8(account.uid()()),
-          group,
+          y::utils::Config().getSSPw().ss(),
+          account.uid()().ss(),
+          group.ss(),
           keepCurrent,
           result
           ) != SOAP_OK) {
@@ -165,12 +166,12 @@ int y::smartschool::addUserToGroup(y::ldap::account& account, const std::string&
   return 0;
 }
 
-int y::smartschool::deleteUser(y::ldap::account& account, const std::string & removalDate) {
+int y::smartschool::deleteUser(y::ldap::account& account, const string & removalDate) {
   xsd__anyType * result;
   if(service.delUser(
-          str8(y::utils::Config().getSSPw()),
-          str8(account.uid()()),
-          removalDate, // official date
+          y::utils::Config().getSSPw().ss(),
+          account.uid()().ss(),
+          removalDate.ss(), // official date
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
@@ -185,7 +186,7 @@ int y::smartschool::deleteUser(y::ldap::account& account, const std::string & re
 
 int y::smartschool::addClass(y::ldap::group& group) {
   xsd__anyType * result;
-  std::string parent;
+  string parent;
   
   switch(group.cn()[0]) {
     case 1: parent = "1stejaar"; break;
@@ -197,18 +198,18 @@ int y::smartschool::addClass(y::ldap::group& group) {
     case 7: parent = "7dejaar"; break;
   }
   
-  std::string description("Leerlingen ");
-  description += str8(group.cn()); 
+  string description("Leerlingen ");
+  description += group.cn(); 
   
   if(service.saveClass(
-          str8(y::utils::Config().getSSPw()), // password smartschool
-          str8(group.cn())                  , // group name
-          description                         , // group description
-          str8(group.cn())                  , // unique group ID
-          "0"                              , // parent for this group
-          "0"                                 , // koppeling schoolagenda
-          ""                                 , // institute number
-          ""                                 , // admin number
+          y::utils::Config().getSSPw().ss(), // password smartschool
+          group.cn().ss()                  , // group name
+          description.ss()                  , // group description
+          group.cn().ss()                  , // unique group ID
+          "0"                               , // parent for this group
+          "0"                               , // koppeling schoolagenda
+          ""                                , // institute number
+          ""                                , // admin number
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
@@ -224,15 +225,15 @@ int y::smartschool::addClass(y::ldap::group& group) {
 int y::smartschool::deleteClass(y::ldap::group& group) {
   xsd__anyType * result;
   if(service.delClass(
-          str8(y::utils::Config().getSSPw()), // password smartschool
-          str8(group.cn())                  , // unique group ID
+          y::utils::Config().getSSPw().ss(), // password smartschool
+          group.cn().ss()                  , // unique group ID
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
     return -1;
   } else {
     if(result->soap_type() == SOAP_TYPE_xsd__int) {
-      std::cout << str8(errorToText(((xsd__int*)(result))->__item)) << std::endl;
+      std::cout << errorToText(((xsd__int*)(result))->__item) << std::endl;
       return ((xsd__int*)(result))->__item;
     }
   }
@@ -241,10 +242,10 @@ int y::smartschool::deleteClass(y::ldap::group& group) {
 
 void y::smartschool::createErrorCodeTable() {
   y::data::row fields;
-  fields.addInt(L"ID");
-  fields[L"ID"].primaryKey(true).required(true);
-  fields.addString(L"code");
-  fields[L"code"].stringLength(512);
+  fields.addInt("ID");
+  fields["ID"].primaryKey(true).required(true);
+  fields.addString("code");
+  fields["code"].stringLength(512);
 
   db->createTable(SS_ERRORS, fields);
 
@@ -253,9 +254,9 @@ void y::smartschool::createErrorCodeTable() {
   // This saves us another table
 
   y::data::row row;
-  row.addInt(L"ID", 0);
+  row.addInt("ID", 0);
   time_t now = time(0);
-  row.addString(L"code", std::to_wstring(now));
+  row.addString("code", string(now));
   db->addRow(SS_ERRORS, row);
   getErrorCodes();
 }
@@ -287,26 +288,26 @@ void y::smartschool::getErrorCodes() {
       
       y::data::row row;
       std::string::size_type sz;
-      row.addInt(L"ID", std::stoi(elms[0], &sz));
+      row.addInt("ID", std::stoi(elms[0], &sz));
       
       // erase quotes 
       elms[1].erase(0,1);
       elms[1].erase(elms[1].end()-1, elms[1].end());
-      row.addString(L"code", elms[1]);
+      row.addString("code", string(elms[1]));
       db->addRow(SS_ERRORS, row);
     }
     
   }
 }
 
-std::wstring y::smartschool::errorToText(int code) {
+string y::smartschool::errorToText(int code) {
   container<y::data::row> rows;
   y::data::field condition;
-  condition.name(L"ID").setInt(code);
+  condition.name("ID").setInt(code);
   db->getRows(SS_ERRORS, rows, condition);
   if(rows.elms()) {
-    return rows[0][L"code"].asString();
+    return rows[0]["code"].asString();
   } 
   
-  return L"This error does not exist.";  
+  return "This error does not exist.";  
 }

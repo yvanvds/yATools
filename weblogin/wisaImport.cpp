@@ -81,21 +81,21 @@ y::gui::stackPageManager * wisaImport::get() {
   return manager;
 }
 
-void wisaImport::setWisaFile(const std::string& file) {
+void wisaImport::setWisaFile(const string& file) {
   wisaFile = file;
   wisaAccounts.clear();
   
   // get lines from file
   boost::locale::generator gen;
   std::locale utf8  = gen("en_US.UTF-8");
-  std::wifstream stream(file);
+  std::wifstream stream(file.utf8());
   stream.imbue(utf8);
   
   if(!readLinesUTF8(&stream)) {
     // probably the file has another encoding
     // Try again with latin1
     std::locale latin = gen("en_US.iso88591");
-    std::ifstream stream2(file);
+    std::ifstream stream2(file.utf8());
     stream2.imbue(latin);
     readLinesLatin(&stream2);
   }
@@ -104,10 +104,10 @@ void wisaImport::setWisaFile(const std::string& file) {
   wisaGroups.clear();
   
   for(int i = 0; i < wisaAccounts.elms(); i++) {
-    std::wstring group = wisaAccounts[i].group;
+    string group = wisaAccounts[i].group;
     bool found = false;
     for(int j = 0; j < wisaGroups.elms(); j++) {
-      if(group.compare(wisaGroups[j].name) == 0) {
+      if(group == wisaGroups[j].name) {
         found = true;
         break;
       }
@@ -159,7 +159,7 @@ bool wisaImport::tokenize(const std::wstring& line) {
   return false;
 }
 
-std::string wisaImport::getWisaFile() {
+string wisaImport::getWisaFile() {
   return wisaFile;
 }
 
@@ -175,10 +175,10 @@ container<wisaImport::wisaAccount> & wisaImport::getWisaAccounts() {
 
 void wisaImport::wisaAccount::set(std::vector<std::wstring>& line) {
   if(line.size() != 5) assert(false);
-  sn = line[0];
-  cn = line[1];
-  group = line[2];
-  date = line[3];
+  sn = string(line[0]);
+  cn = string(line[1]);
+  group = string(line[2]);
+  date = string(line[3]);
   ID = std::stoi(line[4]);
 }
 
@@ -186,6 +186,6 @@ container<wisaImport::wisaGroup> & wisaImport::getWisaGroups() {
   return wisaGroups;
 }
 
-void wisaImport::showErrorOnScreen(const std::wstring& message) {
+void wisaImport::showErrorOnScreen(const string& message) {
   WCommitChanges->addMessage(message);
 }

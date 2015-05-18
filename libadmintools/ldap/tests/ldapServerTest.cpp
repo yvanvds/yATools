@@ -46,11 +46,11 @@ void ldapServerTest::testGetAccount() {
     CPPUNIT_ASSERT(false);
   }
   
-  y::ldap::account & a3 = y::ldap::Server().getAccount(y::ldap::UID_NUMBER(std::stoi(y::utils::Config().getLdapTestUidNumber())));
+  y::ldap::account & a3 = y::ldap::Server().getAccount(y::ldap::UID_NUMBER(y::utils::Config().getLdapTestUidNumber().asInt()));
   if(a3.isNew()) {
     CPPUNIT_ASSERT(false);
   }
-  if(a3.uidNumber()() != std::stoi(y::utils::Config().getLdapTestUidNumber())) {
+  if(a3.uidNumber()() != y::utils::Config().getLdapTestUidNumber().asInt()) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -59,7 +59,7 @@ void ldapServerTest::testGetAccount() {
   if(a4.isNew()) {
     CPPUNIT_ASSERT(false);
   }
-  if(a4.uidNumber()() != std::stoi(y::utils::Config().getLdapTestUidNumber())) {
+  if(a4.uidNumber()() != y::utils::Config().getLdapTestUidNumber().asInt()) {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -85,7 +85,7 @@ void ldapServerTest::testAuth() {
     CPPUNIT_ASSERT(false);
   }
   
-  result = y::ldap::Server().auth(a2.dn(), y::ldap::PASSWORD(L"wrongpassword"));
+  result = y::ldap::Server().auth(a2.dn(), y::ldap::PASSWORD("wrongpassword"));
   if(result) {
     CPPUNIT_ASSERT(false);
   }
@@ -95,7 +95,7 @@ void ldapServerTest::testAuth() {
     CPPUNIT_ASSERT(false);
   }
     
-  result = y::ldap::Server().auth(a2.dn(), y::ldap::PASSWORD(L"wrongpassword"));
+  result = y::ldap::Server().auth(a2.dn(), y::ldap::PASSWORD("wrongpassword"));
   if(result) {
     CPPUNIT_ASSERT(false);
   }  
@@ -122,15 +122,15 @@ void ldapServerTest::testGetAccounts() {
 void ldapServerTest::testGetGroup() {
   y::ldap::Server().clear();
   // get mailgroup
-  y::ldap::group & mailgroup = y::ldap::Server().getGroup(y::ldap::CN(L"6INF1"), false);
-  if(mailgroup.members().elms() != 13) {
+  y::ldap::group & mailgroup = y::ldap::Server().getGroup("6IT", false);
+  if(mailgroup.members().elms() != 22) {
     CPPUNIT_ASSERT(false);
   }
   if(mailgroup.owners().elms() != 1) {
     CPPUNIT_ASSERT(false);
   }
   
-  y::ldap::group & newgroup = y::ldap::Server().getGroup(y::ldap::CN(L"no group"), false);
+  y::ldap::group & newgroup = y::ldap::Server().getGroup("no group", false);
   if(newgroup.members().elms()) {
     CPPUNIT_ASSERT(false);
   }
@@ -139,7 +139,7 @@ void ldapServerTest::testGetGroup() {
   }
   
   // get editable mailgroup
-  y::ldap::group & mailgroup2 = y::ldap::Server().getGroup(y::ldap::CN(L"directie"), true);
+  y::ldap::group & mailgroup2 = y::ldap::Server().getGroup("directie", true);
   if(mailgroup2.members().elms() != 3) {
     CPPUNIT_ASSERT(false);
   }
@@ -151,15 +151,15 @@ void ldapServerTest::testGetGroup() {
 void ldapServerTest::testGetGroup2() {
   y::ldap::Server().clear();
   // get mailgroup
-  y::ldap::group & mailgroup = y::ldap::Server().getGroup(y::ldap::DN(L"cn=6INF1,ou=mailGroups,dc=sanctamaria-aarschot,dc=be"));
-  if(mailgroup.members().elms() != 13) {
+  y::ldap::group & mailgroup = y::ldap::Server().getGroup(y::ldap::DN("cn=6IT,ou=mailGroups,dc=sanctamaria-aarschot,dc=be"));
+  if(mailgroup.members().elms() != 22) {
     CPPUNIT_ASSERT(false);
   }
   if(mailgroup.owners().elms() != 1) {
     CPPUNIT_ASSERT(false);
   }
   
-  y::ldap::group & newgroup = y::ldap::Server().getGroup(y::ldap::DN(L"cn=6INF4,ou=mailGroups,dc=sanctamaria-aarschot,dc=be"));
+  y::ldap::group & newgroup = y::ldap::Server().getGroup(y::ldap::DN("cn=6INF4,ou=mailGroups,dc=sanctamaria-aarschot,dc=be"));
   if(newgroup.members().elms()) {
     CPPUNIT_ASSERT(false);
   }
@@ -168,7 +168,7 @@ void ldapServerTest::testGetGroup2() {
   }
   
   // get editable mailgroup
-  y::ldap::group & mailgroup2 = y::ldap::Server().getGroup(y::ldap::DN(L"cn=directie,ou=editableMailGroups,dc=sanctamaria-aarschot,dc=be"));
+  y::ldap::group & mailgroup2 = y::ldap::Server().getGroup(y::ldap::DN("cn=directie,ou=editableMailGroups,dc=sanctamaria-aarschot,dc=be"));
   if(mailgroup2.members().elms() != 3) {
     CPPUNIT_ASSERT(false);
   }

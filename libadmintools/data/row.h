@@ -16,16 +16,16 @@ namespace y {
     class row {
     public:
       
-      row & addBool   (const std::wstring & name, bool value = false);
-      row & addChar   (const std::wstring & name, char value = 0);
-      row & addShort  (const std::wstring & name, short value = 0);
-      row & addInt    (const std::wstring & name, int value = 0);
-      row & addLong   (const std::wstring & name, long value = 0);
-      row & addFloat  (const std::wstring & name, float value = 0);
-      row & addDouble (const std::wstring & name, double value = 0);
-      row & addString8(const std::wstring & name, const std::string & value = "");
-      row & addString (const std::wstring & name, const std::wstring & value = L"");
-      row & addDate   (const std::wstring & name, const dateTime & value = dateTime(L"0000-00-00 00:00:00"));
+      row & addBool   (const string & name, bool value = false);
+      row & addChar   (const string & name, char value = 0);
+      row & addShort  (const string & name, short value = 0);
+      row & addInt    (const string & name, int value = 0);
+      row & addLong   (const string & name, long value = 0);
+      row & addFloat  (const string & name, float value = 0);
+      row & addDouble (const string & name, double value = 0);
+      row & addString8(const string & name, const string & value = string(""));
+      row & addString (const string & name, const string & value = string(""));
+      row & addDate   (const string & name, const dateTime & value = dateTime(string("0000-00-00 00:00:00")));
       
       int elms() const;
       row & clear();
@@ -33,7 +33,7 @@ namespace y {
       // request element by index
       field & operator[](int i);
       // request element by name
-      field & operator[](const std::wstring & name);
+      field & operator[](const string & name);
     
     private:
       container<field> fields;

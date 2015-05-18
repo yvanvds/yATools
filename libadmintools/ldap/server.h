@@ -10,15 +10,15 @@
  */
 
 #pragma once
-#include "ldap/attributes.h"
-#include "ldap/account.h"
-#include "ldap/group.h"
-#include "utils/container.h"
 #include "dataset.h"
+#include "group.h"
+#include "account.h"
+#include "utils/container.h"
 #include <ldap.h>
 
 namespace y {
   namespace ldap {
+    
     class server {
     public:
       server(); // create object and connect to ldap server
@@ -35,19 +35,19 @@ namespace y {
       account & getAccount(const DN         & id);
 
       group & getGroup(const DN & id);
-      group & getGroup(const std::wstring & cn, bool editable);
+      group & getGroup(const string & cn, bool editable);
 
       container<account> & getAccounts(); 
       container<group  > & getGroups  ();     
 
       // uid numbers of accounts found by this query are stored in results.
       // the function returns the number of accounts found
-      int findAccounts(const std::wstring & query, std::vector<UID_NUMBER> & results);
-      UID  createUID (const std::wstring & cn, const std::wstring & sn);
-      MAIL createMail(const std::wstring & cn, const std::wstring & sn);
+      int findAccounts(const string & query, std::vector<UID_NUMBER> & results);
+      UID  createUID (const string & cn, const string & sn);
+      MAIL createMail(const string & cn, const string & sn);
       
       // this
-      int countResults(const std::wstring &q);
+      int countResults(const string &q);
       
       // clears up all loaded accounts and groups
       // this does not affect the database
@@ -68,7 +68,7 @@ namespace y {
       container<group  > _groups  ;
 
       bool _connected;
-      std::string _base;
+      string _base;
       LDAP * _server;
       LDAP * _authServer;
       struct timeval timeOut;

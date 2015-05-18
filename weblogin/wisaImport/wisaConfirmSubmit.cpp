@@ -60,10 +60,10 @@ void wisaConfirmSubmit::onShow() {
   
   // count accounts in wisa file
   container<wisaImport::wisaAccount> & wisaAccounts = WisaImport().getWisaAccounts();
-  std::wstring m1(L"Nieuw bestand bevat ");
-  m1 += std::to_wstring(wisaAccounts.elms());
-  m1 += L" accounts.";
-  message1->setText(m1);
+  string m1("Nieuw bestand bevat ");
+  m1 += wisaAccounts.elms();
+  m1 += " accounts.";
+  message1->setText(m1.wt());
   
   // load all accounts
   container<y::ldap::account> & accounts = y::ldap::Server().getAccounts();
@@ -86,32 +86,32 @@ void wisaConfirmSubmit::onShow() {
   
   int newAccounts = wisaAccounts.elms() - linkedAccounts;
   
-  std::wstring m2(L"De database bevat ");
-  m2 += std::to_wstring(validAccounts);
-  m2 += L" accounts.";
-  message2->setText(m2);
+  string m2("De database bevat ");
+  m2 += validAccounts;
+  m2 += " accounts.";
+  message2->setText(m2.wt());
   
-  std::wstring m3(L"Er bestaat een geldige link voor ");
-  m3 += std::to_wstring(linkedAccounts);
-  m3 += L" accounts.";
-  message3->setText(m3);
+  string m3("Er bestaat een geldige link voor ");
+  m3 += linkedAccounts;
+  m3 += " accounts.";
+  message3->setText(m3.wt());
   
-  std::wstring m4;
-  m4 += std::to_wstring(accountsToRemove);
-  m4 += L" accounts worden verwijderd.";
-  message4->setText(m4);
+  string m4;
+  m4 += accountsToRemove;
+  m4 += " accounts worden verwijderd.";
+  message4->setText(m4.wt());
   
-  std::wstring m5;
-  m5 += std::to_wstring(newAccounts);
-  m5 += L" accounts worden toegevoegd.";
-  message5->setText(m5);
+  string m5;
+  m5 += newAccounts;
+  m5 += " accounts worden toegevoegd.";
+  message5->setText(m5.wt());
   
   // count groups in wisa file
   container<wisaImport::wisaGroup> & wisaGroups = WisaImport().getWisaGroups();
-  std::wstring m6(L"Nieuw bestand bevat ");
-  m6 += std::to_wstring(wisaGroups.elms());
-  m6 += L" klassen.";
-  message6->setText(m6);
+  string m6("Nieuw bestand bevat ");
+  m6 += wisaGroups.elms();
+  m6 += " klassen.";
+  message6->setText(m6.wt());
   
   // load all accounts
   container<y::ldap::group> & groups = y::ldap::Server().getGroups();
@@ -135,23 +135,23 @@ void wisaConfirmSubmit::onShow() {
   
   int newGroups = wisaGroups.elms() - linkedGroups;
   
-  std::wstring m7(L"De database bevat ");
-  m7 += std::to_wstring(validGroups);
-  m7 += L" klassen.";
-  message7->setText(m7);
+  string m7("De database bevat ");
+  m7 += validGroups;
+  m7 += " klassen.";
+  message7->setText(m7.wt());
   
-  std::wstring m8(L"Er bestaat een geldige link voor ");
-  m8 += std::to_wstring(linkedGroups);
-  m8 += L" klassen.";
-  message8->setText(m8);
+  string m8("Er bestaat een geldige link voor ");
+  m8 += linkedGroups;
+  m8 += " klassen.";
+  message8->setText(m8.wt());
   
-  std::wstring m9;
-  m9 += std::to_wstring(groupsToRemove);
-  m9 += L" klassen worden verwijderd.";
-  message9->setText(m9);
+  string m9;
+  m9 += groupsToRemove;
+  m9 += " klassen worden verwijderd.";
+  message9->setText(m9.wt());
   
-  std::wstring m10;
-  m10 += std::to_wstring(newGroups);
-  m10 += L" klassen worden toegevoegd.";
-  message10->setText(m10);
+  string m10;
+  m10 += newGroups;
+  m10 += " klassen worden toegevoegd.";
+  message10->setText(m10.wt());
 }

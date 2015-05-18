@@ -9,11 +9,11 @@
 #include "yearbookReview.h"
 
 
-yearbookConfirmRemove::yearbookConfirmRemove() :
+yearbookConfirmRemove::yearbookConfirmRemove(yearbookReview * parent) : parent(parent),
 y::gui::confirmationDialog("Ben je zeker?") {
   setContents("Je staat op het punt deze inzending te verwijderen!");
 }
 
 void yearbookConfirmRemove::handleOK() {
-  YearbookReview().removeCurrentEntry();
+  parent->removeCurrentEntry();
 }

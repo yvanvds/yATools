@@ -15,7 +15,7 @@
 namespace y {
   namespace gui {
     
-    class confirmationDialog {
+    class confirmationDialog : public Wt::WObject {
     public:
       confirmationDialog(const Wt::WString & title);
       ~confirmationDialog();

@@ -27,7 +27,7 @@ void dataFieldTest::tearDown() {
 }
 
 void dataFieldTest::testAsBool() {
-  y::data::field _field(L"testbool", true);
+  y::data::field _field("testbool", true);
   bool result = _field.asBool();
   if (result == false) {
     CPPUNIT_ASSERT(false);
@@ -45,7 +45,7 @@ void dataFieldTest::testAsBool() {
 
 void dataFieldTest::testAsChar() {
   char c = 65;
-  y::data::field _field(L"testchar", c);
+  y::data::field _field("testchar", c);
   char result = _field.asChar();
   if (result != c) {
     CPPUNIT_ASSERT(false);
@@ -57,7 +57,7 @@ void dataFieldTest::testAsChar() {
 
 void dataFieldTest::testAsDouble() {
   double d = 4.5;
-  y::data::field _field(L"testDouble", d);
+  y::data::field _field("testDouble", d);
   double result = _field.asDouble();
   if (result != d) {
     CPPUNIT_ASSERT(false);
@@ -69,7 +69,7 @@ void dataFieldTest::testAsDouble() {
 
 void dataFieldTest::testAsFloat() {
   float f = 4.5;
-  y::data::field _field(L"testFloat", f);
+  y::data::field _field("testFloat", f);
   float result = _field.asFloat();
   if (result != f) {
     CPPUNIT_ASSERT(false);
@@ -81,7 +81,7 @@ void dataFieldTest::testAsFloat() {
 
 void dataFieldTest::testAsInt() {
   int i = 3;
-  y::data::field _field(L"testInt", i);
+  y::data::field _field("testInt", i);
   int result = _field.asInt();
   if (i != result) {
     CPPUNIT_ASSERT(false);
@@ -93,7 +93,7 @@ void dataFieldTest::testAsInt() {
 
 void dataFieldTest::testAsLong() {
   long l = 4968347;
-  y::data::field _field(L"testLong", l);
+  y::data::field _field("testLong", l);
   long result = _field.asLong();
   if (l != result) {
     CPPUNIT_ASSERT(false);
@@ -105,7 +105,7 @@ void dataFieldTest::testAsLong() {
 
 void dataFieldTest::testAsShort() {
   short s = 120;
-  y::data::field _field(L"testShort", s);
+  y::data::field _field("testShort", s);
   short result = _field.asShort();
   if (s != result) {
     CPPUNIT_ASSERT(false);
@@ -116,25 +116,13 @@ void dataFieldTest::testAsShort() {
 }
 
 void dataFieldTest::testAsString() {
-  std::wstring s = L"test";
-  y::data::field _field(L"stringtest", s);
-  const std::wstring& result = _field.asString();
-  if (result.compare(s) != 0) {
+  string s = "test";
+  y::data::field _field("stringtest", s);
+  const string& result = _field.asString();
+  if (result != s) {
     CPPUNIT_ASSERT(false);
   }
   if(_field.getType() != y::data::STRING) {
-    CPPUNIT_ASSERT(false);
-  }  
-}
-
-void dataFieldTest::testAsString8() {
-  std::string s = "test";
-  y::data::field _field(L"stringtest", s);
-  const std::string& result = _field.asString8();
-  if (result.compare(s) != 0) {
-    CPPUNIT_ASSERT(false);
-  }
-  if(_field.getType() != y::data::STRING8) {
     CPPUNIT_ASSERT(false);
   }  
 }
@@ -157,17 +145,17 @@ void dataFieldTest::testGetType() {
 }
 
 void dataFieldTest::testName() {
-  y::data::field _field(L"fieldname", true);
-  const std::wstring& result = _field.name();
-  if (result.compare(L"fieldname") != 0) {
+  y::data::field _field("fieldname", true);
+  const string& result = _field.name();
+  if (result != "fieldname") {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void dataFieldTest::testName2() {
   y::data::field _field;
-  _field.name(L"fieldname");
-  if (_field.name().compare(L"fieldname") != 0) {
+  _field.name("fieldname");
+  if (_field.name() != "fieldname") {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -272,25 +260,13 @@ void dataFieldTest::testSetShort() {
 }
 
 void dataFieldTest::testSetString() {
-  std::wstring value = L"test";
+  string value = "test";
   y::data::field _field;
   _field.setString(value);
-  if (_field.asString().compare(value) != 0) {
+  if (_field.asString() != value) {
     CPPUNIT_ASSERT(false);
   }
   if(_field.getType() != y::data::STRING) {
-    CPPUNIT_ASSERT(false);
-  }
-}
-
-void dataFieldTest::testSetString8() {
-  std::string value = "test";
-  y::data::field _field;
-  _field.setString8(value);
-  if (_field.asString8().compare(value) != 0) {
-    CPPUNIT_ASSERT(false);
-  }
-  if(_field.getType() != y::data::STRING8) {
     CPPUNIT_ASSERT(false);
   }
 }

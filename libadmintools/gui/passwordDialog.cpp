@@ -11,6 +11,7 @@
 #include <Wt/WHBoxLayout>
 #include <Wt/WLengthValidator>
 #include "../ldap/server.h"
+#include "utils/string.h"
 
 void y::gui::passwordDialog::create(session * parent) {
   this->parent = parent;
@@ -63,8 +64,8 @@ void y::gui::passwordDialog::create(session * parent) {
   feedbackBox->addWidget(loginFeedback);
 }
 
-void y::gui::passwordDialog::setTitle(const std::string& value) {
-  dialog->setWindowTitle(value);
+void y::gui::passwordDialog::setTitle(const string& value) {
+  dialog->setWindowTitle(value.wt());
 }
 
 void y::gui::passwordDialog::show() {
@@ -101,7 +102,7 @@ void y::gui::passwordDialog::validate() {
       
     } else {  
       if(!parent->validate()) {
-        loginFeedback->setText(errorMessage);
+        loginFeedback->setText(errorMessage.wt());
         loginFeedback->setStyleClass("alert alert-danger");
         passEdit->setStyleClass("form-control");
         nameEdit->setStyleClass("form-control");
@@ -113,21 +114,20 @@ void y::gui::passwordDialog::validate() {
     } 
   } 
 }
-
-const Wt::WString & y::gui::passwordDialog::getName() {
+string y::gui::passwordDialog::getName() {
   return loginName;
 }
 
-const Wt::WString & y::gui::passwordDialog::getPassword() {
+string y::gui::passwordDialog::getPassword() {
   return loginPass;
 }
 
-void y::gui::passwordDialog::setErrorMessage(const std::string & message) {
+void y::gui::passwordDialog::setErrorMessage(const string & message) {
   errorMessage = message;
   if(errorMessage.empty()) {
     loginFeedback->setStyleClass("");
   } else {
     loginFeedback->setStyleClass("alert alert-danger");
   }
-  loginFeedback->setText(errorMessage);
+  loginFeedback->setText(errorMessage.wt());
 }

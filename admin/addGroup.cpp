@@ -5,11 +5,9 @@
  * Created on May 7, 2015, 2:06 PM
  */
 
-#include <string>
 #include <iostream>
 #include "addGroup.h"
-#include "ldap/server.h"
-#include "utils/convert.h"
+#include "admintools.h"
 
 using namespace std;
 using namespace y::ldap;
@@ -20,11 +18,11 @@ addGroup & AddGroup() {
 }
 
 void addGroup::printHelp() {
-  cout << "Add a group to the ldap database." << endl;
-  cout << endl;
-  cout << "Usage: admin group add [-e] <gid>" << endl;
-  cout << endl;
-  cout << "<gid>     name for this group" << endl;
+  cout << "Add a group to the ldap database."     << endl;
+  cout                                            << endl;
+  cout << "Usage: admin group add [-e] <gid>"     << endl;
+  cout                                            << endl;
+  cout << "<gid>     name for this group"         << endl;
   cout << "-e        make this an editable group" << endl;
 }
 
@@ -34,16 +32,16 @@ void addGroup::parse(int argc, char** argv) {
     return;
   }
   
-  std::wstring arg(strW(argv[0]));
-  std::wstring name;
+  ::string arg(argv[0]);
+  ::string name;
   bool editable = false;
   
-  if(arg.compare(L"-e") == 0) {
+  if(arg == "-e") {
     if(argc < 2) {
       printHelp();
       return;
     } else {
-      name = strW(argv[1]);
+      name = argv[1];
       editable = true;
     }
   } else {
@@ -57,6 +55,6 @@ void addGroup::parse(int argc, char** argv) {
   } else {
     grp.flagForCommit();
     Server().commitChanges();
-    cout << "Group " << str8(name) << " added." << endl; 
+    cout << "Group " << name << " added." << endl; 
   }
 }

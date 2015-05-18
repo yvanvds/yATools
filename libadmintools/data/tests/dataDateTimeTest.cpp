@@ -31,15 +31,15 @@ void dataDateTimeTest::testDbFormat() {
   d.hours(9);
   d.minutes(12);
   d.seconds(3);
-  std::wstring result = d.dbFormat();
-  if (result.compare(L"1938-11-01 09:12:03") != 0) {
+  string result = d.dbFormat();
+  if (result != "1938-11-01 09:12:03") {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void dataDateTimeTest::testDbFormat2() {
   y::data::dateTime d;
-  d.dbFormat(L"1938-11-01 09:12:03");
+  d.dbFormat("1938-11-01 09:12:03");
   
   if (d.day() != 1) {
     CPPUNIT_ASSERT(false);

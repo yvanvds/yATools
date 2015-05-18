@@ -5,8 +5,7 @@
  * Created on May 14, 2014, 9:01 PM
  */
 
-#include <string>
-
+#include "utils/string.h"
 #include "dateTime.h"
 
 y::data::dateTime::dateTime() :
@@ -17,7 +16,7 @@ y::data::dateTime::dateTime() :
   _minutes(0),
   _seconds(0) {}
 
-y::data::dateTime::dateTime(const std::wstring & dbFormat) :
+y::data::dateTime::dateTime(const string & dbFormat) :
   _day(0),
   _month(0),
   _year(0),
@@ -81,34 +80,34 @@ int y::data::dateTime::seconds() const {
   return _seconds;
 }
 
-std::wstring y::data::dateTime::dbFormat() const {
-  std::wstring result;
-  result.append(std::to_wstring(_year));
-  result.append(L"-");
-  if(_month < 10) result.append(L"0");
-  result.append(std::to_wstring(_month));
-  result.append(L"-");
-  if(_day < 10) result.append(L"0");
-  result.append(std::to_wstring(_day));
-  result.append(L" ");
+string y::data::dateTime::dbFormat() const {
+  string result;
+  result += _year;
+  result += "-";
+  if(_month < 10) result += 0;
+  result += _month;
+  result += "-";
+  if(_day < 10) result += 0;
+  result += _day;
+  result += " ";
 
-  if(_hours < 10) result.append(L"0");
-  result.append(std::to_wstring(_hours));
-  result.append(L":");
-  if(_minutes < 10) result.append(L"0");
-  result.append(std::to_wstring(_minutes));
-  result.append(L":");
-  if(_seconds < 10) result.append(L"0");
-  result.append(std::to_wstring(_seconds));
+  if(_hours < 10) result += 0;
+  result += _hours;
+  result += ":";
+  if(_minutes < 10) result += 0;
+  result += _minutes;
+  result += ":";
+  if(_seconds < 10) result += 0;
+  result += _seconds;
   
   return result;
 }
 
-void y::data::dateTime::dbFormat(const std::wstring& value) {
-  _year = std::stoi(value.substr(0, 4));
-  _month = std::stoi(value.substr(5, 2));
-  _day = std::stoi(value.substr(8, 2));
-  _hours = std::stoi(value.substr(11, 2));
-  _minutes = std::stoi(value.substr(14, 2));
-  _seconds = std::stoi(value.substr(17, 2));
+void y::data::dateTime::dbFormat(const string & value) {
+  _year = std::stoi(value.db().substr(0, 4));
+  _month = std::stoi(value.db().substr(5, 2));
+  _day = std::stoi(value.db().substr(8, 2));
+  _hours = std::stoi(value.db().substr(11, 2));
+  _minutes = std::stoi(value.db().substr(14, 2));
+  _seconds = std::stoi(value.db().substr(17, 2));
 }

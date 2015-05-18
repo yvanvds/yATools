@@ -16,21 +16,22 @@ y::ldap::dataset::dataset(const dataset& orig) {
   content = orig.content;
 }
 
-bool y::ldap::dataset::create(const std::wstring & filter, const std::wstring & directory) {
+bool y::ldap::dataset::create(const string & filter, const string & directory) {
   this->filter = filter;
   this->directory = directory;
   return Server().getData(*this);
 }
 
-bool y::ldap::dataset::createFromDN(const std::wstring& dn) {
-  std::vector<std::wstring> strs;
-  boost::split(strs, dn, boost::is_any_of(","));
+bool y::ldap::dataset::createFromDN(const string& dn) {
+  std::string temp = dn.utf8();
+  std::vector<std::string> strs;
+  boost::split(strs, temp, boost::is_any_of(","));
   assert(strs.size() > 1);
   this->filter = strs[0];
   this->directory = strs[1];
   for(unsigned int i = 2; i < strs.size(); i++) {
-    this->directory += L",";
-    this->directory += strs[i];
+    this->directory += ",";
+    this->directory += string(strs[i]);
   }
   return Server().getData(*this, true);
 }

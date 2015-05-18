@@ -31,12 +31,12 @@ void yearbookPhoto::setContent(Wt::WVBoxLayout * box) {
 }
 
 void yearbookPhoto::onShow() {
-  if(YearbookDB().photo().empty()) {
+  if(db->photo().empty()) {
     image->setImageLink("http://placehold.it/600x400");
   } else {
-    std::string s = str8(YearbookDB().photo());
+    string s = db->photo();
 
-    Wt::WFileResource * r = new Wt::WFileResource(s);
+    Wt::WFileResource * r = new Wt::WFileResource(s.utf8());
     image->setImageLink(r);
   }
   image->setHeight(200);
@@ -60,20 +60,20 @@ void yearbookPhoto::setUpload() {
   }));
   
   fileUpload->uploaded().connect(std::bind([=] () {
-    std::string file = fileUpload->spoolFileName();
-    std::string imageName("yearbookImages/");
-    imageName += str8(YearbookDB().ID());
+    string file = string(fileUpload->spoolFileName());
+    string imageName("yearbookImages/");
+    imageName += db->ID();
     imageName += ".png";
     
-    std::string cmd("cp ");
-    cmd.append(file);
-    cmd.append(" "); cmd.append(imageName);
-    system(cmd.c_str());
+    string cmd("cp ");
+    cmd += file + " "; 
+    cmd += imageName;
+    cmd.execute();
     
-    YearbookDB().photo(strW(imageName));
+    db->photo(imageName);
     hint->setText("Je foto is opgeslagen.");
     
-    Wt::WFileResource * r = new Wt::WFileResource(imageName);
+    Wt::WFileResource * r = new Wt::WFileResource(imageName.utf8());
     image->setImageLink(r);
     image->setHeight(200);
     image->setWidth(300);
@@ -88,6 +88,6 @@ void yearbookPhoto::setUpload() {
 }
 
 bool yearbookPhoto::onNext() {
-  YearbookDB().saveUser();
+  db->saveUser();
   return true;
 }

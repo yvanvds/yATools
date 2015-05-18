@@ -21,7 +21,6 @@ class dataRowTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST(testAddLong);
   CPPUNIT_TEST(testAddShort);
   CPPUNIT_TEST(testAddString);
-  CPPUNIT_TEST(testAddString8);
   CPPUNIT_TEST(testClear);
   CPPUNIT_TEST(testElms);
 
@@ -42,7 +41,6 @@ private:
   void testAddLong();
   void testAddShort();
   void testAddString();
-  void testAddString8();
   void testClear();
   void testElms();
 
