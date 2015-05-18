@@ -16,10 +16,6 @@
 #include "accountManager.h"
 #include <admintools.h>
 
-accountManager & AccountManager() {
-  static accountManager s;
-  return s;
-}
 
 Wt::WWidget * accountManager::get(y::ldap::account * account) {
   this->account = account;

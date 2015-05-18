@@ -20,6 +20,8 @@
 #include "yearbook/yearbookReview.h"
 #include "yearbook/yearbookDownload.h"
 #include "yearbook/yearbookDB.h"
+#include "accountManager.h"
+#include "proxyManager.h"
 
 using namespace y;
 
@@ -99,6 +101,10 @@ private:
   yearbookDownload * yearbookDownloadPtr;
   yearbookReview * yearbookReviewPtr;
   yearbookDB * yearbookDBPtr;
+  accountManager * accountManagerPtr;
+  proxyManager * proxyManagerPtr;
+  
+  
   
   void createYearbookDB();
   

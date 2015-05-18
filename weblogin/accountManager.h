@@ -34,7 +34,6 @@ private:
   Wt::WPushButton * saveButton;
 };
 
-accountManager & AccountManager();
 
 #endif	/* ACCOUNTMANAGER_H */
 

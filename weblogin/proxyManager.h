@@ -16,10 +16,11 @@
 #include <vector>
 #include "utils/proxy.h"
 
+class proxyManager;
 class room {
 public:
   
-  room(const string & name);
+  room(const string & name, proxyManager * parent);
   void create(Wt::WTableRow * row);
   void buttonClicked(Wt::WRadioButton * selected);
   
@@ -34,6 +35,7 @@ private:
   Wt::WRadioButton * button1;
   Wt::WRadioButton * button2;
   Wt::WRadioButton * button3;
+  proxyManager * parent;
 };
 
 class proxyManager : public Wt::WObject {
@@ -46,7 +48,6 @@ private:
   
 };
 
-proxyManager & ProxyManager();
 
 #endif	/* PROXYMANAGER_H */
 

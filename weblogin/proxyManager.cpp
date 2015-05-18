@@ -19,12 +19,8 @@
 #include "utils/proxy.h"
 #include "data/row.h"
 
-proxyManager & ProxyManager() {
-  static proxyManager s;
-  return s;
-}
-
-room::room(const string & name) : name(name){}
+room::room(const string & name, proxyManager * parent) 
+  : name(name), parent(parent) {}
 
 void room::create(Wt::WTableRow* row) {
   label = new Wt::WText(name.wt());
@@ -50,7 +46,7 @@ void room::create(Wt::WTableRow* row) {
 
 void room::buttonClicked(Wt::WRadioButton * selected) {
   Wt::WButtonGroup * group = selected->group();
-  ProxyManager().getRoom(group)->setStatus((y::utils::proxy::STATUS)group->selectedButtonIndex());
+  parent->getRoom(group)->setStatus((y::utils::proxy::STATUS)group->selectedButtonIndex());
 }
 
 Wt::WButtonGroup * room::getGroup() {
@@ -93,7 +89,7 @@ Wt::WWidget * proxyManager::get() {
   y::utils::Proxy().getAllRooms(rows);
   
   for(int i = 0; i < rows.elms(); i++) {
-    rooms.emplace_back(rows[i]["ID"].asString());
+    rooms.emplace_back(rows[i]["ID"].asString(), this);
     rooms.back().create(table->rowAt(i));
     rooms.back().setStatus((y::utils::proxy::STATUS)rows[i]["status"].asInt(), true);
   }

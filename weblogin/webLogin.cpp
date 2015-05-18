@@ -180,6 +180,7 @@ void webLogin::createContents() {
   
   // show this for last year students (or me for testing)
   string group = account->group()();
+  TODO(only show when yearbook is open)
   if(group[0] == '6' || group[0] == '7' || y::utils::Config().isYearbookAdmin(account->uid()())) {
     mainMenu->addItem("Jaarboek", 
             deferCreate(boost::bind(&webLogin::yearbookFunc, this)), 
@@ -235,11 +236,15 @@ void webLogin::updateTitle() {
 }
 
 Wt::WWidget * webLogin::accountFunc() {
-  return AccountManager().get(account);
+  accountManagerPtr = new accountManager();
+  this->addChild(accountManagerPtr);
+  return accountManagerPtr->get(account);
 }
 
 Wt::WWidget * webLogin::webAccessFunc() {
-  return ProxyManager().get();
+  proxyManagerPtr = new proxyManager();
+  this->addChild(proxyManagerPtr);
+  return proxyManagerPtr->get();
 }
 
 Wt::WWidget * webLogin::wisaImportFunc() {
