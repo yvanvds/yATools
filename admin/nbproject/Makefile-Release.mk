@@ -62,7 +62,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-Wl,-rpath,/home/yvan/github/yATools/libadmintools/dist/Release/GNU-Linux-x86 -L/home/yvan/github/yATools/libadmintools/dist/Release/GNU-Linux-x86 -llibadmintools -lboost_locale
+LDLIBSOPTIONS=-Wl,-rpath,/home/yvan/github/yATools/libadmintools/dist/Release/GNU-Linux-x86 -L/home/yvan/github/yATools/libadmintools/dist/Release/GNU-Linux-x86 -llibadmintools -lboost_locale -lboost_system -lboost_program_options
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

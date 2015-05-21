@@ -167,6 +167,8 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerOptionItem>-lboost_locale</linkerOptionItem>
+            <linkerOptionItem>-lboost_system</linkerOptionItem>
+            <linkerOptionItem>-lboost_program_options</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
