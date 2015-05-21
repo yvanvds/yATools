@@ -40,7 +40,7 @@ public:
   // return as Wt string
   Wt::WString  wt  () const { return Wt::WString(content, Wt::UTF8); }
   // return as smartschool string
-  std::string  ss  () const { return strSS(content); }
+  std::string  ss  () const { return boost::locale::conv::from_utf(content, "Latin1"); }
   // return as integer
   int          asInt() const { return std::stoi(content); }
   
