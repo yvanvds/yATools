@@ -31,10 +31,11 @@ void utilsSecurityTest::tearDown() {
 
 void utilsSecurityTest::testTest() {
   return; TODO(this test is outdated)
-          
+  y::ldap::server Server;
+  
   y::ldap::UID uid(y::utils::Config().getLdapTestUID());
   
-  y::ldap::account & acc = y::ldap::Server().getAccount(uid);
+  y::ldap::account & acc = Server.getAccount(uid);
   
   string password = y::utils::Config().getLdapTestPassword();
   

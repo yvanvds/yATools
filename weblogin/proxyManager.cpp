@@ -19,10 +19,11 @@
 #include "utils/proxy.h"
 #include "data/row.h"
 
-room::room(const string & name, proxyManager * parent) 
-  : name(name), parent(parent) {}
 
-void room::create(Wt::WTableRow* row) {
+void room::create(const string & name, proxyManager * parent, Wt::WTableRow* row) {
+  this->name = name;
+  this->parent = parent;
+  
   label = new Wt::WText(name.wt());
   row->elementAt(0)->addWidget(label);
   bgroup = new Wt::WButtonGroup();
@@ -75,23 +76,23 @@ void room::setStatus(y::utils::proxy::STATUS status, bool silent) {
   }
   
   if(!silent) {
-    y::utils::Proxy().status(this->name, status);
-    y::utils::Proxy().apply();
+    parent->proxyObj.status(this->name, status);
+    parent->proxyObj.apply();
   }
   
 }
 
-Wt::WWidget * proxyManager::get() {
+void proxyManager::create() {
   
   Wt::WTable * table = new Wt::WTable();
   
   container<y::data::row> rows;
-  y::utils::Proxy().getAllRooms(rows);
+  proxyObj.getAllRooms(rows);
   
   for(int i = 0; i < rows.elms(); i++) {
-    rooms.emplace_back(rows[i]["ID"].asString(), this);
-    rooms.back().create(table->rowAt(i));
-    rooms.back().setStatus((y::utils::proxy::STATUS)rows[i]["status"].asInt(), true);
+    room & r = rooms.New();
+    r.create(rows[i]["ID"].asString(), this, table->rowAt(i));
+    r.setStatus((y::utils::proxy::STATUS)rows[i]["status"].asInt(), true);
   }
   
   
@@ -105,19 +106,16 @@ Wt::WWidget * proxyManager::get() {
   table->addStyleClass("table form-inline table-bordered table-hover");
   table->setMargin(0);
   
-  Wt::WContainerWidget * result = new Wt::WContainerWidget();
-  Wt::WPanel * panel = new Wt::WPanel(result);
+  Wt::WPanel * panel = new Wt::WPanel(this);
   panel->setStyleClass("panel panel-primary");
   panel->setCentralWidget(table);
   panel->setTitle("<h3>Webtoegang</h3>");
   
   panel->setMaximumSize(800, Wt::WLength::Auto);
-  
-  return result;
 }
 
 room * proxyManager::getRoom(Wt::WButtonGroup* group) {
-  for(int i = 0; i < rooms.size(); i++) {
+  for(int i = 0; i < rooms.elms(); i++) {
     if(rooms[i].getGroup() == group) {
       return &rooms[i];
     }

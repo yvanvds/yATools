@@ -13,8 +13,9 @@
 #include <assert.h>
 #include "defines.h"
 
-y::ldap::group::group() 
-  : _dn(DN("")), 
+y::ldap::group::group(y::ldap::server * server) 
+  : server(server),
+    _dn(DN("")), 
     _cn(""), 
     _new(true), 
     _editable(true),
@@ -24,7 +25,7 @@ y::ldap::group::group()
 }
 
 bool y::ldap::group::load(const DN& id) {
-  dataset d;
+  dataset d(server);
   if(d.createFromDN(id())) {
     load(d.get(0));
   } 
@@ -32,7 +33,7 @@ bool y::ldap::group::load(const DN& id) {
 }
 
 bool y::ldap::group::load(const string & cn) {
-  dataset d;
+  dataset d(server);
   string filter("cn=" + cn);
   
   if(!editable() && d.create(filter, "ou=mailGroups")) {
@@ -179,15 +180,13 @@ bool y::ldap::group::save() {
       y::Smartschool().deleteClass(*this);
     }
     
-    Server().remove(_dn());
+    server->remove(_dn());
     // not really needed, but you never know
     _members.clear();
     _owners.clear();
     
     return true;
   }
-  
-  dataset values;
   
   // update or add smartschool class if needed
   if(!editable()) {
@@ -207,7 +206,7 @@ bool y::ldap::group::save() {
 }
 
 bool y::ldap::group::saveNew() {
-  dataset values;
+  dataset values(server);
   // don't create if there are no members
   if(_members.elms() == 0) {
     if(!_editable) {
@@ -277,7 +276,7 @@ bool y::ldap::group::saveNew() {
   }
 
   if(values.elms()) {
-    Server().add(_dn(), values);
+    server->add(_dn(), values);
     return true;
   }
   return false;
@@ -286,7 +285,7 @@ bool y::ldap::group::saveNew() {
 bool y::ldap::group::saveUpdate() {
   TODO(in editable mailgroups owners should also be members)
   
-  dataset values;
+  dataset values(server);
   data * ownerDelete = nullptr;
   // remove owners if needed 
   for(int i = 0; i < _ownersInLDAP.elms(); i++){
@@ -376,7 +375,7 @@ bool y::ldap::group::saveUpdate() {
   }
   
   if(values.elms()) {
-    Server().modify(_dn(), values);
+    server->modify(_dn(), values);
     return true;
   }
   return false;

@@ -9,7 +9,6 @@
 #define	PROXY_H
 
 #include <memory>
-#include "../data/sqlserver.h"
 #include "../data/database.h"
 
 namespace y {
@@ -34,13 +33,10 @@ namespace y {
       void apply();
 
     private:
-      std::unique_ptr<y::data::server> server;
-      std::unique_ptr<y::data::database> db;
       
       const string PROXY = "proxy";
     };
-    
-    proxy & Proxy();
+
   }
 }
 

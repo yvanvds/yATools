@@ -17,11 +17,9 @@
 #include "../utils/container.h"
 #include "../utils/string.h"
 #include "row.h"
-#include "sqlserver.h"
 
-#define STATEMENT(NAME, ARGS) \
-std::unique_ptr<sql::PreparedStatement> NAME \
-= std::unique_ptr<sql::PreparedStatement>(connection->prepareStatement(ARGS))
+#define CREATE_STATEMENT(NAME, ARGS) sql::PreparedStatement * NAME = connection->prepareStatement(ARGS)
+#define DELETE_STATEMENT(NAME) delete NAME
 
 namespace y {
   namespace data {
@@ -48,9 +46,18 @@ namespace y {
     
     class database {
     public:
-      database(server & serverObject);
+      database();
+      ~database();
       
-      bool use(const string & dbName);
+      database & open();
+      void close();
+      
+      // schema management
+      bool drop  (const string & schema);
+      bool create(const string & schema);
+      bool has   (const string & schema);
+      bool use   (const string & schema);
+      
       
       bool createTable(const string & tableName, row & description);
       bool deleteTable(const string & tableName);
@@ -68,11 +75,11 @@ namespace y {
       
     private:
       void parseRows(std::unique_ptr<sql::ResultSet> & result, container<row> & rows);
-      void addToStatement(std::unique_ptr<sql::PreparedStatement> & statement, field & condition, int position);
+      void addToStatement(sql::PreparedStatement * statement, field & condition, int position);
       
-      server & serverObject;
-      std::unique_ptr<sql::Connection> connection;
-      std::unique_ptr<sql::Statement> handle;
+      sql::Driver * driver;
+      sql::Connection * connection;
+      sql::Statement * handle;
       bool connected;
       
     };

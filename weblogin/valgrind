@@ -1,1 +1,1 @@
-valgrind --tool=memcheck dist/Debug/GNU-Linux-x86/weblogin  --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090
+G_SLICE=always-malloc valgrind --tool=memcheck --suppressions=glibsupp.txt dist/Debug/GNU-Linux-x86/weblogin  --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090

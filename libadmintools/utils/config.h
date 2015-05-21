@@ -9,6 +9,7 @@
 #include <boost/program_options.hpp>
 #include "container.h"
 #include "string.h"
+#include <mutex>
 
 namespace y {
   namespace utils {
@@ -58,6 +59,8 @@ namespace y {
       string smartschoolPw;
       
       container<string> yearbookAdmin;
+      
+      mutable std::mutex m;
     };
     
     config & Config();

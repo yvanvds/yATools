@@ -16,7 +16,11 @@
 #include "utils/container.h"
 #include <ldap.h>
 
+#define ACCOUNTS container<y::ldap::account, y::ldap::server>
+#define GROUPS   container<y::ldap::group  , y::ldap::server>
+
 namespace y {
+  
   namespace ldap {
     
     class server {
@@ -37,8 +41,8 @@ namespace y {
       group & getGroup(const DN & id);
       group & getGroup(const string & cn, bool editable);
 
-      container<account> & getAccounts(); 
-      container<group  > & getGroups  ();     
+      ACCOUNTS & getAccounts(); 
+      GROUPS   & getGroups  ();     
 
       // uid numbers of accounts found by this query are stored in results.
       // the function returns the number of accounts found
@@ -64,8 +68,8 @@ namespace y {
       void       printMods   (LDAPMod ** mods  ); // for debugging only
       void       toLdapModify(const DN & dn, LDAPMod ** mods); // for debugging only
       
-      container<account> _accounts;
-      container<group  > _groups  ;
+      ACCOUNTS _accounts;
+      GROUPS   _groups  ;
 
       bool _connected;
       string _base;
@@ -77,10 +81,10 @@ namespace y {
       friend class account;
       friend class group  ;
       
+      
       bool _allAccountsLoaded;
       bool _allGroupsLoaded;
     };
 
-    server & Server(); // global object
   }
 }

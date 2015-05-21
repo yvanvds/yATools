@@ -9,11 +9,13 @@
 #define	DATADATABASETEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
-#include "../sqlserver.h"
 
 class dataDatabaseTest : public CPPUNIT_NS::TestFixture {
   CPPUNIT_TEST_SUITE(dataDatabaseTest);
 
+  CPPUNIT_TEST(testCreate);
+  CPPUNIT_TEST(testDrop);
+  CPPUNIT_TEST(testHas);
   CPPUNIT_TEST(testAddRow);
   CPPUNIT_TEST(testCreateTable);
   CPPUNIT_TEST(testDelRow);
@@ -33,6 +35,9 @@ public:
   void tearDown();
 
 private:
+  void testCreate();
+  void testDrop();
+  void testHas();
   void testAddRow();
   void testCreateTable();
   void testDelRow();
@@ -43,7 +48,6 @@ private:
   void testSetRow();
   void testUse();
 
-  std::unique_ptr<y::data::server> server;
 };
 
 #endif	/* DATADATABASETEST_H */

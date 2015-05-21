@@ -40,11 +40,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/data/dateTime.o \
 	${OBJECTDIR}/data/field.o \
 	${OBJECTDIR}/data/row.o \
-	${OBJECTDIR}/data/sqlserver.o \
 	${OBJECTDIR}/gui/application.o \
 	${OBJECTDIR}/gui/confirmationDialog.o \
-	${OBJECTDIR}/gui/passwordDialog.o \
-	${OBJECTDIR}/gui/session.o \
 	${OBJECTDIR}/gui/stackPage.o \
 	${OBJECTDIR}/gui/stackPageManager.o \
 	${OBJECTDIR}/ldap/account.o \
@@ -82,7 +79,6 @@ TESTFILES= \
 	${TESTDIR}/TestFiles/f11 \
 	${TESTDIR}/TestFiles/f8 \
 	${TESTDIR}/TestFiles/f9 \
-	${TESTDIR}/TestFiles/f7 \
 	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f13 \
@@ -141,11 +137,6 @@ ${OBJECTDIR}/data/row.o: data/row.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/row.o data/row.cpp
 
-${OBJECTDIR}/data/sqlserver.o: data/sqlserver.cpp 
-	${MKDIR} -p ${OBJECTDIR}/data
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/sqlserver.o data/sqlserver.cpp
-
 ${OBJECTDIR}/gui/application.o: gui/application.cpp 
 	${MKDIR} -p ${OBJECTDIR}/gui
 	${RM} "$@.d"
@@ -155,16 +146,6 @@ ${OBJECTDIR}/gui/confirmationDialog.o: gui/confirmationDialog.cpp
 	${MKDIR} -p ${OBJECTDIR}/gui
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/confirmationDialog.o gui/confirmationDialog.cpp
-
-${OBJECTDIR}/gui/passwordDialog.o: gui/passwordDialog.cpp 
-	${MKDIR} -p ${OBJECTDIR}/gui
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/passwordDialog.o gui/passwordDialog.cpp
-
-${OBJECTDIR}/gui/session.o: gui/session.cpp 
-	${MKDIR} -p ${OBJECTDIR}/gui
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/session.o gui/session.cpp
 
 ${OBJECTDIR}/gui/stackPage.o: gui/stackPage.cpp 
 	${MKDIR} -p ${OBJECTDIR}/gui
@@ -322,10 +303,6 @@ ${TESTDIR}/TestFiles/f9: ${TESTDIR}/data/tests/dataRowTest.o ${TESTDIR}/data/tes
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f9 $^ ${LDLIBSOPTIONS} -lldap -llber -lboost_iostreams -lboost_program_options `cppunit-config --libs`   
 
-${TESTDIR}/TestFiles/f7: ${TESTDIR}/data/tests/dataServerTest.o ${TESTDIR}/data/tests/dataServerTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS} -lldap -llber -lboost_iostreams -lboost_program_options `cppunit-config --libs`   
-
 ${TESTDIR}/TestFiles/f5: ${TESTDIR}/ldap/tests/ldapDataTest.o ${TESTDIR}/ldap/tests/ldapDataTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} -lldap -llber -lboost_iostreams -lboost_program_options `cppunit-config --libs`   
@@ -405,18 +382,6 @@ ${TESTDIR}/data/tests/dataRowTestRun.o: data/tests/dataRowTestRun.cpp
 	${MKDIR} -p ${TESTDIR}/data/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataRowTestRun.o data/tests/dataRowTestRun.cpp
-
-
-${TESTDIR}/data/tests/dataServerTest.o: data/tests/dataServerTest.cpp 
-	${MKDIR} -p ${TESTDIR}/data/tests
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataServerTest.o data/tests/dataServerTest.cpp
-
-
-${TESTDIR}/data/tests/dataServerTestRun.o: data/tests/dataServerTestRun.cpp 
-	${MKDIR} -p ${TESTDIR}/data/tests
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/data/tests/dataServerTestRun.o data/tests/dataServerTestRun.cpp
 
 
 ${TESTDIR}/ldap/tests/ldapDataTest.o: ldap/tests/ldapDataTest.cpp 
@@ -580,19 +545,6 @@ ${OBJECTDIR}/data/row_nomain.o: ${OBJECTDIR}/data/row.o data/row.cpp
 	    ${CP} ${OBJECTDIR}/data/row.o ${OBJECTDIR}/data/row_nomain.o;\
 	fi
 
-${OBJECTDIR}/data/sqlserver_nomain.o: ${OBJECTDIR}/data/sqlserver.o data/sqlserver.cpp 
-	${MKDIR} -p ${OBJECTDIR}/data
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/data/sqlserver.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/sqlserver_nomain.o data/sqlserver.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/data/sqlserver.o ${OBJECTDIR}/data/sqlserver_nomain.o;\
-	fi
-
 ${OBJECTDIR}/gui/application_nomain.o: ${OBJECTDIR}/gui/application.o gui/application.cpp 
 	${MKDIR} -p ${OBJECTDIR}/gui
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/application.o`; \
@@ -617,32 +569,6 @@ ${OBJECTDIR}/gui/confirmationDialog_nomain.o: ${OBJECTDIR}/gui/confirmationDialo
 	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/confirmationDialog_nomain.o gui/confirmationDialog.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/gui/confirmationDialog.o ${OBJECTDIR}/gui/confirmationDialog_nomain.o;\
-	fi
-
-${OBJECTDIR}/gui/passwordDialog_nomain.o: ${OBJECTDIR}/gui/passwordDialog.o gui/passwordDialog.cpp 
-	${MKDIR} -p ${OBJECTDIR}/gui
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/passwordDialog.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/passwordDialog_nomain.o gui/passwordDialog.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/gui/passwordDialog.o ${OBJECTDIR}/gui/passwordDialog_nomain.o;\
-	fi
-
-${OBJECTDIR}/gui/session_nomain.o: ${OBJECTDIR}/gui/session.o gui/session.cpp 
-	${MKDIR} -p ${OBJECTDIR}/gui
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/session.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/session_nomain.o gui/session.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/gui/session.o ${OBJECTDIR}/gui/session_nomain.o;\
 	fi
 
 ${OBJECTDIR}/gui/stackPage_nomain.o: ${OBJECTDIR}/gui/stackPage.o gui/stackPage.cpp 
@@ -1004,7 +930,6 @@ ${OBJECTDIR}/utils/stringFunctions_nomain.o: ${OBJECTDIR}/utils/stringFunctions.
 	    ${TESTDIR}/TestFiles/f11 || true; \
 	    ${TESTDIR}/TestFiles/f8 || true; \
 	    ${TESTDIR}/TestFiles/f9 || true; \
-	    ${TESTDIR}/TestFiles/f7 || true; \
 	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f13 || true; \

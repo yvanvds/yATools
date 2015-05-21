@@ -37,7 +37,8 @@ void show::parse(int argc, char ** argv) {
       return;
     }
     
-    y::ldap::account & account = y::ldap::Server().getAccount(y::ldap::UID(uid));
+    y::ldap::server s;
+    y::ldap::account & account = s.getAccount(y::ldap::UID(uid));
     if(account.isNew()) {
       cout << "This account does not exist." << endl;
       return;

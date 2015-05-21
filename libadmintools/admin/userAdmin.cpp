@@ -13,10 +13,6 @@
 #include "ldap/account.h"
 #include <assert.h>
 
-y::admin::userAdmin & y::admin::User() {
-  static userAdmin u;
-  return u;
-}
 
 y::ldap::account & y::admin::userAdmin::add(const string & cn, 
                                             const string & sn,
@@ -25,8 +21,8 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
                                             const y::ldap::WISA_ID & id, 
                                             const y::ldap::PASSWORD & pw) {
   
-  y::ldap::account tempAccount;
-  tempAccount.uid(y::ldap::UID(y::ldap::Server().createUID(cn, sn)));
+  y::ldap::account tempAccount(server);
+  tempAccount.uid(y::ldap::UID(server->createUID(cn, sn)));
   tempAccount.group(gid); 
   
   // set group id
@@ -45,7 +41,7 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
   y::samba::addUser(tempAccount);
   
   // load ldap account created by samba
-  y::ldap::account & newAccount = y::ldap::Server().getAccount(tempAccount.uid());
+  y::ldap::account & newAccount = server->getAccount(tempAccount.uid());
   //assert(!newAccount.isNew());
   
   if(newAccount.uid()().size() == 0) {
@@ -66,19 +62,19 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
   newAccount.wisaID(id);
   newAccount.password(pw);
   
-  newAccount.mail(y::ldap::Server().createMail(cn, sn));
+  newAccount.mail(server->createMail(cn, sn));
   newAccount.group(tempAccount.group());
   newAccount.groupID(tempAccount.groupID());
   
   // add to group
   if(newAccount.group()() == "personeel" || newAccount.group()() == "directie") {
-    y::ldap::group & mailGroup = y::ldap::Server().getGroup("personeel", true);
+    y::ldap::group & mailGroup = server->getGroup("personeel", true);
     mailGroup.members().New() = newAccount.mail()();
     mailGroup.flagForCommit();
   } else if(newAccount.group()() != "extern") {
     if(newAccount.group()() != "externmail") {  
       // this is a student belonging to a classgroup
-      y::ldap::group & mailGroup = y::ldap::Server().getGroup(newAccount.group()(), false);
+      y::ldap::group & mailGroup = server->getGroup(newAccount.group()(), false);
       mailGroup.members().New() = newAccount.dn()();
       mailGroup.flagForCommit();
     }
@@ -91,7 +87,7 @@ void y::admin::userAdmin::remove(const y::ldap::account& acc) {
   // remove from groups first
   // if personeel, remove from that group
   if (acc.group()() == "personeel" || acc.group()() == "directie") {
-    y::ldap::group & personeel = y::ldap::Server().getGroup("personeel", true);
+    y::ldap::group & personeel = server->getGroup("personeel", true);
     container<string> & members = personeel.members();
     for(int i = 0; i < members.elms(); i++) {
       if (members[i] == acc.mail()()) {
@@ -113,7 +109,7 @@ void y::admin::userAdmin::remove(const y::ldap::account& acc) {
   
   // remove from class group
   if(acc.group()() != "extern" && acc.group()() != "externmail") {
-    y::ldap::group & classGroup = y::ldap::Server().getGroup(acc.group()(), false);
+    y::ldap::group & classGroup = server->getGroup(acc.group()(), false);
     container<string> & members = classGroup.members();
     for(int i = 0; i < members.elms(); i++) {
       if(members[i] == acc.dn()()) {

@@ -15,11 +15,11 @@
 
 namespace y {
   namespace ldap {
-
+    class server;
 
     class dataset {
     public:
-      dataset() {}
+      dataset(y::ldap::server * server) :server(server) {}
       dataset(const dataset& orig);
 
       bool create(const string & filter, const string & directory = string(""));
@@ -30,6 +30,8 @@ namespace y {
       data & New(data_type type);
 
     private:
+      y::ldap::server * server;
+      
       string filter;
       string directory;
       std::vector<data> content;

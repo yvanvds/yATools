@@ -43,7 +43,7 @@ void wisaParseFile::onShow() {
   entries->elementAt(0,3)->setPadding(5);
   entries->elementAt(0,4)->setPadding(5);
   
-  container<wisaImport::wisaAccount> & wisaContent = WisaImport().getWisaAccounts();
+  container<wisaImport::wisaAccount> & wisaContent = parentObject->getWisaAccounts();
   
   for(int i = 0; i < wisaContent.elms(); i++) {
     entries->elementAt(i+1, 0)->addWidget(new Wt::WText(wisaContent[i].sn.wt()));

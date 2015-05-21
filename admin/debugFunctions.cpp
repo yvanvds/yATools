@@ -12,6 +12,8 @@
 using namespace std;
 using namespace y::ldap;
 
+
+
 debugFunctions & DebugFunctions() {
   static debugFunctions s;
   return s;
@@ -40,25 +42,29 @@ void debugFunctions::parse(int argc, char ** argv) {
 }
 
 void debugFunctions::removeAllStudents() {
-  container<account> & accounts = Server().getAccounts();
+  y::ldap::server s;
+  ACCOUNTS & accounts = s.getAccounts();
   for(int i = 0; i < accounts.elms(); i++) {
     if(accounts[i].groupID()() == 1000) {
       accounts[i].flagForRemoval();
     }
   }
   
-  Server().commitChanges();
+  s.commitChanges();
 }
 
 void debugFunctions::convertToNewAccount() {
-  container<account> & accounts = Server().getAccounts();
+  y::ldap::server s;
+  ACCOUNTS & accounts = s.getAccounts();
   for(int i = 0; i < accounts.elms(); i++) {
     accounts[i].convertToNewAccount();
   }
+  
 }
 
 void debugFunctions::groupsToSmartschool() {
-  container<group> & groups = Server().getGroups();
+  y::ldap::server s;
+  GROUPS & groups = s.getGroups();
   for(int i = 0; i < groups.elms(); i++) {
     if(!groups[i].editable()) {
       y::Smartschool().addClass(groups[i]);
@@ -66,7 +72,7 @@ void debugFunctions::groupsToSmartschool() {
     }
   }
   
-  container<account> & accounts = Server().getAccounts();
+  ACCOUNTS & accounts = s.getAccounts();
   for(int i = 0; i < accounts.elms(); i++) {
     if(accounts[i].groupID()() == 1000) {
       y::Smartschool().addUserToGroup(accounts[i], accounts[i].group()(), false);

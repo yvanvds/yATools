@@ -12,7 +12,6 @@
 #include "admintools.h"
 
 using namespace std;
-using namespace y::ldap;
 
 addUser & AddUser() {
   static addUser s;
@@ -45,9 +44,11 @@ void addUser::parse(int argc, char ** argv) {
   y::ldap::WISA_ID id(argc > 4 ? std::stoi(argv[4]) : 0);
   ::string password(y::utils::Security().makePassword(8));
   
-  y::ldap::account & account = y::admin::User().add(cn, sn, gid, date, id, PASSWORD(password));
+  y::ldap::server server;
+  y::admin::userAdmin admin(&server);
+  y::ldap::account & account = admin.add(cn, sn, gid, date, id, y::ldap::PASSWORD(password));
 
-  Server().commitChanges();
+  server.commitChanges();
   
   cout << "Added user "  << account.fullName()() << " to " << account.group()() << endl;
   cout << "  Login   : " << account.uid()()  << endl;

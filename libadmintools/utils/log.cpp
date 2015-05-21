@@ -19,6 +19,7 @@ y::utils::log::log() : _useConsole(true), _useFile(true), _file("/var/log/admint
 }
 
 y::utils::log & y::utils::log::add(const string& message) {
+  std::lock_guard<std::mutex> lock(m);
   if(_useConsole) {
     std::cout << message.utf8() << std::endl;
   }
@@ -32,11 +33,13 @@ y::utils::log & y::utils::log::add(const string& message) {
 }
 
 y::utils::log & y::utils::log::useConsole(bool enable) {
+  std::lock_guard<std::mutex> lock(m);
   _useConsole = enable;
   return *this;
 }
 
 y::utils::log & y::utils::log::useFile(bool enable, const string& file) {
+  std::lock_guard<std::mutex> lock(m);
   if(_useFile) {
     _stream.close();
   }
@@ -48,6 +51,7 @@ y::utils::log & y::utils::log::useFile(bool enable, const string& file) {
 }
 
 y::utils::log & y::utils::log::useFunction(void(*logFunction)(const string&)) {
+  std::lock_guard<std::mutex> lock(m);
   _logFunction = logFunction;
   return *this;
 }

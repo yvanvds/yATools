@@ -48,13 +48,14 @@ void addGroup::parse(int argc, char** argv) {
     name = arg;
   }
   
-  group & grp = Server().getGroup(name, editable);
+  y::ldap::server server;
+  group & grp = server.getGroup(name, editable);
   if(!grp.isNew()) {
     cout << "This group already exists." << endl;
     return;
   } else {
     grp.flagForCommit();
-    Server().commitChanges();
+    server.commitChanges();
     cout << "Group " << name << " added." << endl; 
   }
 }

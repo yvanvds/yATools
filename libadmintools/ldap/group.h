@@ -13,9 +13,11 @@
 
 namespace y {
   namespace ldap {
+    class server;
+    
     class group {
     public:
-      group();
+      group(y::ldap::server * server);
       
       bool isNew();
       void clear();
@@ -52,6 +54,8 @@ namespace y {
       bool saveNew   ();
       bool saveUpdate();
       void retrieveData(const data& d);
+      
+      y::ldap::server * server;
       
       watch<DN> _dn;
       watch<string> _cn;

@@ -38,7 +38,7 @@ void wisaCompareGroups::onShow() {
   entries->elementAt(0,3)->addWidget(new Wt::WText(" "));
   entries->elementAt(0,4)->addWidget(new Wt::WText("Nieuwe Klas"));
   
-  container<wisaImport::wisaAccount> & wisaContent = WisaImport().getWisaAccounts();
+  container<wisaImport::wisaAccount> & wisaContent = parentObject->getWisaAccounts();
   int row = 1;
   for(int i = 0; i < wisaContent.elms(); i++) {
     if(!wisaContent[i].link) continue;

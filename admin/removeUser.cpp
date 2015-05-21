@@ -38,14 +38,17 @@ void removeUser::parse(int argc, char ** argv) {
   }
   
   ::string uid(argv[0]);
-  account & acc = Server().getAccount(UID(uid));
+  y::ldap::server s;
+  
+  account & acc = s.getAccount(UID(uid));
   if(acc.isNew()) {
     cout << "This user has already entered the void." << endl;
     return;
   }
   
   // if we get here, the user exists
-  y::admin::User().remove(acc);
-  Server().commitChanges();
+  y::admin::userAdmin admin(&s);
+  admin.remove(acc);
+  s.commitChanges();
 }
 

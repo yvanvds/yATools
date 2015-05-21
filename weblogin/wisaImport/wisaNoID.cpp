@@ -42,7 +42,7 @@ void wisaNoID::onShow() {
   entries->elementAt(0,3)->addWidget(new Wt::WText("Wisa ID"));
   entries->elementAt(0,4)->addWidget(new Wt::WText("Verwijder"));
   
-  container<y::ldap::account> & accounts = y::ldap::Server().getAccounts();
+  ACCOUNTS & accounts = parentObject->ldap()->getAccounts();
   int row = 1;
   Wt::WIntValidator * validator = new Wt::WIntValidator(0, 100000);
   
@@ -77,7 +77,7 @@ bool wisaNoID::onNext() {
     Wt::WLineEdit * le = (Wt::WLineEdit*)entries->rowAt(i)->elementAt(3)->widget(0);
     Wt::WCheckBox * cb = (Wt::WCheckBox*)entries->rowAt(i)->elementAt(4)->widget(0);
     if(cb->isChecked()) {
-      y::ldap::account & acc = y::ldap::Server().getAccount(y::ldap::UID(string(le->id())));
+      y::ldap::account & acc = parentObject->ldap()->getAccount(y::ldap::UID(string(le->id())));
       acc.flagForRemoval();
       acc.setImportStatus(y::ldap::WI_DISCARD);
     } else if(le->validate() != Wt::WValidator::Valid) {
@@ -92,7 +92,7 @@ bool wisaNoID::onNext() {
         } catch (boost::bad_lexical_cast) {
           return false;
         }
-        y::ldap::account & acc = y::ldap::Server().getAccount(y::ldap::UID(string(le->id())));
+        y::ldap::account & acc = parentObject->ldap()->getAccount(y::ldap::UID(string(le->id())));
         acc.wisaID(y::ldap::WISA_ID(newID));
         le->setStyleClass("alert alert-success");
         le->setHeight(5);

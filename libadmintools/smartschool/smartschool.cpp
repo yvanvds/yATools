@@ -23,21 +23,20 @@ y::smartschool & y::Smartschool() {
 }
 
 y::smartschool::smartschool() {
-  server = std::unique_ptr<y::data::server  >(new y::data::server);
-  db     = std::unique_ptr<y::data::database>(new y::data::database(*server));
-  
-  if(!server->hasDatabase("admintools")) {
-    server->create("admintools");
+  y::data::database db;
+  db.open();
+  if(!db.has("admintools")) {
+    db.create("admintools");
   }
-  db->use("admintools");
+  db.use("admintools");
   
-  if(!db->tableExists(SS_ERRORS)) {
-    createErrorCodeTable();
+  if(!db.tableExists(SS_ERRORS)) {
+    createErrorCodeTable(db);
   } else {
     container<y::data::row> rows;
     y::data::field condition;
     condition.name("ID").setInt(0);
-    db->getRows(SS_ERRORS, rows, condition);
+    db.getRows(SS_ERRORS, rows, condition);
     if(rows.elms()) {
       std::string::size_type sz;
       int lasttime = std::stoi(rows[0]["code"].asString().utf8(), &sz);
@@ -45,11 +44,13 @@ y::smartschool::smartschool() {
       
       // renew if a day has past
       if(now - lasttime > 86400) {
-        db->deleteTable(SS_ERRORS);
-        createErrorCodeTable();
+        db.deleteTable(SS_ERRORS);
+        createErrorCodeTable(db);
       }
     }
   }
+  loadErrorCodes(db);
+  db.close();
 }
 
 y::smartschool::~smartschool() {
@@ -240,14 +241,14 @@ int y::smartschool::deleteClass(y::ldap::group& group) {
   return 0;
 }
 
-void y::smartschool::createErrorCodeTable() {
+void y::smartschool::createErrorCodeTable(y::data::database & db) {
   y::data::row fields;
   fields.addInt("ID");
   fields["ID"].primaryKey(true).required(true);
   fields.addString("code");
   fields["code"].stringLength(512);
 
-  db->createTable(SS_ERRORS, fields);
+  db.createTable(SS_ERRORS, fields);
 
   // error 0 does not exists, so we abuse this value to
   // remember the last time we requested the error codes.
@@ -257,11 +258,11 @@ void y::smartschool::createErrorCodeTable() {
   row.addInt("ID", 0);
   time_t now = time(0);
   row.addString("code", string(now));
-  db->addRow(SS_ERRORS, row);
-  getErrorCodes();
+  db.addRow(SS_ERRORS, row);
+  getErrorCodesFromSmartschool(db);
 }
 
-void y::smartschool::getErrorCodes() {
+void y::smartschool::getErrorCodesFromSmartschool(y::data::database & db) {
   
   std::string result;
   if(service.returnCsvErrorCodes(result) != SOAP_OK) {
@@ -294,20 +295,23 @@ void y::smartschool::getErrorCodes() {
       elms[1].erase(0,1);
       elms[1].erase(elms[1].end()-1, elms[1].end());
       row.addString("code", string(elms[1]));
-      db->addRow(SS_ERRORS, row);
+      db.addRow(SS_ERRORS, row);
     }
     
   }
 }
 
-string y::smartschool::errorToText(int code) {
+void y::smartschool::loadErrorCodes(y::data::database& db) {
   container<y::data::row> rows;
-  y::data::field condition;
-  condition.name("ID").setInt(code);
-  db->getRows(SS_ERRORS, rows, condition);
-  if(rows.elms()) {
-    return rows[0]["code"].asString();
-  } 
-  
-  return "This error does not exist.";  
+  db.getAllRows(SS_ERRORS, rows);
+  for(int i = 0; i < rows.elms(); i++) {
+    errorTable[rows[i]["ID"].asInt()] = rows[i]["code"].asString();
+  }
+}
+
+string y::smartschool::errorToText(int code) {
+  if(errorTable.valid(code)) {
+    return errorTable[code];
+  }
+  return string("no error found with this ID");
 }

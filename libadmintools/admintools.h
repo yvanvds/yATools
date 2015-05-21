@@ -15,7 +15,6 @@
 #include "data/database.h"
 #include "data/field.h"
 #include "data/row.h"
-#include "data/sqlserver.h"
 
 //ldap
 #include "ldap/account.h"
@@ -48,8 +47,6 @@
 
 //gui
 #include "gui/application.h"
-#include "gui/passwordDialog.h"
-#include "gui/session.h"
 #include "gui/confirmationDialog.h"
 #include "gui/stackPage.h"
 #include "gui/stackPageManager.h"

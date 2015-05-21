@@ -10,12 +10,17 @@
 
 #include "gui/stackPage.h"
 
+class wisaImport;
+
 class wisaCompareGroups : public y::gui::stackPage {
 public:
+  wisaCompareGroups(wisaImport * parentObject) : parentObject(parentObject) {}
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
 private:
   Wt::WTable * entries;
+  
+  wisaImport * parentObject;
 };
 
 #endif	/* WISACOMPAREGROUPS_H */

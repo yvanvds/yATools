@@ -8,6 +8,7 @@
 #pragma once
 #include "utils/string.h"
 #include <fstream>
+#include <mutex>
 
 namespace y {
   namespace utils {
@@ -46,6 +47,7 @@ namespace y {
       string _file;
       std::wofstream _stream;
       void (*_logFunction)(const string & message);
+      std::mutex m;
     };
 
     // global object (functor)

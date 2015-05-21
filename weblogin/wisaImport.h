@@ -12,6 +12,7 @@
 #include "gui/stackPageManager.h"
 #include "ldap/account.h"
 #include "ldap/group.h"
+#include "ldap/server.h"
 #include "wisaImport/wisaCommitChanges.h"
 #include "wisaImport/wisaCompareFile.h"
 #include "wisaImport/wisaCompareGroups.h"
@@ -42,6 +43,8 @@ public:
     y::ldap::group * link;
   };
   
+  wisaImport(y::ldap::server * server) : ldapServer(server) {}
+  
   y::gui::stackPageManager * get();
   void setWisaFile(const string & file);
   string getWisaFile();
@@ -58,6 +61,8 @@ public:
   Wt::WApplication * getApplication() { return app; }
   
   void showErrorOnScreen(const string & message);
+  
+  y::ldap::server * ldap() { return ldapServer; }
   
 private:
   string wisaFile;
@@ -77,9 +82,10 @@ private:
   wisaCommitChanges * WCommitChanges;
   
   Wt::WApplication * app; // for locking
+  
+  y::ldap::server * ldapServer;
 };
 
-wisaImport & WisaImport();
 
 #endif	/* WISAIMPORT_H */
 

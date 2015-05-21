@@ -33,48 +33,43 @@
 #include <Wt/WApplication>
 #include <thread>
 
-wisaImport & WisaImport() {
-  static wisaImport w;
-  return w;
-}
-
 
 y::gui::stackPageManager * wisaImport::get() {
   manager = new y::gui::stackPageManager();  
  
-  wUpload = new wisaUpload();
+  wUpload = new wisaUpload(this);
   manager->addPage(wUpload);
   wUpload->showButtons(false, false);
   
-  WParseFile = new wisaParseFile(); 
+  WParseFile = new wisaParseFile(this); 
   manager->addPage(WParseFile);
   WParseFile->showButtons(true, true);
   
-  WNoID = new wisaNoID(); 
+  WNoID = new wisaNoID(this); 
   manager->addPage(WNoID);
   WNoID->showButtons(false, true);
   
-  WCompareFile = new wisaCompareFile();
+  WCompareFile = new wisaCompareFile(this);
   manager->addPage(WCompareFile);
   WCompareFile->showButtons(false, true);
   
-  WCompareGroups = new wisaCompareGroups();
+  WCompareGroups = new wisaCompareGroups(this);
   manager->addPage(WCompareGroups);
   WCompareGroups->showButtons(false, true);
   
-  WCompareNames = new wisaCompareNames();
+  WCompareNames = new wisaCompareNames(this);
   manager->addPage(WCompareNames);
   WCompareNames->showButtons(false, true);
   
-  WNewGroups = new wisaNewGroups();
+  WNewGroups = new wisaNewGroups(this);
   manager->addPage(WNewGroups);
   WNewGroups->showButtons(false, true);
   
-  WConfirmSubmit = new wisaConfirmSubmit();
+  WConfirmSubmit = new wisaConfirmSubmit(this);
   manager->addPage(WConfirmSubmit);
   WConfirmSubmit->showButtons(true, true);
   
-  WCommitChanges = new wisaCommitChanges();
+  WCommitChanges = new wisaCommitChanges(this);
   manager->addPage(WCommitChanges);
   WCommitChanges->showButtons(false, false);
   
@@ -165,7 +160,7 @@ string wisaImport::getWisaFile() {
 
 void wisaImport::reset() {
   wUpload->clear();
-  y::ldap::Server().clear();
+  ldapServer->clear();
   manager->showPage(0);
 }
 

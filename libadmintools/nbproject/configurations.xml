@@ -14,18 +14,12 @@
       <itemPath>data/field.h</itemPath>
       <itemPath>data/row.cpp</itemPath>
       <itemPath>data/row.h</itemPath>
-      <itemPath>data/sqlserver.cpp</itemPath>
-      <itemPath>data/sqlserver.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f1" displayName="gui" projectFiles="true">
       <itemPath>gui/application.cpp</itemPath>
       <itemPath>gui/application.h</itemPath>
       <itemPath>gui/confirmationDialog.cpp</itemPath>
       <itemPath>gui/confirmationDialog.h</itemPath>
-      <itemPath>gui/passwordDialog.cpp</itemPath>
-      <itemPath>gui/passwordDialog.h</itemPath>
-      <itemPath>gui/session.cpp</itemPath>
-      <itemPath>gui/session.h</itemPath>
       <itemPath>gui/stackPage.cpp</itemPath>
       <itemPath>gui/stackPage.h</itemPath>
       <itemPath>gui/stackPageManager.cpp</itemPath>
@@ -130,14 +124,6 @@
         <itemPath>data/tests/dataRowTest.cpp</itemPath>
         <itemPath>data/tests/dataRowTest.h</itemPath>
         <itemPath>data/tests/dataRowTestRun.cpp</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f7"
-                     displayName="data server test"
-                     projectFiles="true"
-                     kind="TEST">
-        <itemPath>data/tests/dataServerTest.cpp</itemPath>
-        <itemPath>data/tests/dataServerTest.h</itemPath>
-        <itemPath>data/tests/dataServerTestRun.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f5"
                      displayName="ldap data test"
@@ -287,10 +273,6 @@
       </item>
       <item path="data/row.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="data/sqlserver.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="data/sqlserver.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="data/tests/dataDatabaseTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/tests/dataDatabaseTest.h" ex="false" tool="3" flavor2="0">
@@ -314,12 +296,6 @@
       <item path="data/tests/dataRowTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/tests/dataRowTestRun.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="data/tests/dataServerTest.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="data/tests/dataServerTest.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="data/tests/dataServerTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="defines.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -531,14 +507,6 @@
       <item path="gui/confirmationDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="gui/confirmationDialog.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="gui/passwordDialog.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="gui/passwordDialog.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="gui/session.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="gui/session.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="gui/stackPage.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -779,10 +747,6 @@
       </item>
       <item path="data/row.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="data/sqlserver.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="data/sqlserver.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="data/tests/dataDatabaseTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/tests/dataDatabaseTest.h" ex="false" tool="3" flavor2="0">
@@ -806,12 +770,6 @@
       <item path="data/tests/dataRowTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/tests/dataRowTestRun.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="data/tests/dataServerTest.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="data/tests/dataServerTest.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="data/tests/dataServerTestRun.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="defines.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1021,14 +979,6 @@
       <item path="gui/confirmationDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="gui/confirmationDialog.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="gui/passwordDialog.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="gui/passwordDialog.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="gui/session.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="gui/session.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="gui/stackPage.cpp" ex="false" tool="1" flavor2="0">
       </item>

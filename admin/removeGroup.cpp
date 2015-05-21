@@ -50,7 +50,8 @@ void removeGroup::parse(int argc, char** argv) {
     name = arg;
   }
   
-  group & grp = Server().getGroup(name, editable);
+  y::ldap::server s;
+  group & grp = s.getGroup(name, editable);
   
   if(grp.isNew()) {
     cout << "This group does not exist." << endl;
@@ -59,6 +60,6 @@ void removeGroup::parse(int argc, char** argv) {
   
   grp.flagForRemoval();
   grp.flagForCommit();
-  Server().commitChanges();
+  s.commitChanges();
   cout << "Group " << name << " deleted." << endl;
 }

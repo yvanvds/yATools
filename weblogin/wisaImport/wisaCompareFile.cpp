@@ -28,14 +28,14 @@ void wisaCompareFile::setContent(Wt::WVBoxLayout* box) {
 
 void wisaCompareFile::onShow() {
   // count accounts in wisa file
-  container<wisaImport::wisaAccount> & wisaContent = WisaImport().getWisaAccounts();
+  container<wisaImport::wisaAccount> & wisaContent = parentObject->getWisaAccounts();
   string m1("Nieuw bestand bevat ");
   m1 += wisaContent.elms();
   m1 += " accounts.";
   message1->setText(m1.wt());
   
   // load all accounts
-  container<y::ldap::account> & accounts = y::ldap::Server().getAccounts();
+  ACCOUNTS & accounts = parentObject->ldap()->getAccounts();
   int validAccounts = accounts.elms();
   int accountedFor = 0;
   int accountsToRemove = 0;

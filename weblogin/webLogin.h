@@ -22,6 +22,7 @@
 #include "yearbook/yearbookDB.h"
 #include "accountManager.h"
 #include "proxyManager.h"
+#include "ldap/server.h"
 
 using namespace y;
 
@@ -56,9 +57,9 @@ DeferredWidget<Function> *deferCreate(Function f)
   return new DeferredWidget<Function>(f);
 }
 
-class webLogin : public Wt::WApplication {
+class webLogin : public Wt::WContainerWidget {
 public:
-  webLogin(const Wt::WEnvironment & env);
+  webLogin(Wt::WApplication * app);
   void loginButtonClicked();
   
   void createContents();
@@ -67,8 +68,6 @@ public:
   y::ldap::account * account;
 
 private:
-  Wt::WContainerWidget * homePage;
-  Wt::WBootstrapTheme * theme;
   
   // auth
   Wt::WDialog          * loginDialog   ;
@@ -88,12 +87,12 @@ private:
   
   Wt::WWidget * accountFunc();
   Wt::WWidget * webAccessFunc();
-  Wt::WWidget * wisaImportFunc();
-  Wt::WWidget * groupFunc();
-  Wt::WWidget * yearbookFunc();
-  Wt::WWidget * yearbookReviewFunc();
-  Wt::WWidget * yearbookDownloadFunc();
-  Wt::WWidget * yearbookConfigFunc();
+  //Wt::WWidget * wisaImportFunc();
+  //Wt::WWidget * groupFunc();
+  //Wt::WWidget * yearbookFunc();
+  //Wt::WWidget * yearbookReviewFunc();
+  //Wt::WWidget * yearbookDownloadFunc();
+  //Wt::WWidget * yearbookConfigFunc();
   
   // sub objects
   yearbook * yearbookPtr;
@@ -104,14 +103,15 @@ private:
   accountManager * accountManagerPtr;
   proxyManager * proxyManagerPtr;
   
+  y::ldap::server ldapServer;
   
-  
-  void createYearbookDB();
+  //void createYearbookDB();
   
   void logoutFunc();
   
   void updateTitle();
-  Wt::WWidget * wrapView(Wt::WWidget *(webLogin::*createFunction)());
+  //Wt::WWidget * wrapView(Wt::WWidget *(webLogin::*createFunction)());
+  Wt::WApplication * app;
 };
 
 #endif	/* WEBLOGIN_H */

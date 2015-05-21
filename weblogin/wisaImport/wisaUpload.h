@@ -10,9 +10,11 @@
 
 #include "gui/stackPage.h"
 
+class wisaImport;
+
 class wisaUpload : public y::gui::stackPage {
   public:
-    wisaUpload();
+    wisaUpload(wisaImport * parentObject);
     
     void setContent(Wt::WVBoxLayout * box);
     void onShow();
@@ -27,6 +29,8 @@ class wisaUpload : public y::gui::stackPage {
     void uploadedFunc();
     void fileTooLargeFunc();
     void cleanUpload();
+    
+    wisaImport * parentObject;
 };
 
 #endif	/* WISAUPLOAD_H */

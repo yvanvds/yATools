@@ -20,13 +20,10 @@
 #include <boost/locale.hpp>
 #include "defines.h"
 
-// global object
-y::ldap::server & y::ldap::Server() {
-  static y::ldap::server s;
-  return s;
-}
 
-y::ldap::server::server() : _connected(false), _allAccountsLoaded(false), _allGroupsLoaded(false) {
+y::ldap::server::server() : _accounts(this), _groups(this)
+  , _connected(false), _allAccountsLoaded(false)
+  , _allGroupsLoaded(false) {
   setlocale(LC_MESSAGES, "");
   
   // set timeout values
@@ -109,7 +106,7 @@ bool y::ldap::server::getData(y::ldap::dataset& rs, bool isDN) {
     ldap_memfree(dn);
     
     
-    // parse attributes
+    // parse attributesldap
     char * attr;
     BerElement * ber = NULL;
     BerValue ** values = NULL;
@@ -122,6 +119,7 @@ bool y::ldap::server::getData(y::ldap::dataset& rs, bool isDN) {
         for (int i = 0; values[i] != NULL; i++) {
           d.add(string(attr), string(values[i]->bv_val));
         }
+        ldap_value_free_len(values);
       }
       
       ldap_memfree(attr);
@@ -198,7 +196,7 @@ y::ldap::group & y::ldap::server::getGroup(const string & cn, bool editable) {
   return g;
 }
 
-container<y::ldap::account> & y::ldap::server::getAccounts() {
+ACCOUNTS & y::ldap::server::getAccounts() {
   // don't do this twice
   if(_allAccountsLoaded) return _accounts;
   
@@ -208,7 +206,7 @@ container<y::ldap::account> & y::ldap::server::getAccounts() {
     loaded.New() = _accounts[i].uid()();
   }
   
-  dataset d;
+  dataset d(this);
   d.create("objectClass=*", "ou=people");
   for(int i = 0; i < d.elms(); i++) {
     data & temp = d.get(i);
@@ -232,7 +230,7 @@ container<y::ldap::account> & y::ldap::server::getAccounts() {
   return _accounts;
 }
 
-container<y::ldap::group> & y::ldap::server::getGroups() {
+GROUPS & y::ldap::server::getGroups() {
   // don't do this twice
   if(_allGroupsLoaded) return _groups;
   
@@ -243,7 +241,7 @@ container<y::ldap::group> & y::ldap::server::getGroups() {
   }
   
   {
-    dataset d;
+    dataset d(this);
     d.create("objectClass=*", "ou=mailGroups");
     for(int i = 0; i < d.elms(); i++) {
       data & temp = d.get(i);
@@ -261,7 +259,7 @@ container<y::ldap::group> & y::ldap::server::getGroups() {
     }
   }
   {
-    dataset d;
+    dataset d(this);
     d.create("objectClass=*", "ou=editableMailGroups");
     for(int i = 0; i < d.elms(); i++) {
       data & temp = d.get(i);
@@ -401,7 +399,7 @@ void y::ldap::server::releaseMods(LDAPMod** mods) {
     delete[] mods[i]->mod_type;
     for(int j = 0; mods[i]->mod_bvalues[j] != nullptr; j++) {
       delete[] mods[i]->mod_bvalues[j]->bv_val;
-      delete[] mods[i]->mod_bvalues[j];
+      delete mods[i]->mod_bvalues[j];
     }
     delete[] mods[i]->mod_bvalues;
     delete mods[i];
@@ -456,7 +454,7 @@ void y::ldap::server::remove(const DN& dn) {
 }
 
 int y::ldap::server::findAccounts(const string& query, std::vector<UID_NUMBER> & results) {
-  dataset rs;
+  dataset rs(this);
   rs.filter = query;
   rs.directory = "ou=people";
   

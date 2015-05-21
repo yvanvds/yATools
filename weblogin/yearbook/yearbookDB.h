@@ -22,6 +22,7 @@ public:
   };
   
   yearbookDB();
+  ~yearbookDB();
   
   void loadConfig();
   void loadAllUsers(const string & orderBy = string("name"), bool reload = false);
@@ -74,8 +75,7 @@ public:
   
   
 private:
-  std::unique_ptr<y::data::server  > server;
-  std::unique_ptr<y::data::database> db    ;
+  y::data::database db;
   
   
   string _ID;

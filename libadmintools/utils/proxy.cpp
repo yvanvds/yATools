@@ -9,101 +9,101 @@
 #include <fstream>
 #include <stdlib.h>
 
-y::utils::proxy & y ::utils::Proxy() {
-  static proxy p;
-  return p;
-}
-
 y::utils::proxy::proxy() {
-  server = std::unique_ptr<y::data::server  >(new y::data::server);
-  db     = std::unique_ptr<y::data::database>(new y::data::database(*server));
-  
-  if(!server->hasDatabase("admintools")) {
-    server->create("admintools");
+  y::data::database db;
+  db.open();
+  if(!db.has("admintools")) {
+    db.create("admintools");
   }
-  db->use("admintools");
+  db.use("admintools");
   
-  if(!db->tableExists(PROXY)) {
+  if(!db.tableExists(PROXY)) {
     y::data::row rooms;
     rooms.addString("ID");
     rooms["ID"].primaryKey(true).required(true);
     rooms.addInt("status" );
     rooms.addInt("defaultValue");
-    db->createTable(PROXY, rooms);
+    db.createTable(PROXY, rooms);
     
     // add rooms we know
     {
       y::data::row row; row.addString("ID", "CO112"); 
       row.addInt("status", 1); row.addInt("defaultValue", 1);
-      db->addRow(PROXY, row);
+      db.addRow(PROXY, row);
     }
     {
       y::data::row row; row.addString("ID", "CO114"); 
       row.addInt("status", 1); row.addInt("defaultValue", 1);
-      db->addRow(PROXY, row);
+      db.addRow(PROXY, row);
     }
     {
       y::data::row row; row.addString("ID", "CO116");
       row.addInt("status", 1); row.addInt("defaultValue", 1);
-      db->addRow(PROXY, row);
+      db.addRow(PROXY, row);
     }
     {
       y::data::row row; row.addString("ID", "CO117"); 
       row.addInt("status", 1); row.addInt("defaultValue", 1);
-      db->addRow(PROXY, row);
+      db.addRow(PROXY, row);
     }
     {
       y::data::row row; row.addString("ID", "CO126"); 
       row.addInt("status", 1); row.addInt("defaultValue", 1);
-      db->addRow(PROXY, row);
+      db.addRow(PROXY, row);
     }
     {
       y::data::row row; row.addString("ID", "CO127"); 
       row.addInt("status", 1); row.addInt("defaultValue", 1);
-      db->addRow(PROXY, row);
+      db.addRow(PROXY, row);
     }
     {
       y::data::row row; row.addString("ID", "CO137"); 
       row.addInt("status", 1); row.addInt("defaultValue", 1);
-      db->addRow(PROXY, row);
+      db.addRow(PROXY, row);
     }
     {
       y::data::row row; row.addString("ID", "OLC"); 
       row.addInt("status", 2); row.addInt("defaultValue", 2);
-      db->addRow(PROXY, row);
+      db.addRow(PROXY, row);
     }
     {
       y::data::row row; row.addString("ID", "EC202"); 
       row.addInt("status", 1); row.addInt("defaultValue", 1);
-      db->addRow(PROXY, row);
+      db.addRow(PROXY, row);
     }
     {
       y::data::row row; row.addString("ID", "EC203"); 
       row.addInt("status", 1); row.addInt("defaultValue", 1);
-      db->addRow(PROXY, row);
+      db.addRow(PROXY, row);
     }
     {
       y::data::row row; row.addString("ID", "VI215"); 
       row.addInt("status", 1); row.addInt("defaultValue", 1);
-      db->addRow(PROXY, row);
+      db.addRow(PROXY, row);
     }
   }
-  
-  
+  db.close();
 }
 
 bool y::utils::proxy::status(const string & room, STATUS status) {
+  y::data::database db;
+  db.open();
+  db.use("admintools");
   y::data::field condition;
   condition.name("ID");
   condition.setString(room);
   container<y::data::row> rows;
   
-  db->getRows(PROXY, rows, condition);
-  if(!rows.elms()) return false;
+  db.getRows(PROXY, rows, condition);
+  if(!rows.elms()) {
+    db.close();
+    return false;
+  }
   
   y::data::row row;
   row.addInt("status", (int)status);
-  db->setRow(PROXY, row, condition);
+  db.setRow(PROXY, row, condition);
+  db.close();
   return true;
 }
 
@@ -113,7 +113,11 @@ y::utils::proxy::STATUS y::utils::proxy::status(const string & room) {
   condition.setString(room);
   container<y::data::row> rows;
   
-  db->getRows(PROXY, rows, condition);
+  y::data::database db;
+  db.open();
+  db.use("admintools");
+  db.getRows(PROXY, rows, condition);
+  db.close();
   if(!rows.elms()) return INVALID;
   
   return (STATUS)rows[0]["status"].asInt();
@@ -121,7 +125,10 @@ y::utils::proxy::STATUS y::utils::proxy::status(const string & room) {
 
 y::utils::proxy & y::utils::proxy::reset() {
   container<y::data::row> rows;
-  db->getAllRows(PROXY, rows);
+  y::data::database db;
+  db.open();
+  db.use("admintools");
+  db.getAllRows(PROXY, rows);
   
   for (int i = 0; i < rows.elms(); i++) {
     y::data::field condition;
@@ -129,18 +136,27 @@ y::utils::proxy & y::utils::proxy::reset() {
     
     y::data::row data;
     data.addInt("status", rows[i]["defaultValue"].asInt());
-    db->setRow(PROXY, data, condition);
+    db.setRow(PROXY, data, condition);
   }
+  db.close();
   return *this;
 }
 
 void y::utils::proxy::getAllRooms(container<y::data::row>& rows) {
-  db->getAllRows(PROXY, rows);
+  y::data::database db;
+  db.open();
+  db.use("admintools");
+  db.getAllRows(PROXY, rows);
+  db.close();
 }
 
 void y::utils::proxy::apply() {
   container<y::data::row> rows;
-  db->getAllRows(PROXY, rows);
+  y::data::database db;
+  db.open();
+  db.use("admintools");
+  db.getAllRows(PROXY, rows);
+  db.close();
   
   // open file and remove current content
   std::wofstream file;
@@ -155,5 +171,3 @@ void y::utils::proxy::apply() {
   file.close();
   system("sudo /sbin/restartSquid");
 }
-
-

@@ -31,6 +31,7 @@ void ::find::parse(int argc, char ** argv) {
   ::string cn(argv[0]);
   ::string sn;
   std::vector<y::ldap::UID_NUMBER> results;
+  y::ldap::server s;
   
   if (argc > 1) {
     sn = argv[1];
@@ -41,10 +42,10 @@ void ::find::parse(int argc, char ** argv) {
     ::string query;
     query  = "(&(cn="; query += cn; 
     query += ")(sn=" ; query += sn; query += "))"; 
-    if(y::ldap::Server().findAccounts(query, results)) {
+    if(s.findAccounts(query, results)) {
       cout << "Exact match:" << endl;
       for(int i = 0; i < results.size(); i++) {
-        y::ldap::account & account = y::ldap::Server().getAccount(results[i]);
+        y::ldap::account & account = s.getAccount(results[i]);
         cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
       }
       results.clear();
@@ -57,10 +58,10 @@ void ::find::parse(int argc, char ** argv) {
     
     query  = "(&(cn~="; query += cn; 
     query += ")(sn~=" ; query += sn; query += "))"; 
-    if(y::ldap::Server().findAccounts(query, results)) {
+    if(s.findAccounts(query, results)) {
       cout << "similar matches:" << endl;
       for(int i = 0; i < results.size(); i++) {
-        y::ldap::account & account = y::ldap::Server().getAccount(results[i]);
+        y::ldap::account & account = s.getAccount(results[i]);
         cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
       }
       results.clear();
@@ -75,10 +76,10 @@ void ::find::parse(int argc, char ** argv) {
     if(sn.empty() || y::utils::ask("Search on first name only?")) {
       ::string query;
       query  = "(cn="; query += cn; query += ")"; 
-      if(y::ldap::Server().findAccounts(query, results)) {
+      if(s.findAccounts(query, results)) {
         cout << "Exact matches:" << endl;
         for(int i = 0; i < results.size(); i++) {
-          y::ldap::account & account = y::ldap::Server().getAccount(results[i]);
+          y::ldap::account & account = s.getAccount(results[i]);
           cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
         }
         results.clear();
@@ -90,10 +91,10 @@ void ::find::parse(int argc, char ** argv) {
       cin.get();
     
       query  = "(cn~="; query += cn; query += ")"; 
-      if(y::ldap::Server().findAccounts(query, results)) {
+      if(s.findAccounts(query, results)) {
         cout << "similar matches:" << endl;
         for(int i = 0; i < results.size(); i++) {
-          y::ldap::account & account = y::ldap::Server().getAccount(results[i]);
+          y::ldap::account & account = s.getAccount(results[i]);
           cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
         }
         results.clear();
@@ -107,10 +108,10 @@ void ::find::parse(int argc, char ** argv) {
   if(!sn.empty() && y::utils::ask("Search on last name only?")) {
     ::string query;
     query  = "(sn="; query += sn; query += ")"; 
-    if(y::ldap::Server().findAccounts(query, results)) {
+    if(s.findAccounts(query, results)) {
       cout << "Exact matches:" << endl;
       for(int i = 0; i < results.size(); i++) {
-        y::ldap::account & account = y::ldap::Server().getAccount(results[i]);
+        y::ldap::account & account = s.getAccount(results[i]);
         cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
       }
       results.clear();
@@ -122,10 +123,10 @@ void ::find::parse(int argc, char ** argv) {
     cin.get();
 
     query  = "(sn~="; query += sn; query += ")"; 
-    if(y::ldap::Server().findAccounts(query, results)) {
+    if(s.findAccounts(query, results)) {
       cout << "similar matches:" << endl;
       for(int i = 0; i < results.size(); i++) {
-        y::ldap::account & account = y::ldap::Server().getAccount(results[i]);
+        y::ldap::account & account = s.getAccount(results[i]);
         cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
       }
       results.clear();

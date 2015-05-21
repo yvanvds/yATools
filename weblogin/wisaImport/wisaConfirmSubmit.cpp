@@ -42,7 +42,7 @@ void wisaConfirmSubmit::setContent(Wt::WVBoxLayout* box) {
 }
 
 bool wisaConfirmSubmit::onPrevious() {
-  WisaImport().reset();
+  parentObject->reset();
   return false;
 }
 
@@ -59,14 +59,14 @@ void wisaConfirmSubmit::onShow() {
   nextButton->setText("Wijzig Database");
   
   // count accounts in wisa file
-  container<wisaImport::wisaAccount> & wisaAccounts = WisaImport().getWisaAccounts();
+  container<wisaImport::wisaAccount> & wisaAccounts = parentObject->getWisaAccounts();
   string m1("Nieuw bestand bevat ");
   m1 += wisaAccounts.elms();
   m1 += " accounts.";
   message1->setText(m1.wt());
   
   // load all accounts
-  container<y::ldap::account> & accounts = y::ldap::Server().getAccounts();
+  ACCOUNTS & accounts = parentObject->ldap()->getAccounts();
   int validAccounts = accounts.elms();
   int linkedAccounts = 0;
   int accountsToRemove = 0;
@@ -107,14 +107,14 @@ void wisaConfirmSubmit::onShow() {
   message5->setText(m5.wt());
   
   // count groups in wisa file
-  container<wisaImport::wisaGroup> & wisaGroups = WisaImport().getWisaGroups();
+  container<wisaImport::wisaGroup> & wisaGroups = parentObject->getWisaGroups();
   string m6("Nieuw bestand bevat ");
   m6 += wisaGroups.elms();
   m6 += " klassen.";
   message6->setText(m6.wt());
   
   // load all accounts
-  container<y::ldap::group> & groups = y::ldap::Server().getGroups();
+  GROUPS & groups = parentObject->ldap()->getGroups();
   int validGroups = groups.elms();
   int linkedGroups = 0;
   int groupsToRemove = 0;

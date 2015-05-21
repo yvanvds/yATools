@@ -112,6 +112,7 @@ void printBasicHelp() {
   cout << "  show       : show a user's details."    << endl;
   cout << "  find       : find a user by name."      << endl;
   cout << "  user       : add or delete a user."     << endl;
+  cout << "  group      : add or delete a group."    << endl;
   cout << "  proxy      : squid control."            << endl;
   
   cout << endl;

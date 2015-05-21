@@ -34,15 +34,17 @@ void proxyManager::parse(int argc, char ** argv) {
     printHelp();
     return;
   } else {
+    y::utils::proxy proxyObj;
+    
     ::string arg(argv[0]);
     if(arg == "--reset") {
-      Proxy().reset().apply();
+      proxyObj.reset().apply();
       return;
     } 
     
     if(arg == "--show") {
       container<y::data::row> rows;
-      y::utils::Proxy().getAllRooms(rows);
+      proxyObj.getAllRooms(rows);
       for (int i = 0; i < rows.elms(); i++) {
         cout << rows[i]["ID"].asString() << " is ";
         y::utils::proxy::STATUS status = (y::utils::proxy::STATUS)rows[i]["status"].asInt();
@@ -57,7 +59,7 @@ void proxyManager::parse(int argc, char ** argv) {
     
     // other arguments are supposed to be rooms
     proxy::STATUS status = proxy::INVALID;
-    status = y::utils::Proxy().status(arg);
+    status = proxyObj.status(arg);
     if(status == proxy::INVALID) {
       cout << "This room does not exist" << endl;
       return;
@@ -76,8 +78,8 @@ void proxyManager::parse(int argc, char ** argv) {
             cout << arg << " is already open." << endl;
             return;
           } else {
-            y::utils::Proxy().status(arg, proxy::OPEN);
-            y::utils::Proxy().apply();
+            proxyObj.status(arg, proxy::OPEN);
+            proxyObj.apply();
             cout << arg << " is now open." << endl;
             return;
           }
@@ -87,8 +89,8 @@ void proxyManager::parse(int argc, char ** argv) {
             cout << arg << " is already filtered." << endl;
             return;
           } else {
-            y::utils::Proxy().status(arg, proxy::FILTER);
-            y::utils::Proxy().apply();
+            proxyObj.status(arg, proxy::FILTER);
+            proxyObj.apply();
             cout << arg << " is now filtered." << endl;
             return;
           }
@@ -98,8 +100,8 @@ void proxyManager::parse(int argc, char ** argv) {
             cout << arg << " is already closed." << endl;
             return;
           } else {
-            y::utils::Proxy().status(arg, proxy::CLOSED);
-            y::utils::Proxy().apply();
+            proxyObj.status(arg, proxy::CLOSED);
+            proxyObj.apply();
             cout << arg << " is now closed." << endl;
             return;
           }

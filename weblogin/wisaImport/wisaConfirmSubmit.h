@@ -11,8 +11,11 @@
 
 #include "gui/stackPage.h"
 
+class wisaImport;
+
 class wisaConfirmSubmit : public y::gui::stackPage {
 public:
+  wisaConfirmSubmit(wisaImport * parentObject) : parentObject(parentObject) {}
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
   bool onNext();
@@ -28,6 +31,8 @@ private:
   Wt::WText * message8;
   Wt::WText * message9;
   Wt::WText * message10;
+  
+  wisaImport * parentObject;
 };
 
 #endif	/* WISACONFIRMSUBMIT_H */

@@ -29,6 +29,7 @@ void y::utils::config::load() {
 }
 
 void y::utils::config::load(int argc, char** argv) {
+  std::lock_guard<std::mutex> lock(m);
   if(configReady) {
     //Log().add("y::sys::config::load is called more than once!");
     return;
@@ -162,50 +163,62 @@ void y::utils::config::load(int argc, char** argv) {
 }
 
 const string & y::utils::config::getLdapPasswd() const {
+  std::lock_guard<std::mutex> lock(m);
   return ldapPasswd;
 }
 
 const string & y::utils::config::getLdapHost() const {
+  std::lock_guard<std::mutex> lock(m);
   return ldapHost;
 }
 
 const string & y::utils::config::getLdapBaseDN() const {
+  std::lock_guard<std::mutex> lock(m);
   return ldapBaseDN;
 }
 
 const string & y::utils::config::getLdapAdminDN() const {
+  std::lock_guard<std::mutex> lock(m);
   return ldapAdminDN;
 }
 
 const string & y::utils::config::getLdapTestUID() const {
+  std::lock_guard<std::mutex> lock(m);
   return ldapTestUID;
 }
 
 const string & y::utils::config::getLdapTestPassword() const {
+  std::lock_guard<std::mutex> lock(m);
   return ldapTestPassword;
 }
 
 const string & y::utils::config::getLdapTestUidNumber() const {
+  std::lock_guard<std::mutex> lock(m);
   return ldapTestUidNumber;
 }
 
 const string & y::utils::config::getLdapTestDN() const {
+  std::lock_guard<std::mutex> lock(m);
   return ldapTestDN;
 }
 
 const string & y::utils::config::getMysqlPassword() const {
+  std::lock_guard<std::mutex> lock(m);
   return mysqlPassword;
 }
 
 const string & y::utils::config::getDomain() const {
+  std::lock_guard<std::mutex> lock(m);
   return domain;
 }
 
 const string & y::utils::config::getSSPw() const {
+  std::lock_guard<std::mutex> lock(m);
   return smartschoolPw;
 }
 
 bool y::utils::config::isYearbookAdmin(const string& uid) {
+  std::lock_guard<std::mutex> lock(m);
   for(int i = 0; i < yearbookAdmin.elms(); i++) {
     if(yearbookAdmin[i] == uid) return true;
   }

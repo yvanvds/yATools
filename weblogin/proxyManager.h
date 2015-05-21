@@ -19,9 +19,7 @@
 class proxyManager;
 class room {
 public:
-  
-  room(const string & name, proxyManager * parent);
-  void create(Wt::WTableRow * row);
+  void create(const string & name, proxyManager * parent, Wt::WTableRow * row);
   void buttonClicked(Wt::WRadioButton * selected);
   
   void setStatus(y::utils::proxy::STATUS status, bool silent = false);
@@ -38,14 +36,15 @@ private:
   proxyManager * parent;
 };
 
-class proxyManager : public Wt::WObject {
+class proxyManager : public Wt::WContainerWidget {
 public:
-  Wt::WWidget * get();
+  void create();
   
   room * getRoom(Wt::WButtonGroup * group);
 private:
-  std::vector<room> rooms;
-  
+  container<room> rooms;
+  y::utils::proxy proxyObj;
+  friend class room;
 };
 
 

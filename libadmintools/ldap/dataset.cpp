@@ -11,6 +11,7 @@
 #include <boost/algorithm/string.hpp>
 
 y::ldap::dataset::dataset(const dataset& orig) {
+  server = orig.server;
   filter = orig.filter;
   directory = orig.directory;
   content = orig.content;
@@ -19,7 +20,7 @@ y::ldap::dataset::dataset(const dataset& orig) {
 bool y::ldap::dataset::create(const string & filter, const string & directory) {
   this->filter = filter;
   this->directory = directory;
-  return Server().getData(*this);
+  return server->getData(*this);
 }
 
 bool y::ldap::dataset::createFromDN(const string& dn) {
@@ -33,7 +34,7 @@ bool y::ldap::dataset::createFromDN(const string& dn) {
     this->directory += ",";
     this->directory += string(strs[i]);
   }
-  return Server().getData(*this, true);
+  return server->getData(*this, true);
 }
 
 int y::ldap::dataset::elms() {

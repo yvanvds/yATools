@@ -10,16 +10,15 @@
 
 
 yearbookDB::yearbookDB() {
-  server = std::unique_ptr<y::data::server>(new y::data::server);
-  db = std::unique_ptr<y::data::database>(new y::data::database(*server));
+  db.open();
   
-  if(!server->hasDatabase("yearbookApp")) {
-    server->create("yearbookApp");
+  if(!db.has("yearbookApp")) {
+    db.create("yearbookApp");
   }
   
-  db->use("yearbookApp");
+  db.use("yearbookApp");
   
-if(!db->tableExists("submissions")) {  
+if(!db.tableExists("submissions")) {  
     // create table for submissions
     y::data::row submissions;
     submissions.addString("ID");
@@ -41,10 +40,10 @@ if(!db->tableExists("submissions")) {
     submissions.addDate("submitDate");
     submissions.addBool("approved");
     
-    db->createTable("submissions", submissions);    
+    db.createTable("submissions", submissions);    
   } 
   
-  if(!db->tableExists("config")) {
+  if(!db.tableExists("config")) {
     y::data::row config;
     config.addInt("ID");
     config["ID"].primaryKey(true).required(true).autoIncrement(true);
@@ -59,7 +58,7 @@ if(!db->tableExists("submissions")) {
     config["question3"].stringLength(128);
     config["question4"].stringLength(128);
     
-    db->createTable("config", config);
+    db.createTable("config", config);
     
     config.clear();
     y::data::dateTime date;
@@ -72,33 +71,37 @@ if(!db->tableExists("submissions")) {
     config.addString("question2", "");
     config.addString("question3", "");
     config.addString("question4", "");
-    db->addRow("config", config);
+    db.addRow("config", config);
   }
   
-  if(!db->tableExists("replacements")) {
+  if(!db.tableExists("replacements")) {
     y::data::row replacements;
     replacements.addInt("ID");
     replacements["ID"].primaryKey(true).required(true).autoIncrement(true);
     replacements.addString("original").addString("replacement");
     replacements["replacement"].stringLength(128);
-    db->createTable("replacements", replacements);
+    db.createTable("replacements", replacements);
   }
   
-  if(!db->tableExists("validUsers")) {
+  if(!db.tableExists("validUsers")) {
     y::data::row users;
     users.addInt("ID");
     users["ID"].primaryKey(true).required(true).autoIncrement(true);
     users.addString("accountName");
     
-    db->createTable("validUsers", users);
+    db.createTable("validUsers", users);
   } 
   
   newEntry = true;
 }
 
+yearbookDB::~yearbookDB() {
+  db.close();
+}
+
 void yearbookDB::loadConfig() {
   container<y::data::row> config;
-  db->getAllRows("config", config);
+  db.getAllRows("config", config);
   if(config.elms()) {
     openDate  = config[0]["openDate" ].asDate();
     closeDate = config[0]["closeDate"].asDate();
@@ -114,7 +117,7 @@ bool yearbookDB::loadUser(const string & uid) {
   condition.name("ID");
   condition.setString(uid);
   container<y::data::row> rows;
-  db->getRows("submissions", rows, condition);
+  db.getRows("submissions", rows, condition);
   
   if(rows.elms() > 0) {
     y::data::row & result = rows[0];
@@ -162,14 +165,14 @@ void yearbookDB::saveUser() {
   
   if(newEntry) {
     row.addString("ID", _ID);
-    db->addRow("submissions", row);
+    db.addRow("submissions", row);
     newEntry = false;
   } else {
     y::data::field condition;
     condition.name("ID");
     condition.setString(_ID);
 
-    db->setRow("submissions", row, condition);
+    db.setRow("submissions", row, condition);
   }
 }
 
@@ -187,7 +190,7 @@ void yearbookDB::saveUser(entry & e) {
   row.addString("photo", e.photo);
   row.addBool("approved", e.approved);
   y::data::field condition("ID", e.ID);
-  db->setRow("submissions", row, condition);
+  db.setRow("submissions", row, condition);
   e.changed = false;
 }
 
@@ -208,7 +211,7 @@ void yearbookDB::saveUser(int index) {
   row.addString("photo", e.photo);
   row.addBool("approved", e.approved);
   y::data::field condition("ID", e.ID);
-  db->setRow("submissions", row, condition);
+  db.setRow("submissions", row, condition);
   e.changed = false;
 }
 
@@ -339,7 +342,7 @@ void yearbookDB::loadAllUsers(const string& orderBy, bool reload) {
   if(orderBy != "classgroup") {
     order.New().setKey("surname");
   }
-  db->getAllRows("submissions", rows, order);
+  db.getAllRows("submissions", rows, order);
   
   for (int i = 0; i < rows.elms(); i++) {
     entry & e = entries.New();
@@ -376,12 +379,12 @@ void yearbookDB::replace(const string& key, const string& value) {
     y::data::field condition("original", key);
     y::data::row row;
     row.addString("replacement", value);
-    db->setRow("replacements", row, condition);
+    db.setRow("replacements", row, condition);
   } else {
     y::data::row row;
     row.addString("original", key);
     row.addString("replacement", value);
-    db->addRow("replacements", row);
+    db.addRow("replacements", row);
   }
 }
 
@@ -395,7 +398,7 @@ void yearbookDB::setQuestion(int ID, const string& text) {
     case 3: row.addString("question4", question[3]); break;
   }
   y::data::field condition("ID", 1);
-  db->setRow("config", row, condition);
+  db.setRow("config", row, condition);
 }
 
 void yearbookDB::setCloseDate(const Wt::WDate& date) {
@@ -405,7 +408,7 @@ void yearbookDB::setCloseDate(const Wt::WDate& date) {
   y::data::row row;
   row.addDate("closeDate", closeDate);
   y::data::field condition("ID", 1);
-  db->setRow("config", row, condition);
+  db.setRow("config", row, condition);
 }
 
 void yearbookDB::setOpenDate(const Wt::WDate& date) {
@@ -415,12 +418,12 @@ void yearbookDB::setOpenDate(const Wt::WDate& date) {
   y::data::row row;
   row.addDate("openDate", openDate);
   y::data::field condition("ID", 1);
-  db->setRow("config", row, condition);
+  db.setRow("config", row, condition);
 }
 
 void yearbookDB::removeUser(const string & uid) {
   y::data::field condition("ID", uid);
-  db->delRow("submissions", condition);
+  db.delRow("submissions", condition);
   
   for(int i = 0; i < entries.elms(); i++) {
     if (entries[i].ID == uid) {
@@ -434,7 +437,7 @@ void yearbookDB::removeUser(int index) {
   if(index >= entries.elms()) return;
  
   y::data::field condition("ID", entries[index].ID);
-  db->delRow("submissions", condition);
+  db.delRow("submissions", condition);
   
   entries.remove(index);
 }

@@ -10,13 +10,18 @@
 
 #include "gui/stackPage.h"
 
+class wisaImport;
+
 class wisaNoID : public y::gui::stackPage {
 public:
+  wisaNoID(wisaImport * parentObject) : parentObject(parentObject) {}
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
   bool onNext();
 private:
   Wt::WTable * entries;
+  
+  wisaImport * parentObject;
 };
 #endif	/* WISANOID_H */
 

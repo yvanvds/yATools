@@ -17,7 +17,7 @@
 #include <admintools.h>
 
 
-Wt::WWidget * accountManager::get(y::ldap::account * account) {
+void accountManager::create(y::ldap::account * account) {
   this->account = account;
   
   Wt::WTable * table = new Wt::WTable();
@@ -123,14 +123,11 @@ Wt::WWidget * accountManager::get(y::ldap::account * account) {
   
   table->setStyleClass("panel-body");
   
-  Wt::WContainerWidget * result = new Wt::WContainerWidget();
-  Wt::WPanel * panel = new Wt::WPanel(result);
+  Wt::WPanel * panel = new Wt::WPanel(this);
   panel->setStyleClass("panel panel-primary");
   panel->setTitle("<h3>Mijn Account</h3>");
   panel->setCentralWidget(table);
   panel->setMaximumSize(800, Wt::WLength::Auto);
-  
-  return result;
 }
 
 void accountManager::saveButtonClicked() {
@@ -144,7 +141,7 @@ void accountManager::saveButtonClicked() {
   feedback->setStyleClass("alert");
   feedback->setText("");
   
-  if (!y::ldap::Server().auth(account->dn(), y::ldap::PASSWORD(currentPW))) {
+  if (!server->auth(account->dn(), y::ldap::PASSWORD(currentPW))) {
     currentPassword->setStyleClass("form-control invalid");
     currentPassword->setText("");
     currentPassword->setFocus();
@@ -186,7 +183,7 @@ void accountManager::saveButtonClicked() {
 
   // if we get here, change the user's password
   account->password(y::ldap::PASSWORD(newPW1));
-  y::ldap::Server().commitChanges();
+  server->commitChanges();
   feedback->setText("Je wachtwoord is gewijzigd.");
   feedback->setStyleClass("alert alert-success"); 
   currentPassword->setText("");

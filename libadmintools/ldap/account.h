@@ -32,9 +32,11 @@ namespace y {
     const string TYPE_GID       ("departmentNumber");
     const string TYPE_GID_NUMBER("gidNumber"       );   
     
+    class server;
+    
     class account {
     public:
-      account();
+      account(y::ldap::server * server);
 
       bool isNew(); // true if account does not exist in ldap
       void clear();
@@ -78,6 +80,8 @@ namespace y {
       // shared code for load functions
       bool load(const data & d);
       
+      y::ldap::server * server;
+      
       watch<UID_NUMBER>  _uidNumber;
       watch<UID       >  _uid      ;
       watch<DN        >  _dn       ;
@@ -104,6 +108,7 @@ namespace y {
       
       WISA_IMPORT _importStatus;
       bool _flaggedForRemoval;
+      
       
       friend class server;
     };

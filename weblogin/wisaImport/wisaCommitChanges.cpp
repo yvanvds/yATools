@@ -78,18 +78,12 @@ void wisaCommitChanges::setContent(Wt::WVBoxLayout* box) {
   download = new fileDownload(entries);
 }
 
-void WisaShowErrorOnScreen(const string & message) {
-  WisaImport().showErrorOnScreen(message);
-}
-
-
 void commitThreadFunc(wisaCommitChanges * caller) {
-  y::utils::Log().useFunction(&WisaShowErrorOnScreen);
   // create groups
-  container<wisaImport::wisaGroup> & wisaGroups = WisaImport().getWisaGroups();
+  container<wisaImport::wisaGroup> & wisaGroups = caller->getParentObject()->getWisaGroups();
   for (int i = 0; i < wisaGroups.elms(); i++) {
     if(wisaGroups[i].link == nullptr) {
-      y::ldap::group & g = y::ldap::Server().getGroup(wisaGroups[i].name, false);
+      y::ldap::group & g = caller->getParentObject()->ldap()->getGroup(wisaGroups[i].name, false);
       g.flagForCommit();
       string message("Klas ");
       message += wisaGroups[i].name;
@@ -98,7 +92,9 @@ void commitThreadFunc(wisaCommitChanges * caller) {
     }
   }
   
-  container<wisaImport::wisaAccount> & wisaAccounts = WisaImport().getWisaAccounts();
+  y::admin::userAdmin admin(caller->getParentObject()->ldap());
+  
+  container<wisaImport::wisaAccount> & wisaAccounts = caller->getParentObject()->getWisaAccounts();
   for (int i = 0; i < wisaAccounts.elms(); i++) {
     wisaImport::wisaAccount & account = wisaAccounts[i];
     if(account.link == nullptr) {
@@ -111,7 +107,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
       string password(y::utils::Security().makePassword(8));
       
       
-      y::ldap::account & acc = y::admin::User().add(cn, sn, gid, date, id, y::ldap::PASSWORD(password));
+      y::ldap::account & acc = admin.add(cn, sn, gid, date, id, y::ldap::PASSWORD(password));
       string message("Account voor ");
       message += acc.fullName()();
       message += " werd toegevoegd";
@@ -170,9 +166,9 @@ void commitThreadFunc(wisaCommitChanges * caller) {
       }
       
       if(account.link->group()() != account.group) {
-        y::ldap::group & oldGroup = y::ldap::Server().getGroup(account.link->group()(), false);
+        y::ldap::group & oldGroup = caller->getParentObject()->ldap()->getGroup(account.link->group()(), false);
         oldGroup.removeMember(account.link->dn()());
-        y::ldap::group & newGroup = y::ldap::Server().getGroup(account.group, false);
+        y::ldap::group & newGroup = caller->getParentObject()->ldap()->getGroup(account.group, false);
         newGroup.addMember(account.link->dn()());
         account.link->group(y::ldap::GID(account.group));
         string message("Klas voor ");
@@ -197,17 +193,17 @@ void commitThreadFunc(wisaCommitChanges * caller) {
     }
   }
   
-  container<y::ldap::account> & ldapAcc = y::ldap::Server().getAccounts();
+  ACCOUNTS & ldapAcc = caller->getParentObject()->ldap()->getAccounts();
   for(int i = 0; i < ldapAcc.elms(); i++) {
     if(ldapAcc[i].flaggedForRemoval()) {
-      y::admin::User().remove(ldapAcc[i]);
+      admin.remove(ldapAcc[i]);
       string message("Gebruiker ");
       message += ldapAcc[i].fullName()();
       message += " werd verwijderd";
       caller->addMessage(message);
     }
   }
-  y::ldap::Server().commitChanges();
+  caller->getParentObject()->ldap()->commitChanges();
   caller->addMessage("Alle wijzigingen zijn voltooid.", true);
   
   y::utils::Log().useFunction();
@@ -223,7 +219,7 @@ void wisaCommitChanges::onShow() {
   entries->elementAt(rowCounter,0)->setPadding(5);
   rowCounter++;
   
-  WisaImport().getApplication()->enableUpdates();
+  parentObject->getApplication()->enableUpdates();
   
   std::thread t(commitThreadFunc, this);
   t.detach();
@@ -232,14 +228,14 @@ void wisaCommitChanges::onShow() {
 
 
 void wisaCommitChanges::addMessage(const string& message, bool lastUpdate) {
-  Wt::WApplication::UpdateLock lock(WisaImport().getApplication());
+  Wt::WApplication::UpdateLock lock(parentObject->getApplication());
   if(lock) {
     entries->elementAt(rowCounter,0)->addWidget(new Wt::WText(message.wt()));
     entries->elementAt(rowCounter,0)->setPadding(5);
     rowCounter++;
     streamCounter++;
     if(streamCounter == 10) {
-      WisaImport().getApplication()->triggerUpdate();
+      parentObject->getApplication()->triggerUpdate();
       streamCounter = 0;
     }
     
@@ -254,7 +250,7 @@ void wisaCommitChanges::addMessage(const string& message, bool lastUpdate) {
       }
       
       progress->setText("<h4>Klaar</h4>");
-      WisaImport().getApplication()->triggerUpdate();
+      parentObject->getApplication()->triggerUpdate();
     }
   }  
 }

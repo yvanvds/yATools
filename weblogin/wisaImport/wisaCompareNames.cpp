@@ -43,7 +43,7 @@ void wisaCompareNames::onShow() {
   entries->elementAt(0,3)->setPadding(5);
   entries->elementAt(0,4)->setPadding(5);
   
-  container<wisaImport::wisaAccount> & wisaContent = WisaImport().getWisaAccounts();
+  container<wisaImport::wisaAccount> & wisaContent = parentObject->getWisaAccounts();
   int row = 1;
   for(int i = 0; i < wisaContent.elms(); i++) {
     if(!wisaContent[i].link) continue;

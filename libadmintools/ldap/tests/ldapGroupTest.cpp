@@ -29,47 +29,51 @@ void ldapGroupTest::tearDown() {
 }
 
 void ldapGroupTest::testCn() {
-  y::ldap::group  & group = y::ldap::Server().getGroup("6INF1", false);
-  if (group.cn() != "6INF1") {
+  y::ldap::server Server;
+  y::ldap::group  & group = Server.getGroup("6IT", false);
+  if (group.cn() != "6IT") {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void ldapGroupTest::testDn() {
-  y::ldap::group  & group = y::ldap::Server().getGroup("6INF1", false);
-  if (group.dn()() != "cn=6INF1,ou=mailGroups,dc=sanctamaria-aarschot,dc=be") {
+  y::ldap::server Server;
+  y::ldap::group  & group = Server.getGroup("6IT", false);
+  if (group.dn()() != "cn=6IT,ou=mailGroups,dc=sanctamaria-aarschot,dc=be") {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void ldapGroupTest::testEditable() {
-  y::ldap::group  & group = y::ldap::Server().getGroup("6INF1", false);
+  y::ldap::server Server;
+  y::ldap::group  & group = Server.getGroup("6IT", false);
   if (group.editable()) {
     CPPUNIT_ASSERT(false);
   }
-  y::ldap::group  & group2 = y::ldap::Server().getGroup("directie", true);
+  y::ldap::group  & group2 = Server.getGroup("directie", true);
   if (!group2.editable()) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void ldapGroupTest::testFlagForCommit() {
-  y::ldap::group  & group = y::ldap::Server().getGroup("6IT", false);
+  y::ldap::server Server;
+  y::ldap::group  & group = Server.getGroup("6IT", false);
   container<string> & members = group.members();
   members.New() = y::utils::Config().getLdapTestDN();
-  if(y::ldap::Server().commitChanges()) {
+  if(Server.commitChanges()) {
     // not flagged for commit, so this should not succeed
     CPPUNIT_ASSERT(false);
   }
   
   group.flagForCommit();
-  if(!y::ldap::Server().commitChanges()) {
+  if(!Server.commitChanges()) {
     CPPUNIT_ASSERT(false);
   }
   
   // restore list to previous state
-  y::ldap::Server().clear();
-  y::ldap::group  & group2 = y::ldap::Server().getGroup("6IT", false);
+  Server.clear();
+  y::ldap::group  & group2 = Server.getGroup("6IT", false);
   container<string> & members2 = group2.members();
   bool found = false;
   for(int i = 0; i < members2.elms(); i++)  {
@@ -81,25 +85,26 @@ void ldapGroupTest::testFlagForCommit() {
   }
   if(!found) CPPUNIT_ASSERT(false);
   group2.flagForCommit();
-  y::ldap::Server().commitChanges();
+  Server.commitChanges();
 }
 
 void ldapGroupTest::testMembers() {
+  y::ldap::server Server;
   int memberCount;
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("6IT", false);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("6IT", false);
     container<string> & members = group.members();
     memberCount = members.elms();
     members.New() = y::utils::Config().getLdapTestDN();  
     group.flagForCommit();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   // reload list
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("6IT", false);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("6IT", false);
     container<string> & members = group.members();
     if(members.elms() != memberCount + 1) {
       CPPUNIT_ASSERT(false);
@@ -113,13 +118,13 @@ void ldapGroupTest::testMembers() {
     }
     
     group.flagForCommit();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   // reload again
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("6IT", false);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("6IT", false);
     container<string> & members = group.members();
     if(members.elms() != memberCount) {
       CPPUNIT_ASSERT(false);
@@ -128,19 +133,19 @@ void ldapGroupTest::testMembers() {
   
   // now do the same test with an editable group
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("directie", true);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("directie", true);
     container<string> & members = group.members();
     memberCount = members.elms();
     members.New() = "yvan@sanctamaria-aarschot.be"; 
     group.flagForCommit();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   // reload list
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("directie", true);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("directie", true);
     container<string> & members = group.members();
     if(members.elms() != memberCount + 1) {
       CPPUNIT_ASSERT(false);
@@ -154,13 +159,13 @@ void ldapGroupTest::testMembers() {
     }
     
     group.flagForCommit();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   // reload again
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("directie", true);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("directie", true);
     container<string> & members = group.members();
     if(members.elms() != memberCount) {
       CPPUNIT_ASSERT(false);
@@ -169,19 +174,20 @@ void ldapGroupTest::testMembers() {
 }
 
 void ldapGroupTest::testOwners() {
+  y::ldap::server Server;
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("6IT", false);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("6IT", false);
     container<string> & owners = group.owners();
     owners.New() = y::utils::Config().getLdapTestDN();  
     group.flagForCommit();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   // reload list
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("6IT", false);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("6IT", false);
     container<string> & owners = group.owners();
     if(owners.elms() != 2) {
       CPPUNIT_ASSERT(false);
@@ -195,13 +201,13 @@ void ldapGroupTest::testOwners() {
     }
     
     group.flagForCommit();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   // reload again
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("6IT", false);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("6IT", false);
     container<string> & owners = group.owners();
     if(owners.elms() != 1) {
       CPPUNIT_ASSERT(false);
@@ -210,18 +216,18 @@ void ldapGroupTest::testOwners() {
   
   // now do the same test with an editable group
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("directie", true);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("directie", true);
     container<string> & owners = group.owners();
     owners.New() = "yvan@sanctamaria-aarschot.be"; 
     group.flagForCommit();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   // reload list
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("directie", true);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("directie", true);
     container<string> & owners = group.owners();
     if(owners.elms() != 4) {
       CPPUNIT_ASSERT(false);
@@ -235,13 +241,13 @@ void ldapGroupTest::testOwners() {
     }
     
     group.flagForCommit();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   // reload again
   {
-    y::ldap::Server().clear();
-    y::ldap::group  & group = y::ldap::Server().getGroup("directie", true);
+    Server.clear();
+    y::ldap::group  & group = Server.getGroup("directie", true);
     container<string> & owners = group.owners();
     if(owners.elms() != 3) {
       CPPUNIT_ASSERT(false);
@@ -250,10 +256,11 @@ void ldapGroupTest::testOwners() {
 }
 
 void ldapGroupTest::testSave() {
+  y::ldap::server Server;
   // create a new group
   {
-    y::ldap::Server().clear();
-    y::ldap::group & group = y::ldap::Server().getGroup("newgroup", false);
+    Server.clear();
+    y::ldap::group & group = Server.getGroup("newgroup", false);
     if(!group.isNew()) {
       // this should be a new group
       CPPUNIT_ASSERT(false);
@@ -262,23 +269,23 @@ void ldapGroupTest::testSave() {
     group.editable(false);
     group.members().New() = y::utils::Config().getLdapTestDN();
     group.flagForCommit();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   {
-    y::ldap::Server().clear();
-    y::ldap::group & group = y::ldap::Server().getGroup("newgroup", false);
+    Server.clear();
+    y::ldap::group & group = Server.getGroup("newgroup", false);
     if(group.isNew()) {
       CPPUNIT_ASSERT(false);
     }
     group.flagForRemoval();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   {
     // check if it's gone
-    y::ldap::Server().clear();
-    y::ldap::group & group = y::ldap::Server().getGroup("newgroup", false);
+    Server.clear();
+    y::ldap::group & group = Server.getGroup("newgroup", false);
     if(!group.isNew()) {
       // this should be a new group
       CPPUNIT_ASSERT(false);
@@ -287,8 +294,8 @@ void ldapGroupTest::testSave() {
   
   // create a new editable group
   {
-    y::ldap::Server().clear();
-    y::ldap::group & group = y::ldap::Server().getGroup("newgroup", true);
+    Server.clear();
+    y::ldap::group & group = Server.getGroup("newgroup", true);
     if(!group.isNew()) {
       // this should be a new group
       CPPUNIT_ASSERT(false);
@@ -297,23 +304,23 @@ void ldapGroupTest::testSave() {
     group.owners().New() = "boss@sanctamaria-aarschot.be";
     group.members().New() = "yvan@sanctamaria-aarschot.be";
     group.flagForCommit();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   {
-    y::ldap::Server().clear();
-    y::ldap::group & group = y::ldap::Server().getGroup("newgroup", true);
+    Server.clear();
+    y::ldap::group & group = Server.getGroup("newgroup", true);
     if(group.isNew()) {
       CPPUNIT_ASSERT(false);
     }
     group.flagForRemoval();
-    y::ldap::Server().commitChanges();
+    Server.commitChanges();
   }
   
   {
     // check if it's gone
-    y::ldap::Server().clear();
-    y::ldap::group & group = y::ldap::Server().getGroup("newgroup", true);
+    Server.clear();
+    y::ldap::group & group = Server.getGroup("newgroup", true);
     if(!group.isNew()) {
       // this should be a new group
       CPPUNIT_ASSERT(false);

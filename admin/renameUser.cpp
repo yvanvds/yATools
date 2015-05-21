@@ -44,7 +44,8 @@ void renameUser::parse(int argc, char ** argv) {
   ::string cn (argv[1]);
   ::string sn (argv[2]);
   
-  account & acc = Server().getAccount(UID(uid));
+  y::ldap::server s;
+  account & acc = s.getAccount(UID(uid));
   if(acc.isNew()) {
     cout << "This user does not exist." << endl;
     return;
@@ -60,5 +61,5 @@ void renameUser::parse(int argc, char ** argv) {
        << " replaced with " << fullname         << endl;
   
   acc.fullName(y::ldap::FULL_NAME(fullname));
-  Server().commitChanges();
+  s.commitChanges();
 }

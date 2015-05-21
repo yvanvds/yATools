@@ -13,7 +13,6 @@
 #include "utils/container.h"
 #include "ldap/account.h"
 #include "data/database.h"
-#include "data/sqlserver.h"
 #include "ldap/group.h"
 
 namespace y {
@@ -46,12 +45,13 @@ namespace y {
     
     // local database
     const string SS_ERRORS = string("smartschool_errors");
-    std::unique_ptr<y::data::server> server;
-    std::unique_ptr<y::data::database> db;
     
     // for maintenance
-    void getErrorCodes();
-    void createErrorCodeTable();
+    void getErrorCodesFromSmartschool(y::data::database & db);
+    void createErrorCodeTable(y::data::database & db);
+    void loadErrorCodes(y::data::database & db);
+    
+    container<string> errorTable;
   };
   
   smartschool & Smartschool();

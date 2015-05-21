@@ -33,18 +33,13 @@
 #include "yearbook/yearbookReview.h"
 #include "yearbook/yearbookDownload.h"
 
-webLogin::webLogin(const Wt::WEnvironment & env) : Wt::WApplication(env), loggedIn(false), yearbookDBPtr(nullptr) {
-  y::utils::Log().add("start of webLogin app");
+webLogin::webLogin(Wt::WApplication * app) : WContainerWidget()
+, loggedIn(false), yearbookDBPtr(nullptr)
+, app(app) {
+  setOverflow(OverflowHidden);
   
-  setTitle("Login Application");
-  theme = new Wt::WBootstrapTheme(this);
-  theme->setVersion(Wt::WBootstrapTheme::Version3);
-  this->setTheme(theme);
   
-  root()->setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
-  root()->setPadding("5%");
-  
-  loginDialog = new Wt::WDialog(root());
+  loginDialog = new Wt::WDialog(this);
   loginDialog->setWindowTitle("Web Login");
   
   loginContainer = new Wt::WContainerWidget(loginDialog->contents());
@@ -107,10 +102,10 @@ void webLogin::loginButtonClicked() {
   Wt::WString id = nameEdit->text();
   Wt::WString passwd = passEdit->text();
   
-  account = &y::ldap::Server().getAccount(y::ldap::UID(id));
+  account = &ldapServer.getAccount(y::ldap::UID(id)); 
   if(!account->isNew()) {
     
-    loggedIn =  y::ldap::Server().auth(account->dn(), y::ldap::PASSWORD(passwd));
+    loggedIn = ldapServer.auth(account->dn(), y::ldap::PASSWORD(passwd));
 
     if(loggedIn) {
       loginDialog->hide();
@@ -139,33 +134,32 @@ void webLogin::loginButtonClicked() {
   
   if(loggedIn) {
     createContents();
-    root()->addWidget(homePage);
   }
 }
 
+
 void webLogin::createContents() {
-  
-  homePage = new Wt::WContainerWidget(root());
 
   Wt::WHBoxLayout * hbox = new Wt::WHBoxLayout();
-  homePage->setLayout(hbox);
+  this->setLayout(hbox);
   
-  Wt::WStackedWidget * contents = new Wt::WStackedWidget(root());
+  Wt::WStackedWidget * contents = new Wt::WStackedWidget(this);
   Wt::WAnimation fade(Wt::WAnimation::Fade, Wt::WAnimation::Linear, 250);
   contents->setTransitionAnimation(fade);
   contents->setId("contents");
   
   mainMenu = new Wt::WMenu(contents, Wt::Vertical);
+  
   mainMenu->addItem("Mijn Account", 
           deferCreate(boost::bind(&webLogin::accountFunc, this)), 
-          Wt::WMenuItem::PreLoading);
+          Wt::WMenuItem::LazyLoading);
   
   if(account->group()() == "personeel") {
     mainMenu->addItem("Web Toegang", 
             deferCreate(boost::bind(&webLogin::webAccessFunc, this)), 
-            Wt::WMenuItem::PreLoading);
+            Wt::WMenuItem::LazyLoading);
   }
-  
+  /*
   if(account->uid()() == "yvanym") {
     mainMenu->addItem("Wisa Import",
             deferCreate(boost::bind(&webLogin::wisaImportFunc, this)),
@@ -205,10 +199,10 @@ void webLogin::createContents() {
     yearbookMenu->setStyleClass("nav nav-stacked");
     
     mainMenu->addMenu("Jaarboek Admin", yearbookMenu);
-  }
+  }*/
   
   mainMenu->setInternalPathEnabled("/");
-  mainMenu->itemSelected().connect(this, &webLogin::updateTitle);
+  //mainMenu->itemSelected().connect(this, &webLogin::updateTitle);
   mainMenu->setStyleClass("nav nav-pills nav-stacked");
   
   Wt::WPushButton * logoutButton = new Wt::WPushButton();
@@ -226,27 +220,27 @@ void webLogin::createContents() {
   
   hbox->addWidget(leftContainer);
   hbox->addWidget(contents, 1);
-  
 }
+
 
 void webLogin::updateTitle() {
   if(mainMenu->currentItem()) {
-    setTitle(mainMenu->currentItem()->text());
+    app->setTitle(mainMenu->currentItem()->text());
   }
 }
 
 Wt::WWidget * webLogin::accountFunc() {
-  accountManagerPtr = new accountManager();
-  this->addChild(accountManagerPtr);
-  return accountManagerPtr->get(account);
+  accountManagerPtr = new accountManager(&ldapServer);
+  accountManagerPtr->create(account);
+  return accountManagerPtr;
 }
 
 Wt::WWidget * webLogin::webAccessFunc() {
   proxyManagerPtr = new proxyManager();
-  this->addChild(proxyManagerPtr);
-  return proxyManagerPtr->get();
+  proxyManagerPtr->create();
+  return proxyManagerPtr;
 }
-
+/*
 Wt::WWidget * webLogin::wisaImportFunc() {
   Wt::WPanel * panel = new Wt::WPanel();
   panel->setTitle("<h3>Wisa Import</h3>");
@@ -317,12 +311,12 @@ Wt::WWidget * webLogin::yearbookConfigFunc() {
   
   return panel;
 }
-
+*/
 void webLogin::logoutFunc() {
-  this->redirect("/");
-  this->quit();
+  app->redirect("/");
+  app->quit();
 }
-
+/*
 void webLogin::createYearbookDB() {
   if(yearbookDBPtr == nullptr) {
     yearbookDBPtr = new yearbookDB();
@@ -330,3 +324,4 @@ void webLogin::createYearbookDB() {
     this->addChild(yearbookDBPtr);
   }
 }
+  */

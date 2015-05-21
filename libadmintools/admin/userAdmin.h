@@ -8,23 +8,25 @@
 #ifndef USERADMIN_H
 #define	USERADMIN_H
 #include "ldap/account.h"
+#include "ldap/server.h"
 
 namespace y {
   namespace admin {
     
     class userAdmin {
     public:
-      ldap::account & add(const string & cn, const string & sn,
-               const ldap::GID & gid, const ldap::DATE & dateOfBirth, 
-               const ldap::WISA_ID & id, const ldap::PASSWORD & pw);
+      userAdmin(y::ldap::server * server) : server(server) {}
       
-      void remove(const ldap::account & acc);
+      y::ldap::account & add(const string & cn, const string & sn,
+               const y::ldap::GID & gid, const y::ldap::DATE & dateOfBirth, 
+               const y::ldap::WISA_ID & id, const y::ldap::PASSWORD & pw);
+      
+      void remove(const y::ldap::account & acc);
       
     private:
-      
+      y::ldap::server * server;
     };
     
-    userAdmin & User();
   }
 }
 

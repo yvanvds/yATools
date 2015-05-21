@@ -12,10 +12,13 @@
 #include <Wt/WLineEdit>
 #include <Wt/WObject>
 #include "ldap/account.h"
+#include "ldap/server.h"
 
-class accountManager : public Wt::WObject {
+
+class accountManager : public Wt::WContainerWidget {
 public:
-  Wt::WWidget * get(y::ldap::account * account);
+  accountManager(y::ldap::server * server) : server(server) {}
+  void create(y::ldap::account * account);
   void saveButtonClicked();
   
 private:
@@ -32,6 +35,8 @@ private:
   
   Wt::WText * feedback; 
   Wt::WPushButton * saveButton;
+  
+  y::ldap::server * server;
 };
 
 

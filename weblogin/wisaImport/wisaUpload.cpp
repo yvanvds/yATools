@@ -17,7 +17,7 @@
 #include "ldap/server.h"
 #include "../wisaImport.h"
 
-wisaUpload::wisaUpload() : box(nullptr), fileUpload(nullptr) {}
+wisaUpload::wisaUpload(wisaImport * parentObject) : box(nullptr), fileUpload(nullptr), parentObject(parentObject) {}
 
 void wisaUpload::setContent(Wt::WVBoxLayout* box) {
   this->box = box;
@@ -58,7 +58,7 @@ void wisaUpload::fileTooLargeFunc() {
 }
 
 void wisaUpload::uploadedFunc() {
-  WisaImport().setWisaFile(string(fileUpload->spoolFileName()));
+  parentObject->setWisaFile(string(fileUpload->spoolFileName()));
   parent->showPage(pageIndex + 1);
 }
 

@@ -6,14 +6,18 @@
  */
 
 #include "database.h"
-#include "sqlserver.h"
 #include "row.h"
 #include "../utils/container.h"
 #include "../utils/convert.h"
 #include "dateTime.h"
 #include "field.h"
 #include "utils/string.h"
+#include "utils/config.h"
 
+
+////////////////////////////////////////
+// class data
+////////////////////////////////////////
 y::data::order::order() : ascend(true) {}
 
 y::data::order & y::data::order::setKey(const string & key) {
@@ -33,21 +37,87 @@ y::data::order & y::data::order::ascending() {
 
 container<y::data::order> y::data::defaultOrder;
 
-y::data::database::database(y::data::server & serverObject) : serverObject(serverObject)
-, connection(serverObject.getConnection()),
-  connected(false){
-  handle = std::unique_ptr<sql::Statement>(connection->createStatement());
+///////////////////////////////////////
+// class database
+///////////////////////////////////////
+
+y::data::database::database() : driver(nullptr), connection(nullptr), handle(nullptr),
+  connected(false){}
+
+y::data::database & y::data::database::open() {
+  if (connected) return *this;
+  
+  if(driver == nullptr) {
+    driver = get_driver_instance();
+    driver->threadInit();
+  }
+  
+  if(connection == nullptr) {
+    connection = driver->connect("tcp://127.0.0.1:3306", 
+                                 "root", 
+                                 y::utils::Config().getMysqlPassword().ldap());
+  }
+  
+  if(handle == nullptr) {
+    handle = connection->createStatement();
+  }
+  connected = true;
+  
+  return *this;
 }
 
-bool y::data::database::use(const string & dbName) {
-  if(!serverObject.hasDatabase(dbName)) {
-    connected = false;
-  } else {
-    connection->setSchema(dbName.db());
-    connected = true;
+y::data::database::~database() {
+  close();
+  if(driver != nullptr) {
+    driver->threadEnd();
+    driver = nullptr;
   }
-  return connected;
 }
+
+void y::data::database::close() {
+  if(handle != nullptr) {
+    delete handle;
+    handle = nullptr;
+  }
+  if(connection != nullptr) {
+    delete connection;
+    connection = nullptr;
+  }
+  connected = false;
+}
+
+////////////////////////////////////////
+// schema functions
+////////////////////////////////////////
+
+bool y::data::database::drop(const string& schema) {
+  if(!connected) return false;
+  return handle->execute("DROP DATABASE " + schema.db());
+}
+
+bool y::data::database::create(const string& schema) {
+  if(!connected) return false;
+  return handle->execute("CREATE DATABASE " + schema.db() + " CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci'");
+}
+
+bool y::data::database::has(const string & schema) {
+  if(!connected) return false;
+  std::unique_ptr<sql::ResultSet> result;
+  result = std::unique_ptr<sql::ResultSet>(handle->executeQuery("SHOW DATABASES LIKE '" + schema.db() + "'"));
+  if (result->rowsCount()) return true;
+  return false;
+}
+
+bool y::data::database::use(const string & schema) {
+  if (!connected) return false;
+  if(!has(schema)) return false;
+  connection->setSchema(schema.db());
+  return true;
+}
+
+//////////////////////////////////////////
+// table functions
+//////////////////////////////////////////
 
 bool y::data::database::createTable(const string & tableName, row & description) {
   // check if we're in a database
@@ -269,7 +339,7 @@ bool y::data::database::getRows(const string & table, container<row> & rows, fie
     }
   }  
   
-  STATEMENT(statement, query.db());
+  CREATE_STATEMENT(statement, query.db());
   addToStatement(statement, condition, 1);
   
   try {
@@ -278,8 +348,10 @@ bool y::data::database::getRows(const string & table, container<row> & rows, fie
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+    DELETE_STATEMENT(statement);
     return false;
   }
+  DELETE_STATEMENT(statement);
   
   if (!result->rowsCount()) return false;
   
@@ -343,7 +415,7 @@ bool y::data::database::setRow(const string & table, row & values, field & condi
   }
   query += "?";
   
-  STATEMENT(statement, query.db());
+  CREATE_STATEMENT(statement, query.db());
   
   int i = 0;
   for(; i < values.elms(); i++) {
@@ -351,14 +423,18 @@ bool y::data::database::setRow(const string & table, row & values, field & condi
   }
   addToStatement(statement, condition, i+1);
 
+  sql::ResultSet * result = nullptr;
   try {
-    statement->executeQuery();
+     result = statement->executeQuery();
   } catch (sql::SQLException & e) {
     std::cout << "#\t SQL Exception: " << e.what();
 		std::cout << " (MySQL error code: " << e.getErrorCode();
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+    DELETE_STATEMENT(statement);
     return false;
   }
+  if(result != nullptr) delete result;
+  DELETE_STATEMENT(statement);
   return true;
 }
 
@@ -379,7 +455,7 @@ bool y::data::database::addRow(const string& table, row& values) {
   }
   query += ")";
 
-  STATEMENT(statement, query.db());
+  CREATE_STATEMENT(statement, query.db());
   
   for(int i = 0; i < values.elms(); i++) {
     addToStatement(statement, values[i], i+1);
@@ -392,8 +468,10 @@ bool y::data::database::addRow(const string& table, row& values) {
     std::cout << "#\t SQL Exception: " << e.what();
 		std::cout << " (MySQL error code: " << e.getErrorCode();
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+    DELETE_STATEMENT(statement);
     return false;
   }
+  DELETE_STATEMENT(statement);
   return true;
 }
 
@@ -408,7 +486,7 @@ bool y::data::database::delRow(const string & table, field & condition, y::data:
   } 
   query += "?";
 
-  STATEMENT(statement, query.db());
+  CREATE_STATEMENT(statement, query.db());
 
   addToStatement(statement, condition, 1);
 
@@ -419,9 +497,10 @@ bool y::data::database::delRow(const string & table, field & condition, y::data:
     std::cout << "#\t SQL Exception: " << e.what();
 	  std::cout << " (MySQL error code: " << e.getErrorCode();
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+    DELETE_STATEMENT(statement);
     return false;
   }
-  
+  DELETE_STATEMENT(statement);
   return true;
 }
 
@@ -439,7 +518,7 @@ bool y::data::database::execute(const string & query) {
   return true;
 }
 
-void y::data::database::addToStatement(std::unique_ptr<sql::PreparedStatement>& statement, field& condition, int position) {
+void y::data::database::addToStatement(sql::PreparedStatement * statement, field& condition, int position) {
   //std::cout << "added " << condition.name() << " at position " << position << std::endl;
   
   switch(condition.getType()) {

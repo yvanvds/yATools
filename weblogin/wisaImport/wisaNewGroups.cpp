@@ -38,8 +38,8 @@ void wisaNewGroups::onShow() {
   entries->elementAt(0,1)->addWidget(new Wt::WText("Status"));
   entries->elementAt(0,1)->setPadding(5);
   
-  container<y::ldap::group> & groups = y::ldap::Server().getGroups();
-  container<wisaImport::wisaGroup> & wisaGroups = WisaImport().getWisaGroups();
+  GROUPS & groups = parentObject->ldap()->getGroups();
+  container<wisaImport::wisaGroup> & wisaGroups = parentObject->getWisaGroups();
   
   int row = 1;
   for(int i = 0; i < groups.elms(); i++) {

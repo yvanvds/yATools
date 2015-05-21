@@ -15,7 +15,8 @@
 #include "utils/convert.h"
 #include "smartschool/smartschool.h"
 
-y::ldap::account::account() : 
+y::ldap::account::account(y::ldap::server * server) :
+  server(server),
   _uidNumber(UID_NUMBER(0)),
   _uid(UID("")),
   _dn(DN("")),
@@ -105,7 +106,7 @@ bool y::ldap::account::load(const data& d) {
 }
 
 bool y::ldap::account::load(const UID & id) {
-  dataset d;
+  dataset d(server);
   string filter(TYPE_UID);
   filter += "=" + id();
   
@@ -117,7 +118,7 @@ bool y::ldap::account::load(const UID & id) {
 }
 
 bool y::ldap::account::load(UID_NUMBER id) {
-  dataset d;
+  dataset d(server);
   string filter(TYPE_UID_NUMBER);
   filter += "=" + string(id());
   
@@ -129,7 +130,7 @@ bool y::ldap::account::load(UID_NUMBER id) {
 }
 
 bool y::ldap::account::load(const DN & id) {
-  dataset d;  
+  dataset d(server);  
   if(d.createFromDN(id())) {
     load(d.get(0));
   }
@@ -141,13 +142,13 @@ bool y::ldap::account::save() {
   // remove user if needed
   if(flaggedForRemoval()) {
     y::Smartschool().deleteUser(*this);
-    Server().remove(_dn());
+    server->remove(_dn());
     return true;
   }
   
   
   // else apply changes
-  dataset values;
+  dataset values(server);
   
   // on first save, some new entries have to be added
   if(!_hasKrbName) {
@@ -271,7 +272,7 @@ bool y::ldap::account::save() {
   }
   
   if(values.elms()) {
-    Server().modify(_dn(), values);
+    server->modify(_dn(), values);
     
     // check if more than just the password is changed
     if(_group()() != "extern" && _group()() != "externmail") {
@@ -455,7 +456,7 @@ void y::ldap::account::convertToNewAccount() {
   }
   std::cout << "will be converted" << std::endl;
   
-  dataset values;
+  dataset values(server);
   
   {
     data & d = values.New(ADD);
@@ -512,5 +513,5 @@ void y::ldap::account::convertToNewAccount() {
   }
   
   
-  Server().modify(_dn(), values);
+  server->modify(_dn(), values);
 }

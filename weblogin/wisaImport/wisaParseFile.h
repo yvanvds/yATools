@@ -10,12 +10,17 @@
 
 #include "gui/stackPage.h"
 
+class wisaImport;
+
 class wisaParseFile : public y::gui::stackPage {
 public:
+  wisaParseFile(wisaImport * parentObject) : parentObject(parentObject) {}
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
 private:
   Wt::WTable * entries;
+  
+  wisaImport * parentObject;
 };
 
 #endif	/* WISAPARSEFILE_H */

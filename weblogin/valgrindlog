@@ -1,0 +1,3 @@
+rm log
+G_SLICE=always-malloc valgrind --tool=memcheck --suppressions=glibsupp.txt --show-leak-kinds=definite --leak-check=full --log-file=log dist/Debug/GNU-Linux-x86/weblogin  --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090
+less log
