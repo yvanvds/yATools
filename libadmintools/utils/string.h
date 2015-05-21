@@ -28,19 +28,19 @@ public:
   explicit string(int value) : content(std::to_string(value)) {}
   
   // return as wide string
-  std::wstring wide() const { return strW(content); }
+  std::wstring wide () const { return strW(content); }
   // return as utf8 string
-  std::string  utf8() const { return      content ; }
+  std::string  utf8 () const { return      content ; }
   // return as c string
   const char * c_str() const { return content.c_str(); }
   // return as ldap string
-  const char * ldap() const { return c_str(); }
+  const char * ldap () const { return content.c_str(); }
   // return as database string
-  std::string  db  () const { return content; }
+  std::string  db   () const { return content; }
   // return as Wt string
-  Wt::WString  wt  () const { return Wt::WString(content, Wt::UTF8); }
+  Wt::WString  wt   () const { return Wt::WString(content, Wt::UTF8); }
   // return as smartschool string
-  std::string  ss  () const { return boost::locale::conv::from_utf(content, "Latin1"); }
+  std::string  ss   () const { return boost::locale::conv::from_utf(content, "Latin1"); }
   // return as integer
   int          asInt() const { return std::stoi(content); }
   
@@ -97,14 +97,16 @@ public:
   
   
   //iteration
-  char & operator[](int pos) { return content[pos]; }
+        char & operator[](int pos)       { return content[pos]; }
   const char & operator[](int pos) const { return content[pos]; }
   
-  string & replaceUTF8() { y::utils::replaceUTF8Chars(content); return *this; }
-  string & keeponlyChars() { y::utils::keepOnlyChars(content); return *this; }
-  string & toLower() { content = boost::locale::to_lower(content); return *this; }
-  void execute() { system(content.c_str()); }
-  void clear() { content.clear(); }
+  // manipulation
+  string & replaceUTF8  () { y::utils::replaceUTF8Chars       (content); return *this; }
+  string & keeponlyChars() { y::utils::keepOnlyChars          (content); return *this; }
+  string & toLower      () { content = boost::locale::to_lower(content); return *this; }
+  
+  void execute          () { system(content.c_str()); }
+  void clear            () {        content.clear() ; }
 private:
   std::string content;
 };
