@@ -8,13 +8,13 @@
 #ifndef WISANEWGROUPS_H
 #define	WISANEWGROUPS_H
 
-#include "gui/stackPage.h"
+#include "../base/stackPage.h"
 
 class wisaImport;
 
-class wisaNewGroups : public y::gui::stackPage {
+class wisaNewGroups : public stackPage {
 public:
-  wisaNewGroups(wisaImport * parentObject) : parentObject(parentObject) {}
+  wisaNewGroups(wisaImport * parentObject);
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
 private:

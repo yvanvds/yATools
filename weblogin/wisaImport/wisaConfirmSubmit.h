@@ -9,13 +9,13 @@
 #define	WISACONFIRMSUBMIT_H
 
 
-#include "gui/stackPage.h"
+#include "../base/stackPage.h"
 
 class wisaImport;
 
-class wisaConfirmSubmit : public y::gui::stackPage {
+class wisaConfirmSubmit : public stackPage {
 public:
-  wisaConfirmSubmit(wisaImport * parentObject) : parentObject(parentObject) {}
+  wisaConfirmSubmit(wisaImport * parentObject);
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
   bool onNext();

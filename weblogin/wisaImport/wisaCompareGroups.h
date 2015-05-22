@@ -8,13 +8,13 @@
 #ifndef WISACOMPAREGROUPS_H
 #define	WISACOMPAREGROUPS_H
 
-#include "gui/stackPage.h"
+#include "../base/stackPage.h"
 
 class wisaImport;
 
-class wisaCompareGroups : public y::gui::stackPage {
+class wisaCompareGroups : public stackPage {
 public:
-  wisaCompareGroups(wisaImport * parentObject) : parentObject(parentObject) {}
+  wisaCompareGroups(wisaImport * parentObject);
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
 private:

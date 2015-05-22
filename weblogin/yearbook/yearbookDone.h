@@ -8,12 +8,12 @@
 #ifndef YEARBOOKDONE_H
 #define	YEARBOOKDONE_H
 
-#include "gui/stackPage.h"
+#include "../base/stackPage.h"
 #include "yearbookDB.h"
 
-class yearbookDone : public y::gui::stackPage {
+class yearbookDone : public stackPage {
 public:
-  yearbookDone(yearbookDB * db) : db(db) {}
+  yearbookDone(yearbookDB * db);// : db(db) {}
   virtual void setContent(Wt::WVBoxLayout * box);
   virtual void onShow();
   

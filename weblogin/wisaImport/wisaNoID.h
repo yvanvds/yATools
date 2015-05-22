@@ -8,13 +8,13 @@
 #ifndef WISANOID_H
 #define	WISANOID_H
 
-#include "gui/stackPage.h"
+#include "../base/stackPage.h"
 
 class wisaImport;
 
-class wisaNoID : public y::gui::stackPage {
+class wisaNoID : public stackPage {
 public:
-  wisaNoID(wisaImport * parentObject) : parentObject(parentObject) {}
+  wisaNoID(wisaImport * parentObject);
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
   bool onNext();

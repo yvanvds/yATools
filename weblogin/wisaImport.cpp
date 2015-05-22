@@ -32,19 +32,24 @@
 #include <Wt/WIntValidator>
 #include <Wt/WApplication>
 #include <thread>
+#include <Wt/WTabWidget>
+#include "base/stackPage.h"
 
 
-y::gui::stackPageManager * wisaImport::get() {
-  manager = new y::gui::stackPageManager();  
- 
+void wisaImport::create() {
+  setTitle("<h3>Wisa Import</h3>");
+  setStyleClass("panel panel-primary");
+  setMaximumSize(800, 800);
+  
+  tabs = new Wt::WTabWidget();
+  this->setCentralWidget(tabs);
+  
   wUpload = new wisaUpload(this);
-  manager->addPage(wUpload);
-  wUpload->showButtons(false, false);
+  tabs->addTab(wUpload, "Upload");
   
   WParseFile = new wisaParseFile(this); 
-  manager->addPage(WParseFile);
-  WParseFile->showButtons(true, true);
-  
+  tabs->addTab(WParseFile, "Accounts");
+  /*
   WNoID = new wisaNoID(this); 
   manager->addPage(WNoID);
   WNoID->showButtons(false, true);
@@ -71,9 +76,7 @@ y::gui::stackPageManager * wisaImport::get() {
   
   WCommitChanges = new wisaCommitChanges(this);
   manager->addPage(WCommitChanges);
-  WCommitChanges->showButtons(false, false);
-  
-  return manager;
+  WCommitChanges->showButtons(false, false);*/
 }
 
 void wisaImport::setWisaFile(const string& file) {
@@ -161,7 +164,7 @@ string wisaImport::getWisaFile() {
 void wisaImport::reset() {
   wUpload->clear();
   ldapServer->clear();
-  manager->showPage(0);
+  //showPage(0);
 }
 
 container<wisaImport::wisaAccount> & wisaImport::getWisaAccounts() {
@@ -183,4 +186,12 @@ container<wisaImport::wisaGroup> & wisaImport::getWisaGroups() {
 
 void wisaImport::showErrorOnScreen(const string& message) {
   WCommitChanges->addMessage(message);
+}
+
+void wisaImport::gotoTab(WISA_TAB id) {
+  switch(id) {
+    case WISA_TAB_UPLOAD: tabs->setCurrentIndex(tabs->indexOf(wUpload)); break;
+    case WISA_TAB_PARSE : tabs->setCurrentIndex(tabs->indexOf(WParseFile)); break;
+    
+  }
 }

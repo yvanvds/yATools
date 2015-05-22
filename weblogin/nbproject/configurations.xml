@@ -5,6 +5,12 @@
       <itemPath>accountManager.cpp</itemPath>
       <itemPath>accountManager.h</itemPath>
     </logicalFolder>
+    <logicalFolder name="base" displayName="base" projectFiles="true">
+      <itemPath>base/stackPage.cpp</itemPath>
+      <itemPath>base/stackPage.h</itemPath>
+      <itemPath>base/stackPageManager.cpp</itemPath>
+      <itemPath>base/stackPageManager.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="f2" displayName="proxyManager" projectFiles="true">
       <itemPath>proxyManager.cpp</itemPath>
       <itemPath>proxyManager.h</itemPath>
@@ -68,6 +74,9 @@
     <itemPath>webLogin.cpp</itemPath>
     <itemPath>webLogin.h</itemPath>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>base</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
@@ -121,6 +130,14 @@
       <item path="accountManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="accountManager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="base/stackPage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="base/stackPage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="base/stackPageManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="base/stackPageManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -265,6 +282,14 @@
       <item path="accountManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="accountManager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="base/stackPage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="base/stackPage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="base/stackPageManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="base/stackPageManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

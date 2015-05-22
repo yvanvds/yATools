@@ -23,6 +23,7 @@
 #include "accountManager.h"
 #include "proxyManager.h"
 #include "ldap/server.h"
+#include "wisaImport.h"
 
 using namespace y;
 
@@ -87,7 +88,7 @@ private:
   
   Wt::WWidget * accountFunc();
   Wt::WWidget * webAccessFunc();
-  //Wt::WWidget * wisaImportFunc();
+  Wt::WWidget * wisaImportFunc();
   //Wt::WWidget * groupFunc();
   //Wt::WWidget * yearbookFunc();
   //Wt::WWidget * yearbookReviewFunc();
@@ -102,6 +103,7 @@ private:
   yearbookDB * yearbookDBPtr;
   accountManager * accountManagerPtr;
   proxyManager * proxyManagerPtr;
+  wisaImport * wisaImportPtr;
   
   y::ldap::server ldapServer;
   

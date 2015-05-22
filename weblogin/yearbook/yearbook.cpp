@@ -15,7 +15,7 @@ yearbook::yearbook(yearbookDB * ptr) : db(ptr), manager(nullptr), account(nullpt
 y::gui::stackPageManager * yearbook::get() { 
   manager = new y::gui::stackPageManager();
   this->addChild(manager);
-  
+  /*
   ybVerifyAccount = new yearbookVerifyAccount(db);
   manager->addPage(ybVerifyAccount);
   ybVerifyAccount->showButtons(false, true);
@@ -43,7 +43,7 @@ y::gui::stackPageManager * yearbook::get() {
   ybDone = new yearbookDone(db);
   manager->addPage(ybDone);
   ybDone->showButtons(true, false);
-  
+  */
   return manager;
 }
 

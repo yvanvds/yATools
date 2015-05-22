@@ -13,25 +13,28 @@
 #include <Wt/WVBoxLayout>
 #include <Wt/WFileUpload>
 #include <Wt/WProgressBar>
+#include <Wt/WContainerWidget>
 #include "utils/container.h" 
 #include "ldap/server.h"
 #include "../wisaImport.h"
 
-wisaUpload::wisaUpload(wisaImport * parentObject) : box(nullptr), fileUpload(nullptr), parentObject(parentObject) {}
 
-void wisaUpload::setContent(Wt::WVBoxLayout* box) {
-  this->box = box;
+wisaUpload::wisaUpload(wisaImport * parentObject)
+: box(nullptr), fileUpload(nullptr), parentObject(parentObject)
+{
+  box = new Wt::WVBoxLayout(this);
+  setLayout(box);
   
   cleanUpload();
-
   message = new Wt::WText("Kies een wisa export bestand.");
   message->setStyleClass("alert alert-info");
   box->addWidget(message);
 }
 
 void wisaUpload::cleanUpload() {
-  if(fileUpload && box) {
+  if(fileUpload) {
     box->removeWidget(fileUpload);
+    delete fileUpload;
   }
   
   fileUpload = new Wt::WFileUpload();
@@ -39,8 +42,11 @@ void wisaUpload::cleanUpload() {
   fileUpload->setProgressBar(new Wt::WProgressBar());
   fileUpload->changed().connect(this, &wisaUpload::uploadFunc);
   fileUpload->fileTooLarge().connect(this, &wisaUpload::fileTooLargeFunc);
-  fileUpload->uploaded().connect(this, &wisaUpload::uploadedFunc);
-  if(box) box->insertWidget(0, fileUpload);
+  fileUpload->uploaded().connect(std::bind([=] () {
+    parentObject->setWisaFile(string(fileUpload->spoolFileName()));
+    parentObject->gotoTab(wisaImport::WISA_TAB_PARSE);
+  }));
+  box->addWidget(fileUpload);
 }
 
 void wisaUpload::clear() {
@@ -55,11 +61,12 @@ void wisaUpload::uploadFunc() {
 void wisaUpload::fileTooLargeFunc() {
   message->setText("This file is too large");
   message->setStyleClass("alert alert-danger");
+  cleanUpload();
 }
 
 void wisaUpload::uploadedFunc() {
   parentObject->setWisaFile(string(fileUpload->spoolFileName()));
-  parent->showPage(pageIndex + 1);
+  parentObject->gotoTab(wisaImport::WISA_TAB_PARSE);
 }
 
 void wisaUpload::onShow() {

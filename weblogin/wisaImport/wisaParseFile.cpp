@@ -14,7 +14,12 @@
 #include "ldap/server.h"
 #include "../wisaImport.h"
 
-void wisaParseFile::setContent(Wt::WVBoxLayout* box) {
+wisaParseFile::wisaParseFile(wisaImport * parentObject)
+: parentObject(parentObject) 
+{
+  box = new Wt::WVBoxLayout(this);
+  setLayout(box);
+  
   box->addWidget(new Wt::WText("<h4>Controleer of dit er ok uit ziet. (Let op de accenten!)</h4>"));
   
   // table scroll

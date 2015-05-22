@@ -13,19 +13,11 @@
 #include "stackPage.h"
 #include "stackPageManager.h"
 
-y::gui::stackPage::stackPage() : createDone(false) {
-  
-}
-
-void y::gui::stackPage::create(int index, stackPageManager * parent) {
-  if(createDone) return;
-  this->pageIndex = index;
+void stackPage::create(stackPageManager * parent) {
   this->parent = parent;
-  
-  Wt::WContainerWidget * content = new Wt::WContainerWidget(parent);
+
   Wt::WVBoxLayout * box = new Wt::WVBoxLayout();
-  content->setLayout(box);
-  
+  setLayout(box);
   setContent(box);
   
   // navigation buttons
@@ -52,7 +44,7 @@ void y::gui::stackPage::create(int index, stackPageManager * parent) {
   
 }
 
-void y::gui::stackPage::showButtons(bool previous, bool next) {
+void stackPage::showButtons(bool previous, bool next) {
   if (previous) {
     previousButton->show();
   } else {
@@ -65,11 +57,11 @@ void y::gui::stackPage::showButtons(bool previous, bool next) {
   }
 }
 
-void y::gui::stackPage::previousClicked() {
+void stackPage::previousClicked() {
   if (onPrevious()) parent->showPage(pageIndex-1);
 }
 
-void y::gui::stackPage::nextClicked() {
+void stackPage::nextClicked() {
   if(onNext()) parent->showPage(pageIndex+1);
 }
 

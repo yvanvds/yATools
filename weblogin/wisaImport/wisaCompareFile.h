@@ -8,13 +8,13 @@
 #ifndef WISACOMPAREFILE_H
 #define	WISACOMPAREFILE_H
 
-#include "gui/stackPage.h"
+#include "../base/stackPage.h"
 
 class wisaImport;
 
-class wisaCompareFile : public y::gui::stackPage {
+class wisaCompareFile : public stackPage {
 public:
-  wisaCompareFile(wisaImport * parentObject) : parentObject(parentObject) {}
+  wisaCompareFile(wisaImport * parentObject);
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
 private:

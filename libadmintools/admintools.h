@@ -48,8 +48,6 @@
 //gui
 #include "gui/application.h"
 #include "gui/confirmationDialog.h"
-#include "gui/stackPage.h"
-#include "gui/stackPageManager.h"
 
 //admin
 #include "admin/userAdmin.h"

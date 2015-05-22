@@ -8,12 +8,12 @@
 #ifndef YEARBOOKVERIFYACCOUNT_H
 #define	YEARBOOKVERIFYACCOUNT_H
 
-#include "gui/stackPage.h"
+#include "../base/stackPage.h"
 #include "yearbookDB.h"
 
-class yearbookVerifyAccount : public y::gui::stackPage {
+class yearbookVerifyAccount : public stackPage {
 public:
-  yearbookVerifyAccount(yearbookDB * ptr) : db(ptr) {}
+  yearbookVerifyAccount(yearbookDB * ptr);// : db(ptr) {}
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
   bool onNext();

@@ -8,14 +8,17 @@
 #include <Wt/WStackedWidget>
 
 #include "stackPageManager.h"
+#include "stackPage.h"
 #include "utils/container.h"
 
-void y::gui::stackPageManager::addPage(stackPage* page) {
-  page->create(pages.elms(), this);
-  pages.New() = page; 
+void stackPageManager::addPage(stackPage* page) {
+  page->setIndex(pages.elms());
+  pages.New() = page;
+  page->create(this);
+  addWidget(page);
 }
 
-void y::gui::stackPageManager::showPage(int index) {
+void stackPageManager::showPage(int index) {
   if (index < pages.elms()) {
     pages[index]->onShow();
     this->setCurrentIndex(index);

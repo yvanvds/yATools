@@ -8,10 +8,10 @@
 #ifndef YEARBOOKQUESTION_H
 #define	YEARBOOKQUESTION_H
 
-#include "gui/stackPage.h"
+#include "../base/stackPage.h"
 #include "yearbookDB.h"
 
-class yearbookQuestion : public y::gui::stackPage {
+class yearbookQuestion : public stackPage {
 public:
   yearbookQuestion(int ID, yearbookDB * ptr);
   virtual void setContent(Wt::WVBoxLayout * box);

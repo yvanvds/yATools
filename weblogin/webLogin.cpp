@@ -88,11 +88,10 @@ webLogin::webLogin(Wt::WApplication * app) : WContainerWidget()
   feedbackBox->addWidget(loginFeedback);
   
 #ifdef DEBUG
-  //account = &y::ldap::Server().getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
-  //loggedIn = true;
-  //createContents();
-  //root()->addWidget(homePage);
-  loginDialog->show();
+  account = &ldapServer.getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
+  loggedIn = true;
+  createContents();
+  //loginDialog->show();
 #else 
   loginDialog->show();
 #endif
@@ -159,13 +158,14 @@ void webLogin::createContents() {
             deferCreate(boost::bind(&webLogin::webAccessFunc, this)), 
             Wt::WMenuItem::LazyLoading);
   }
-  /*
+  
   if(account->uid()() == "yvanym") {
     mainMenu->addItem("Wisa Import",
             deferCreate(boost::bind(&webLogin::wisaImportFunc, this)),
             Wt::WMenuItem::LazyLoading);
   }
   
+  /*
   if(false) {
     mainMenu->addItem("Groepen Admin", 
             deferCreate(boost::bind(&webLogin::groupFunc, this)), 
@@ -240,17 +240,14 @@ Wt::WWidget * webLogin::webAccessFunc() {
   proxyManagerPtr->create();
   return proxyManagerPtr;
 }
-/*
-Wt::WWidget * webLogin::wisaImportFunc() {
-  Wt::WPanel * panel = new Wt::WPanel();
-  panel->setTitle("<h3>Wisa Import</h3>");
-  panel->setStyleClass("panel panel-primary");
-  panel->setCentralWidget(WisaImport().get());
-  panel->setMaximumSize(800, 800);
-  WisaImport().setApplication(this); // needed for locking
-  return panel;
-}
 
+Wt::WWidget * webLogin::wisaImportFunc() {
+  wisaImportPtr = new wisaImport(&ldapServer);
+  wisaImportPtr->create();
+  wisaImportPtr->setApplication(app);
+  return wisaImportPtr;
+}
+/*
 Wt::WWidget * webLogin::groupFunc() {
   return new Wt::WText("groepen");
 }

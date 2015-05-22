@@ -42,8 +42,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/data/row.o \
 	${OBJECTDIR}/gui/application.o \
 	${OBJECTDIR}/gui/confirmationDialog.o \
-	${OBJECTDIR}/gui/stackPage.o \
-	${OBJECTDIR}/gui/stackPageManager.o \
 	${OBJECTDIR}/ldap/account.o \
 	${OBJECTDIR}/ldap/attributes.o \
 	${OBJECTDIR}/ldap/data.o \
@@ -89,11 +87,11 @@ TESTFILES= \
 	${TESTDIR}/TestFiles/f6
 
 # C Compiler Flags
-CFLAGS=
+CFLAGS=`cppunit-config --cflags` 
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=`cppunit-config --cflags` 
+CXXFLAGS=`cppunit-config --cflags` 
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -102,15 +100,15 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lwtfcgi -lwt -lmysqlcppconn-static -lmysqlclient -llber -lldap -lboost_iostreams -lgsoapssl++ -lboost_locale
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_filesystem -lboost_program_options -lcrypt -lwtfcgi -lwt -lmysqlcppconn-static -lmysqlclient -llber -lldap -lboost_iostreams -lgsoapssl++ -lboost_locale `cppunit-config --libs`  
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${TESTDIR}/TestFiles/f7
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
+${TESTDIR}/TestFiles/f7: ${OBJECTFILES}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f7 ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
 ${OBJECTDIR}/admin/userAdmin.o: admin/userAdmin.cpp 
 	${MKDIR} -p ${OBJECTDIR}/admin
@@ -146,16 +144,6 @@ ${OBJECTDIR}/gui/confirmationDialog.o: gui/confirmationDialog.cpp
 	${MKDIR} -p ${OBJECTDIR}/gui
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/confirmationDialog.o gui/confirmationDialog.cpp
-
-${OBJECTDIR}/gui/stackPage.o: gui/stackPage.cpp 
-	${MKDIR} -p ${OBJECTDIR}/gui
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/stackPage.o gui/stackPage.cpp
-
-${OBJECTDIR}/gui/stackPageManager.o: gui/stackPageManager.cpp 
-	${MKDIR} -p ${OBJECTDIR}/gui
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/stackPageManager.o gui/stackPageManager.cpp
 
 ${OBJECTDIR}/ldap/account.o: ldap/account.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
@@ -571,32 +559,6 @@ ${OBJECTDIR}/gui/confirmationDialog_nomain.o: ${OBJECTDIR}/gui/confirmationDialo
 	    ${CP} ${OBJECTDIR}/gui/confirmationDialog.o ${OBJECTDIR}/gui/confirmationDialog_nomain.o;\
 	fi
 
-${OBJECTDIR}/gui/stackPage_nomain.o: ${OBJECTDIR}/gui/stackPage.o gui/stackPage.cpp 
-	${MKDIR} -p ${OBJECTDIR}/gui
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/stackPage.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/stackPage_nomain.o gui/stackPage.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/gui/stackPage.o ${OBJECTDIR}/gui/stackPage_nomain.o;\
-	fi
-
-${OBJECTDIR}/gui/stackPageManager_nomain.o: ${OBJECTDIR}/gui/stackPageManager.o gui/stackPageManager.cpp 
-	${MKDIR} -p ${OBJECTDIR}/gui
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/stackPageManager.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/stackPageManager_nomain.o gui/stackPageManager.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/gui/stackPageManager.o ${OBJECTDIR}/gui/stackPageManager_nomain.o;\
-	fi
-
 ${OBJECTDIR}/ldap/account_nomain.o: ${OBJECTDIR}/ldap/account.o ldap/account.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/ldap/account.o`; \
@@ -945,7 +907,7 @@ ${OBJECTDIR}/utils/stringFunctions_nomain.o: ${OBJECTDIR}/utils/stringFunctions.
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}
+	${RM} ${TESTDIR}/TestFiles/f7
 
 # Subprojects
 .clean-subprojects:

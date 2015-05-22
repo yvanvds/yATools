@@ -34,6 +34,7 @@
             <file>file:/home/yvan/github/yATools/libadmintools/data/dateTime.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/container.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/data/tests/dataRowTest.h</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/gui/stackPageManager.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/console.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/data.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldpAttributesTest.h</file>
@@ -41,11 +42,13 @@
             <file>file:/home/yvan/github/yATools/libadmintools/utils/sha1.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/samba/samba.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/data/tests/dataDatabaseTest.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/gui/stackPage.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldpAttributesTest.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/data/tests/dataServerTest.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/smartschool/smartschool.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/admin/userAdmin.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldapDataTest.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/gui/stackPage.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/stringFunctions.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/gui/confirmationDialog.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/string.h</file>
@@ -53,6 +56,7 @@
             <file>file:/home/yvan/github/yATools/libadmintools/utils/log.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldapGroupTest.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/random.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/gui/stackPageManager.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/smartschool/smartschool.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/security.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/watch.h</file>

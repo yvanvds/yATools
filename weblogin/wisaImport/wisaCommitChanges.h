@@ -8,7 +8,7 @@
 #ifndef WISACOMMITCHANGES_H
 #define	WISACOMMITCHANGES_H
 
-#include "gui/stackPage.h"
+#include "../base/stackPage.h"
 #include <Wt/WResource>
 #include <Wt/Http/Response>
 #include <Wt/Http/ResponseContinuation>
@@ -31,9 +31,9 @@ class fileDownload : public Wt::WResource {
 
 class wisaImport;
 
-class wisaCommitChanges : public y::gui::stackPage {
+class wisaCommitChanges : public stackPage {
 public:
-  wisaCommitChanges(wisaImport * parentObject) : parentObject(parentObject) {}
+  wisaCommitChanges(wisaImport * parentObject);
   
   void setContent(Wt::WVBoxLayout * box);
   void onShow();

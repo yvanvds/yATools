@@ -8,8 +8,8 @@
 #ifndef YEARBOOK_H
 #define	YEARBOOK_H
 
-#include "gui/stackPage.h"
-#include "gui/stackPageManager.h"
+#include "../base/stackPage.h"
+#include "../base/stackPageManager.h"
 #include "yearbookVerifyAccount.h"
 #include "yearbookQuestion.h"
 #include "yearbookPhoto.h"
@@ -21,13 +21,13 @@ class yearbook : public Wt::WObject {
 public:
   yearbook(yearbookDB * ptr);
   
-  y::gui::stackPageManager * get();
+  stackPageManager * get();
   void setAccount(y::ldap::account * account);
   
 private:
   yearbookDB  * db;
   
-  y::gui::stackPageManager * manager;
+  stackPageManager * manager;
   y::ldap::account * account;
   
   yearbookVerifyAccount * ybVerifyAccount;

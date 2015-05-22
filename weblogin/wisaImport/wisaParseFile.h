@@ -8,16 +8,18 @@
 #ifndef WISAPARSEFILE_H
 #define	WISAPARSEFILE_H
 
-#include "gui/stackPage.h"
+#include <Wt/WContainerWidget>
 
 class wisaImport;
 
-class wisaParseFile : public y::gui::stackPage {
+class wisaParseFile : public Wt::WContainerWidget {
 public:
-  wisaParseFile(wisaImport * parentObject) : parentObject(parentObject) {}
-  void setContent(Wt::WVBoxLayout * box);
+  wisaParseFile(wisaImport * parentObject);
+  
   void onShow();
+  
 private:
+  Wt::WVBoxLayout * box;
   Wt::WTable * entries;
   
   wisaImport * parentObject;

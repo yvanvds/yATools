@@ -8,16 +8,16 @@
 #ifndef YEARBOOKPHOTO_H
 #define	YEARBOOKPHOTO_H
 
-#include "gui/stackPage.h"
+#include "../base/stackPage.h"
 #include <Wt/WFileUpload>
 #include <Wt/WImage>
 #include <Wt/WVBoxLayout>
 #include <Wt/WText>
 #include "yearbookDB.h"
 
-class yearbookPhoto : public y::gui::stackPage {
+class yearbookPhoto : public stackPage {
 public:
-  yearbookPhoto(yearbookDB * db) : db(db) {}
+  yearbookPhoto(yearbookDB * db);// : db(db) {}
   virtual void setContent(Wt::WVBoxLayout * box);
   virtual void onShow();
   bool onNext();

@@ -36,6 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/accountManager.o \
+	${OBJECTDIR}/base/stackPage.o \
+	${OBJECTDIR}/base/stackPageManager.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/proxyManager.o \
 	${OBJECTDIR}/webLogin.o \
@@ -91,6 +93,16 @@ ${OBJECTDIR}/accountManager.o: accountManager.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/accountManager.o accountManager.cpp
+
+${OBJECTDIR}/base/stackPage.o: base/stackPage.cpp 
+	${MKDIR} -p ${OBJECTDIR}/base
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/base/stackPage.o base/stackPage.cpp
+
+${OBJECTDIR}/base/stackPageManager.o: base/stackPageManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/base
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/base/stackPageManager.o base/stackPageManager.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
