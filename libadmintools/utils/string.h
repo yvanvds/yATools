@@ -69,10 +69,10 @@ public:
   
   // append
   string & operator+=(const string       & ref) { content +=         ref.content; return *this; }
+  string & operator+=(char                 ref) { content +=                ref ; return *this; }
   string & operator+=(int                  ref) { content += std::to_string(ref); return *this; }
   string & operator+=(float                ref) { content += std::to_string(ref); return *this; }
   string & operator+=(double               ref) { content += std::to_string(ref); return *this; }
-  
   
   string operator+(const string       & ref) const { return string(content +         ref.content); }
   string operator+(const std::string  & ref) const { return string(content +                ref ); }
