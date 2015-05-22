@@ -12,8 +12,8 @@
 
 yearbook::yearbook(yearbookDB * ptr) : db(ptr), manager(nullptr), account(nullptr) {}
 
-y::gui::stackPageManager * yearbook::get() { 
-  manager = new y::gui::stackPageManager();
+stackPageManager * yearbook::get() { 
+  manager = new stackPageManager();
   this->addChild(manager);
   /*
   ybVerifyAccount = new yearbookVerifyAccount(db);

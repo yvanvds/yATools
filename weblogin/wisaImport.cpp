@@ -191,7 +191,9 @@ void wisaImport::showErrorOnScreen(const string& message) {
 void wisaImport::gotoTab(WISA_TAB id) {
   switch(id) {
     case WISA_TAB_UPLOAD: tabs->setCurrentIndex(tabs->indexOf(wUpload)); break;
-    case WISA_TAB_PARSE : tabs->setCurrentIndex(tabs->indexOf(WParseFile)); break;
-    
+    case WISA_TAB_PARSE : {
+      WParseFile->onShow();
+      tabs->setCurrentIndex(tabs->indexOf(WParseFile)); break;
+    }
   }
 }

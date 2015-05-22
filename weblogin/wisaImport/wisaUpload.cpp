@@ -45,6 +45,7 @@ void wisaUpload::cleanUpload() {
   fileUpload->uploaded().connect(std::bind([=] () {
     parentObject->setWisaFile(string(fileUpload->spoolFileName()));
     parentObject->gotoTab(wisaImport::WISA_TAB_PARSE);
+    cleanUpload();
   }));
   box->addWidget(fileUpload);
 }

@@ -29,9 +29,9 @@ wisaParseFile::wisaParseFile(wisaImport * parentObject)
   
   entries = new Wt::WTable();
   entries->setHeaderCount(1);
-  entries->setWidth(700);
+  entries->setWidth(600);
   scroll->setWidget(entries);
-  scroll->setMaximumSize(750, 500);
+  scroll->setMaximumSize(650, 500);
 }
 
 void wisaParseFile::onShow() {
