@@ -41,6 +41,7 @@ void wisaNoID::onShow() {
   entries->elementAt(0,2)->addWidget(new Wt::WText("Klas"));
   entries->elementAt(0,3)->addWidget(new Wt::WText("Wisa ID"));
   entries->elementAt(0,4)->addWidget(new Wt::WText("Verwijder"));
+  entries->elementAt(0,4)->setContentAlignment(Wt::AlignCenter);
   
   ACCOUNTS & accounts = parentObject->ldap()->getAccounts();
   int row = 1;
@@ -66,7 +67,14 @@ void wisaNoID::onShow() {
       wisaEdit->setHeight(5);
       entries->elementAt(row, 3)->addWidget(wisaEdit);
       Wt::WCheckBox * remove = new Wt::WCheckBox();
+      remove->resize(20,20);
       entries->elementAt(row, 4)->addWidget(remove);
+      
+      entries->elementAt(row, 0)->setContentAlignment(Wt::AlignMiddle);
+      entries->elementAt(row, 1)->setContentAlignment(Wt::AlignMiddle);
+      entries->elementAt(row, 2)->setContentAlignment(Wt::AlignMiddle);
+      entries->elementAt(row, 3)->setContentAlignment(Wt::AlignMiddle);
+      entries->elementAt(row, 4)->setContentAlignment(Wt::AlignMiddle | Wt::AlignCenter);
       row++;
     }
   }

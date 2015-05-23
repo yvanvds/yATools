@@ -14,24 +14,22 @@
 #include "yearbookDownload.h"
 #include "yearbookDB.h"
 
-Wt::WWidget * yearbookDownload::get() {
-  mainWidget = new Wt::WContainerWidget();
-  
-  mainWidget->addStyleClass("well");
-  mainWidget->setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
+yearbookDownload::yearbookDownload(yearbookDB * ptr) : db(ptr), downloadFile(nullptr) {
+  addStyleClass("well");
+  setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
 
-  mainWidget->addWidget(new Wt::WText("<p>Genereer een nieuwe versie van de PDF.</p> <p><b>Let op: </b>Bij ongeldige invoer kan de PDF onvolledig zijn.</p>"));
+  addWidget(new Wt::WText("<p>Genereer een nieuwe versie van de PDF.</p> <p><b>Let op: </b>Bij ongeldige invoer kan de PDF onvolledig zijn.</p>"));
   Wt::WPushButton * button = new Wt::WPushButton("Maak PDF");
-  mainWidget->addWidget(button);
+  addWidget(button);
   button->clicked().connect(this, &yearbookDownload::generatePDF);
 
   downloadTitle = new Wt::WText("<h1>Download beschikbaar</h1>");
   downloadTitle->addStyleClass("page-header");
-  mainWidget->addWidget(downloadTitle);
+  addWidget(downloadTitle);
   downloadContainer = new Wt::WContainerWidget();
   downloadContainer->addStyleClass("well");
   downloadContainer->setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
-  mainWidget->addWidget(downloadContainer);
+  addWidget(downloadContainer);
 
   downloadTitle->hide();
   downloadContainer->hide();
@@ -43,8 +41,10 @@ Wt::WWidget * yearbookDownload::get() {
   downloadAnchor = new Wt::WAnchor(Wt::WLink(downloadFile), "Download");
   downloadAnchor->setTarget(Wt::TargetNewWindow);
   downloadContainer->addWidget(downloadAnchor);
-  
-  return mainWidget;
+}
+
+yearbookDownload::~yearbookDownload() {
+  if(downloadFile != nullptr) delete downloadFile;
 }
 
 void yearbookDownload::generatePDF() {
@@ -165,7 +165,5 @@ void yearbookDownload::generatePDF() {
   downloadFile->setMimeType("application/pdf");
   downloadAnchor->setLink(Wt::WLink(downloadFile));
   downloadTitle->show();
-  downloadContainer->show();
-  
-  
+  downloadContainer->show(); 
 }

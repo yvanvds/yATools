@@ -17,17 +17,15 @@
 #include "yearbookDB.h"
 #include "ldap/account.h"
 
-class yearbook : public Wt::WObject {
+class yearbook : public stackPageManager {
 public:
   yearbook(yearbookDB * ptr);
   
-  stackPageManager * get();
   void setAccount(y::ldap::account * account);
   
 private:
   yearbookDB  * db;
   
-  stackPageManager * manager;
   y::ldap::account * account;
   
   yearbookVerifyAccount * ybVerifyAccount;

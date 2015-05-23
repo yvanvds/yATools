@@ -10,14 +10,13 @@
 
 #include "yearbookDB.h"
 
-class yearbookDownload : public Wt::WObject {
+class yearbookDownload : public Wt::WContainerWidget {
 public:
-  yearbookDownload(yearbookDB * ptr) : db(ptr) {}
-  Wt::WWidget * get();
+  yearbookDownload(yearbookDB * ptr);
+ ~yearbookDownload();
   
 private:
   yearbookDB * db;
-  Wt::WContainerWidget * mainWidget;
   
   Wt::WFileResource * downloadFile;
   Wt::WText * downloadTitle;

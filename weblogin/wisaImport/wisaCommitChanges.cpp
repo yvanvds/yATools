@@ -60,6 +60,12 @@ bool fileDownload::empty() {
   return messages.empty();
 }
 
+wisaCommitChanges::~wisaCommitChanges() {
+  if(download != nullptr) {
+    delete download;
+  }
+}
+
 void wisaCommitChanges::setContent(Wt::WVBoxLayout* box) {
   this->box = box;
   progress = new Wt::WText("<h4>Wijzigingen worden uitgevoerd...</h4>");
@@ -73,7 +79,7 @@ void wisaCommitChanges::setContent(Wt::WVBoxLayout* box) {
   entries->setHeaderCount(1);
   entries->setWidth(700);
   scroll->setWidget(entries);
-  scroll->setMaximumSize(750, 500);
+  scroll->setMaximumSize(750, 450);
   
   download = new fileDownload(entries);
 }

@@ -14,7 +14,7 @@ class wisaImport;
 
 class wisaNewGroups : public stackPage {
 public:
-  wisaNewGroups(wisaImport * parentObject);
+  wisaNewGroups(wisaImport * parentObject) : parentObject(parentObject) {}
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
 private:

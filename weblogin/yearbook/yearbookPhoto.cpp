@@ -12,6 +12,12 @@
 #include <Wt/WFileResource>
 #include <Wt/WProgressBar>
 
+yearbookPhoto::~yearbookPhoto() {
+  if(imageResource != nullptr) {
+    delete imageResource;
+  }
+}
+
 void yearbookPhoto::setContent(Wt::WVBoxLayout * box) {
   this->box = box;
   
@@ -26,7 +32,6 @@ void yearbookPhoto::setContent(Wt::WVBoxLayout * box) {
   box->addWidget(image, 0, Wt::AlignCenter);
   
   box->addWidget(hint);
-  fileUpload = NULL;
   setUpload();
 }
 
@@ -35,9 +40,9 @@ void yearbookPhoto::onShow() {
     image->setImageLink("http://placehold.it/600x400");
   } else {
     string s = db->photo();
-
-    Wt::WFileResource * r = new Wt::WFileResource(s.utf8());
-    image->setImageLink(r);
+    if(imageResource != nullptr) delete imageResource;
+    imageResource = new Wt::WFileResource(s.utf8());
+    image->setImageLink(imageResource);
   }
   image->setHeight(200);
   image->setWidth(300);
@@ -45,12 +50,13 @@ void yearbookPhoto::onShow() {
 
 
 void yearbookPhoto::setUpload() {
-  if(fileUpload != NULL) {
+  if(fileUpload != nullptr) {
     box->removeWidget(fileUpload);
+    delete fileUpload;
   }
   
   fileUpload = new Wt::WFileUpload();
-  fileUpload->setFileTextSize(1000);
+  fileUpload->setFileTextSize(10);
   fileUpload->setProgressBar(new Wt::WProgressBar());
   fileUpload->setMargin(10, Wt::Right);
   fileUpload->setFilters("image/*");
@@ -73,8 +79,10 @@ void yearbookPhoto::setUpload() {
     db->photo(imageName);
     hint->setText("Je foto is opgeslagen.");
     
-    Wt::WFileResource * r = new Wt::WFileResource(imageName.utf8());
-    image->setImageLink(r);
+    if(imageResource != nullptr) delete imageResource;
+    
+    imageResource = new Wt::WFileResource(imageName.utf8());
+    image->setImageLink(imageResource);
     image->setHeight(200);
     image->setWidth(300);
   }));

@@ -33,8 +33,9 @@ class wisaImport;
 
 class wisaCommitChanges : public stackPage {
 public:
-  wisaCommitChanges(wisaImport * parentObject);
-  
+  wisaCommitChanges(wisaImport * parentObject) : parentObject(parentObject), download(nullptr) {}
+ ~wisaCommitChanges();
+ 
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
   bool onNext();

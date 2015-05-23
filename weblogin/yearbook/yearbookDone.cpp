@@ -20,6 +20,8 @@ void yearbookDone::setContent(Wt::WVBoxLayout* box) {
   s += date.daysTo(db->getCloseDate());
   s += " dagen om ze aan te passen. Daarna maken we er een mooi jaarboek van.</p>"; 
   box->addWidget(new Wt::WText(s.wt()));  
+
+  
 }
 
 void yearbookDone::onShow() {

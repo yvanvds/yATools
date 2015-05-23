@@ -13,7 +13,7 @@
 
 class yearbookDone : public stackPage {
 public:
-  yearbookDone(yearbookDB * db);// : db(db) {}
+  yearbookDone(yearbookDB * db) : db(db) {}
   virtual void setContent(Wt::WVBoxLayout * box);
   virtual void onShow();
   

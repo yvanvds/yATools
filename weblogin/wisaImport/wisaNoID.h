@@ -14,7 +14,7 @@ class wisaImport;
 
 class wisaNoID : public stackPage {
 public:
-  wisaNoID(wisaImport * parentObject);
+  wisaNoID(wisaImport * parentObject) : parentObject(parentObject) {}
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
   bool onNext();

@@ -22,8 +22,9 @@
 #include "wisaImport/wisaParseFile.h"
 #include "wisaImport/wisaUpload.h"
 #include "utils/string.h"
+#include "base/stackPageManager.h"
 
-class wisaImport : public Wt::WPanel {
+class wisaImport : public stackPageManager {
 public:
   struct wisaAccount {
     wisaAccount() : link(nullptr) {}
@@ -42,15 +43,9 @@ public:
     y::ldap::group * link;
   };
   
-  enum WISA_TAB {
-    WISA_TAB_UPLOAD,
-    WISA_TAB_PARSE,
-  };
   
-  wisaImport(y::ldap::server * server) : ldapServer(server) {}
-  
-  void create();
-  void gotoTab(WISA_TAB id);
+  wisaImport(y::ldap::server * server);
+
   
   void setWisaFile(const string & file);
   string getWisaFile();
@@ -75,7 +70,6 @@ private:
   container<wisaAccount> wisaAccounts;
   container<wisaGroup> wisaGroups;
   
-  Wt::WTabWidget * tabs;
   wisaUpload * wUpload;
   wisaParseFile * WParseFile;
   wisaNoID * WNoID;

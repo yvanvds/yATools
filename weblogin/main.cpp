@@ -37,7 +37,7 @@ Wt::WApplication * createApplication(const Wt::WEnvironment& env) {
   Wt::WHBoxLayout * layout = new Wt::WHBoxLayout(app->root());
   layout->setContentsMargins(0, 0, 0, 0);
   //app->root()->setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
-  app->root()->setPadding("5%");
+  app->root()->setPadding("1%");
   layout->addWidget(new webLogin(app));
 
   app->setTitle("Sancta Maria Apps");

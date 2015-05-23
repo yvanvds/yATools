@@ -36,47 +36,43 @@
 #include "base/stackPage.h"
 
 
-void wisaImport::create() {
-  setTitle("<h3>Wisa Import</h3>");
-  setStyleClass("panel panel-primary");
-  setMaximumSize(800, 800);
-  
-  tabs = new Wt::WTabWidget();
-  this->setCentralWidget(tabs);
-  
+wisaImport::wisaImport(y::ldap::server* server) : ldapServer(server) { 
   wUpload = new wisaUpload(this);
-  tabs->addTab(wUpload, "Upload");
+  addPage(wUpload);
+  wUpload->showButtons(false, false);
   
   WParseFile = new wisaParseFile(this); 
-  tabs->addTab(WParseFile, "Accounts");
-  /*
+  addPage(WParseFile);
+  WParseFile->showButtons(true, true);
+  
   WNoID = new wisaNoID(this); 
-  manager->addPage(WNoID);
+  addPage(WNoID);
   WNoID->showButtons(false, true);
   
   WCompareFile = new wisaCompareFile(this);
-  manager->addPage(WCompareFile);
+  addPage(WCompareFile);
   WCompareFile->showButtons(false, true);
   
   WCompareGroups = new wisaCompareGroups(this);
-  manager->addPage(WCompareGroups);
+  addPage(WCompareGroups);
   WCompareGroups->showButtons(false, true);
   
   WCompareNames = new wisaCompareNames(this);
-  manager->addPage(WCompareNames);
+  addPage(WCompareNames);
   WCompareNames->showButtons(false, true);
   
+  
   WNewGroups = new wisaNewGroups(this);
-  manager->addPage(WNewGroups);
+  addPage(WNewGroups);
   WNewGroups->showButtons(false, true);
   
   WConfirmSubmit = new wisaConfirmSubmit(this);
-  manager->addPage(WConfirmSubmit);
+  addPage(WConfirmSubmit);
   WConfirmSubmit->showButtons(true, true);
   
   WCommitChanges = new wisaCommitChanges(this);
-  manager->addPage(WCommitChanges);
-  WCommitChanges->showButtons(false, false);*/
+  addPage(WCommitChanges);
+  WCommitChanges->showButtons(false, false);
 }
 
 void wisaImport::setWisaFile(const string& file) {
@@ -186,14 +182,4 @@ container<wisaImport::wisaGroup> & wisaImport::getWisaGroups() {
 
 void wisaImport::showErrorOnScreen(const string& message) {
   WCommitChanges->addMessage(message);
-}
-
-void wisaImport::gotoTab(WISA_TAB id) {
-  switch(id) {
-    case WISA_TAB_UPLOAD: tabs->setCurrentIndex(tabs->indexOf(wUpload)); break;
-    case WISA_TAB_PARSE : {
-      WParseFile->onShow();
-      tabs->setCurrentIndex(tabs->indexOf(WParseFile)); break;
-    }
-  }
 }

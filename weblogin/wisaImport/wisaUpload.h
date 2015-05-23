@@ -8,14 +8,16 @@
 #ifndef WISAUPLOAD_H
 #define	WISAUPLOAD_H
 
-#include <Wt/WContainerWidget>
+#include "../base/stackPage.h"
 
 class wisaImport;
 
-class wisaUpload : public Wt::WContainerWidget {
+class wisaUpload : public stackPage {
   public:
     wisaUpload(wisaImport * parentObject);
    
+    void setContent(Wt::WVBoxLayout * box);
+    
     void onShow();
     void clear();
     

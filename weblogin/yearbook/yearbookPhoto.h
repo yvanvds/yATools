@@ -17,7 +17,9 @@
 
 class yearbookPhoto : public stackPage {
 public:
-  yearbookPhoto(yearbookDB * db);// : db(db) {}
+  yearbookPhoto(yearbookDB * db) : db(db), fileUpload(nullptr), imageResource(nullptr) {}
+ ~yearbookPhoto();
+ 
   virtual void setContent(Wt::WVBoxLayout * box);
   virtual void onShow();
   bool onNext();
@@ -27,6 +29,7 @@ private:
   yearbookDB * db;
   Wt::WVBoxLayout * box;
   Wt::WFileUpload * fileUpload;
+  Wt::WFileResource * imageResource;
   Wt::WText * hint;
   Wt::WImage * image;
 };

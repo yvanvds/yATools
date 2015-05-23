@@ -14,7 +14,7 @@ class wisaImport;
 
 class wisaCompareFile : public stackPage {
 public:
-  wisaCompareFile(wisaImport * parentObject);
+  wisaCompareFile(wisaImport * parentObject) : parentObject(parentObject) {}
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
 private:

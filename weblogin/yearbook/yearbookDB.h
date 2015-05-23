@@ -22,7 +22,6 @@ public:
   };
   
   yearbookDB();
-  ~yearbookDB();
   
   void loadConfig();
   void loadAllUsers(const string & orderBy = string("name"), bool reload = false);
@@ -74,9 +73,7 @@ public:
   container<y::data::row> & getReplacements();
   
   
-private:
-  y::data::database db;
-  
+private: 
   
   string _ID;
   string _name;

@@ -11,7 +11,7 @@
 #include "yearbookDB.h"
 #include "yearbookQuestion.h"
 
-//yearbookQuestion::yearbookQuestion(int ID, yearbookDB * ptr) : questionID(ID), db(ptr) {}
+yearbookQuestion::yearbookQuestion(int ID, yearbookDB * ptr) : questionID(ID), db(ptr) {}
 
 void yearbookQuestion::setContent(Wt::WVBoxLayout* box) {
   string title("<h3>Stap ");

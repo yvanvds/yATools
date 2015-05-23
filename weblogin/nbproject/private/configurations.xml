@@ -30,13 +30,18 @@
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090</runcommandpicklistitem>
+          <runcommandpicklistitem>valgrind --tool=memcheck  "${OUTPUT_PATH}" --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090</runcommandpicklistitem>
+          <runcommandpicklistitem>valgrind --tool=memcheck  --suppressions=glibsupp.txt --show-leak-:q"${OUTPUT_PATH}" --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090</runcommandpicklistitem>
+          <runcommandpicklistitem>G_SLICE=always-malloc valgrind --tool=memcheck  --suppressions=glibsupp.txt  "${OUTPUT_PATH}" --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090</runcommandpicklistitem>
+          <runcommandpicklistitem>valgrind --tool=memcheck  --suppressions=glibsupp.txt  "${OUTPUT_PATH}" --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090</runcommand>
+        <runcommand>valgrind --tool=memcheck  --suppressions=glibsupp.txt  "${OUTPUT_PATH}" --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
         <remove-instrumentation>0</remove-instrumentation>
         <environment>
+          <variable name="G_SLICE" value="always-malloc"/>
         </environment>
       </runprofile>
     </conf>

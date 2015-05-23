@@ -27,8 +27,8 @@ void yearbookConfig::loadContent() {
   question4->setText(db->getQuestion(3).wt());
 }
 
-Wt::WWidget * yearbookConfig::get() { 
-  tabs = new Wt::WTabWidget();
+yearbookConfig::yearbookConfig(yearbookDB* ptr) : db(ptr) { 
+  tabs = new Wt::WTabWidget(this);
   db->loadAllUsers("name", true);
   
   /***************************************************************
@@ -41,7 +41,7 @@ Wt::WWidget * yearbookConfig::get() {
     Wt::WContainerWidget * group = new Wt::WContainerWidget();
     group->addStyleClass("well");
     group->setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
-    group->setHeight(600);
+    group->setHeight(300);
     activation->addWidget(group);
     
     group->addWidget(new Wt::WText("<p>Tijdens deze periode zijn nieuwe inzendingen mogelijk. Een inzending kan gewijzigd worden tot de einddatum.</p>"));
@@ -131,8 +131,7 @@ Wt::WWidget * yearbookConfig::get() {
     
     group->addWidget(new Wt::WText("<p>Geef hier de volledige naam voor elke klascode in.</p>"));
     
-    Wt::WTable * table = new Wt::WTable(group);
-    int tableIndex = 0;
+    
     container<yearbookDB::entry> & entries = db->getEntries();
     
     for (int i = 0; i < entries.elms(); i++) {
@@ -152,9 +151,6 @@ Wt::WWidget * yearbookConfig::get() {
         r.key = group;
         r.value = new Wt::WLineEdit();
         r.value->setWidth("150px");
-        table->elementAt(tableIndex, 0)->addWidget(new Wt::WText(r.key.wt()));
-        table->elementAt(tableIndex, 1)->addWidget(r.value);
-        tableIndex++;
         
         // see if this exists in the database
         for(int j = 0; j < db->getReplacements().elms(); j++) {
@@ -165,7 +161,20 @@ Wt::WWidget * yearbookConfig::get() {
             break;
           }
         }
-        
+      }
+    }
+    
+    Wt::WTable * table = new Wt::WTable(group);
+    int tableIndex = 0;
+    bool secondRow = false;
+    
+    for(int i = 0; i < replacements.elms(); i++) {
+      table->elementAt(tableIndex, secondRow?2:0)->addWidget(new Wt::WText(replacements[i].key.wt()));
+      table->elementAt(tableIndex, secondRow?3:1)->addWidget(replacements[i].value);      
+      tableIndex++;
+      if(tableIndex + 1 > replacements.elms() / 2) {
+        tableIndex = 0;
+        secondRow = true;
       }
     }
     
@@ -173,7 +182,7 @@ Wt::WWidget * yearbookConfig::get() {
     button->clicked().connect(this, &yearbookConfig::replacementChange);
     button->setStyleClass("btn btn-success");
     button->setWidth("150px");
-    table->elementAt(tableIndex, 1)->addWidget(button);
+    table->elementAt(table->rowCount(), 3)->addWidget(button);
     
     for(int i = 0; i < table->rowCount(); i++) {
       for(int j = 0; j < table->columnCount(); j++) {
@@ -182,7 +191,6 @@ Wt::WWidget * yearbookConfig::get() {
     }
   }
   loadContent();
-  return tabs;
 }
 
 void yearbookConfig::openDateChanged() {

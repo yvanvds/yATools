@@ -97,6 +97,12 @@ webLogin::webLogin(Wt::WApplication * app) : WContainerWidget()
 #endif
 }
 
+webLogin::~webLogin() {
+  if(yearbookDBPtr != nullptr) {
+    delete yearbookDBPtr;
+  }
+}
+
 void webLogin::loginButtonClicked() {
   Wt::WString id = nameEdit->text();
   Wt::WString passwd = passEdit->text();
@@ -171,7 +177,7 @@ void webLogin::createContents() {
             deferCreate(boost::bind(&webLogin::groupFunc, this)), 
             Wt::WMenuItem::PreLoading);
   }
-  
+  */
   // show this for last year students (or me for testing)
   string group = account->group()();
   TODO(only show when yearbook is open)
@@ -199,7 +205,7 @@ void webLogin::createContents() {
     yearbookMenu->setStyleClass("nav nav-stacked");
     
     mainMenu->addMenu("Jaarboek Admin", yearbookMenu);
-  }*/
+  }
   
   mainMenu->setInternalPathEnabled("/");
   //mainMenu->itemSelected().connect(this, &webLogin::updateTitle);
@@ -242,27 +248,30 @@ Wt::WWidget * webLogin::webAccessFunc() {
 }
 
 Wt::WWidget * webLogin::wisaImportFunc() {
+  Wt::WPanel * panel = new Wt::WPanel();
+  panel->setTitle("<h3>Wisa Import</h3>");
+  panel->setStyleClass("panel panel-primary");
   wisaImportPtr = new wisaImport(&ldapServer);
-  wisaImportPtr->create();
   wisaImportPtr->setApplication(app);
-  return wisaImportPtr;
+  panel->setCentralWidget(wisaImportPtr);
+  panel->setMaximumSize(800, 700);
+  return panel;
 }
 /*
 Wt::WWidget * webLogin::groupFunc() {
   return new Wt::WText("groepen");
 }
-
+*/
 Wt::WWidget * webLogin::yearbookFunc() {
   createYearbookDB();
-  
   Wt::WPanel * panel = new Wt::WPanel();
   panel->setTitle("<h3>Jaarboek</h3>");
   panel->setStyleClass("panel panel-primary");
+  
   yearbookPtr = new yearbook(yearbookDBPtr);
-  this->addChild(yearbookPtr);
-  panel->setCentralWidget(yearbookPtr->get());
-  panel->setMaximumSize(800, 1000);
   yearbookPtr->setAccount(account);
+  panel->setCentralWidget(yearbookPtr);
+  panel->setMaximumSize(800, 700);
   
   return panel;
 }
@@ -274,9 +283,8 @@ Wt::WWidget * webLogin::yearbookReviewFunc() {
   panel->setTitle("<h3>Jaarboek Review</h3>");
   panel->setStyleClass("panel panel-primary");
   yearbookReviewPtr = new yearbookReview(yearbookDBPtr);
-  this->addChild(yearbookReviewPtr);
-  panel->setCentralWidget(yearbookReviewPtr->get());
-  panel->setMaximumSize(800, 1000);
+  panel->setCentralWidget(yearbookReviewPtr);
+  panel->setMaximumSize(800, 700);
   
   return panel;
 }
@@ -288,9 +296,8 @@ Wt::WWidget * webLogin::yearbookDownloadFunc() {
   panel->setTitle("<h3>Jaarboek Download</h3>");
   panel->setStyleClass("panel panel-primary");
   yearbookDownloadPtr = new yearbookDownload(yearbookDBPtr);
-  this->addChild(yearbookDownloadPtr);
-  panel->setCentralWidget(yearbookDownloadPtr->get());
-  panel->setMaximumSize(800, 1000);
+  panel->setCentralWidget(yearbookDownloadPtr);
+  panel->setMaximumSize(800, 700);
   
   return panel;
 }
@@ -302,23 +309,20 @@ Wt::WWidget * webLogin::yearbookConfigFunc() {
   panel->setTitle("<h3>Jaarboek Configuratie</h3>");
   panel->setStyleClass("panel panel-primary");
   yearbookConfigPtr = new yearbookConfig(yearbookDBPtr);
-  this->addChild(yearbookConfigPtr);
-  panel->setCentralWidget(yearbookConfigPtr->get());
-  panel->setMaximumSize(800, 1000);
+  panel->setCentralWidget(yearbookConfigPtr);
+  panel->setMaximumSize(800, 700);
   
   return panel;
 }
-*/
+
 void webLogin::logoutFunc() {
   app->redirect("/");
   app->quit();
 }
-/*
+
 void webLogin::createYearbookDB() {
   if(yearbookDBPtr == nullptr) {
     yearbookDBPtr = new yearbookDB();
     yearbookDBPtr->loadConfig();
-    this->addChild(yearbookDBPtr);
   }
 }
-  */

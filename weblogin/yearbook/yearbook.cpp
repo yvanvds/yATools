@@ -10,41 +10,37 @@
 #include <Wt/WDate>
 
 
-yearbook::yearbook(yearbookDB * ptr) : db(ptr), manager(nullptr), account(nullptr) {}
-
-stackPageManager * yearbook::get() { 
-  manager = new stackPageManager();
-  this->addChild(manager);
-  /*
+yearbook::yearbook(yearbookDB * ptr) : db(ptr), account(nullptr) {
+  
   ybVerifyAccount = new yearbookVerifyAccount(db);
-  manager->addPage(ybVerifyAccount);
+  addPage(ybVerifyAccount);
   ybVerifyAccount->showButtons(false, true);
   
+  
   ybQuestion1 = new yearbookQuestion(1, db);
-  manager->addPage(ybQuestion1);
+  addPage(ybQuestion1);
   ybQuestion1->showButtons(true, true);
   
   ybQuestion2 = new yearbookQuestion(2, db);
-  manager->addPage(ybQuestion2);
+  addPage(ybQuestion2);
   ybQuestion2->showButtons(true, true);
   
   ybQuestion3 = new yearbookQuestion(3, db);
-  manager->addPage(ybQuestion3);
+  addPage(ybQuestion3);
   ybQuestion3->showButtons(true, true);
   
   ybQuestion4 = new yearbookQuestion(4, db);
-  manager->addPage(ybQuestion4);
+  addPage(ybQuestion4);
   ybQuestion4->showButtons(true, true);
   
   ybPhoto = new yearbookPhoto(db);
-  manager->addPage(ybPhoto);
+  addPage(ybPhoto);
   ybPhoto->showButtons(true, true);
   
   ybDone = new yearbookDone(db);
-  manager->addPage(ybDone);
+  addPage(ybDone);
   ybDone->showButtons(true, false);
-  */
-  return manager;
+  
 }
 
 void yearbook::setAccount(y::ldap::account * account) {

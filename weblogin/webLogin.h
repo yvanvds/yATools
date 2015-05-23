@@ -61,6 +61,8 @@ DeferredWidget<Function> *deferCreate(Function f)
 class webLogin : public Wt::WContainerWidget {
 public:
   webLogin(Wt::WApplication * app);
+ ~webLogin();
+  
   void loginButtonClicked();
   
   void createContents();
@@ -90,10 +92,10 @@ private:
   Wt::WWidget * webAccessFunc();
   Wt::WWidget * wisaImportFunc();
   //Wt::WWidget * groupFunc();
-  //Wt::WWidget * yearbookFunc();
-  //Wt::WWidget * yearbookReviewFunc();
-  //Wt::WWidget * yearbookDownloadFunc();
-  //Wt::WWidget * yearbookConfigFunc();
+  Wt::WWidget * yearbookFunc();
+  Wt::WWidget * yearbookReviewFunc();
+  Wt::WWidget * yearbookDownloadFunc();
+  Wt::WWidget * yearbookConfigFunc();
   
   // sub objects
   yearbook * yearbookPtr;
@@ -107,7 +109,7 @@ private:
   
   y::ldap::server ldapServer;
   
-  //void createYearbookDB();
+  void createYearbookDB();
   
   void logoutFunc();
   

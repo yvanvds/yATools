@@ -10,6 +10,7 @@
 
 
 yearbookDB::yearbookDB() {
+  y::data::database db;
   db.open();
   
   if(!db.has("yearbookApp")) {
@@ -93,13 +94,15 @@ if(!db.tableExists("submissions")) {
   } 
   
   newEntry = true;
-}
-
-yearbookDB::~yearbookDB() {
   db.close();
 }
 
+
 void yearbookDB::loadConfig() {
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
+  
   container<y::data::row> config;
   db.getAllRows("config", config);
   if(config.elms()) {
@@ -110,9 +113,17 @@ void yearbookDB::loadConfig() {
     question[2] = config[0]["question3"].asString();
     question[3] = config[0]["question4"].asString();
   }
+  
+  db.getAllRows("replacements", replacements);
+  
+  db.close();
 }
 
 bool yearbookDB::loadUser(const string & uid) {
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
+  
   y::data::field condition;
   condition.name("ID");
   condition.setString(uid);
@@ -138,9 +149,15 @@ bool yearbookDB::loadUser(const string & uid) {
   } else {
     return false;
   }
+  
+  db.close();
 }
 
 void yearbookDB::saveUser() {
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
+  
   y::data::row row;
   row.addString("name", _name);
   row.addString("surname", _surname);
@@ -174,9 +191,15 @@ void yearbookDB::saveUser() {
 
     db.setRow("submissions", row, condition);
   }
+  
+  db.close();
 }
 
 void yearbookDB::saveUser(entry & e) {
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
+  
   y::data::row row;
   row.addString("name", e.name);
   row.addString("surname", e.surname);
@@ -192,10 +215,16 @@ void yearbookDB::saveUser(entry & e) {
   y::data::field condition("ID", e.ID);
   db.setRow("submissions", row, condition);
   e.changed = false;
+  
+  db.close();
 }
 
 void yearbookDB::saveUser(int index) {
   if(index >= entries.elms()) return;
+  
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
   
   entry & e = entries[index];
   y::data::row row;
@@ -213,6 +242,7 @@ void yearbookDB::saveUser(int index) {
   y::data::field condition("ID", e.ID);
   db.setRow("submissions", row, condition);
   e.changed = false;
+  db.close();
 }
 
 void yearbookDB::ID(const string & value) {
@@ -335,6 +365,9 @@ void yearbookDB::loadAllUsers(const string& orderBy, bool reload) {
   if(!entries.empty() && !reload) return;
   
   entries.clear();
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
   
   container<y::data::row> rows;
   container<y::data::order> order;
@@ -362,6 +395,7 @@ void yearbookDB::loadAllUsers(const string& orderBy, bool reload) {
     e.approved = rows[i]["approved"].asBool();
     e.changed = false;
   }
+  db.close();
 }
 
 void yearbookDB::replace(const string& key, const string& value) {
@@ -375,6 +409,10 @@ void yearbookDB::replace(const string& key, const string& value) {
     }
   }
   
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
+  
   if(found) {
     y::data::field condition("original", key);
     y::data::row row;
@@ -386,9 +424,15 @@ void yearbookDB::replace(const string& key, const string& value) {
     row.addString("replacement", value);
     db.addRow("replacements", row);
   }
+  
+  db.close();
 }
 
 void yearbookDB::setQuestion(int ID, const string& text) {
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
+  
   question[ID] = text; 
   y::data::row row;
   switch(ID) {
@@ -399,9 +443,14 @@ void yearbookDB::setQuestion(int ID, const string& text) {
   }
   y::data::field condition("ID", 1);
   db.setRow("config", row, condition);
+  db.close();
 }
 
 void yearbookDB::setCloseDate(const Wt::WDate& date) {
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
+  
   closeDate.day(date.day());
   closeDate.month(date.month());
   closeDate.year(date.year());
@@ -409,9 +458,14 @@ void yearbookDB::setCloseDate(const Wt::WDate& date) {
   row.addDate("closeDate", closeDate);
   y::data::field condition("ID", 1);
   db.setRow("config", row, condition);
+  db.close();
 }
 
 void yearbookDB::setOpenDate(const Wt::WDate& date) {
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
+  
   openDate.day(date.day());
   openDate.month(date.month());
   openDate.year(date.year());
@@ -419,9 +473,14 @@ void yearbookDB::setOpenDate(const Wt::WDate& date) {
   row.addDate("openDate", openDate);
   y::data::field condition("ID", 1);
   db.setRow("config", row, condition);
+  db.close();
 }
 
 void yearbookDB::removeUser(const string & uid) {
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
+  
   y::data::field condition("ID", uid);
   db.delRow("submissions", condition);
   
@@ -431,13 +490,20 @@ void yearbookDB::removeUser(const string & uid) {
       break;
     }
   }
+  
+  db.close();
 }
 
 void yearbookDB::removeUser(int index) {
   if(index >= entries.elms()) return;
  
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
+  
   y::data::field condition("ID", entries[index].ID);
   db.delRow("submissions", condition);
+  db.close();
   
   entries.remove(index);
 }

@@ -15,7 +15,7 @@ class wisaImport;
 
 class wisaConfirmSubmit : public stackPage {
 public:
-  wisaConfirmSubmit(wisaImport * parentObject);
+  wisaConfirmSubmit(wisaImport * parentObject) : parentObject(parentObject) {}
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
   bool onNext();

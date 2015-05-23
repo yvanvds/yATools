@@ -15,11 +15,10 @@
 #include "../wisaImport.h"
 
 wisaParseFile::wisaParseFile(wisaImport * parentObject)
-: parentObject(parentObject) 
-{
-  box = new Wt::WVBoxLayout(this);
-  setLayout(box);
-  
+: parentObject(parentObject) {}
+
+
+void wisaParseFile::setContent(Wt::WVBoxLayout * box) { 
   box->addWidget(new Wt::WText("<h4>Controleer of dit er ok uit ziet. (Let op de accenten!)</h4>"));
   
   // table scroll
@@ -29,9 +28,9 @@ wisaParseFile::wisaParseFile(wisaImport * parentObject)
   
   entries = new Wt::WTable();
   entries->setHeaderCount(1);
-  entries->setWidth(600);
+  entries->setWidth(700);
   scroll->setWidget(entries);
-  scroll->setMaximumSize(650, 500);
+  scroll->setMaximumSize(750, 450);
 }
 
 void wisaParseFile::onShow() {

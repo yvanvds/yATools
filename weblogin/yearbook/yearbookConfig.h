@@ -8,7 +8,7 @@
 #ifndef YEARBOOKCONFIG_H
 #define	YEARBOOKCONFIG_H
 
-#include <Wt/WObject>
+#include <Wt/WContainerWidget>
 #include <Wt/WTabWidget>
 #include <Wt/WDateEdit>
 #include <Wt/WLineEdit>
@@ -16,15 +16,14 @@
 #include "utils/string.h"
 #include "yearbookDB.h"
 
-class yearbookConfig : public Wt::WObject {
+class yearbookConfig : public Wt::WContainerWidget {
 public:
-  yearbookConfig(yearbookDB * ptr) : db(ptr) {}
+  yearbookConfig(yearbookDB * ptr);
   struct replacement {
     string key;
     Wt::WLineEdit * value;
   };
   
-  Wt::WWidget * get();
   void loadContent();
 private:
   

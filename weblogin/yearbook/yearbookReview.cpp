@@ -17,44 +17,39 @@
 #include "yearbookReview.h"
 #include "yearbookDB.h"
 
-yearbookReview::yearbookReview(yearbookDB* ptr) : db(ptr) {
-  
-}
-
-Wt::WWidget * yearbookReview::get() {
+yearbookReview::yearbookReview(yearbookDB* ptr) : db(ptr), dialogResource(nullptr) {
   db->loadConfig();
   db->loadAllUsers("name", true);
   
-  mainWidget = new Wt::WContainerWidget();
-  this->addChild(mainWidget);
-  
   //mainWidget->addStyleClass("well");
-  mainWidget->setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
-  mainWidget->setOverflow(Wt::WContainerWidget::OverflowScroll, Wt::Orientation::Vertical);
-  mainWidget->setHeight(600);
+  setContentAlignment(Wt::AlignCenter | Wt::AlignMiddle);
+  setOverflow(Wt::WContainerWidget::OverflowScroll, Wt::Orientation::Vertical);
+  setHeight(600);
   
   string s = "<h3>";
   s += db->getEntries().elms();
   s += " inzendingen</h3>";
   title = new Wt::WText(s.wt());
   title->addStyleClass("page-header");
-  mainWidget->addWidget(title);
+  addWidget(title);
   
-  table = new Wt::WTable(mainWidget);
-  mainWidget->addWidget(table);
+  table = new Wt::WTable();
+  addWidget(table);
   loadTableContent();
   createDialog();
- 
-  
-  warningAtRemove = new yearbookConfirmRemove();
-  this->addChild(warningAtRemove);
-  warningAtRemove->setParent(this);
-  
-  return mainWidget;
+
+  //warningAtRemove = new yearbookConfirmRemove();
+  //warningAtRemove->setParent(this);
+}
+
+yearbookReview::~yearbookReview() {
+  if(dialogResource != nullptr) {
+    delete dialogResource;
+  }
 }
 
 void yearbookReview::createDialog() {
-  dialog = new Wt::WDialog(mainWidget);
+  dialog = new Wt::WDialog(this);
   dialog->resize("700px", "600px");
   dialogContainer = new Wt::WContainerWidget(dialog->contents());
   Wt::WContainerWidget * personInfo = new Wt::WContainerWidget();
@@ -197,8 +192,10 @@ void yearbookReview::loadDialogContent() {
     dialogImage->setImageLink("http://placehold.it/600x400");
   } else {
     string s = db->getEntries()[currentEntry].photo;
-    Wt::WFileResource * r = new Wt::WFileResource(s.utf8());
-    dialogImage->setImageLink(r);
+    
+    if(dialogResource != nullptr) delete dialogResource;
+    dialogResource = new Wt::WFileResource(s.utf8());
+    dialogImage->setImageLink(dialogResource);
     dialogImage->setWidth("300px");
   }
   

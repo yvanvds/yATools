@@ -13,7 +13,7 @@
 
 class yearbookVerifyAccount : public stackPage {
 public:
-  yearbookVerifyAccount(yearbookDB * ptr);// : db(ptr) {}
+  yearbookVerifyAccount(yearbookDB * ptr) : db(ptr) {}
   void setContent(Wt::WVBoxLayout * box);
   void onShow();
   bool onNext();
