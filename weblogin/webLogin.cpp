@@ -144,9 +144,18 @@ void webLogin::loginButtonClicked() {
 
 
 void webLogin::createContents() {
+  Wt::WVBoxLayout * everything = new Wt::WVBoxLayout();
+  this->setLayout(everything);
+  Wt::WContainerWidget * mainContentBlock = new Wt::WContainerWidget();
+  everything->addWidget(mainContentBlock);
+  string versionText("yAtools version ");
+  versionText += VERSION;
+  versionText += ", by yvan vander sanden.";
 
+  everything->addWidget(new Wt::WText(versionText.wt()));
+  
   Wt::WHBoxLayout * hbox = new Wt::WHBoxLayout();
-  this->setLayout(hbox);
+  mainContentBlock->setLayout(hbox);
   
   Wt::WStackedWidget * contents = new Wt::WStackedWidget(this);
   Wt::WAnimation fade(Wt::WAnimation::Fade, Wt::WAnimation::Linear, 250);

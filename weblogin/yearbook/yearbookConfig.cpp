@@ -172,7 +172,7 @@ yearbookConfig::yearbookConfig(yearbookDB* ptr) : db(ptr) {
       table->elementAt(tableIndex, secondRow?2:0)->addWidget(new Wt::WText(replacements[i].key.wt()));
       table->elementAt(tableIndex, secondRow?3:1)->addWidget(replacements[i].value);      
       tableIndex++;
-      if(tableIndex + 1 > replacements.elms() / 2) {
+      if(!secondRow && tableIndex + 1 > replacements.elms() / 2) {
         tableIndex = 0;
         secondRow = true;
       }

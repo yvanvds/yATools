@@ -184,11 +184,6 @@ void commitThreadFunc(wisaCommitChanges * caller) {
       }
       
       y::ldap::DATE date(account.date, true);
-      string message("birthday: ");
-      message += account.link->birthDay()();
-      message += " ";
-      message += date();
-      caller->addMessage(message);
       if(account.link->birthDay() != date) {
         account.link->birthDay(date);
         string message("Verjaardag voor ");

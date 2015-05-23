@@ -7,51 +7,48 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaUpload.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookQuestion.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/webLogin.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/main.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbook.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookQuestion.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaUpload.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaParseFile.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookConfig.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/proxyManager.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaUpload.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDownload.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDone.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookVerifyAccount.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDone.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDownload.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaConfirmSubmit.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookVerifyAccount.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitChanges.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNewGroups.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareGroups.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/base/stackPageManager.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareNames.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookPhoto.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/webLogin.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookReview.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookConfirmRemove.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDB.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitChanges.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookConfig.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareFile.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookConfig.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/accountManager.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbook.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDB.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareGroups.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/proxyManager.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/base/stackPage.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookPhoto.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareFile.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNewGroups.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNoID.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/base/stackPageManager.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDone.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNoID.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaParseFile.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareNames.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookConfirmRemove.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNoID.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookReview.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDownload.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/accountManager.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaConfirmSubmit.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookQuestion.cpp</file>
         </group>
