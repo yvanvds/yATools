@@ -150,9 +150,13 @@ void webLogin::createContents() {
   everything->addWidget(mainContentBlock);
   string versionText("yAtools version ");
   versionText += VERSION;
-  versionText += ", by yvan vander sanden.";
-
-  everything->addWidget(new Wt::WText(versionText.wt()));
+  versionText += ", by yvan vander sanden. Build number ";
+  versionText += BUILD_NUMBER;
+  versionText += " at ";
+  versionText += BUILD_DATE;
+  Wt::WText * version = new Wt::WText(versionText.wt());
+  version->setStyleClass("small");
+  everything->addWidget(version);
   
   Wt::WHBoxLayout * hbox = new Wt::WHBoxLayout();
   mainContentBlock->setLayout(hbox);

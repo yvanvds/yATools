@@ -3,11 +3,17 @@
 . scripts/gui
 
 sendToGit() {
+  #update version numbers
+  perl -pe 's/\d+/$& > 1 ? $&+1 : $&/ge' -i libadmintools/version.h
+  echo "#define BUILD_DATE \"$(date)\"" > libadmintools/build_date.h
+
+  # set message
   git add -A
   message="automated upload from install script"
  
   showInput "Git Commit" "Provide a commit message" "$message"
 
+  # push
   git commit -m "$INPUT_RESULT"
   git push
   if [[ $? == 0 ]]; then

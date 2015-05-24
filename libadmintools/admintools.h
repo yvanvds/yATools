@@ -8,7 +8,9 @@
 #ifndef ADMINTOOLS_H
 #define	ADMINTOOLS_H
 
-#define VERSION "1.2.7"
+#define VERSION "1.2"
+#include "version.h"
+#include "build_date.h"
 
 #include "defines.h"
 
