@@ -5,7 +5,7 @@
  * Created on May 12, 2015, 3:15 PM
  */
 
-#include <string>
+#include "utils/string.h"
 #include <Wt/WTextArea>
 #include <Wt/WVBoxLayout>
 #include "yearbookDB.h"
@@ -61,11 +61,14 @@ void yearbookQuestion::onShow() {
 }
 
 void yearbookQuestion::contentChanged() {
+  string answer(textArea->text());
+  answer.removeNewLine();
+  
   switch(questionID) {
-    case 1: db->answer1(textArea->text()); break;
-    case 2: db->answer2(textArea->text()); break;
-    case 3: db->answer3(textArea->text()); break;
-    case 4: db->answer4(textArea->text()); break;
+    case 1: db->answer1(answer); break;
+    case 2: db->answer2(answer); break;
+    case 3: db->answer3(answer); break;
+    case 4: db->answer4(answer); break;
   }
 }
 

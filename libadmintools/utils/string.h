@@ -14,6 +14,7 @@
 #include "convert.h"
 #include "stringFunctions.h"
 #include <stdlib.h>
+#include <boost/algorithm/string.hpp>
 
 class string {
 public:
@@ -104,6 +105,15 @@ public:
   string & replaceUTF8  () { y::utils::replaceUTF8Chars       (content); return *this; }
   string & keeponlyChars() { y::utils::keepOnlyChars          (content); return *this; }
   string & toLower      () { content = boost::locale::to_lower(content); return *this; }
+  string & removeNewLine() {
+      // windows
+    boost::replace_all(content, "\r\n", " ");
+    // linux
+    boost::replace_all(content, "\n", " ");
+    // mac
+    boost::replace_all(content, "\r", " ");
+    return *this;
+  }
   
   void execute          () { system(content.c_str()); }
   void clear            () {        content.clear() ; }
