@@ -71,7 +71,9 @@ void yearbookReview::createDialog() {
   personInfo->addWidget(dialogTable);
   
   dialogImage = new Wt::WImage();
-  dialogImage->setImageLink("http://placehold.it/600x400");
+  if(dialogResource != nullptr) delete dialogResource;
+  dialogResource = new Wt::WFileResource("yearbook_latex/Pictures/placeholder.jpg");
+  dialogImage->setImageLink(dialogResource);
   dialogImage->resize("300px", "200px");
   dialogTable->elementAt(0,0)->addWidget(dialogImage);
   
@@ -195,7 +197,9 @@ void yearbookReview::loadDialogContent() {
   dialogImage = new Wt::WImage();
   
   if(db->getEntries()[currentEntry].photo.empty()) {
-    dialogImage->setImageLink("http://placehold.it/600x400");
+    if(dialogResource != nullptr) delete dialogResource;
+    dialogResource = new Wt::WFileResource("yearbook_latex/Pictures/placeholder.jpg");
+    dialogImage->setImageLink(dialogResource);
     dialogImage->resize("300px", "200px");
   } else {
     string s = db->getEntries()[currentEntry].photo;
@@ -372,5 +376,8 @@ void yearbookReview::onNameClicked() {
 
 void yearbookReview::removeImage() {
   db->getEntries()[currentEntry].photo.clear();
-  dialogImage->setImageLink("http://placekitten.com/200/200");
+  if(dialogResource != nullptr) delete dialogResource;
+  dialogResource = new Wt::WFileResource("yearbook_latex/Pictures/placeholder.jpg");
+  dialogImage->setImageLink(dialogResource);
+  dialogImage->resize("300px", "200px");
 }
