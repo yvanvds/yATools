@@ -26,7 +26,9 @@ void yearbookPhoto::setContent(Wt::WVBoxLayout * box) {
   box->addWidget(new Wt::WText("<p>Voeg tot slot een mooie foto van jezelf toe. Bij voorkeur in landscape formaat, met 900x600 pixels.</p>"));
  
   image = new Wt::WImage();
-  image->setImageLink("http://placehold.it/600x400");
+  if(imageResource != nullptr) delete imageResource;
+  imageResource = new Wt::WFileResource("yearbook_latex/Pictures/placeholder.jpg");
+  image->setImageLink(imageResource);
   
   hint = new Wt::WText();
 
@@ -38,7 +40,9 @@ void yearbookPhoto::setContent(Wt::WVBoxLayout * box) {
 
 void yearbookPhoto::onShow() {
   if(db->photo().empty()) {
-    image->setImageLink("http://placehold.it/600x400");
+    if(imageResource != nullptr) delete imageResource;
+    imageResource = new Wt::WFileResource("yearbook_latex/Pictures/placeholder.jpg");
+    image->setImageLink(imageResource);
     image->resize("300px", "200px");
   } else {
     string s = db->photo();
