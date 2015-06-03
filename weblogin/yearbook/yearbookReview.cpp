@@ -13,9 +13,11 @@
 #include <Wt/WHBoxLayout>
 #include <Wt/WFileResource>
 #include <Wt/WScrollArea>
+#include <Wt/WPainter>
 
 #include "yearbookReview.h"
 #include "yearbookDB.h"
+#include "../base/imageConvert.h"
 
 yearbookReview::yearbookReview(yearbookDB* ptr) : db(ptr), dialogResource(nullptr) {
   db->loadConfig();
@@ -60,7 +62,7 @@ void yearbookReview::createDialog() {
   dialogContainer->setPadding("10px");
   dialogContainer->setOverflow(Wt::WContainerWidget::OverflowScroll, Wt::Orientation::Vertical);
   
-  Wt::WTable * dialogTable = new Wt::WTable();
+  dialogTable = new Wt::WTable();
   dialogTable->columnAt(0)->setWidth("230px");
   dialogTable->columnAt(1)->setWidth("100px");
   dialogTable->columnAt(2)->setWidth("300px");
@@ -70,7 +72,7 @@ void yearbookReview::createDialog() {
   
   dialogImage = new Wt::WImage();
   dialogImage->setImageLink("http://placehold.it/600x400");
-  dialogImage->setWidth("300px");
+  dialogImage->resize("300px", "200px");
   dialogTable->elementAt(0,0)->addWidget(dialogImage);
   
   dialogImageButton = new Wt::WPushButton("verwijder foto");
@@ -188,16 +190,38 @@ void yearbookReview::loadDialogContent() {
   title += db->getEntries()[currentEntry].surname;
   dialog->setWindowTitle(title.wt());
   
+  dialogTable->elementAt(0,0)->removeWidget(dialogImage);
+  delete dialogImage;
+  dialogImage = new Wt::WImage();
+  
   if(db->getEntries()[currentEntry].photo.empty()) {
     dialogImage->setImageLink("http://placehold.it/600x400");
+    dialogImage->resize("300px", "200px");
   } else {
     string s = db->getEntries()[currentEntry].photo;
     
     if(dialogResource != nullptr) delete dialogResource;
     dialogResource = new Wt::WFileResource(s.utf8());
     dialogImage->setImageLink(dialogResource);
-    dialogImage->setWidth("300px");
+    
+    int _width;
+    int _height;
+    GetDimensions(s.c_str(), _width, _height);
+    float _ratio;
+    
+    if(_width > _height) {
+      _ratio = _width / 300.f;
+    } else {
+      _ratio = _height / 200.f;
+    }
+    _width /= _ratio;
+    _height /= _ratio;
+    Wt::WLength w(_width);
+    Wt::WLength h(_height);
+    dialogImage->resize(w, h);
   }
+  
+  dialogTable->elementAt(0,0)->addWidget(dialogImage);
   
   dialogName->setText(db->getEntries()[currentEntry].name.wt());
   dialogSurname->setText(db->getEntries()[currentEntry].surname.wt());

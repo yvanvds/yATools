@@ -42,6 +42,7 @@ private:
   
   Wt::WText * title;
   Wt::WDialog * dialog;
+  Wt::WTable * dialogTable;
   Wt::WImage * dialogImage;
   Wt::WPushButton * dialogImageButton;
   Wt::WLineEdit * dialogName;

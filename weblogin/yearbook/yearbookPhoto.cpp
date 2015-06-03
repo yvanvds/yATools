@@ -11,6 +11,7 @@
 #include <Wt/WText>
 #include <Wt/WFileResource>
 #include <Wt/WProgressBar>
+#include "../base/imageConvert.h"
 
 yearbookPhoto::~yearbookPhoto() {
   if(imageResource != nullptr) {
@@ -38,14 +39,28 @@ void yearbookPhoto::setContent(Wt::WVBoxLayout * box) {
 void yearbookPhoto::onShow() {
   if(db->photo().empty()) {
     image->setImageLink("http://placehold.it/600x400");
+    image->resize("300px", "200px");
   } else {
     string s = db->photo();
     if(imageResource != nullptr) delete imageResource;
     imageResource = new Wt::WFileResource(s.utf8());
     image->setImageLink(imageResource);
+    int _width;
+    int _height;
+    GetDimensions(s.c_str(), _width, _height);
+    float _ratio;
+    
+    if(_width > _height) {
+      _ratio = _width / 300.f;
+    } else {
+      _ratio = _height / 200.f;
+    }
+    _width /= _ratio;
+    _height /= _ratio;
+    Wt::WLength w(_width);
+    Wt::WLength h(_height);
+    image->resize(w, h);
   }
-  image->setHeight(200);
-  image->setWidth(300);
 }
 
 
@@ -83,8 +98,21 @@ void yearbookPhoto::setUpload() {
     
     imageResource = new Wt::WFileResource(imageName.utf8());
     image->setImageLink(imageResource);
-    image->setHeight(200);
-    image->setWidth(300);
+    int _width;
+    int _height;
+    GetDimensions(imageName.c_str(), _width, _height);
+    float _ratio;
+    
+    if(_width > _height) {
+      _ratio = _width / 300.f;
+    } else {
+      _ratio = _height / 200.f;
+    }
+    _width /= _ratio;
+    _height /= _ratio;
+    Wt::WLength w(_width);
+    Wt::WLength h(_height);
+    image->resize(w, h);
   }));
   
   fileUpload->fileTooLarge().connect(std::bind([=] () {

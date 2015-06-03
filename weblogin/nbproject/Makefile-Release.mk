@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/accountManager.o \
+	${OBJECTDIR}/base/imageConvert.o \
 	${OBJECTDIR}/base/stackPage.o \
 	${OBJECTDIR}/base/stackPageManager.o \
 	${OBJECTDIR}/main.o \
@@ -77,7 +78,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -lwtfcgi -lwt -lldap -llber -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals -lboost_locale -Wl,-rpath,../libadmintools/dist/Release/GNU-Linux-x86 -L../libadmintools/dist/Release/GNU-Linux-x86 -llibadmintools
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -lwtfcgi -lwt -lldap -llber -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals -lboost_locale -Wl,-rpath,../libadmintools/dist/Release/GNU-Linux-x86 -L../libadmintools/dist/Release/GNU-Linux-x86 -llibadmintools -lpng -ljpeg
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -93,6 +94,11 @@ ${OBJECTDIR}/accountManager.o: accountManager.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/accountManager.o accountManager.cpp
+
+${OBJECTDIR}/base/imageConvert.o: base/imageConvert.cpp 
+	${MKDIR} -p ${OBJECTDIR}/base
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/base/imageConvert.o base/imageConvert.cpp
 
 ${OBJECTDIR}/base/stackPage.o: base/stackPage.cpp 
 	${MKDIR} -p ${OBJECTDIR}/base

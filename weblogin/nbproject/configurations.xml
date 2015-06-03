@@ -6,6 +6,8 @@
       <itemPath>accountManager.h</itemPath>
     </logicalFolder>
     <logicalFolder name="base" displayName="base" projectFiles="true">
+      <itemPath>base/imageConvert.cpp</itemPath>
+      <itemPath>base/imageConvert.h</itemPath>
       <itemPath>base/stackPage.cpp</itemPath>
       <itemPath>base/stackPage.h</itemPath>
       <itemPath>base/stackPageManager.cpp</itemPath>
@@ -76,6 +78,7 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>base</Elem>
+    <Elem>dependencies</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -124,12 +127,17 @@
             <linkerOptionItem>-llber</linkerOptionItem>
             <linkerOptionItem>-lldap</linkerOptionItem>
             <linkerOptionItem>-lboost_locale</linkerOptionItem>
+            <linkerOptionItem>-lpng -ljpeg</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
       <item path="accountManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="accountManager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="base/imageConvert.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="base/imageConvert.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="base/stackPage.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -276,12 +284,17 @@
                             OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
+            <linkerOptionItem>-lpng -ljpeg</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
       <item path="accountManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="accountManager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="base/imageConvert.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="base/imageConvert.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="base/stackPage.cpp" ex="false" tool="1" flavor2="0">
       </item>
