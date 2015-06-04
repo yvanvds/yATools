@@ -69,7 +69,16 @@ void yearbookDownload::generatePDF() {
           groupName = db->getReplacements()[i]["replacement"].asString();
         }
       }
-      content << std::endl << "\\chapterimage{Pictures/chapter_head_2}" << std::endl;
+      
+      std::string groupImage = "Pictures/chapter_head_2";
+      for(int i = 0; i < db->getGroupImages().elms(); i++) {
+        if(db->getGroupImages()[i]["groupName"].asString() == currentGroup) {
+          groupImage = "../" + db->getGroupImages()[i]["imageName"].asString().utf8();
+          boost::algorithm::erase_last(groupImage, ".png");
+          break;
+        }
+      }
+      content << std::endl << "\\chapterimage{" << groupImage << "}" << std::endl;
       content << std::endl << "\\chapter*{" << groupName << "}" << std::endl;
       content << std::endl << "\\chaptermark{" << groupName << "}" << std::endl;
       content << std::endl << "\\addcontentsline{toc}{chapter}{" << groupName << "}" << std::endl;

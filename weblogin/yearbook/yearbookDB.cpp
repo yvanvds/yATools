@@ -19,7 +19,7 @@ yearbookDB::yearbookDB() {
   
   db.use("yearbookApp");
   
-if(!db.tableExists("submissions")) {  
+  if(!db.tableExists("submissions")) {  
     // create table for submissions
     y::data::row submissions;
     submissions.addString("ID");
@@ -84,6 +84,15 @@ if(!db.tableExists("submissions")) {
     db.createTable("replacements", replacements);
   }
   
+  if(!db.tableExists("groupImages")) {
+    y::data::row images;
+    images.addInt("ID");
+    images["ID"].primaryKey(true).required(true).autoIncrement(true);
+    images.addString("groupName").addString("imageName");
+    images["imageName"].stringLength(128);
+    db.createTable("groupImages", images);
+  }
+  
   if(!db.tableExists("validUsers")) {
     y::data::row users;
     users.addInt("ID");
@@ -115,7 +124,7 @@ void yearbookDB::loadConfig() {
   }
   
   db.getAllRows("replacements", replacements);
-  
+  db.getAllRows("groupImages", groupImages);
   db.close();
 }
 
@@ -428,6 +437,34 @@ void yearbookDB::replace(const string& key, const string& value) {
   db.close();
 }
 
+void yearbookDB::saveGroupImage(const string& groupName, const string& imageName) {
+  bool found = false;
+  for (int i = 0; i < groupImages.elms(); i++) {
+    if(groupImages[i]["groupName"].asString() == groupName) {
+      groupImages[i]["imageName"].setString(imageName);
+      found = true;
+      break;
+    }
+  }
+  
+  y::data::database db;
+  db.open();
+  db.use("yearbookApp");
+  
+  if(found) {
+    y::data::field condition("groupName", groupName);
+    y::data::row row;
+    row.addString("imageName", imageName);
+    db.setRow("groupImages", row, condition);
+  } else {
+    y::data::row row;
+    row.addString("groupName", groupName);
+    row.addString("imageName", imageName);
+    db.addRow("groupImages", row);
+  }
+  db.close();
+}
+
 void yearbookDB::setQuestion(int ID, const string& text) {
   y::data::database db;
   db.open();
@@ -514,4 +551,8 @@ container<yearbookDB::entry> & yearbookDB::getEntries() {
 
 container<y::data::row> & yearbookDB::getReplacements() {
   return replacements;
+}
+
+container<y::data::row> & yearbookDB::getGroupImages() {
+  return groupImages;
 }

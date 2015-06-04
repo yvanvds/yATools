@@ -68,9 +68,11 @@ public:
   void setCloseDate(const Wt::WDate & date);
   
   void replace(const string & key, const string & value);
+  void saveGroupImage(const string & groupName, const string & imageName);
   
   container<entry> & getEntries();
   container<y::data::row> & getReplacements();
+  container<y::data::row> & getGroupImages();
   
   
 private: 
@@ -96,6 +98,7 @@ private:
   
   container<entry> entries;
   container<y::data::row> replacements;
+  container<y::data::row> groupImages;
 };
 
 

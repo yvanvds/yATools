@@ -12,6 +12,7 @@
 #include <Wt/WTabWidget>
 #include <Wt/WDateEdit>
 #include <Wt/WLineEdit>
+#include <Wt/WToolBar>
 #include "utils/container.h"
 #include "utils/string.h"
 #include "yearbookDB.h"
@@ -19,9 +20,12 @@
 class yearbookConfig : public Wt::WContainerWidget {
 public:
   yearbookConfig(yearbookDB * ptr);
+ ~yearbookConfig(); 
+  
   struct replacement {
     string key;
     Wt::WLineEdit * value;
+    string image;
   };
   
   void loadContent();
@@ -42,6 +46,9 @@ private:
   
   void refreshUsers();
   
+  void setImage(int group);
+  void createUpload();
+  
   yearbookDB * db;
   
   Wt::WTabWidget * tabs;
@@ -55,6 +62,14 @@ private:
   Wt::WLineEdit * question3;
   Wt::WLineEdit * question4;
   
+  int currentGroup;
+  Wt::WImage * groupImage;
+  Wt::WFileUpload * imageUpload;
+  Wt::WFileResource * imageResource;
+  Wt::WFileResource * defaultResource;
+  Wt::WText * imageHint;
+  Wt::WContainerWidget * contentContainer;
+  Wt::WToolBar * classes;
   
   container<replacement> replacements;
   void replacementChange();

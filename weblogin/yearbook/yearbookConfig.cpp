@@ -11,6 +11,13 @@
 #include <Wt/WText>
 #include <Wt/WTable>
 #include <Wt/WDateEdit>
+#include <Wt/WHBoxLayout>
+#include <Wt/WVBoxLayout>
+#include <Wt/WImage>
+#include <Wt/WToolBar>
+#include <Wt/WFileResource>
+#include <Wt/WFileUpload>
+#include <Wt/WProgressBar>
 
 #include "yearbookConfig.h"
 #include "yearbookDB.h"
@@ -27,7 +34,11 @@ void yearbookConfig::loadContent() {
   question4->setText(db->getQuestion(3).wt());
 }
 
-yearbookConfig::yearbookConfig(yearbookDB* ptr) : db(ptr) { 
+yearbookConfig::yearbookConfig(yearbookDB* ptr) 
+  : db(ptr)
+  , imageResource(nullptr)
+  , defaultResource(nullptr)
+  , imageUpload(nullptr) { 
   tabs = new Wt::WTabWidget(this);
   db->loadAllUsers("name", true);
   
@@ -190,7 +201,61 @@ yearbookConfig::yearbookConfig(yearbookDB* ptr) : db(ptr) {
       }
     }
   }
+  
+  /****************************************************************
+   Pictures
+   ***************************************************************/
+  {
+    Wt::WContainerWidget * group = new Wt::WContainerWidget();
+    group->addStyleClass("well");
+    tabs->addTab(group, "Klasfoto's");
+    
+    Wt::WTable * layout = new Wt::WTable(group);   
+    
+    classes = new Wt::WToolBar();
+    classes->setCompact(true);
+    classes->setOrientation(Wt::Orientation::Vertical);
+    classes->setAttributeValue("class", "btn-group-vertical");
+    layout->elementAt(0,0)->addWidget(classes);
+    
+    for(int i = 0; i < replacements.elms(); i++) {
+      Wt::WPushButton * button = new Wt::WPushButton(replacements[i].key.wt());
+      button->clicked().connect(boost::bind(&yearbookConfig::setImage, this, i));
+      classes->addButton(button);
+      container<y::data::row> & images = db->getGroupImages();
+      for(int j =0; j < images.elms(); j++) {
+        if(replacements[i].key == images[j]["groupName"].asString()) {          
+          replacements[i].image = images[j]["imageName"].asString();
+          break;
+        }
+      }
+    }
+    
+    contentContainer = new Wt::WContainerWidget();
+    contentContainer->setPadding(Wt::WLength(10));
+    layout->elementAt(0,1)->addWidget(contentContainer);
+    contentContainer->addWidget(new Wt::WText("Voor elke klas kan je een groepsfoto uploaden. Voor een goede layout is het belangrijk dat de foto dubbel zo breed dan hoog is (bijvoorbeeld 1000x500 pixels)."));
+    groupImage = new Wt::WImage();
+    defaultResource = new Wt::WFileResource("yearbook_latex/Pictures/chapter_head_2.png");
+    groupImage->setImageLink(defaultResource);
+    groupImage->resize("600px", "300px");
+    contentContainer->addWidget(groupImage);
+    imageHint = new Wt::WText();
+    contentContainer->addWidget(imageHint);
+    createUpload();
+    setImage(0);    
+  }
+  
   loadContent();
+}
+
+yearbookConfig::~yearbookConfig() {
+  if(imageResource != nullptr) {
+    delete imageResource;
+  }
+  if(defaultResource != nullptr) {
+    delete defaultResource;
+  }
 }
 
 void yearbookConfig::openDateChanged() {
@@ -238,4 +303,69 @@ void yearbookConfig::replacementChange() {
   for (int i = 0; i < replacements.elms(); i++) {
     db->replace(replacements[i].key, (replacements[i].value->text()));
   }
+}
+
+void yearbookConfig::setImage(int group) {
+  for(int i = 0; i < classes->count(); i++) {
+    classes->widget(i)->setStyleClass("btn btn-default");
+  }
+  classes->widget(group)->setStyleClass("btn btn-primary");
+  
+  if(replacements[group].image.empty()) {
+    groupImage->setImageLink(defaultResource);
+    groupImage->resize("600px", "300px");
+  } else {
+    if(imageResource != nullptr) delete imageResource;    
+    imageResource = new Wt::WFileResource(replacements[group].image.utf8());
+    groupImage->setImageLink(imageResource);
+    groupImage->resize("600px", "300px");
+  }
+  currentGroup = group;
+}
+
+void yearbookConfig::createUpload() {
+  if(imageUpload != nullptr) {
+    contentContainer->removeWidget(imageUpload);
+    delete imageUpload;
+  }
+  
+  imageUpload = new Wt::WFileUpload();
+  imageUpload->setFileTextSize(10);
+  imageUpload->setProgressBar(new Wt::WProgressBar());
+  imageUpload->setMargin(10, Wt::Right);
+  imageUpload->setFilters("image/*");
+  
+  imageUpload->changed().connect(std::bind([=] () {
+    imageUpload->upload();
+  }));
+  
+  imageUpload->uploaded().connect(std::bind([=] () {
+    string file = string(imageUpload->spoolFileName());
+    string imageName("yearbookImages/");
+    imageName += replacements[currentGroup].key;
+    imageName += ".png";
+    
+    string cmd("cp ");
+    cmd += file + " "; 
+    cmd += imageName;
+    cmd.execute();
+    
+    replacements[currentGroup].image = imageName;
+    db->saveGroupImage(replacements[currentGroup].key, replacements[currentGroup].image);
+    imageHint->setText("<p>Je foto is opgeslagen.</p>");
+    
+    if(imageResource != nullptr) delete imageResource;
+    
+    imageResource = new Wt::WFileResource(imageName.utf8());
+    groupImage->setImageLink(imageResource);
+    groupImage->resize("600px", "300px");
+    createUpload();
+  }));
+  
+  imageUpload->fileTooLarge().connect(std::bind([=] () {
+    imageHint->setText("<p>Dit bestand is te groot. (Maximum 1MB)</p>");
+    createUpload();
+  }));
+  
+  contentContainer->insertWidget(3, imageUpload);
 }
