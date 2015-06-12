@@ -38,6 +38,8 @@ void debugFunctions::parse(int argc, char ** argv) {
     groupsToSmartschool();
   } else if(::string(argv[0]) == "convert") {
     convertToNewAccount();
+  } else if(::string(argv[0]) == "test") {
+    testFunction();
   }
 }
 
@@ -81,3 +83,17 @@ void debugFunctions::groupsToSmartschool() {
   }
 }
 
+void debugFunctions::testFunction() {
+  y::utils::Log().useConsole(true);
+  y::ldap::server server;
+  y::ldap::group & group = server.getGroup("5IT1", false);
+  
+  int result = y::Smartschool().deleteClass(group);
+  if(result != 0) {
+    std::cout << y::Smartschool().errorToText(result).c_str() << std::endl;
+  } else {
+    std::cout << "success" << std::endl;
+  }
+  
+  std::cin.get();
+}

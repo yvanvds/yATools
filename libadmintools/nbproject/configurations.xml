@@ -226,11 +226,13 @@
           <commandLine>`cppunit-config --cflags`</commandLine>
           <preprocessorList>
             <Elem>DEBUG</Elem>
+            <Elem>SOAP_C_UTFSTRING</Elem>
+            <Elem>WITH_DOM</Elem>
           </preprocessorList>
           <warningLevel>2</warningLevel>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f7</output>
+          <output>../Debug/libsystem.so</output>
           <linkerAddLib>
             <pElem>/usr/lib/x86_64-linux-gnu</pElem>
             <pElem>/usr/lib</pElem>
@@ -683,6 +685,10 @@
             <pElem>/usr/include</pElem>
           </incDir>
           <commandLine>`cppunit-config --cflags`</commandLine>
+          <preprocessorList>
+            <Elem>SOAP_C_UTFSTRING</Elem>
+            <Elem>WITH_DOM</Elem>
+          </preprocessorList>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>

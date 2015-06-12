@@ -21,14 +21,17 @@ namespace y {
     smartschool();
    ~smartschool();
    
+   int getUserDetails(const string & name, const string & password, y::data::row & details);
+   
    // add a new course
    int addCourse(const string & name, const string & description);
    
+   
    // add class or group to a course
-   void addGroupsToCourse(const string & courseName, const string & courseDescription, container<string> & groupIDs);
+   int setCourseClasses(const string & courseName, const string & courseDescription, container<string> & groupIDs);
   
-   // add teacher to course
-   // void addTeacherToCourse(const std::string & courseName, const std::string & courseDescription, const )
+   // add teacher to course, container with co-teachers can be empty
+   int setCourseTeachers(const string & courseName, const string & courseDescription, const string & teacher, container<string> * coTeachers = nullptr);
   
    int savePassword(y::ldap::account & account);
    void saveUser(y::ldap::account & account);
@@ -50,7 +53,7 @@ namespace y {
     void getErrorCodesFromSmartschool(y::data::database & db);
     void createErrorCodeTable(y::data::database & db);
     void loadErrorCodes(y::data::database & db);
-    
+
     container<string> errorTable;
   };
   

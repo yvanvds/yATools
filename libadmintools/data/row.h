@@ -34,6 +34,9 @@ namespace y {
       field & operator[](int i);
       // request element by name
       field & operator[](const string & name);
+      
+      // simple printout of contents for debugging
+      void print();
     
     private:
       container<field> fields;

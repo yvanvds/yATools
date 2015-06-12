@@ -15,6 +15,7 @@
 #include "stringFunctions.h"
 #include <stdlib.h>
 #include <boost/algorithm/string.hpp>
+#include <Wt/Json/Value>
 
 class string {
 public:
@@ -24,6 +25,8 @@ public:
   explicit string(const std::wstring & orig) : content(  str8(orig) ) {}
            string(const Wt ::WString & orig) : content(orig.toUTF8()) {}
            string(const char         * orig) : content(       orig  ) {}
+           string(const wchar_t      * orig) : content(  str8(orig) ) {}
+  explicit string(const Wt::Json::Value & orig) { content = orig.operator  std::string(); }
            
   
   explicit string(int value) : content(std::to_string(value)) {}
@@ -71,6 +74,7 @@ public:
   // append
   string & operator+=(const string       & ref) { content +=         ref.content; return *this; }
   string & operator+=(char                 ref) { content +=                ref ; return *this; }
+  string & operator+=(const wchar_t      * ref) { content +=           str8(ref); return *this; }          
   string & operator+=(int                  ref) { content += std::to_string(ref); return *this; }
   string & operator+=(float                ref) { content += std::to_string(ref); return *this; }
   string & operator+=(double               ref) { content += std::to_string(ref); return *this; }
@@ -79,6 +83,7 @@ public:
   string operator+(const std::string  & ref) const { return string(content +                ref ); }
   string operator+(const std::wstring & ref) const { return string(content +           str8(ref)); }
   string operator+(const char *         ref) const { return string(content +                ref ); }
+  string operator+(const wchar_t *      ref) const { return string(content +           str8(ref)); }
   string operator+(int                  ref) const { return string(content + std::to_string(ref)); }
   string operator+(float                ref) const { return string(content + std::to_string(ref)); }
   string operator+(double               ref) const { return string(content + std::to_string(ref)); }

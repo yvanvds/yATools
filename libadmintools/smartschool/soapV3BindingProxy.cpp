@@ -110,7 +110,7 @@ char *V3BindingProxy::soap_sprint_fault(char *buf, size_t len)
 }
 #endif
 
-int V3BindingProxy::saveUser(const char *endpoint, const char *soap_action, std::string accesscode, std::string internnumber, std::string username, std::string passwd1, std::string passwd2, std::string passwd3, std::string name, std::string surname, std::string extranames, std::string initials, std::string sex, std::string birthday, std::string birthplace, std::string birthcountry, std::string address, std::string postalcode, std::string location, std::string country, std::string email, std::string mobilephone, std::string homephone, std::string fax, std::string prn, std::string stamboeknummer, std::string basisrol, std::string untis, xsd__anyType *&return_)
+int V3BindingProxy::saveUser(const char *endpoint, const char *soap_action, std::string accesscode, std::string internnumber, std::string username, std::string passwd1, std::string passwd2, std::string passwd3, std::string name, std::string surname, std::string extranames, std::string initials, std::string sex, std::string birthday, std::string birthplace, std::string birthcountry, std::string address, std::string postalcode, std::string location, std::string country, std::string email, std::string mobilephone, std::string homephone, std::string fax, std::string prn, std::string stamboeknummer, std::string basisrol, std::string untis, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__saveUser soap_tmp_ns1__saveUser;
 	struct ns1__saveUserResponse *soap_tmp_ns1__saveUserResponse;
@@ -172,7 +172,9 @@ int V3BindingProxy::saveUser(const char *endpoint, const char *soap_action, std:
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -191,7 +193,7 @@ int V3BindingProxy::saveUser(const char *endpoint, const char *soap_action, std:
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::saveClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, std::string instituteNumber, std::string adminNumber, xsd__anyType *&return_)
+int V3BindingProxy::saveClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, std::string instituteNumber, std::string adminNumber, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__saveClass soap_tmp_ns1__saveClass;
 	struct ns1__saveClassResponse *soap_tmp_ns1__saveClassResponse;
@@ -235,7 +237,9 @@ int V3BindingProxy::saveClass(const char *endpoint, const char *soap_action, std
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -254,7 +258,7 @@ int V3BindingProxy::saveClass(const char *endpoint, const char *soap_action, std
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::getAllAccounts(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, std::string recursive, xsd__anyType *&return_)
+int V3BindingProxy::getAllAccounts(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, std::string recursive, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__getAllAccounts soap_tmp_ns1__getAllAccounts;
 	struct ns1__getAllAccountsResponse *soap_tmp_ns1__getAllAccountsResponse;
@@ -293,7 +297,9 @@ int V3BindingProxy::getAllAccounts(const char *endpoint, const char *soap_action
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -312,7 +318,7 @@ int V3BindingProxy::getAllAccounts(const char *endpoint, const char *soap_action
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::getAllAccountsExtended(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, std::string recursive, xsd__anyType *&return_)
+int V3BindingProxy::getAllAccountsExtended(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, std::string recursive, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__getAllAccountsExtended soap_tmp_ns1__getAllAccountsExtended;
 	struct ns1__getAllAccountsExtendedResponse *soap_tmp_ns1__getAllAccountsExtendedResponse;
@@ -351,7 +357,9 @@ int V3BindingProxy::getAllAccountsExtended(const char *endpoint, const char *soa
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -370,7 +378,7 @@ int V3BindingProxy::getAllAccountsExtended(const char *endpoint, const char *soa
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::getAllGroupsAndClasses(const char *endpoint, const char *soap_action, std::string accesscode, xsd__anyType *&return_)
+int V3BindingProxy::getAllGroupsAndClasses(const char *endpoint, const char *soap_action, std::string accesscode, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__getAllGroupsAndClasses soap_tmp_ns1__getAllGroupsAndClasses;
 	struct ns1__getAllGroupsAndClassesResponse *soap_tmp_ns1__getAllGroupsAndClassesResponse;
@@ -407,7 +415,9 @@ int V3BindingProxy::getAllGroupsAndClasses(const char *endpoint, const char *soa
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -486,7 +496,7 @@ int V3BindingProxy::addCourse(const char *endpoint, const char *soap_action, std
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::addCourseTeacher(const char *endpoint, const char *soap_action, std::string accesscode, std::string coursename, std::string coursedesc, std::string internnummer, std::string userlist, xsd__anyType *&return_)
+int V3BindingProxy::addCourseTeacher(const char *endpoint, const char *soap_action, std::string accesscode, std::string coursename, std::string coursedesc, std::string internnummer, std::string userlist, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__addCourseTeacher soap_tmp_ns1__addCourseTeacher;
 	struct ns1__addCourseTeacherResponse *soap_tmp_ns1__addCourseTeacherResponse;
@@ -527,7 +537,9 @@ int V3BindingProxy::addCourseTeacher(const char *endpoint, const char *soap_acti
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -546,7 +558,7 @@ int V3BindingProxy::addCourseTeacher(const char *endpoint, const char *soap_acti
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::addCourseStudents(const char *endpoint, const char *soap_action, std::string accesscode, std::string coursename, std::string coursedesc, std::string groupIds, xsd__anyType *&return_)
+int V3BindingProxy::addCourseStudents(const char *endpoint, const char *soap_action, std::string accesscode, std::string coursename, std::string coursedesc, std::string groupIds, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__addCourseStudents soap_tmp_ns1__addCourseStudents;
 	struct ns1__addCourseStudentsResponse *soap_tmp_ns1__addCourseStudentsResponse;
@@ -586,7 +598,9 @@ int V3BindingProxy::addCourseStudents(const char *endpoint, const char *soap_act
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -663,7 +677,7 @@ int V3BindingProxy::getCourses(const char *endpoint, const char *soap_action, st
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::delUser(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string officialDate, xsd__anyType *&return_)
+int V3BindingProxy::delUser(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string officialDate, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__delUser soap_tmp_ns1__delUser;
 	struct ns1__delUserResponse *soap_tmp_ns1__delUserResponse;
@@ -702,7 +716,9 @@ int V3BindingProxy::delUser(const char *endpoint, const char *soap_action, std::
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -721,7 +737,7 @@ int V3BindingProxy::delUser(const char *endpoint, const char *soap_action, std::
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::saveUserParameter(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string paramName, std::string paramValue, xsd__anyType *&return_)
+int V3BindingProxy::saveUserParameter(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string paramName, std::string paramValue, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__saveUserParameter soap_tmp_ns1__saveUserParameter;
 	struct ns1__saveUserParameterResponse *soap_tmp_ns1__saveUserParameterResponse;
@@ -761,7 +777,9 @@ int V3BindingProxy::saveUserParameter(const char *endpoint, const char *soap_act
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -780,7 +798,7 @@ int V3BindingProxy::saveUserParameter(const char *endpoint, const char *soap_act
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::getClassList(const char *endpoint, const char *soap_action, xsd__anyType *accesscode, std::string &return_)
+int V3BindingProxy::getClassList(const char *endpoint, const char *soap_action, struct soap_dom_element accesscode, std::string &return_)
 {	struct soap *soap = this;
 	struct ns1__getClassList soap_tmp_ns1__getClassList;
 	struct ns1__getClassListResponse *soap_tmp_ns1__getClassListResponse;
@@ -838,7 +856,7 @@ int V3BindingProxy::getClassList(const char *endpoint, const char *soap_action, 
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::saveClassList(const char *endpoint, const char *soap_action, std::string accesscode, std::string serializedList, xsd__anyType *&return_)
+int V3BindingProxy::saveClassList(const char *endpoint, const char *soap_action, std::string accesscode, std::string serializedList, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__saveClassList soap_tmp_ns1__saveClassList;
 	struct ns1__saveClassListResponse *soap_tmp_ns1__saveClassListResponse;
@@ -876,7 +894,9 @@ int V3BindingProxy::saveClassList(const char *endpoint, const char *soap_action,
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -895,7 +915,7 @@ int V3BindingProxy::saveClassList(const char *endpoint, const char *soap_action,
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::delClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, xsd__anyType *&return_)
+int V3BindingProxy::delClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__delClass soap_tmp_ns1__delClass;
 	struct ns1__delClassResponse *soap_tmp_ns1__delClassResponse;
@@ -933,7 +953,9 @@ int V3BindingProxy::delClass(const char *endpoint, const char *soap_action, std:
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -952,7 +974,7 @@ int V3BindingProxy::delClass(const char *endpoint, const char *soap_action, std:
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::saveUserToClasses(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string csvList, xsd__anyType *&return_)
+int V3BindingProxy::saveUserToClasses(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string csvList, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__saveUserToClasses soap_tmp_ns1__saveUserToClasses;
 	struct ns1__saveUserToClassesResponse *soap_tmp_ns1__saveUserToClassesResponse;
@@ -991,7 +1013,9 @@ int V3BindingProxy::saveUserToClasses(const char *endpoint, const char *soap_act
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1010,7 +1034,7 @@ int V3BindingProxy::saveUserToClasses(const char *endpoint, const char *soap_act
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::saveUserToClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string class_, std::string officialDate, xsd__anyType *&return_)
+int V3BindingProxy::saveUserToClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string class_, std::string officialDate, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__saveUserToClass soap_tmp_ns1__saveUserToClass;
 	struct ns1__saveUserToClassResponse *soap_tmp_ns1__saveUserToClassResponse;
@@ -1050,7 +1074,9 @@ int V3BindingProxy::saveUserToClass(const char *endpoint, const char *soap_actio
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1069,7 +1095,7 @@ int V3BindingProxy::saveUserToClass(const char *endpoint, const char *soap_actio
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::saveUserToClassesAndGroups(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string csvList, int keepOld, xsd__anyType *&return_)
+int V3BindingProxy::saveUserToClassesAndGroups(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string csvList, int keepOld, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__saveUserToClassesAndGroups soap_tmp_ns1__saveUserToClassesAndGroups;
 	struct ns1__saveUserToClassesAndGroupsResponse *soap_tmp_ns1__saveUserToClassesAndGroupsResponse;
@@ -1109,7 +1135,9 @@ int V3BindingProxy::saveUserToClassesAndGroups(const char *endpoint, const char 
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1128,7 +1156,7 @@ int V3BindingProxy::saveUserToClassesAndGroups(const char *endpoint, const char 
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::setAccountStatus(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, xsd__anyType *accountStatus, xsd__anyType *&return_)
+int V3BindingProxy::setAccountStatus(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, struct soap_dom_element accountStatus, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__setAccountStatus soap_tmp_ns1__setAccountStatus;
 	struct ns1__setAccountStatusResponse *soap_tmp_ns1__setAccountStatusResponse;
@@ -1167,7 +1195,9 @@ int V3BindingProxy::setAccountStatus(const char *endpoint, const char *soap_acti
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1186,7 +1216,7 @@ int V3BindingProxy::setAccountStatus(const char *endpoint, const char *soap_acti
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::setAccountPhoto(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string photo, xsd__anyType *&return_)
+int V3BindingProxy::setAccountPhoto(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string photo, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__setAccountPhoto soap_tmp_ns1__setAccountPhoto;
 	struct ns1__setAccountPhotoResponse *soap_tmp_ns1__setAccountPhotoResponse;
@@ -1225,7 +1255,9 @@ int V3BindingProxy::setAccountPhoto(const char *endpoint, const char *soap_actio
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1244,7 +1276,7 @@ int V3BindingProxy::setAccountPhoto(const char *endpoint, const char *soap_actio
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::replaceInum(const char *endpoint, const char *soap_action, std::string accesscode, std::string oldInum, std::string newInum, xsd__anyType *&return_)
+int V3BindingProxy::replaceInum(const char *endpoint, const char *soap_action, std::string accesscode, std::string oldInum, std::string newInum, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__replaceInum soap_tmp_ns1__replaceInum;
 	struct ns1__replaceInumResponse *soap_tmp_ns1__replaceInumResponse;
@@ -1283,7 +1315,9 @@ int V3BindingProxy::replaceInum(const char *endpoint, const char *soap_action, s
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1302,7 +1336,7 @@ int V3BindingProxy::replaceInum(const char *endpoint, const char *soap_action, s
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::savePassword(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string password, int accountType, xsd__anyType *&return_)
+int V3BindingProxy::savePassword(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string password, int accountType, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__savePassword soap_tmp_ns1__savePassword;
 	struct ns1__savePasswordResponse *soap_tmp_ns1__savePasswordResponse;
@@ -1342,7 +1376,9 @@ int V3BindingProxy::savePassword(const char *endpoint, const char *soap_action, 
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1361,7 +1397,7 @@ int V3BindingProxy::savePassword(const char *endpoint, const char *soap_action, 
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::sendMsg(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string title, std::string body, std::string senderIdentifier, struct _Struct_1 attachments, int coaccount, xsd__anyType *&return_)
+int V3BindingProxy::sendMsg(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string title, std::string body, std::string senderIdentifier, struct _Struct_1 attachments, int coaccount, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__sendMsg soap_tmp_ns1__sendMsg;
 	struct ns1__sendMsgResponse *soap_tmp_ns1__sendMsgResponse;
@@ -1404,7 +1440,9 @@ int V3BindingProxy::sendMsg(const char *endpoint, const char *soap_action, std::
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1423,7 +1461,7 @@ int V3BindingProxy::sendMsg(const char *endpoint, const char *soap_action, std::
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::getSkoreClassTeacherCourseRelation(const char *endpoint, const char *soap_action, std::string accesscode, xsd__anyType *&return_)
+int V3BindingProxy::getSkoreClassTeacherCourseRelation(const char *endpoint, const char *soap_action, std::string accesscode, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__getSkoreClassTeacherCourseRelation soap_tmp_ns1__getSkoreClassTeacherCourseRelation;
 	struct ns1__getSkoreClassTeacherCourseRelationResponse *soap_tmp_ns1__getSkoreClassTeacherCourseRelationResponse;
@@ -1460,7 +1498,9 @@ int V3BindingProxy::getSkoreClassTeacherCourseRelation(const char *endpoint, con
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1479,7 +1519,7 @@ int V3BindingProxy::getSkoreClassTeacherCourseRelation(const char *endpoint, con
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::unregisterStudent(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string officialDate, xsd__anyType *&return_)
+int V3BindingProxy::unregisterStudent(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string officialDate, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__unregisterStudent soap_tmp_ns1__unregisterStudent;
 	struct ns1__unregisterStudentResponse *soap_tmp_ns1__unregisterStudentResponse;
@@ -1518,7 +1558,9 @@ int V3BindingProxy::unregisterStudent(const char *endpoint, const char *soap_act
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1537,7 +1579,7 @@ int V3BindingProxy::unregisterStudent(const char *endpoint, const char *soap_act
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::getClassTeachers(const char *endpoint, const char *soap_action, std::string accesscode, xsd__anyType *&return_)
+int V3BindingProxy::getClassTeachers(const char *endpoint, const char *soap_action, std::string accesscode, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__getClassTeachers soap_tmp_ns1__getClassTeachers;
 	struct ns1__getClassTeachersResponse *soap_tmp_ns1__getClassTeachersResponse;
@@ -1574,7 +1616,9 @@ int V3BindingProxy::getClassTeachers(const char *endpoint, const char *soap_acti
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1593,7 +1637,7 @@ int V3BindingProxy::getClassTeachers(const char *endpoint, const char *soap_acti
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::isValidUserCredentials(const char *endpoint, const char *soap_action, std::string accesscode, std::string username, std::string password, xsd__anyType *&return_)
+int V3BindingProxy::isValidUserCredentials(const char *endpoint, const char *soap_action, std::string accesscode, std::string username, std::string password, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__isValidUserCredentials soap_tmp_ns1__isValidUserCredentials;
 	struct ns1__isValidUserCredentialsResponse *soap_tmp_ns1__isValidUserCredentialsResponse;
@@ -1632,7 +1676,9 @@ int V3BindingProxy::isValidUserCredentials(const char *endpoint, const char *soa
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
 		return soap_closesock(soap);
-	return_ = NULL;
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
 	if (soap_begin_recv(soap)
 	 || soap_envelope_begin_in(soap)
 	 || soap_recv_header(soap)
@@ -1708,6 +1754,65 @@ int V3BindingProxy::getAbsents(const char *endpoint, const char *soap_action, st
 	 || soap_end_recv(soap))
 		return soap_closesock(soap);
 	return_ = soap_tmp_ns1__getAbsentsResponse->return_;
+	return soap_closesock(soap);
+}
+
+int V3BindingProxy::getUserDetails(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string &return_)
+{	struct soap *soap = this;
+	struct ns1__getUserDetails soap_tmp_ns1__getUserDetails;
+	struct ns1__getUserDetailsResponse *soap_tmp_ns1__getUserDetailsResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3";
+	if (soap_action == NULL)
+		soap_action = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3#getUserDetails";
+	soap_begin(soap);
+	soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
+	soap_tmp_ns1__getUserDetails.accesscode = accesscode;
+	soap_tmp_ns1__getUserDetails.userIdentifier = userIdentifier;
+	soap_serializeheader(soap);
+	soap_serialize_ns1__getUserDetails(soap, &soap_tmp_ns1__getUserDetails);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ns1__getUserDetails(soap, &soap_tmp_ns1__getUserDetails, "ns1:getUserDetails", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_url(soap, soap_endpoint, NULL), soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ns1__getUserDetails(soap, &soap_tmp_ns1__getUserDetails, "ns1:getUserDetails", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_std__string(soap, &return_);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	if (soap_recv_fault(soap, 1))
+		return soap->error;
+	soap_tmp_ns1__getUserDetailsResponse = soap_get_ns1__getUserDetailsResponse(soap, NULL, "", "");
+	if (!soap_tmp_ns1__getUserDetailsResponse || soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return_ = soap_tmp_ns1__getUserDetailsResponse->return_;
 	return soap_closesock(soap);
 }
 

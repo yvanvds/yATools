@@ -31,6 +31,14 @@ compiling, linking, and/or using OpenSSL is allowed.
  *                                                                            *
 \******************************************************************************/
 
+#ifndef SOAP_TYPE_xsd__anyType
+#define SOAP_TYPE_xsd__anyType (9)
+typedef struct soap_dom_element xsd__anyType;
+#endif
+#ifndef SOAP_TYPE_xsd__anyAttribute
+#define SOAP_TYPE_xsd__anyAttribute (11)
+typedef struct soap_dom_attribute xsd__anyAttribute;
+#endif
 
 /******************************************************************************\
  *                                                                            *
@@ -43,69 +51,12 @@ compiling, linking, and/or using OpenSSL is allowed.
 
 #endif
 
-#ifndef SOAP_TYPE_xsd__anyType
-#define SOAP_TYPE_xsd__anyType (8)
-/* Primitive xsd:anyType schema type: */
-class SOAP_CMAC xsd__anyType
-{
-public:
-	char *__item;
-	struct soap *soap;	/* transient */
-public:
-	virtual int soap_type() const { return 8; } /* = unique id SOAP_TYPE_xsd__anyType */
-	virtual void soap_default(struct soap*);
-	virtual void soap_serialize(struct soap*) const;
-	virtual int soap_put(struct soap*, const char*, const char*) const;
-	virtual int soap_out(struct soap*, const char*, int, const char*) const;
-	virtual void *soap_get(struct soap*, const char*, const char*);
-	virtual void *soap_in(struct soap*, const char*, const char*);
-	         xsd__anyType() { xsd__anyType::soap_default(NULL); }
-	virtual ~xsd__anyType() { }
-};
-#endif
 
-#ifndef SOAP_TYPE_xsd__int
-#define SOAP_TYPE_xsd__int (10)
-/* Primitive xsd:int schema type: */
-class SOAP_CMAC xsd__int : public xsd__anyType
-{
-public:
-	int __item;
-public:
-	virtual int soap_type() const { return 10; } /* = unique id SOAP_TYPE_xsd__int */
-	virtual void soap_default(struct soap*);
-	virtual void soap_serialize(struct soap*) const;
-	virtual int soap_put(struct soap*, const char*, const char*) const;
-	virtual int soap_out(struct soap*, const char*, int, const char*) const;
-	virtual void *soap_get(struct soap*, const char*, const char*);
-	virtual void *soap_in(struct soap*, const char*, const char*);
-	         xsd__int() { xsd__int::soap_default(NULL); }
-	virtual ~xsd__int() { }
-};
-#endif
+
+
 
 #if 0 /* volatile type: do not declare here, declared elsewhere */
 
-#endif
-
-#ifndef SOAP_TYPE_xsd__string
-#define SOAP_TYPE_xsd__string (11)
-/* Primitive xsd:string schema type: */
-class SOAP_CMAC xsd__string : public xsd__anyType
-{
-public:
-	std::string __item;
-public:
-	virtual int soap_type() const { return 11; } /* = unique id SOAP_TYPE_xsd__string */
-	virtual void soap_default(struct soap*);
-	virtual void soap_serialize(struct soap*) const;
-	virtual int soap_put(struct soap*, const char*, const char*) const;
-	virtual int soap_out(struct soap*, const char*, int, const char*) const;
-	virtual void *soap_get(struct soap*, const char*, const char*);
-	virtual void *soap_in(struct soap*, const char*, const char*);
-	         xsd__string() { xsd__string::soap_default(NULL); }
-	virtual ~xsd__string() { }
-};
 #endif
 
 #ifndef SOAP_TYPE_ns1__saveUserResponse
@@ -114,7 +65,7 @@ public:
 struct ns1__saveUserResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 16; } /* = unique id SOAP_TYPE_ns1__saveUserResponse */
 };
@@ -163,7 +114,7 @@ public:
 struct ns1__saveClassResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 19; } /* = unique id SOAP_TYPE_ns1__saveClassResponse */
 };
@@ -194,7 +145,7 @@ public:
 struct ns1__getAllAccountsResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 22; } /* = unique id SOAP_TYPE_ns1__getAllAccountsResponse */
 };
@@ -220,7 +171,7 @@ public:
 struct ns1__getAllAccountsExtendedResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 25; } /* = unique id SOAP_TYPE_ns1__getAllAccountsExtendedResponse */
 };
@@ -246,7 +197,7 @@ public:
 struct ns1__getAllGroupsAndClassesResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 28; } /* = unique id SOAP_TYPE_ns1__getAllGroupsAndClassesResponse */
 };
@@ -296,7 +247,7 @@ public:
 struct ns1__addCourseTeacherResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 35; } /* = unique id SOAP_TYPE_ns1__addCourseTeacherResponse */
 };
@@ -324,7 +275,7 @@ public:
 struct ns1__addCourseStudentsResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 38; } /* = unique id SOAP_TYPE_ns1__addCourseStudentsResponse */
 };
@@ -375,7 +326,7 @@ public:
 struct ns1__delUserResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 44; } /* = unique id SOAP_TYPE_ns1__delUserResponse */
 };
@@ -401,7 +352,7 @@ public:
 struct ns1__saveUserParameterResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 47; } /* = unique id SOAP_TYPE_ns1__saveUserParameterResponse */
 };
@@ -440,7 +391,7 @@ public:
 struct ns1__getClassList
 {
 public:
-	xsd__anyType *accesscode;	/* optional element of type xsd:anyType */
+	struct soap_dom_element accesscode;	/* external */
 public:
 	int soap_type() const { return 51; } /* = unique id SOAP_TYPE_ns1__getClassList */
 };
@@ -452,7 +403,7 @@ public:
 struct ns1__saveClassListResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 53; } /* = unique id SOAP_TYPE_ns1__saveClassListResponse */
 };
@@ -477,7 +428,7 @@ public:
 struct ns1__delClassResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 56; } /* = unique id SOAP_TYPE_ns1__delClassResponse */
 };
@@ -502,7 +453,7 @@ public:
 struct ns1__saveUserToClassesResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 59; } /* = unique id SOAP_TYPE_ns1__saveUserToClassesResponse */
 };
@@ -528,7 +479,7 @@ public:
 struct ns1__saveUserToClassResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 62; } /* = unique id SOAP_TYPE_ns1__saveUserToClassResponse */
 };
@@ -555,7 +506,7 @@ public:
 struct ns1__saveUserToClassesAndGroupsResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 65; } /* = unique id SOAP_TYPE_ns1__saveUserToClassesAndGroupsResponse */
 };
@@ -582,7 +533,7 @@ public:
 struct ns1__setAccountStatusResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 68; } /* = unique id SOAP_TYPE_ns1__setAccountStatusResponse */
 };
@@ -596,7 +547,7 @@ struct ns1__setAccountStatus
 public:
 	std::string accesscode;	/* required element of type xsd:string */
 	std::string userIdentifier;	/* required element of type xsd:string */
-	xsd__anyType *accountStatus;	/* optional element of type xsd:anyType */
+	struct soap_dom_element accountStatus;	/* external */
 public:
 	int soap_type() const { return 69; } /* = unique id SOAP_TYPE_ns1__setAccountStatus */
 };
@@ -608,7 +559,7 @@ public:
 struct ns1__setAccountPhotoResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 71; } /* = unique id SOAP_TYPE_ns1__setAccountPhotoResponse */
 };
@@ -634,7 +585,7 @@ public:
 struct ns1__replaceInumResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 74; } /* = unique id SOAP_TYPE_ns1__replaceInumResponse */
 };
@@ -660,7 +611,7 @@ public:
 struct ns1__savePasswordResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 77; } /* = unique id SOAP_TYPE_ns1__savePasswordResponse */
 };
@@ -700,7 +651,7 @@ public:
 struct ns1__sendMsgResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 82; } /* = unique id SOAP_TYPE_ns1__sendMsgResponse */
 };
@@ -730,7 +681,7 @@ public:
 struct ns1__getSkoreClassTeacherCourseRelationResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 85; } /* = unique id SOAP_TYPE_ns1__getSkoreClassTeacherCourseRelationResponse */
 };
@@ -754,7 +705,7 @@ public:
 struct ns1__unregisterStudentResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 88; } /* = unique id SOAP_TYPE_ns1__unregisterStudentResponse */
 };
@@ -780,7 +731,7 @@ public:
 struct ns1__getClassTeachersResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 91; } /* = unique id SOAP_TYPE_ns1__getClassTeachersResponse */
 };
@@ -804,7 +755,7 @@ public:
 struct ns1__isValidUserCredentialsResponse
 {
 public:
-	xsd__anyType *return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:anyType */
+	struct soap_dom_element return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* external */
 public:
 	int soap_type() const { return 94; } /* = unique id SOAP_TYPE_ns1__isValidUserCredentialsResponse */
 };
@@ -850,13 +801,38 @@ public:
 };
 #endif
 
+#ifndef SOAP_TYPE_ns1__getUserDetailsResponse
+#define SOAP_TYPE_ns1__getUserDetailsResponse (100)
+/* ns1:getUserDetailsResponse */
+struct ns1__getUserDetailsResponse
+{
+public:
+	std::string return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:string */
+public:
+	int soap_type() const { return 100; } /* = unique id SOAP_TYPE_ns1__getUserDetailsResponse */
+};
+#endif
+
+#ifndef SOAP_TYPE_ns1__getUserDetails
+#define SOAP_TYPE_ns1__getUserDetails (101)
+/* ns1:getUserDetails */
+struct ns1__getUserDetails
+{
+public:
+	std::string accesscode;	/* required element of type xsd:string */
+	std::string userIdentifier;	/* required element of type xsd:string */
+public:
+	int soap_type() const { return 101; } /* = unique id SOAP_TYPE_ns1__getUserDetails */
+};
+#endif
+
 #ifndef SOAP_TYPE_ns1__returnErrorCodes
-#define SOAP_TYPE_ns1__returnErrorCodes (101)
+#define SOAP_TYPE_ns1__returnErrorCodes (104)
 /* ns1:returnErrorCodes */
 struct ns1__returnErrorCodes
 {
 public:
-	int soap_type() const { return 101; } /* = unique id SOAP_TYPE_ns1__returnErrorCodes */
+	int soap_type() const { return 104; } /* = unique id SOAP_TYPE_ns1__returnErrorCodes */
 #ifdef WITH_NOEMPTYSTRUCT
 private:
 	char dummy;	/* dummy member to enable compilation */
@@ -865,24 +841,24 @@ private:
 #endif
 
 #ifndef SOAP_TYPE_ns1__returnCsvErrorCodesResponse
-#define SOAP_TYPE_ns1__returnCsvErrorCodesResponse (103)
+#define SOAP_TYPE_ns1__returnCsvErrorCodesResponse (106)
 /* ns1:returnCsvErrorCodesResponse */
 struct ns1__returnCsvErrorCodesResponse
 {
 public:
 	std::string return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:string */
 public:
-	int soap_type() const { return 103; } /* = unique id SOAP_TYPE_ns1__returnCsvErrorCodesResponse */
+	int soap_type() const { return 106; } /* = unique id SOAP_TYPE_ns1__returnCsvErrorCodesResponse */
 };
 #endif
 
 #ifndef SOAP_TYPE_ns1__returnCsvErrorCodes
-#define SOAP_TYPE_ns1__returnCsvErrorCodes (104)
+#define SOAP_TYPE_ns1__returnCsvErrorCodes (107)
 /* ns1:returnCsvErrorCodes */
 struct ns1__returnCsvErrorCodes
 {
 public:
-	int soap_type() const { return 104; } /* = unique id SOAP_TYPE_ns1__returnCsvErrorCodes */
+	int soap_type() const { return 107; } /* = unique id SOAP_TYPE_ns1__returnCsvErrorCodes */
 #ifdef WITH_NOEMPTYSTRUCT
 private:
 	char dummy;	/* dummy member to enable compilation */
@@ -891,24 +867,24 @@ private:
 #endif
 
 #ifndef SOAP_TYPE_ns1__returnJsonErrorCodesResponse
-#define SOAP_TYPE_ns1__returnJsonErrorCodesResponse (106)
+#define SOAP_TYPE_ns1__returnJsonErrorCodesResponse (109)
 /* ns1:returnJsonErrorCodesResponse */
 struct ns1__returnJsonErrorCodesResponse
 {
 public:
 	std::string return_;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:string */
 public:
-	int soap_type() const { return 106; } /* = unique id SOAP_TYPE_ns1__returnJsonErrorCodesResponse */
+	int soap_type() const { return 109; } /* = unique id SOAP_TYPE_ns1__returnJsonErrorCodesResponse */
 };
 #endif
 
 #ifndef SOAP_TYPE_ns1__returnJsonErrorCodes
-#define SOAP_TYPE_ns1__returnJsonErrorCodes (107)
+#define SOAP_TYPE_ns1__returnJsonErrorCodes (110)
 /* ns1:returnJsonErrorCodes */
 struct ns1__returnJsonErrorCodes
 {
 public:
-	int soap_type() const { return 107; } /* = unique id SOAP_TYPE_ns1__returnJsonErrorCodes */
+	int soap_type() const { return 110; } /* = unique id SOAP_TYPE_ns1__returnJsonErrorCodes */
 #ifdef WITH_NOEMPTYSTRUCT
 private:
 	char dummy;	/* dummy member to enable compilation */
@@ -919,12 +895,12 @@ private:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (108)
+#define SOAP_TYPE_SOAP_ENV__Header (111)
 /* SOAP Header: */
 struct SOAP_ENV__Header
 {
 public:
-	int soap_type() const { return 108; } /* = unique id SOAP_TYPE_SOAP_ENV__Header */
+	int soap_type() const { return 111; } /* = unique id SOAP_TYPE_SOAP_ENV__Header */
 #ifdef WITH_NOEMPTYSTRUCT
 private:
 	char dummy;	/* dummy member to enable compilation */
@@ -937,7 +913,7 @@ private:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (109)
+#define SOAP_TYPE_SOAP_ENV__Code (112)
 /* SOAP Fault Code: */
 struct SOAP_ENV__Code
 {
@@ -945,7 +921,7 @@ public:
 	char *SOAP_ENV__Value;	/* optional element of type xsd:QName */
 	struct SOAP_ENV__Code *SOAP_ENV__Subcode;	/* optional element of type SOAP-ENV:Code */
 public:
-	int soap_type() const { return 109; } /* = unique id SOAP_TYPE_SOAP_ENV__Code */
+	int soap_type() const { return 112; } /* = unique id SOAP_TYPE_SOAP_ENV__Code */
 };
 #endif
 
@@ -954,7 +930,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (111)
+#define SOAP_TYPE_SOAP_ENV__Detail (114)
 /* SOAP-ENV:Detail */
 struct SOAP_ENV__Detail
 {
@@ -963,7 +939,7 @@ public:
 	int __type;	/* any type of element <fault> (defined below) */
 	void *fault;	/* transient */
 public:
-	int soap_type() const { return 111; } /* = unique id SOAP_TYPE_SOAP_ENV__Detail */
+	int soap_type() const { return 114; } /* = unique id SOAP_TYPE_SOAP_ENV__Detail */
 };
 #endif
 
@@ -972,14 +948,14 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (113)
+#define SOAP_TYPE_SOAP_ENV__Reason (116)
 /* SOAP-ENV:Reason */
 struct SOAP_ENV__Reason
 {
 public:
 	char *SOAP_ENV__Text;	/* optional element of type xsd:string */
 public:
-	int soap_type() const { return 113; } /* = unique id SOAP_TYPE_SOAP_ENV__Reason */
+	int soap_type() const { return 116; } /* = unique id SOAP_TYPE_SOAP_ENV__Reason */
 };
 #endif
 
@@ -988,7 +964,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (114)
+#define SOAP_TYPE_SOAP_ENV__Fault (117)
 /* SOAP Fault: */
 struct SOAP_ENV__Fault
 {
@@ -1003,7 +979,7 @@ public:
 	char *SOAP_ENV__Role;	/* optional element of type xsd:string */
 	struct SOAP_ENV__Detail *SOAP_ENV__Detail;	/* optional element of type SOAP-ENV:Detail */
 public:
-	int soap_type() const { return 114; } /* = unique id SOAP_TYPE_SOAP_ENV__Fault */
+	int soap_type() const { return 117; } /* = unique id SOAP_TYPE_SOAP_ENV__Fault */
 };
 #endif
 

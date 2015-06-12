@@ -63,112 +63,116 @@ class SOAP_CMAC V3BindingProxy : public soap
 #endif
 
 	/// Web service operation 'saveUser' (returns error code or SOAP_OK)
-	virtual	int saveUser(std::string accesscode, std::string internnumber, std::string username, std::string passwd1, std::string passwd2, std::string passwd3, std::string name, std::string surname, std::string extranames, std::string initials, std::string sex, std::string birthday, std::string birthplace, std::string birthcountry, std::string address, std::string postalcode, std::string location, std::string country, std::string email, std::string mobilephone, std::string homephone, std::string fax, std::string prn, std::string stamboeknummer, std::string basisrol, std::string untis, xsd__anyType *&return_) { return this->saveUser(NULL, NULL, accesscode, internnumber, username, passwd1, passwd2, passwd3, name, surname, extranames, initials, sex, birthday, birthplace, birthcountry, address, postalcode, location, country, email, mobilephone, homephone, fax, prn, stamboeknummer, basisrol, untis, return_); }
-	virtual	int saveUser(const char *endpoint, const char *soap_action, std::string accesscode, std::string internnumber, std::string username, std::string passwd1, std::string passwd2, std::string passwd3, std::string name, std::string surname, std::string extranames, std::string initials, std::string sex, std::string birthday, std::string birthplace, std::string birthcountry, std::string address, std::string postalcode, std::string location, std::string country, std::string email, std::string mobilephone, std::string homephone, std::string fax, std::string prn, std::string stamboeknummer, std::string basisrol, std::string untis, xsd__anyType *&return_);
+	virtual	int saveUser(std::string accesscode, std::string internnumber, std::string username, std::string passwd1, std::string passwd2, std::string passwd3, std::string name, std::string surname, std::string extranames, std::string initials, std::string sex, std::string birthday, std::string birthplace, std::string birthcountry, std::string address, std::string postalcode, std::string location, std::string country, std::string email, std::string mobilephone, std::string homephone, std::string fax, std::string prn, std::string stamboeknummer, std::string basisrol, std::string untis, struct soap_dom_element &return_) { return this->saveUser(NULL, NULL, accesscode, internnumber, username, passwd1, passwd2, passwd3, name, surname, extranames, initials, sex, birthday, birthplace, birthcountry, address, postalcode, location, country, email, mobilephone, homephone, fax, prn, stamboeknummer, basisrol, untis, return_); }
+	virtual	int saveUser(const char *endpoint, const char *soap_action, std::string accesscode, std::string internnumber, std::string username, std::string passwd1, std::string passwd2, std::string passwd3, std::string name, std::string surname, std::string extranames, std::string initials, std::string sex, std::string birthday, std::string birthplace, std::string birthcountry, std::string address, std::string postalcode, std::string location, std::string country, std::string email, std::string mobilephone, std::string homephone, std::string fax, std::string prn, std::string stamboeknummer, std::string basisrol, std::string untis, struct soap_dom_element &return_);
 
 	/// Web service operation 'saveClass' (returns error code or SOAP_OK)
-	virtual	int saveClass(std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, std::string instituteNumber, std::string adminNumber, xsd__anyType *&return_) { return this->saveClass(NULL, NULL, accesscode, name, desc, code, parent, untis, instituteNumber, adminNumber, return_); }
-	virtual	int saveClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, std::string instituteNumber, std::string adminNumber, xsd__anyType *&return_);
+	virtual	int saveClass(std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, std::string instituteNumber, std::string adminNumber, struct soap_dom_element &return_) { return this->saveClass(NULL, NULL, accesscode, name, desc, code, parent, untis, instituteNumber, adminNumber, return_); }
+	virtual	int saveClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, std::string instituteNumber, std::string adminNumber, struct soap_dom_element &return_);
 
 	/// Web service operation 'getAllAccounts' (returns error code or SOAP_OK)
-	virtual	int getAllAccounts(std::string accesscode, std::string code, std::string recursive, xsd__anyType *&return_) { return this->getAllAccounts(NULL, NULL, accesscode, code, recursive, return_); }
-	virtual	int getAllAccounts(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, std::string recursive, xsd__anyType *&return_);
+	virtual	int getAllAccounts(std::string accesscode, std::string code, std::string recursive, struct soap_dom_element &return_) { return this->getAllAccounts(NULL, NULL, accesscode, code, recursive, return_); }
+	virtual	int getAllAccounts(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, std::string recursive, struct soap_dom_element &return_);
 
 	/// Web service operation 'getAllAccountsExtended' (returns error code or SOAP_OK)
-	virtual	int getAllAccountsExtended(std::string accesscode, std::string code, std::string recursive, xsd__anyType *&return_) { return this->getAllAccountsExtended(NULL, NULL, accesscode, code, recursive, return_); }
-	virtual	int getAllAccountsExtended(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, std::string recursive, xsd__anyType *&return_);
+	virtual	int getAllAccountsExtended(std::string accesscode, std::string code, std::string recursive, struct soap_dom_element &return_) { return this->getAllAccountsExtended(NULL, NULL, accesscode, code, recursive, return_); }
+	virtual	int getAllAccountsExtended(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, std::string recursive, struct soap_dom_element &return_);
 
 	/// Web service operation 'getAllGroupsAndClasses' (returns error code or SOAP_OK)
-	virtual	int getAllGroupsAndClasses(std::string accesscode, xsd__anyType *&return_) { return this->getAllGroupsAndClasses(NULL, NULL, accesscode, return_); }
-	virtual	int getAllGroupsAndClasses(const char *endpoint, const char *soap_action, std::string accesscode, xsd__anyType *&return_);
+	virtual	int getAllGroupsAndClasses(std::string accesscode, struct soap_dom_element &return_) { return this->getAllGroupsAndClasses(NULL, NULL, accesscode, return_); }
+	virtual	int getAllGroupsAndClasses(const char *endpoint, const char *soap_action, std::string accesscode, struct soap_dom_element &return_);
 
 	/// Web service operation 'addCourse' (returns error code or SOAP_OK)
 	virtual	int addCourse(std::string accesscode, std::string coursename, std::string coursedesc, std::string &return_) { return this->addCourse(NULL, NULL, accesscode, coursename, coursedesc, return_); }
 	virtual	int addCourse(const char *endpoint, const char *soap_action, std::string accesscode, std::string coursename, std::string coursedesc, std::string &return_);
 
 	/// Web service operation 'addCourseTeacher' (returns error code or SOAP_OK)
-	virtual	int addCourseTeacher(std::string accesscode, std::string coursename, std::string coursedesc, std::string internnummer, std::string userlist, xsd__anyType *&return_) { return this->addCourseTeacher(NULL, NULL, accesscode, coursename, coursedesc, internnummer, userlist, return_); }
-	virtual	int addCourseTeacher(const char *endpoint, const char *soap_action, std::string accesscode, std::string coursename, std::string coursedesc, std::string internnummer, std::string userlist, xsd__anyType *&return_);
+	virtual	int addCourseTeacher(std::string accesscode, std::string coursename, std::string coursedesc, std::string internnummer, std::string userlist, struct soap_dom_element &return_) { return this->addCourseTeacher(NULL, NULL, accesscode, coursename, coursedesc, internnummer, userlist, return_); }
+	virtual	int addCourseTeacher(const char *endpoint, const char *soap_action, std::string accesscode, std::string coursename, std::string coursedesc, std::string internnummer, std::string userlist, struct soap_dom_element &return_);
 
 	/// Web service operation 'addCourseStudents' (returns error code or SOAP_OK)
-	virtual	int addCourseStudents(std::string accesscode, std::string coursename, std::string coursedesc, std::string groupIds, xsd__anyType *&return_) { return this->addCourseStudents(NULL, NULL, accesscode, coursename, coursedesc, groupIds, return_); }
-	virtual	int addCourseStudents(const char *endpoint, const char *soap_action, std::string accesscode, std::string coursename, std::string coursedesc, std::string groupIds, xsd__anyType *&return_);
+	virtual	int addCourseStudents(std::string accesscode, std::string coursename, std::string coursedesc, std::string groupIds, struct soap_dom_element &return_) { return this->addCourseStudents(NULL, NULL, accesscode, coursename, coursedesc, groupIds, return_); }
+	virtual	int addCourseStudents(const char *endpoint, const char *soap_action, std::string accesscode, std::string coursename, std::string coursedesc, std::string groupIds, struct soap_dom_element &return_);
 
 	/// Web service operation 'getCourses' (returns error code or SOAP_OK)
 	virtual	int getCourses(std::string accesscode, std::string &return_) { return this->getCourses(NULL, NULL, accesscode, return_); }
 	virtual	int getCourses(const char *endpoint, const char *soap_action, std::string accesscode, std::string &return_);
 
 	/// Web service operation 'delUser' (returns error code or SOAP_OK)
-	virtual	int delUser(std::string accesscode, std::string userIdentifier, std::string officialDate, xsd__anyType *&return_) { return this->delUser(NULL, NULL, accesscode, userIdentifier, officialDate, return_); }
-	virtual	int delUser(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string officialDate, xsd__anyType *&return_);
+	virtual	int delUser(std::string accesscode, std::string userIdentifier, std::string officialDate, struct soap_dom_element &return_) { return this->delUser(NULL, NULL, accesscode, userIdentifier, officialDate, return_); }
+	virtual	int delUser(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string officialDate, struct soap_dom_element &return_);
 
 	/// Web service operation 'saveUserParameter' (returns error code or SOAP_OK)
-	virtual	int saveUserParameter(std::string accesscode, std::string userIdentifier, std::string paramName, std::string paramValue, xsd__anyType *&return_) { return this->saveUserParameter(NULL, NULL, accesscode, userIdentifier, paramName, paramValue, return_); }
-	virtual	int saveUserParameter(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string paramName, std::string paramValue, xsd__anyType *&return_);
+	virtual	int saveUserParameter(std::string accesscode, std::string userIdentifier, std::string paramName, std::string paramValue, struct soap_dom_element &return_) { return this->saveUserParameter(NULL, NULL, accesscode, userIdentifier, paramName, paramValue, return_); }
+	virtual	int saveUserParameter(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string paramName, std::string paramValue, struct soap_dom_element &return_);
 
 	/// Web service operation 'getClassList' (returns error code or SOAP_OK)
-	virtual	int getClassList(xsd__anyType *accesscode, std::string &return_) { return this->getClassList(NULL, NULL, accesscode, return_); }
-	virtual	int getClassList(const char *endpoint, const char *soap_action, xsd__anyType *accesscode, std::string &return_);
+	virtual	int getClassList(struct soap_dom_element accesscode, std::string &return_) { return this->getClassList(NULL, NULL, accesscode, return_); }
+	virtual	int getClassList(const char *endpoint, const char *soap_action, struct soap_dom_element accesscode, std::string &return_);
 
 	/// Web service operation 'saveClassList' (returns error code or SOAP_OK)
-	virtual	int saveClassList(std::string accesscode, std::string serializedList, xsd__anyType *&return_) { return this->saveClassList(NULL, NULL, accesscode, serializedList, return_); }
-	virtual	int saveClassList(const char *endpoint, const char *soap_action, std::string accesscode, std::string serializedList, xsd__anyType *&return_);
+	virtual	int saveClassList(std::string accesscode, std::string serializedList, struct soap_dom_element &return_) { return this->saveClassList(NULL, NULL, accesscode, serializedList, return_); }
+	virtual	int saveClassList(const char *endpoint, const char *soap_action, std::string accesscode, std::string serializedList, struct soap_dom_element &return_);
 
 	/// Web service operation 'delClass' (returns error code or SOAP_OK)
-	virtual	int delClass(std::string accesscode, std::string code, xsd__anyType *&return_) { return this->delClass(NULL, NULL, accesscode, code, return_); }
-	virtual	int delClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, xsd__anyType *&return_);
+	virtual	int delClass(std::string accesscode, std::string code, struct soap_dom_element &return_) { return this->delClass(NULL, NULL, accesscode, code, return_); }
+	virtual	int delClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string code, struct soap_dom_element &return_);
 
 	/// Web service operation 'saveUserToClasses' (returns error code or SOAP_OK)
-	virtual	int saveUserToClasses(std::string accesscode, std::string userIdentifier, std::string csvList, xsd__anyType *&return_) { return this->saveUserToClasses(NULL, NULL, accesscode, userIdentifier, csvList, return_); }
-	virtual	int saveUserToClasses(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string csvList, xsd__anyType *&return_);
+	virtual	int saveUserToClasses(std::string accesscode, std::string userIdentifier, std::string csvList, struct soap_dom_element &return_) { return this->saveUserToClasses(NULL, NULL, accesscode, userIdentifier, csvList, return_); }
+	virtual	int saveUserToClasses(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string csvList, struct soap_dom_element &return_);
 
 	/// Web service operation 'saveUserToClass' (returns error code or SOAP_OK)
-	virtual	int saveUserToClass(std::string accesscode, std::string userIdentifier, std::string class_, std::string officialDate, xsd__anyType *&return_) { return this->saveUserToClass(NULL, NULL, accesscode, userIdentifier, class_, officialDate, return_); }
-	virtual	int saveUserToClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string class_, std::string officialDate, xsd__anyType *&return_);
+	virtual	int saveUserToClass(std::string accesscode, std::string userIdentifier, std::string class_, std::string officialDate, struct soap_dom_element &return_) { return this->saveUserToClass(NULL, NULL, accesscode, userIdentifier, class_, officialDate, return_); }
+	virtual	int saveUserToClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string class_, std::string officialDate, struct soap_dom_element &return_);
 
 	/// Web service operation 'saveUserToClassesAndGroups' (returns error code or SOAP_OK)
-	virtual	int saveUserToClassesAndGroups(std::string accesscode, std::string userIdentifier, std::string csvList, int keepOld, xsd__anyType *&return_) { return this->saveUserToClassesAndGroups(NULL, NULL, accesscode, userIdentifier, csvList, keepOld, return_); }
-	virtual	int saveUserToClassesAndGroups(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string csvList, int keepOld, xsd__anyType *&return_);
+	virtual	int saveUserToClassesAndGroups(std::string accesscode, std::string userIdentifier, std::string csvList, int keepOld, struct soap_dom_element &return_) { return this->saveUserToClassesAndGroups(NULL, NULL, accesscode, userIdentifier, csvList, keepOld, return_); }
+	virtual	int saveUserToClassesAndGroups(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string csvList, int keepOld, struct soap_dom_element &return_);
 
 	/// Web service operation 'setAccountStatus' (returns error code or SOAP_OK)
-	virtual	int setAccountStatus(std::string accesscode, std::string userIdentifier, xsd__anyType *accountStatus, xsd__anyType *&return_) { return this->setAccountStatus(NULL, NULL, accesscode, userIdentifier, accountStatus, return_); }
-	virtual	int setAccountStatus(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, xsd__anyType *accountStatus, xsd__anyType *&return_);
+	virtual	int setAccountStatus(std::string accesscode, std::string userIdentifier, struct soap_dom_element accountStatus, struct soap_dom_element &return_) { return this->setAccountStatus(NULL, NULL, accesscode, userIdentifier, accountStatus, return_); }
+	virtual	int setAccountStatus(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, struct soap_dom_element accountStatus, struct soap_dom_element &return_);
 
 	/// Web service operation 'setAccountPhoto' (returns error code or SOAP_OK)
-	virtual	int setAccountPhoto(std::string accesscode, std::string userIdentifier, std::string photo, xsd__anyType *&return_) { return this->setAccountPhoto(NULL, NULL, accesscode, userIdentifier, photo, return_); }
-	virtual	int setAccountPhoto(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string photo, xsd__anyType *&return_);
+	virtual	int setAccountPhoto(std::string accesscode, std::string userIdentifier, std::string photo, struct soap_dom_element &return_) { return this->setAccountPhoto(NULL, NULL, accesscode, userIdentifier, photo, return_); }
+	virtual	int setAccountPhoto(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string photo, struct soap_dom_element &return_);
 
 	/// Web service operation 'replaceInum' (returns error code or SOAP_OK)
-	virtual	int replaceInum(std::string accesscode, std::string oldInum, std::string newInum, xsd__anyType *&return_) { return this->replaceInum(NULL, NULL, accesscode, oldInum, newInum, return_); }
-	virtual	int replaceInum(const char *endpoint, const char *soap_action, std::string accesscode, std::string oldInum, std::string newInum, xsd__anyType *&return_);
+	virtual	int replaceInum(std::string accesscode, std::string oldInum, std::string newInum, struct soap_dom_element &return_) { return this->replaceInum(NULL, NULL, accesscode, oldInum, newInum, return_); }
+	virtual	int replaceInum(const char *endpoint, const char *soap_action, std::string accesscode, std::string oldInum, std::string newInum, struct soap_dom_element &return_);
 
 	/// Web service operation 'savePassword' (returns error code or SOAP_OK)
-	virtual	int savePassword(std::string accesscode, std::string userIdentifier, std::string password, int accountType, xsd__anyType *&return_) { return this->savePassword(NULL, NULL, accesscode, userIdentifier, password, accountType, return_); }
-	virtual	int savePassword(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string password, int accountType, xsd__anyType *&return_);
+	virtual	int savePassword(std::string accesscode, std::string userIdentifier, std::string password, int accountType, struct soap_dom_element &return_) { return this->savePassword(NULL, NULL, accesscode, userIdentifier, password, accountType, return_); }
+	virtual	int savePassword(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string password, int accountType, struct soap_dom_element &return_);
 
 	/// Web service operation 'sendMsg' (returns error code or SOAP_OK)
-	virtual	int sendMsg(std::string accesscode, std::string userIdentifier, std::string title, std::string body, std::string senderIdentifier, struct _Struct_1 attachments, int coaccount, xsd__anyType *&return_) { return this->sendMsg(NULL, NULL, accesscode, userIdentifier, title, body, senderIdentifier, attachments, coaccount, return_); }
-	virtual	int sendMsg(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string title, std::string body, std::string senderIdentifier, struct _Struct_1 attachments, int coaccount, xsd__anyType *&return_);
+	virtual	int sendMsg(std::string accesscode, std::string userIdentifier, std::string title, std::string body, std::string senderIdentifier, struct _Struct_1 attachments, int coaccount, struct soap_dom_element &return_) { return this->sendMsg(NULL, NULL, accesscode, userIdentifier, title, body, senderIdentifier, attachments, coaccount, return_); }
+	virtual	int sendMsg(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string title, std::string body, std::string senderIdentifier, struct _Struct_1 attachments, int coaccount, struct soap_dom_element &return_);
 
 	/// Web service operation 'getSkoreClassTeacherCourseRelation' (returns error code or SOAP_OK)
-	virtual	int getSkoreClassTeacherCourseRelation(std::string accesscode, xsd__anyType *&return_) { return this->getSkoreClassTeacherCourseRelation(NULL, NULL, accesscode, return_); }
-	virtual	int getSkoreClassTeacherCourseRelation(const char *endpoint, const char *soap_action, std::string accesscode, xsd__anyType *&return_);
+	virtual	int getSkoreClassTeacherCourseRelation(std::string accesscode, struct soap_dom_element &return_) { return this->getSkoreClassTeacherCourseRelation(NULL, NULL, accesscode, return_); }
+	virtual	int getSkoreClassTeacherCourseRelation(const char *endpoint, const char *soap_action, std::string accesscode, struct soap_dom_element &return_);
 
 	/// Web service operation 'unregisterStudent' (returns error code or SOAP_OK)
-	virtual	int unregisterStudent(std::string accesscode, std::string userIdentifier, std::string officialDate, xsd__anyType *&return_) { return this->unregisterStudent(NULL, NULL, accesscode, userIdentifier, officialDate, return_); }
-	virtual	int unregisterStudent(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string officialDate, xsd__anyType *&return_);
+	virtual	int unregisterStudent(std::string accesscode, std::string userIdentifier, std::string officialDate, struct soap_dom_element &return_) { return this->unregisterStudent(NULL, NULL, accesscode, userIdentifier, officialDate, return_); }
+	virtual	int unregisterStudent(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string officialDate, struct soap_dom_element &return_);
 
 	/// Web service operation 'getClassTeachers' (returns error code or SOAP_OK)
-	virtual	int getClassTeachers(std::string accesscode, xsd__anyType *&return_) { return this->getClassTeachers(NULL, NULL, accesscode, return_); }
-	virtual	int getClassTeachers(const char *endpoint, const char *soap_action, std::string accesscode, xsd__anyType *&return_);
+	virtual	int getClassTeachers(std::string accesscode, struct soap_dom_element &return_) { return this->getClassTeachers(NULL, NULL, accesscode, return_); }
+	virtual	int getClassTeachers(const char *endpoint, const char *soap_action, std::string accesscode, struct soap_dom_element &return_);
 
 	/// Web service operation 'isValidUserCredentials' (returns error code or SOAP_OK)
-	virtual	int isValidUserCredentials(std::string accesscode, std::string username, std::string password, xsd__anyType *&return_) { return this->isValidUserCredentials(NULL, NULL, accesscode, username, password, return_); }
-	virtual	int isValidUserCredentials(const char *endpoint, const char *soap_action, std::string accesscode, std::string username, std::string password, xsd__anyType *&return_);
+	virtual	int isValidUserCredentials(std::string accesscode, std::string username, std::string password, struct soap_dom_element &return_) { return this->isValidUserCredentials(NULL, NULL, accesscode, username, password, return_); }
+	virtual	int isValidUserCredentials(const char *endpoint, const char *soap_action, std::string accesscode, std::string username, std::string password, struct soap_dom_element &return_);
 
 	/// Web service operation 'getAbsents' (returns error code or SOAP_OK)
 	virtual	int getAbsents(std::string accesscode, std::string userIdentifier, std::string schoolYear, std::string &return_) { return this->getAbsents(NULL, NULL, accesscode, userIdentifier, schoolYear, return_); }
 	virtual	int getAbsents(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string schoolYear, std::string &return_);
+
+	/// Web service operation 'getUserDetails' (returns error code or SOAP_OK)
+	virtual	int getUserDetails(std::string accesscode, std::string userIdentifier, std::string &return_) { return this->getUserDetails(NULL, NULL, accesscode, userIdentifier, return_); }
+	virtual	int getUserDetails(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string &return_);
 
 	/// Web service one-way send operation 'send_returnErrorCodes' (returns error code or SOAP_OK)
 	virtual	int send_returnErrorCodes() { return this->send_returnErrorCodes(NULL, NULL); }

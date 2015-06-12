@@ -13,7 +13,11 @@
 #include "utils/string.h"
 #include "data/database.h"
 #include "ldap/group.h"
+#include "utils/log.h"
 
+#include "Wt/Json/Parser"
+#include "Wt/Json/Object"
+#include "Wt/Json/Value"
 
 //#include "ldap/account.h"
 
@@ -57,6 +61,38 @@ y::smartschool::~smartschool() {
   service.destroy();
 }
 
+int y::smartschool::getUserDetails(const string& name, const string& password, y::data::row& details) {
+  soap_dom_element result;
+  
+  
+  
+  if(service.isValidUserCredentials(y::utils::Config().getSSPw().ss(), 
+                                    name.ss(), 
+                                    password.ss(),
+                                    result) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return -1;
+  } else {
+    Wt::Json::Object data;
+    Wt::Json::ParseError error;
+    if(!Wt::Json::parse(string(result.wide).utf8(), data, error)) {
+      return string(result.wide).asInt();
+    } else {
+      details["number"].setInt(string(data.get("number")).asInt());
+      details["username"].setString(string(data.get("username")));
+      details["name"].setString(string(data.get("name")));
+      details["surname"].setString(string(data.get("surname")));
+      details["email"].setString(string(data.get("email")));
+      details["role"].setInt(string(data.get("role")).asInt());
+      details["accountType"].setInt(string(data.get("accountType")).asInt());
+    }
+    
+  }
+  
+  
+  return 0;
+}
+
 int y::smartschool::addCourse(const string& name, const string& description) {
   std::string result;
   if(service.addCourse(y::utils::Config().getSSPw().ss(), name.ss(), description.ss(), result) != SOAP_OK) {
@@ -68,23 +104,55 @@ int y::smartschool::addCourse(const string& name, const string& description) {
   } 
 }
 
-void y::smartschool::addGroupsToCourse(const string& courseName, const string& courseDescription, container<string>& groupIDs) {
-  std::string result;
+int y::smartschool::setCourseClasses(const string& courseName, const string& courseDescription, container<string>& groupIDs) {
+  soap_dom_element result;
   string grouplist;
   for(int i = 0; i < groupIDs.elms(); i++) {
     grouplist += groupIDs[i];
-    if(i < groupIDs.elms() - 1);
-    grouplist += ',';
+    if(i < (groupIDs.elms() - 1)) grouplist += ',';
   }
   
-  // todo
-  //if(service.addCourseStudents(y::utils::Config().getSSPw(), courseName, courseDescription, grouplist, result) != SOAP_OK) {
-  //  service.soap_stream_fault(std::cerr);
-  //}
+  if(service.addCourseStudents(y::utils::Config().getSSPw().ss()
+                            , courseName.ss()
+                            , courseDescription.ss()
+                            , grouplist.ss()
+                            , result
+    ) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return -1;
+  } else {
+    return string(result.wide).asInt();
+  }
 }
 
+int y::smartschool::setCourseTeachers(const string& courseName, const string& courseDescription, const string & teacher, container<string> * coTeachers) {
+  soap_dom_element result;
+  string grouplist;
+  if(coTeachers != nullptr) {
+    for(int i = 0; i < coTeachers->elms(); i++) {
+      grouplist += (*coTeachers)[i];
+      if(i < (coTeachers->elms() - 1)) grouplist += ',';
+    }
+  }
+  
+  if(service.addCourseTeacher(y::utils::Config().getSSPw().ss()
+                              , courseName.ss()
+                              , courseDescription.ss()
+                              , teacher.ss()
+                              , grouplist.ss() 
+                              , result
+    ) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return -1;
+  } else {
+    return string(result.wide).asInt();
+  }
+}
+
+
+
 int y::smartschool::savePassword(y::ldap::account& account) {
-  xsd__anyType * result;
+  /*xsd__anyType * result;
   if(service.savePassword(
           y::utils::Config().getSSPw().ss(),
           account.uid()().ss(),
@@ -97,7 +165,7 @@ int y::smartschool::savePassword(y::ldap::account& account) {
     if(result->soap_type() == SOAP_TYPE_xsd__int) {
       return ((xsd__int*)(result))->__item;
     }
-  }
+  }*/
   return 0;
 }
 
@@ -114,7 +182,7 @@ void y::smartschool::saveUser(y::ldap::account& account) {
     role = "leerling";
   }
   
-  xsd__anyType * result;
+  soap_dom_element result;
   if(service.saveUser(
           y::utils::Config().getSSPw().ss(),
           std::to_string(account.uidNumber()()) , // internal number
@@ -149,7 +217,7 @@ void y::smartschool::saveUser(y::ldap::account& account) {
 }
 
 int y::smartschool::addUserToGroup(y::ldap::account& account, const string& group, bool keepCurrent) {
-  xsd__anyType * result;
+  soap_dom_element result;
   if(service.saveUserToClassesAndGroups(
           y::utils::Config().getSSPw().ss(),
           account.uid()().ss(),
@@ -160,15 +228,15 @@ int y::smartschool::addUserToGroup(y::ldap::account& account, const string& grou
     service.soap_stream_fault(std::cerr);
     return -1;
   } else {
-    if(result->soap_type() == SOAP_TYPE_xsd__int) {
-      return ((xsd__int*)(result))->__item;
-    }
+    //if(result->soap_type() == SOAP_TYPE_xsd__int) {
+    //  return ((xsd__int*)(result))->__item;
+    //}
   }
   return 0;
 }
 
 int y::smartschool::deleteUser(y::ldap::account& account, const string & removalDate) {
-  xsd__anyType * result;
+  soap_dom_element result;
   if(service.delUser(
           y::utils::Config().getSSPw().ss(),
           account.uid()().ss(),
@@ -178,53 +246,50 @@ int y::smartschool::deleteUser(y::ldap::account& account, const string & removal
     service.soap_stream_fault(std::cerr);
     return -1;
   } else {
-    if(result->soap_type() == SOAP_TYPE_xsd__int) {
-      return ((xsd__int*)(result))->__item;
-    }
+    //if(result->soap_type() == SOAP_TYPE_xsd__int) {
+    //  return ((xsd__int*)(result))->__item;
+    //}
   }
   return 0;
 }
 
 int y::smartschool::addClass(y::ldap::group& group) {
-  xsd__anyType * result;
+  soap_dom_element result;
   string parent;
   
   switch(group.cn()[0]) {
-    case 1: parent = "1stejaar"; break;
-    case 2: parent = "2dejaar"; break;
-    case 3: parent = "3dejaar"; break;
-    case 4: parent = "4dejaar"; break;
-    case 5: parent = "5dejaar"; break;
-    case 6: parent = "6dejaar"; break;
-    case 7: parent = "7dejaar"; break;
+    case '1': parent = "1stejaar"; break;
+    case '2': parent = "2dejaar"; break;
+    case '3': parent = "3dejaar"; break;
+    case '4': parent = "4dejaar"; break;
+    case '5': parent = "5dejaar"; break;
+    case '6': parent = "6dejaar"; break;
+    case '7': parent = "7dejaar"; break;
   }
   
   string description("Leerlingen ");
   description += group.cn(); 
   
   if(service.saveClass(
-          y::utils::Config().getSSPw().ss(), // password smartschool
-          group.cn().ss()                  , // group name
+          y::utils::Config().getSSPw().ss() , // password smartschool
+          group.cn().ss()                   , // group name
           description.ss()                  , // group description
-          group.cn().ss()                  , // unique group ID
-          "0"                               , // parent for this group
-          "0"                               , // koppeling schoolagenda
-          ""                                , // institute number
-          ""                                , // admin number
+          group.cn().ss()                   , // unique group ID
+          parent.ss()                       , // parent for this group
+          ""                                , // koppeling schoolagenda
+          "125252"                          , // institute number
+          "502"                             , // admin number
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
     return -1;
   } else {
-    if(result->soap_type() == SOAP_TYPE_xsd__int) {
-      return ((xsd__int*)(result))->__item;
-    }
+    return string(result.wide).asInt();
   }
-  return 0;
 }
 
 int y::smartschool::deleteClass(y::ldap::group& group) {
-  xsd__anyType * result;
+  soap_dom_element result;
   if(service.delClass(
           y::utils::Config().getSSPw().ss(), // password smartschool
           group.cn().ss()                  , // unique group ID
@@ -233,10 +298,7 @@ int y::smartschool::deleteClass(y::ldap::group& group) {
     service.soap_stream_fault(std::cerr);
     return -1;
   } else {
-    if(result->soap_type() == SOAP_TYPE_xsd__int) {
-      std::cout << errorToText(((xsd__int*)(result))->__item) << std::endl;
-      return ((xsd__int*)(result))->__item;
-    }
+    return string(result.wide).asInt();
   }
   return 0;
 }
@@ -310,6 +372,10 @@ void y::smartschool::loadErrorCodes(y::data::database& db) {
 }
 
 string y::smartschool::errorToText(int code) {
+  // seems like ss didn't implement this code
+  if(code == 9) {
+    return string("Wrong username or password.");
+  }
   if(errorTable.valid(code)) {
     return errorTable[code];
   }

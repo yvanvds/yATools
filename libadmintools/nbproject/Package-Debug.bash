@@ -13,8 +13,8 @@ CND_BUILDDIR=build
 CND_DLIB_EXT=so
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${TESTDIR}/TestFiles/f7
-OUTPUT_BASENAME=f7
+OUTPUT_PATH=../Debug/libsystem.so
+OUTPUT_BASENAME=libsystem.so
 PACKAGE_TOP_DIR=liblibadmintools.so/
 
 # Functions
