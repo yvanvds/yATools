@@ -19,11 +19,13 @@
 #include <iostream>
 #include <boost/locale.hpp>
 #include "defines.h"
+#include "group.h"
+#include "attributes.h"
 
 
-y::ldap::server::server() : _accounts(this), _groups(this)
+y::ldap::server::server() : _accounts(this), _groups(this), _classes(this)
   , _connected(false), _allAccountsLoaded(false)
-  , _allGroupsLoaded(false) {
+  , _allGroupsLoaded(false), _allClassesLoaded(false) {
   setlocale(LC_MESSAGES, "");
   
   // set timeout values
@@ -196,6 +198,29 @@ y::ldap::group & y::ldap::server::getGroup(const string & cn, bool editable) {
   return g;
 }
 
+y::ldap::schoolClass & y::ldap::server::getClass(const DN& id) {
+  for(int i = 0; i < _classes.elms(); i++) {
+    if(_classes[i].dn() == id) {
+      return _classes[i];
+    }
+  }
+  
+  schoolClass & s = _classes.New();
+  s.load(id);
+  return s;
+}
+
+y::ldap::schoolClass & y::ldap::server::getClass(const string & cn) {
+  for(int i = 0; i < _classes.elms(); i++) {
+    if(_classes[i].cn() == cn) {
+      return _classes[i];
+    }
+  }
+  schoolClass & s = _classes.New();
+  s.load(cn);
+  return s;
+} 
+
 ACCOUNTS & y::ldap::server::getAccounts() {
   // don't do this twice
   if(_allAccountsLoaded) return _accounts;
@@ -254,7 +279,7 @@ GROUPS & y::ldap::server::getGroups() {
       }
       if(!found) {
         group & g = _groups.New();
-        g.load(d.get(i));
+        g.loadData(d.get(i));
       }
     }
   }
@@ -280,6 +305,41 @@ GROUPS & y::ldap::server::getGroups() {
   
   return _groups;
 }
+
+CLASSES & y::ldap::server::getClasses() {
+  // don't do this twice
+  if(_allClassesLoaded) return _classes;
+  
+  // keep track of classes we've already loaded
+  container<string> loaded;
+  for(int i = 0; i < _classes.elms(); i++) {
+    loaded.New() = _classes[i].cn();
+  }
+  
+  {
+    dataset d(this);
+    d.create("objectClass=*", "ou=classes");
+    for(int i = 0; i < d.elms(); i++) {
+      data & temp = d.get(i);
+      bool found = false;
+      for (int i = 0; i < loaded.elms(); i++) {
+        if(loaded[i] == temp.getValue(TYPE_CN)) {
+          found = true;
+          break;
+        }
+      }
+      if(!found) {
+        schoolClass & g = _classes.New();
+        g.loadData(d.get(i));
+      }
+    }
+  }
+  
+  _allClassesLoaded = true;
+  
+  return _classes;
+}
+
 
 bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) { 
   // setup second connection for auth function
@@ -565,6 +625,10 @@ bool y::ldap::server::commitChanges() {
   for(int i = 0; i < _accounts.elms(); i++) {
     if(_accounts[i].save()) result = true;
   }
+  
+  for(int i = 0; i < _classes.elms(); i++) {
+    if(_classes[i].save()) result = true;
+  }
  
   return result;
 }
@@ -572,7 +636,9 @@ bool y::ldap::server::commitChanges() {
 void y::ldap::server::clear() {
   _accounts.clear();
   _groups.clear();
+  _classes.clear();
   _allAccountsLoaded = false;
   _allGroupsLoaded = false;
+  _allClassesLoaded = false;
 }
 

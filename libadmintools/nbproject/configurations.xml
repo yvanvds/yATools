@@ -27,6 +27,8 @@
         <itemPath>ldap/data.h</itemPath>
         <itemPath>ldap/dataset.cpp</itemPath>
         <itemPath>ldap/dataset.h</itemPath>
+        <itemPath>ldap/ldapObject.cpp</itemPath>
+        <itemPath>ldap/ldapObject.h</itemPath>
       </logicalFolder>
       <itemPath>ldap/account.cpp</itemPath>
       <itemPath>ldap/account.h</itemPath>
@@ -34,6 +36,8 @@
       <itemPath>ldap/attributes.h</itemPath>
       <itemPath>ldap/group.cpp</itemPath>
       <itemPath>ldap/group.h</itemPath>
+      <itemPath>ldap/schoolClass.cpp</itemPath>
+      <itemPath>ldap/schoolClass.h</itemPath>
       <itemPath>ldap/server.cpp</itemPath>
       <itemPath>ldap/server.h</itemPath>
     </logicalFolder>
@@ -160,6 +164,14 @@
         <itemPath>ldap/tests/ldpBaseDataTest.cpp</itemPath>
         <itemPath>ldap/tests/ldpBaseDataTest.h</itemPath>
         <itemPath>ldap/tests/ldpBaseDataTestRun.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7"
+                     displayName="schoolClassTest"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>ldap/tests/schoolClassTest.cpp</itemPath>
+        <itemPath>ldap/tests/schoolClassTest.h</itemPath>
+        <itemPath>ldap/tests/schoolClassTestRunner.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f3"
                      displayName="sys config Test"
@@ -464,6 +476,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <folder path="TestFiles/f8">
         <cTool>
           <commandLine>`cppunit-config --cflags`</commandLine>
@@ -520,6 +546,14 @@
       </item>
       <item path="ldap/group.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ldap/ldapObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/ldapObject.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/schoolClass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/schoolClass.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ldap/server.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/server.h" ex="false" tool="3" flavor2="0">
@@ -556,6 +590,15 @@
       <item path="ldap/tests/ldpBaseDataTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ldap/tests/ldpBaseDataTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/schoolClassTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/schoolClassTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/schoolClassTestRunner.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="samba/samba.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -926,6 +969,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <folder path="TestFiles/f8">
         <cTool>
           <commandLine>`cppunit-config --cflags`</commandLine>
@@ -982,6 +1039,14 @@
       </item>
       <item path="ldap/group.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ldap/ldapObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/ldapObject.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/schoolClass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/schoolClass.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ldap/server.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ldap/server.h" ex="false" tool="3" flavor2="0">
@@ -1018,6 +1083,15 @@
       <item path="ldap/tests/ldpBaseDataTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ldap/tests/ldpBaseDataTestRun.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/schoolClassTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ldap/tests/schoolClassTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ldap/tests/schoolClassTestRunner.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="samba/samba.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -47,6 +47,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/ldap/data.o \
 	${OBJECTDIR}/ldap/dataset.o \
 	${OBJECTDIR}/ldap/group.o \
+	${OBJECTDIR}/ldap/ldapObject.o \
+	${OBJECTDIR}/ldap/schoolClass.o \
 	${OBJECTDIR}/ldap/server.o \
 	${OBJECTDIR}/samba/samba.o \
 	${OBJECTDIR}/smartschool/smartschool.o \
@@ -82,6 +84,7 @@ TESTFILES= \
 	${TESTDIR}/TestFiles/f13 \
 	${TESTDIR}/TestFiles/f1 \
 	${TESTDIR}/TestFiles/f2 \
+	${TESTDIR}/TestFiles/f7 \
 	${TESTDIR}/TestFiles/f3 \
 	${TESTDIR}/TestFiles/f12 \
 	${TESTDIR}/TestFiles/f6
@@ -169,6 +172,16 @@ ${OBJECTDIR}/ldap/group.o: ldap/group.cpp
 	${MKDIR} -p ${OBJECTDIR}/ldap
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/group.o ldap/group.cpp
+
+${OBJECTDIR}/ldap/ldapObject.o: ldap/ldapObject.cpp 
+	${MKDIR} -p ${OBJECTDIR}/ldap
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/ldapObject.o ldap/ldapObject.cpp
+
+${OBJECTDIR}/ldap/schoolClass.o: ldap/schoolClass.cpp 
+	${MKDIR} -p ${OBJECTDIR}/ldap
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/schoolClass.o ldap/schoolClass.cpp
 
 ${OBJECTDIR}/ldap/server.o: ldap/server.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ldap
@@ -311,6 +324,10 @@ ${TESTDIR}/TestFiles/f2: ${TESTDIR}/ldap/tests/ldpBaseDataTest.o ${TESTDIR}/ldap
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
 
+${TESTDIR}/TestFiles/f7: ${TESTDIR}/ldap/tests/schoolClassTest.o ${TESTDIR}/ldap/tests/schoolClassTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
+
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/system/tests/sysConfigTest.o ${TESTDIR}/system/tests/sysConfigTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   
@@ -430,6 +447,18 @@ ${TESTDIR}/ldap/tests/ldpBaseDataTestRun.o: ldap/tests/ldpBaseDataTestRun.cpp
 	${MKDIR} -p ${TESTDIR}/ldap/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/ldpBaseDataTestRun.o ldap/tests/ldpBaseDataTestRun.cpp
+
+
+${TESTDIR}/ldap/tests/schoolClassTest.o: ldap/tests/schoolClassTest.cpp 
+	${MKDIR} -p ${TESTDIR}/ldap/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/schoolClassTest.o ldap/tests/schoolClassTest.cpp
+
+
+${TESTDIR}/ldap/tests/schoolClassTestRunner.o: ldap/tests/schoolClassTestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/ldap/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/schoolClassTestRunner.o ldap/tests/schoolClassTestRunner.cpp
 
 
 ${TESTDIR}/system/tests/sysConfigTest.o: system/tests/sysConfigTest.cpp 
@@ -622,6 +651,32 @@ ${OBJECTDIR}/ldap/group_nomain.o: ${OBJECTDIR}/ldap/group.o ldap/group.cpp
 	    $(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/group_nomain.o ldap/group.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ldap/group.o ${OBJECTDIR}/ldap/group_nomain.o;\
+	fi
+
+${OBJECTDIR}/ldap/ldapObject_nomain.o: ${OBJECTDIR}/ldap/ldapObject.o ldap/ldapObject.cpp 
+	${MKDIR} -p ${OBJECTDIR}/ldap
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/ldap/ldapObject.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/ldapObject_nomain.o ldap/ldapObject.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/ldap/ldapObject.o ${OBJECTDIR}/ldap/ldapObject_nomain.o;\
+	fi
+
+${OBJECTDIR}/ldap/schoolClass_nomain.o: ${OBJECTDIR}/ldap/schoolClass.o ldap/schoolClass.cpp 
+	${MKDIR} -p ${OBJECTDIR}/ldap
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/ldap/schoolClass.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ldap/schoolClass_nomain.o ldap/schoolClass.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/ldap/schoolClass.o ${OBJECTDIR}/ldap/schoolClass_nomain.o;\
 	fi
 
 ${OBJECTDIR}/ldap/server_nomain.o: ${OBJECTDIR}/ldap/server.o ldap/server.cpp 
@@ -897,6 +952,7 @@ ${OBJECTDIR}/utils/stringFunctions_nomain.o: ${OBJECTDIR}/utils/stringFunctions.
 	    ${TESTDIR}/TestFiles/f13 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
+	    ${TESTDIR}/TestFiles/f7 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
 	    ${TESTDIR}/TestFiles/f12 || true; \
 	    ${TESTDIR}/TestFiles/f6 || true; \

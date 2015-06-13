@@ -253,7 +253,7 @@ int y::smartschool::deleteUser(y::ldap::account& account, const string & removal
   return 0;
 }
 
-int y::smartschool::addClass(y::ldap::group& group) {
+int y::smartschool::addClass(y::ldap::schoolClass & group) {
   soap_dom_element result;
   string parent;
   
@@ -288,7 +288,7 @@ int y::smartschool::addClass(y::ldap::group& group) {
   }
 }
 
-int y::smartschool::deleteClass(y::ldap::group& group) {
+int y::smartschool::deleteClass(y::ldap::schoolClass & group) {
   soap_dom_element result;
   if(service.delClass(
           y::utils::Config().getSSPw().ss(), // password smartschool

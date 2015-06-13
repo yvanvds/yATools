@@ -14,22 +14,14 @@
 #include "defines.h"
 
 y::ldap::group::group(y::ldap::server * server) 
-  : server(server),
-    _dn(DN("")), 
-    _cn(""), 
-    _new(true), 
-    _editable(true),
-    _flaggedForCommit(false),
-    _flaggedForRemoval(false),
-    _importStatus(WI_NOT_ACCOUNTED) {
-}
+  : ldapObject(server),
+    _editable(true) {}
 
-bool y::ldap::group::load(const DN& id) {
-  dataset d(server);
-  if(d.createFromDN(id())) {
-    load(d.get(0));
-  } 
-  return !_new;
+void y::ldap::group::clear() {
+  _owners.clear();
+  _members.clear();
+  _ownersInLDAP.clear();
+  _membersInLDAP.clear();
 }
 
 bool y::ldap::group::load(const string & cn) {
@@ -37,9 +29,9 @@ bool y::ldap::group::load(const string & cn) {
   string filter("cn=" + cn);
   
   if(!editable() && d.create(filter, "ou=mailGroups")) {
-    load(d.get(0));
+    loadData(d.get(0));
   } else if(editable() && d.create(filter, "ou=editableMailGroups")) {
-    load(d.get(0));
+    loadData(d.get(0));
   } else {
     _cn(cn);
   }
@@ -47,7 +39,7 @@ bool y::ldap::group::load(const string & cn) {
   return !_new;
 }
 
-bool y::ldap::group::load(const data& d) {
+bool y::ldap::group::loadData(const data& d) {
   _dn(DN(d.getValue("DN")), true);
   _cn(d.getValue("cn"), true);
   
@@ -81,18 +73,6 @@ bool y::ldap::group::load(const data& d) {
   return !_new;
 }
 
-void y::ldap::group::flagForCommit() {
-  _flaggedForCommit = true;
-}
-
-const y::ldap::DN & y::ldap::group::dn() const {
-  return _dn();
-}
-
-const string & y::ldap::group::cn() const {
-  return _cn();
-}
-
 container<string> & y::ldap::group::owners() {
   return _owners;
 }
@@ -110,15 +90,6 @@ y::ldap::group & y::ldap::group::editable(bool value) {
 
 bool y::ldap::group::editable() {
   return _editable;
-}
-
-bool y::ldap::group::isNew() {
-  return _new;
-}
-
-void y::ldap::group::flagForRemoval() {
-  _flaggedForCommit = true; // delete is also a commit
-  _flaggedForRemoval = true;
 }
 
 bool y::ldap::group::removeOwner(const string& owner) {
@@ -167,46 +138,7 @@ bool y::ldap::group::addMember(const string& member) {
   return true;
 }
 
-bool y::ldap::group::flaggedForRemoval() {
-  return _flaggedForRemoval;
-}
-
-bool y::ldap::group::save() {
-  if(!_flaggedForCommit) return false;
-  
-  if(_flaggedForRemoval) {
-    // remove from smartschool if this is a class group
-    if(!editable()) {
-      y::Smartschool().deleteClass(*this);
-    }
-    
-    server->remove(_dn());
-    // not really needed, but you never know
-    _members.clear();
-    _owners.clear();
-    
-    return true;
-  }
-  
-  // update or add smartschool class if needed
-  if(!editable()) {
-    y::Smartschool().addClass(*this);
-  }
-  
-  if(_new) {    
-    if(saveNew()) {
-      _new = false;
-      return true;
-    } else return false;
-  } else {
-    return saveUpdate();
-  }
-  
-  
-}
-
-bool y::ldap::group::saveNew() {
-  dataset values(server);
+bool y::ldap::group::addNew(dataset & values) {
   // don't create if there are no members
   if(_members.elms() == 0) {
     if(!_editable) {
@@ -275,17 +207,12 @@ bool y::ldap::group::saveNew() {
     mbs.add("values", _members[i]);
   }
 
-  if(values.elms()) {
-    server->add(_dn(), values);
-    return true;
-  }
-  return false;
+  return true;
 }
 
-bool y::ldap::group::saveUpdate() {
+bool y::ldap::group::update(dataset & values) {
   TODO(in editable mailgroups owners should also be members)
-  
-  dataset values(server);
+
   data * ownerDelete = nullptr;
   // remove owners if needed 
   for(int i = 0; i < _ownersInLDAP.elms(); i++){
@@ -374,19 +301,5 @@ bool y::ldap::group::saveUpdate() {
     }
   }
   
-  if(values.elms()) {
-    server->modify(_dn(), values);
-    return true;
-  }
-  return false;
-  
-}
-
-y::ldap::WISA_IMPORT y::ldap::group::getImportStatus() {
-  return _importStatus;
-} 
-
-y::ldap::group & y::ldap::group::setImportStatus(WISA_IMPORT status) {
-  _importStatus = status;
-  return *this;
+  return true; 
 }

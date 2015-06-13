@@ -14,6 +14,7 @@
 #include "ldap/account.h"
 #include "data/database.h"
 #include "ldap/group.h"
+#include "ldap/schoolClass.h"
 
 namespace y {
   class smartschool {
@@ -38,8 +39,8 @@ namespace y {
    int addUserToGroup(y::ldap::account & account, const string & group, bool keepCurrent);
    int deleteUser(y::ldap::account & account, const string & removalDate = string("00/00/0000"));
    
-   int addClass(y::ldap::group & group);
-   int deleteClass(y::ldap::group & group);
+   int addClass(y::ldap::schoolClass & group);
+   int deleteClass(y::ldap::schoolClass & group);
    
    string errorToText(int code);
    

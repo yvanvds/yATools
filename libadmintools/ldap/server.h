@@ -14,10 +14,12 @@
 #include "group.h"
 #include "account.h"
 #include "utils/container.h"
+#include "schoolClass.h"
 #include <ldap.h>
 
-#define ACCOUNTS container<y::ldap::account, y::ldap::server>
-#define GROUPS   container<y::ldap::group  , y::ldap::server>
+#define ACCOUNTS container<y::ldap::account    , y::ldap::server>
+#define GROUPS   container<y::ldap::group      , y::ldap::server>
+#define CLASSES  container<y::ldap::schoolClass, y::ldap::server>
 
 namespace y {
   
@@ -38,11 +40,15 @@ namespace y {
       account & getAccount(      UID_NUMBER   id);
       account & getAccount(const DN         & id);
 
-      group & getGroup(const DN & id);
+      group & getGroup(const DN     & id);
       group & getGroup(const string & cn, bool editable);
-
+      
+      schoolClass & getClass(const DN     & id);
+      schoolClass & getClass(const string & cn);
+      
       ACCOUNTS & getAccounts(); 
-      GROUPS   & getGroups  ();     
+      GROUPS   & getGroups  (); 
+      CLASSES  & getClasses ();
 
       // uid numbers of accounts found by this query are stored in results.
       // the function returns the number of accounts found
@@ -70,6 +76,7 @@ namespace y {
       
       ACCOUNTS _accounts;
       GROUPS   _groups  ;
+      CLASSES  _classes ;
 
       bool _connected;
       string _base;
@@ -80,10 +87,12 @@ namespace y {
       friend class dataset;
       friend class account;
       friend class group  ;
+      friend class ldapObject;
       
       
       bool _allAccountsLoaded;
       bool _allGroupsLoaded;
+      bool _allClassesLoaded;
     };
 
   }

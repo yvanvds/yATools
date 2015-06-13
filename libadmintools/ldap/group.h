@@ -9,22 +9,18 @@
 #include "utils/watch.h"
 #include "utils/container.h"
 #include "ldap/attributes.h"
+#include "ldapObject.h"
 #include "data.h"
 
 namespace y {
   namespace ldap {
     class server;
     
-    class group {
+    class group : public ldapObject {
     public:
       group(y::ldap::server * server);
-      
-      bool isNew();
+
       void clear();
-      bool save ();
-      
-      const DN & dn() const;
-      const string & cn() const;
 
       container<string> & owners ();
       container<string> & members();
@@ -37,28 +33,18 @@ namespace y {
 
       group & editable(bool value); // automatic group or not
       bool    editable();
+
+      virtual void beforeRemove() {};
       
-      void    flagForCommit    ();
-      void    flagForRemoval   ();
-      bool    flaggedForRemoval();
       
-      // used for wisa import
-      WISA_IMPORT getImportStatus();
-      group & setImportStatus(WISA_IMPORT status);
       
     private:
-      bool load(const DN & id);
+      using ldapObject::load;
       bool load(const string & cn);
-      bool load(const data& d);
+      bool loadData(const data& d);
       
-      bool saveNew   ();
-      bool saveUpdate();
-      void retrieveData(const data& d);
-      
-      y::ldap::server * server;
-      
-      watch<DN> _dn;
-      watch<string> _cn;
+      virtual bool addNew(dataset & values);
+      virtual bool update(dataset & values);
 
       container<string> _owners ;
       container<string> _members;
@@ -67,11 +53,7 @@ namespace y {
       container<string> _ownersInLDAP;
       container<string> _membersInLDAP;
 
-      bool _new     ; // false if loaded from ldap
       bool _editable;
-      bool _flaggedForCommit;
-      bool _flaggedForRemoval;
-      WISA_IMPORT _importStatus;
       
       friend class server;
     };

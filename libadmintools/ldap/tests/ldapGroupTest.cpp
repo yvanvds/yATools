@@ -215,10 +215,12 @@ void ldapGroupTest::testOwners() {
   }
   
   // now do the same test with an editable group
+  int countOwners;
   {
     Server.clear();
     y::ldap::group  & group = Server.getGroup("directie", true);
     container<string> & owners = group.owners();
+    countOwners = owners.elms();
     owners.New() = "yvan@sanctamaria-aarschot.be"; 
     group.flagForCommit();
     Server.commitChanges();
@@ -229,7 +231,7 @@ void ldapGroupTest::testOwners() {
     Server.clear();
     y::ldap::group  & group = Server.getGroup("directie", true);
     container<string> & owners = group.owners();
-    if(owners.elms() != 4) {
+    if(owners.elms() != countOwners + 1) {
       CPPUNIT_ASSERT(false);
     }
     
@@ -249,7 +251,7 @@ void ldapGroupTest::testOwners() {
     Server.clear();
     y::ldap::group  & group = Server.getGroup("directie", true);
     container<string> & owners = group.owners();
-    if(owners.elms() != 3) {
+    if(owners.elms() != countOwners) {
       CPPUNIT_ASSERT(false);
     }
   }
