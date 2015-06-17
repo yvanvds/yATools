@@ -2,8 +2,22 @@
 <configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="f3" displayName="accountManager" projectFiles="true">
-      <itemPath>accountManager.cpp</itemPath>
-      <itemPath>accountManager.h</itemPath>
+      <itemPath>account/changeName.cpp</itemPath>
+      <itemPath>account/changeName.h</itemPath>
+      <itemPath>account/changePassword.cpp</itemPath>
+      <itemPath>account/changePassword.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f5" displayName="auth" projectFiles="true" kind="ROOT">
+      <itemPath>auth/authModel.cpp</itemPath>
+      <itemPath>auth/authModel.h</itemPath>
+      <itemPath>auth/authService.cpp</itemPath>
+      <itemPath>auth/authService.h</itemPath>
+      <itemPath>auth/authWidget.cpp</itemPath>
+      <itemPath>auth/authWidget.h</itemPath>
+      <itemPath>auth/session.cpp</itemPath>
+      <itemPath>auth/session.h</itemPath>
+      <itemPath>auth/user.cpp</itemPath>
+      <itemPath>auth/user.h</itemPath>
     </logicalFolder>
     <logicalFolder name="base" displayName="base" projectFiles="true">
       <itemPath>base/imageConvert.cpp</itemPath>
@@ -16,6 +30,22 @@
     <logicalFolder name="f2" displayName="proxyManager" projectFiles="true">
       <itemPath>proxyManager.cpp</itemPath>
       <itemPath>proxyManager.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f6"
+                   displayName="site_resources"
+                   projectFiles="true"
+                   kind="ROOT">
+      <itemPath>site_resources/auth_css_theme.xml</itemPath>
+      <itemPath>site_resources/auth_strings.xml</itemPath>
+      <itemPath>site_resources/bootstrap3_theme.xml</itemPath>
+      <itemPath>site_resources/bootstrap_theme.xml</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f7"
+                   displayName="staffManager"
+                   projectFiles="true"
+                   kind="ROOT">
+      <itemPath>staffManager/staffList.cpp</itemPath>
+      <itemPath>staffManager/staffList.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f1" displayName="wisaImport" projectFiles="true">
       <itemPath>wisaImport/wisaCommitChanges.cpp</itemPath>
@@ -72,9 +102,11 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>application.cpp</itemPath>
+    <itemPath>application.h</itemPath>
     <itemPath>main.cpp</itemPath>
-    <itemPath>webLogin.cpp</itemPath>
-    <itemPath>webLogin.h</itemPath>
+    <itemPath>topContent.cpp</itemPath>
+    <itemPath>topContent.h</itemPath>
   </logicalFolder>
   <sourceRootList>
     <Elem>base</Elem>
@@ -106,7 +138,7 @@
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerOptionItem>-lwthttp -lwt</linkerOptionItem>
+            <linkerOptionItem>-lwthttp -lwt -lwtdbo -lwtdbomysql</linkerOptionItem>
             <linkerLibProjectItem>
               <makeArtifact PL="../libadmintools"
                             CT="2"
@@ -131,9 +163,37 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="accountManager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="account/changeName.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="accountManager.h" ex="false" tool="3" flavor2="0">
+      <item path="account/changeName.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="account/changePassword.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="account/changePassword.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="application.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="application.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/authModel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/authModel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/authService.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/authService.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/authWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/authWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/session.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/session.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/user.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/user.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="base/imageConvert.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -153,9 +213,24 @@
       </item>
       <item path="proxyManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="webLogin.cpp" ex="false" tool="1" flavor2="0">
+      <item path="site_resources/auth_css_theme.xml" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="webLogin.h" ex="false" tool="3" flavor2="0">
+      <item path="site_resources/auth_strings.xml" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="site_resources/bootstrap3_theme.xml"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="site_resources/bootstrap_theme.xml" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="staffManager/staffList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="staffManager/staffList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="topContent.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="topContent.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="wisaImport.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -269,7 +344,7 @@
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerOptionItem>-lwtfcgi -lwt</linkerOptionItem>
+            <linkerOptionItem>-lwtfcgi -lwt -lwtdbo -lwtdbomysql</linkerOptionItem>
             <linkerOptionItem>-lldap -llber</linkerOptionItem>
             <linkerOptionItem>-lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals -lboost_locale</linkerOptionItem>
             <linkerLibProjectItem>
@@ -288,9 +363,37 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="accountManager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="account/changeName.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="accountManager.h" ex="false" tool="3" flavor2="0">
+      <item path="account/changeName.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="account/changePassword.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="account/changePassword.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="application.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="application.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/authModel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/authModel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/authService.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/authService.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/authWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/authWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/session.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/session.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/user.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/user.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="base/imageConvert.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -310,9 +413,24 @@
       </item>
       <item path="proxyManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="webLogin.cpp" ex="false" tool="1" flavor2="0">
+      <item path="site_resources/auth_css_theme.xml" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="webLogin.h" ex="false" tool="3" flavor2="0">
+      <item path="site_resources/auth_strings.xml" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="site_resources/bootstrap3_theme.xml"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="site_resources/bootstrap_theme.xml" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="staffManager/staffList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="staffManager/staffList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="topContent.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="topContent.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="wisaImport.cpp" ex="false" tool="1" flavor2="0">
       </item>

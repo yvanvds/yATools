@@ -33,4 +33,8 @@ public:
     return _changed;
   }
   
+  void unFlag() {
+    _changed = false;
+  }
+  
 };

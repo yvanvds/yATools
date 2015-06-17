@@ -19,6 +19,7 @@
 #include "data/database.h"
 #include "data/field.h"
 #include "data/row.h"
+#include "data/adminRights.h"
 
 //ldap
 #include "ldap/account.h"
@@ -50,7 +51,6 @@
 
 
 //gui
-#include "gui/application.h"
 #include "gui/confirmationDialog.h"
 
 //admin

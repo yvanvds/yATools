@@ -36,11 +36,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/admin/userAdmin.o \
+	${OBJECTDIR}/data/adminRights.o \
 	${OBJECTDIR}/data/database.o \
 	${OBJECTDIR}/data/dateTime.o \
 	${OBJECTDIR}/data/field.o \
 	${OBJECTDIR}/data/row.o \
-	${OBJECTDIR}/gui/application.o \
 	${OBJECTDIR}/gui/confirmationDialog.o \
 	${OBJECTDIR}/ldap/account.o \
 	${OBJECTDIR}/ldap/attributes.o \
@@ -118,6 +118,11 @@ ${OBJECTDIR}/admin/userAdmin.o: admin/userAdmin.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/admin/userAdmin.o admin/userAdmin.cpp
 
+${OBJECTDIR}/data/adminRights.o: data/adminRights.cpp 
+	${MKDIR} -p ${OBJECTDIR}/data
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/adminRights.o data/adminRights.cpp
+
 ${OBJECTDIR}/data/database.o: data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
 	${RM} "$@.d"
@@ -137,11 +142,6 @@ ${OBJECTDIR}/data/row.o: data/row.cpp
 	${MKDIR} -p ${OBJECTDIR}/data
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/row.o data/row.cpp
-
-${OBJECTDIR}/gui/application.o: gui/application.cpp 
-	${MKDIR} -p ${OBJECTDIR}/gui
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/application.o gui/application.cpp
 
 ${OBJECTDIR}/gui/confirmationDialog.o: gui/confirmationDialog.cpp 
 	${MKDIR} -p ${OBJECTDIR}/gui
@@ -510,6 +510,19 @@ ${OBJECTDIR}/admin/userAdmin_nomain.o: ${OBJECTDIR}/admin/userAdmin.o admin/user
 	    ${CP} ${OBJECTDIR}/admin/userAdmin.o ${OBJECTDIR}/admin/userAdmin_nomain.o;\
 	fi
 
+${OBJECTDIR}/data/adminRights_nomain.o: ${OBJECTDIR}/data/adminRights.o data/adminRights.cpp 
+	${MKDIR} -p ${OBJECTDIR}/data
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/data/adminRights.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/adminRights_nomain.o data/adminRights.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/data/adminRights.o ${OBJECTDIR}/data/adminRights_nomain.o;\
+	fi
+
 ${OBJECTDIR}/data/database_nomain.o: ${OBJECTDIR}/data/database.o data/database.cpp 
 	${MKDIR} -p ${OBJECTDIR}/data
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/data/database.o`; \
@@ -560,19 +573,6 @@ ${OBJECTDIR}/data/row_nomain.o: ${OBJECTDIR}/data/row.o data/row.cpp
 	    $(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/data/row_nomain.o data/row.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/data/row.o ${OBJECTDIR}/data/row_nomain.o;\
-	fi
-
-${OBJECTDIR}/gui/application_nomain.o: ${OBJECTDIR}/gui/application.o gui/application.cpp 
-	${MKDIR} -p ${OBJECTDIR}/gui
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/gui/application.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Wall -DDEBUG -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gui/application_nomain.o gui/application.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/gui/application.o ${OBJECTDIR}/gui/application_nomain.o;\
 	fi
 
 ${OBJECTDIR}/gui/confirmationDialog_nomain.o: ${OBJECTDIR}/gui/confirmationDialog.o gui/confirmationDialog.cpp 

@@ -6,6 +6,8 @@
       <itemPath>admin/userAdmin.h</itemPath>
     </logicalFolder>
     <logicalFolder name="data" displayName="data" projectFiles="true">
+      <itemPath>data/adminRights.cpp</itemPath>
+      <itemPath>data/adminRights.h</itemPath>
       <itemPath>data/database.cpp</itemPath>
       <itemPath>data/database.h</itemPath>
       <itemPath>data/dateTime.cpp</itemPath>
@@ -16,8 +18,6 @@
       <itemPath>data/row.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f1" displayName="gui" projectFiles="true">
-      <itemPath>gui/application.cpp</itemPath>
-      <itemPath>gui/application.h</itemPath>
       <itemPath>gui/confirmationDialog.cpp</itemPath>
       <itemPath>gui/confirmationDialog.h</itemPath>
     </logicalFolder>
@@ -275,6 +275,10 @@
       </item>
       <item path="build_date.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="data/adminRights.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/adminRights.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/database.h" ex="false" tool="3" flavor2="0">
@@ -518,10 +522,6 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
-      <item path="gui/application.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="gui/application.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="gui/confirmationDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="gui/confirmationDialog.h" ex="false" tool="3" flavor2="0">
@@ -770,6 +770,10 @@
       </item>
       <item path="build_date.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="data/adminRights.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="data/adminRights.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="data/database.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="data/database.h" ex="false" tool="3" flavor2="0">
@@ -1011,10 +1015,6 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
-      <item path="gui/application.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="gui/application.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="gui/confirmationDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="gui/confirmationDialog.h" ex="false" tool="3" flavor2="0">

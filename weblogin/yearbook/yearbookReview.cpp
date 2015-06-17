@@ -14,6 +14,8 @@
 #include <Wt/WFileResource>
 #include <Wt/WScrollArea>
 #include <Wt/WPainter>
+#include <Wt/WLineEdit>
+#include <Wt/WBreak>
 
 #include "yearbookReview.h"
 #include "yearbookDB.h"

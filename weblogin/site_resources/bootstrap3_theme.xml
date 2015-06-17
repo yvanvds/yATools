@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages xmlns:if="Wt.WTemplate.conditions">
+  <message id="Wt.Auth.field">
+    <![CDATA[
+    ${<if:{1}>}
+    <div class="form-group">
+      <label for="${id:{1}}" class="control-label col-sm-3">
+        ${tr:Wt.Auth.{1}}
+      </label>
+      <div class="col-sm-4">
+	${{1}}
+      </div>
+      <div class="help-block col-sm-4">
+        ${{1}-info}
+      </div>
+    </div>
+    ${</if:{1}>}
+    ]]>
+  </message>
+
+  <message id="Wt.Auth.field2">
+    <![CDATA[
+    ${<if:{1}>}
+    <div class="form-group">
+      <label for="${id:{1}}" class="control-label col-sm-3">
+        ${{2}}
+      </label>
+      <div class="col-sm-4">
+	${{1}}
+      </div>
+      <div class="help-block col-sm-4">
+        ${{1}-info}
+      </div>
+    </div>
+    ${</if:{1}>}
+    ]]>
+  </message>
+
+  <message id="Wt.Auth.field3">
+    <![CDATA[
+    ${<if:{1}>}
+    <div class="form-group">
+      <label for="${id:{1}}" class="control-label col-sm-3">
+        ${{2}}
+      </label>
+      <div class="col-sm-4">
+	${{1}}
+      </div>
+      <div class="help-block col-sm-4">
+        ${{1}-info} ${{3} class="btn-link"}
+      </div>
+    </div>
+    ${</if:{1}>}
+    ]]>
+  </message>
+
+  <message id="Wt.WNavigationBar.template">
+    <div>
+      ${collapse-button}
+      <div class="navbar-header">
+	${expand-button}
+	${title-link}
+      </div>
+      ${contents}
+    </div>
+  </message>
+  
+  <message id="yAtools.frontpage">
+    <div class="jumbotron" align="center">
+      <table>
+        <tr>
+          <td style="padding: 50px; text-align: center; vertical-align: center">
+            <a href="http://gmail.sanctamaria-aarschot.be">
+              <i class="fa fa-envelope fa-5x"></i><br />mail
+            </a>
+          </td>
+          <td style="padding: 50px; text-align: center; vertical-align: center">
+            <a href="http://www.sanctamaria-aarschot.be">
+                <i class="fa fa-home fa-5x"></i><br />website
+              </a>
+          </td>
+          <td style="padding: 50px; text-align: center; vertical-align: center">
+            <a href="http://sanctamaria-aarschot.smartschool.be">
+              <i class="fa fa-dollar fa-5x"></i><br />smartschool
+            </a>
+          </td>
+          <td style="padding: 50px; text-align: center; vertical-align: center">
+            <a href="http://moodle.sanctamaria-aarschot.be">
+              <i class="fa fa-graduation-cap fa-5x"></i><br />moodle
+            </a>
+          </td>
+          <td style="padding: 50px; text-align: center; vertical-align: center">
+            <a href="http://cloud.sanctamaria-aarschot.be">
+              <i class="fa fa-folder-open-o fa-5x"></i><br />cloud
+            </a>
+          </td>
+        </tr>
+      </table>
+      
+    </div>
+  </message>
+
+</messages>

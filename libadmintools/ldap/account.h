@@ -25,11 +25,13 @@ namespace y {
     const string TYPE_SN        ("sn"              );
     const string TYPE_FULL_NAME ("displayName"     );
     const string TYPE_HOMEDIR   ("homeDirectory"   );
-    const string TYPE_WISA_ID   ("employeeNumber"  );
+    const string TYPE_WISA_ID   ("wisaID"          );
+    const string TYPE_WISA_NAME ("wisaName"        );
     const string TYPE_MAIL      ("mail"            );
-    const string TYPE_PASSWORD  ("title"           );
-    const string TYPE_BIRTHDAY  ("roomNumber"      );
-    const string TYPE_GID       ("departmentNumber");
+    const string TYPE_MAILALIAS ("mailAlias"       );
+    const string TYPE_PASSWORD  ("gmailPassword"   );
+    const string TYPE_BIRTHDAY  ("birthday"        );
+    const string TYPE_GID       ("schoolRole"      );
     const string TYPE_GID_NUMBER("gidNumber"       );   
     
     class server;
@@ -46,16 +48,19 @@ namespace y {
       const UID_NUMBER & uidNumber() const; account & uidNumber(const UID_NUMBER & value);
       const UID        & uid      () const; account & uid      (const UID        & value);
       const DN         & dn       () const; 
-      const string & cn       () const; account & cn       (const string & value);
-      const string & sn       () const; account & sn       (const string & value);
+      const string     & cn       () const; account & cn       (const string & value);
+      const string     & sn       () const; account & sn       (const string & value);
       const FULL_NAME  & fullName () const; account & fullName (const FULL_NAME  & value);
       const HOMEDIR    & homeDir  () const; account & homeDir  (const HOMEDIR    & value);
       const WISA_ID    & wisaID   () const; account & wisaID   (const WISA_ID    & value);
+      const string     & wisaName () const; account & wisaName (const string  & value);
       const MAIL       & mail     () const; account & mail     (const MAIL       & value);
       const DATE       & birthDay () const; account & birthDay (const DATE       & value);
       const PASSWORD   & password () const; account & password (const PASSWORD   & value);
       const GID        & group    () const; account & group    (const GID        & value);
       const GID_NUMBER & groupID  () const; account & groupID  (const GID_NUMBER & value);
+      
+      bool isStaff();
       
       // will flag this account for removal during server commit
       void flagForRemoval   () { _flaggedForRemoval = true; }
@@ -85,11 +90,12 @@ namespace y {
       watch<UID_NUMBER>  _uidNumber;
       watch<UID       >  _uid      ;
       watch<DN        >  _dn       ;
-      watch<string>  _cn       ;
-      watch<string>  _sn       ;
+      watch<string>      _cn       ;
+      watch<string>      _sn       ;
       watch<FULL_NAME >  _fullName ;
       watch<HOMEDIR   >  _homeDir  ;
       watch<WISA_ID   >  _wisaID   ;
+      watch<string>      _wisaName ;
       watch<MAIL      >  _mail     ;
       watch<DATE      >  _birthDay ;
       watch<PASSWORD  >  _password ;
@@ -103,8 +109,10 @@ namespace y {
       bool _hasKrbName; 
       bool _hasGroup;
       bool _hasWisaID;
+      bool _hasWisaName;
       bool _hasMail;
       bool _hasBirthday;
+      bool _hasSchoolPersonClass;
       
       WISA_IMPORT _importStatus;
       bool _flaggedForRemoval;

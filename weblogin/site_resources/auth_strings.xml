@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages xmlns:if="Wt.WTemplate.conditions">
+
+  <!-- BaseAuth, PasswordAuth and OAuth models -->
+
+  <message id="Wt.Auth.error-invalid-token">The operation could not be completed: invalid token.</message>
+  <message id="Wt.Auth.error-token-expired">The operation could not be completed: the token has expired.</message>
+  <message id="Wt.Auth.mail-sent">Er is een mail verzonden met verdere instructies.</message>
+  <message id="Wt.Auth.info-email-confirmed">Your email address is now confirmed.</message>
+
+  <message id="Wt.Auth.passwdqc.reason-error">
+    Check failed
+  </message>
+  <message id="Wt.Auth.passwdqc.reason-same">
+    The same as the old one
+  </message>
+  <message id="Wt.Auth.passwdqc.reason-similar">
+    Based on the old one
+  </message>
+  <message id="Wt.Auth.passwdqc.reason-short">
+    Too short
+  </message>
+  <message id="Wt.Auth.passwdqc.reason-long">
+    Too long
+  </message>
+  <message id="Wt.Auth.passwdqc.reason-simpleshort">
+    Not enough different characters or classes for this length
+  </message>
+  <message id="Wt.Auth.passwdqc.reason-simple">
+    Not enough different characters or classes
+  </message>
+  <message id="Wt.Auth.passwdqc.reason-personal">
+    Based on personal information
+  </message>
+  <message id="Wt.Auth.passwdqc.reason-word">
+    Based on a dictionary word and not a passphrase
+  </message>
+  <message id="Wt.Auth.passwdqc.reason-seq">
+    Based on a common sequence of characters
+  </message>
+  <message id="Wt.Auth.passwdqc.reason-ok">
+    Valid
+  </message>
+
+  <message id="Wt.Auth.GoogleService.badresponse">
+    <p>Sorry, could not login using your Google account.</p>
+    <small>
+      <p>Google's identification server generated an unexpected
+	response.</p>
+    </small>
+  </message>
+
+  <message id="Wt.Auth.FacebookService.badresponse">
+    <p>Sorry, could not login using your Facebook account.</p>
+    <small>
+      <p>Facebook's identification server generated an unexpected
+	response.</p>
+    </small>
+  </message>
+  
+  <!-- LoginWidget -->
+
+  <message id="Wt.Auth.login-form-title">Aanmelden</message>
+  <message id="Wt.Auth.login-form-info"></message>
+  <message id="Wt.Auth.user-name">Gebruikersnaam</message>
+  <message id="Wt.Auth.user-name-info">Vul je naam in</message>
+  <message id="Wt.Auth.user-name-invalid">Niet correct</message>
+  <message id="Wt.Auth.email">Gebruikersnaam</message>
+  <message id="Wt.Auth.email-info">Vul je gebruikersnaam in</message>
+  <message id="Wt.Auth.optional-email-info">
+    Enter your email address (optional)
+  </message>
+  <message id="Wt.Auth.password">Wachtwoord</message>
+  <message id="Wt.Auth.password-info">Vul je wachtwoord in</message>
+  <message id="Wt.Auth.remember-me">Onthoud me</message>
+  <message id="Wt.Auth.remember-me-info.days">
+    Onthoudt deze login {1} dagen
+  </message>
+  <message id="Wt.Auth.remember-me-info.weeks">
+    Onthoudt deze login {1} weken
+  </message>
+  <message id="Wt.Auth.lost-password">Wachtwoord vergeten?</message>
+  <message id="Wt.Auth.login">Aanmelden</message>
+  <message id="Wt.Auth.logout">Afmelden</message>
+  <message id="Wt.Auth.throttle-retry">Retry in {1}s</message>
+
+  <!-- RegistrationWidget -->
+
+  <message id="Wt.Auth.registration-form-title">Registration</message>
+  <message id="Wt.Auth.registration-form-info">Please complete the following information to register.</message>
+  <message id="Wt.Auth.password-registration">Register using a user name and password:</message>
+  <message id="Wt.Auth.oauth-registration">Register with an identity provider:</message>
+  <message id="Wt.Auth.or-oauth-registration">Or, register with an identity provider:</message>
+  <message id="Wt.Auth.valid">Valid</message>
+  <message id="Wt.Auth.choose-password">Choose Password</message>
+  <message id="Wt.Auth.choose-password-info">Choose a password</message>
+  <message id="Wt.Auth.repeat-password">Repeat password</message>
+  <message id="Wt.Auth.repeat-password-info">Re-enter your password</message>
+  <message id="Wt.Auth.email-invalid">Invalid email address</message>
+  <message id="Wt.Auth.email-exists">Email already registered</message>
+  <message id="Wt.Auth.oauth">Your external account</message>
+  <message id="Wt.Auth.oauth-info">Choose one of your accounts</message>
+  <message id="Wt.Auth.user-name-exists">User already exists</message>
+  <message id="Wt.Auth.confirm-is-you">User exists, is this you?</message>
+  <message id="Wt.Auth.user-name-tooshort">Min. size {1} characters</message>
+  <message id="Wt.Auth.password-tooshort">Min. size {1} characters</message>
+  <message id="Wt.Auth.passwords-dont-match">Passwords don't match</message>
+  <message id="Wt.Auth.registration">Registration</message>
+  <message id="Wt.Auth.register">Register</message>
+  <message id="Wt.Auth.error-user-invalid">Registration failed.</message>
+  <message id="Wt.Auth.email-unverified">Please confirm your email first.</message>
+  <message id="Wt.Auth.confirm-email-first">
+    <h5>Welcome!</h5>
+
+    You will be able to login after confirming your email address using the
+    email we've just sent you.
+  </message>
+
+  <!-- PasswordPromptDialog -->
+
+  <message id="Wt.Auth.enter-password">Enter your password</message>
+  <message id="Wt.Auth.password-prompt-form-title">Enter your password</message>
+  <message id="Wt.Auth.password-prompt-form-info"></message>
+  <message id="Wt.Auth.password-invalid">Invalid password</message>
+
+  <!-- UpdatePasswordWidget -->
+
+  <message id="Wt.Auth.updatepassword">Update password</message>
+  <message id="Wt.Auth.update-password-form-title">Update password</message>
+  <message id="Wt.Auth.update-password-form-info">Enter a new password below</message>
+
+  <!-- LostPasswordDialog -->
+
+  <message id="Wt.Auth.lostpassword">Wachtwoord vergeten?</message>
+  <message id="Wt.Auth.lost-password-form-title">Vraag een nieuw wachtwoord aan.</message>
+  <message id="Wt.Auth.lost-password-form-info">Vul hier je gebruikersnaam in.
+  Als je een persoonlijk email adres hebt opgegeven krijg je 
+  een mail waarmee je opnieuw kan inloggen.</message>
+  <message id="Wt.Auth.send">Versturen</message>
+
+  <!-- Message boxes -->
+
+  <message id="Wt.Auth.error">Error</message>
+  <message id="Wt.Auth.notice">Notice</message>
+
+  <!-- Emails -->
+
+  <message id="Wt.Auth.confirmmail.subject">Account activatie</message>
+
+  <message id="Wt.Auth.confirmmail.body">
+Dag {1},
+
+Thank you for joining!
+
+To complete your registration, please finally confirm your account by
+clicking on the following link or copying the URL into your browser.
+ 
+Please click here to confirm your registration or copy and paste the
+following URL into your browser: (Note: be sure to copy the entire
+URL, including any part of it which goes onto a second line.)
+
+{3}
+
+This text is resolved from the "Wt.Auth.confirmmail.subject",
+"Wt.Auth.confirmmail.body", and "Wt.Auth.confirmmail.htmlbody"
+resource keys.
+
+Good luck with your Wt application,
+
+The Wt team.
+  </message>
+
+  <message id="Wt.Auth.confirmmail.htmlbody">
+    <h3>Hello {1},</h3>
+
+    <p>Thank you for joining!</p>
+
+    <p>To complete your registration, please finally confirm your
+    account by clicking on the following link or copying the URL into
+    your browser.</p>
+ 
+    <p>Please <a href="{3}">click here to confirm</a> your
+    registration or copy and paste the following URL into your
+    browser: <i>(Note: be sure to copy the entire URL, including any
+    part of it which goes onto a second line.)</i></p>
+    
+    <b>{3}</b>
+
+    <p>
+      <i>Note to developer:</i>
+    </p>
+    <p>
+      This text is resolved from the "Wt.Auth.confirmmail.subject",
+      "Wt.Auth.confirmmail.body", and "Wt.Auth.confirmmail.htmlbody"
+      resource keys.
+    </p>
+
+    <p>Good luck with your Wt application,</p>
+
+    <p>The Wt team.</p>
+  </message>
+
+  <message id="Wt.Auth.lostpasswordmail.subject">Wachtwoord vergeten?</message>
+
+  <message id="Wt.Auth.lostpasswordmail.body">
+Dag {1},
+
+Je ontvangt deze mail omdat iemand (waarschijnlijk jij?) aangaf
+dat je je wachtwoord kwijt bent. 
+
+Als dat zo is, dan kan je een nieuw wachtwoord kiezen door op de onderstaande
+link te volgen of de URL te kopieren naar je browser. Als je niet
+weet waarom je deze mail krijgt kan je hem gewoon negeren. 
+ 
+{3} 
+
+Vriendelijke groet,
+
+Het Sancta Maria IT team.
+  </message>
+
+  <message id="Wt.Auth.lostpasswordmail.htmlbody">
+    <h3>Dag {1},</h3>
+
+    <p>Je ontvangt deze mail omdat iemand (waarschijnlijk jij?) aangaf
+dat je je wachtwoord kwijt bent.</p>
+
+    <p>Als dat zo is, dan kan je een nieuw wachtwoord kiezen door op de onderstaande
+link te volgen. Als je niet
+weet waarom je deze mail krijgt kan je hem gewoon negeren.</p>
+ 
+    <p>Klik <a href="{3}">hier</a> om je wachtwoord te vernieuwen.</p>
+
+    <p>Vriendelijke groet,</p>
+
+    <p>Het Sancta Maria IT team.</p>
+  </message>
+
+</messages>

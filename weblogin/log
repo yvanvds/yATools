@@ -1,65 +1,36 @@
-==11973== Memcheck, a memory error detector
-==11973== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==11973== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
-==11973== Command: dist/Debug/GNU-Linux-x86/weblogin --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090
-==11973== Parent PID: 11971
-==11973== 
-==11973== Thread 3:
-==11973== Invalid read of size 8
-==11973==    at 0x47C157: room::buttonClicked(Wt::WRadioButton*) (proxyManager.cpp:49)
-==11973==    by 0x484F4D: boost::_mfi::mf1<void, room, Wt::WRadioButton*>::operator()(room*, Wt::WRadioButton*) const (mem_fn_template.hpp:165)
-==11973==    by 0x4847D8: void boost::_bi::list2<boost::_bi::value<room*>, boost::arg<1> >::operator()<boost::_mfi::mf1<void, room, Wt::WRadioButton*>, boost::_bi::list6<Wt::WRadioButton*&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&> >(boost::_bi::type<void>, boost::_mfi::mf1<void, room, Wt::WRadioButton*>&, boost::_bi::list6<Wt::WRadioButton*&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&>&, int) (bind.hpp:313)
-==11973==    by 0x483DFC: void boost::_bi::bind_t<void, boost::_mfi::mf1<void, room, Wt::WRadioButton*>, boost::_bi::list2<boost::_bi::value<room*>, boost::arg<1> > >::operator()<Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass>(Wt::WRadioButton*&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&) (bind_template.hpp:203)
-==11973==    by 0x483442: boost::detail::function::void_function_obj_invoker6<boost::_bi::bind_t<void, boost::_mfi::mf1<void, room, Wt::WRadioButton*>, boost::_bi::list2<boost::_bi::value<room*>, boost::arg<1> > >, void, Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass>::invoke(boost::detail::function::function_buffer&, Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass) (function_template.hpp:153)
-==11973==    by 0x55761CD: boost::signals2::detail::signal6_impl<void, Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, boost::signals2::optional_last_value<void>, int, std::less<int>, boost::function<void (Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass)>, boost::function<void (boost::signals2::connection const&, Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass)>, boost::signals2::mutex>::operator()(Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass) (function_template.hpp:767)
-==11973==    by 0x5572A8A: Wt::WButtonGroup::onButtonChange() (signal_template.hpp:695)
-==11973==    by 0x555341F: boost::signals2::detail::signal1_impl<void, Wt::NoClass, boost::signals2::optional_last_value<void>, int, std::less<int>, boost::function<void (Wt::NoClass)>, boost::function<void (boost::signals2::connection const&, Wt::NoClass)>, boost::signals2::mutex>::operator()(Wt::NoClass) (function_template.hpp:767)
-==11973==    by 0x55536CD: Wt::EventSignal<Wt::NoClass>::processDynamic(Wt::JavaScriptEvent const&) (signal_template.hpp:695)
-==11973==    by 0x589F9D5: Wt::WebSession::processSignal(Wt::EventSignalBase*, std::string const&, Wt::WebRequest const&, Wt::WebSession::SignalKind) (WebSession.C:2835)
-==11973==    by 0x58A77F3: Wt::WebSession::notifySignal(Wt::WEvent const&) (WebSession.C:2809)
-==11973==    by 0x58A94F2: Wt::WebSession::notify(Wt::WEvent const&) (WebSession.C:2368)
-==11973==  Address 0x16c9ad28 is 248 bytes inside a block of size 256 free'd
-==11973==    at 0x4C2C2BC: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==11973==    by 0x47EFCD: __gnu_cxx::new_allocator<room>::deallocate(room*, unsigned long) (new_allocator.h:110)
-==11973==    by 0x47E093: std::_Vector_base<room, std::allocator<room> >::_M_deallocate(room*, unsigned long) (stl_vector.h:174)
-==11973==    by 0x47D58F: void std::vector<room, std::allocator<room> >::_M_emplace_back_aux<string const&, proxyManager* const>(string const&, proxyManager* const&&) (vector.tcc:430)
-==11973==    by 0x47CE4C: void std::vector<room, std::allocator<room> >::emplace_back<string const&, proxyManager* const>(string const&, proxyManager* const&&) (vector.tcc:101)
-==11973==    by 0x47C37A: proxyManager::create() (proxyManager.cpp:92)
-==11973==    by 0x487E8D: webLogin::webAccessFunc() (webLogin.cpp:240)
-==11973==    by 0x48EB38: boost::_mfi::mf0<Wt::WWidget*, webLogin>::operator()(webLogin*) const (mem_fn_template.hpp:49)
-==11973==    by 0x48EA9C: Wt::WWidget* boost::_bi::list1<boost::_bi::value<webLogin*> >::operator()<Wt::WWidget*, boost::_mfi::mf0<Wt::WWidget*, webLogin>, boost::_bi::list0>(boost::_bi::type<Wt::WWidget*>, boost::_mfi::mf0<Wt::WWidget*, webLogin>&, boost::_bi::list0&, long) (bind.hpp:243)
-==11973==    by 0x48EA4A: boost::_bi::bind_t<Wt::WWidget*, boost::_mfi::mf0<Wt::WWidget*, webLogin>, boost::_bi::list1<boost::_bi::value<webLogin*> > >::operator()() (bind_template.hpp:20)
-==11973==    by 0x48E8A2: DeferredWidget<boost::_bi::bind_t<Wt::WWidget*, boost::_mfi::mf0<Wt::WWidget*, webLogin>, boost::_bi::list1<boost::_bi::value<webLogin*> > > >::load() (webLogin.h:48)
-==11973==    by 0x5744A6A: Wt::WWebWidget::doLoad(Wt::WWidget*) (WWebWidget.C:2311)
-==11973== 
-==11973== 
-==11973== HEAP SUMMARY:
-==11973==     in use at exit: 122,856 bytes in 279 blocks
-==11973==   total heap usage: 23,652 allocs, 23,373 frees, 6,859,748 bytes allocated
-==11973== 
-==11973== Thread 1:
-==11973== 8,136 (176 direct, 7,960 indirect) bytes in 1 blocks are definitely lost in loss record 260 of 263
-==11973==    at 0x4C2B0E0: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==11973==    by 0x5F57552: sql::mysql::MySQL_Prepared_Statement::executeQuery() (in /home/yvan/github/yATools/Debug/libsystem.so)
-==11973==    by 0x5E81E3D: y::data::database::setRow(string const&, y::data::row&, y::data::field&, y::data::COMPARE) (database.cpp:425)
-==11973==    by 0x5F19C43: y::utils::proxy::status(string const&, y::utils::proxy::STATUS) (proxy.cpp:105)
-==11973==    by 0x47C28C: room::setStatus(y::utils::proxy::STATUS, bool) (proxyManager.cpp:78)
-==11973==    by 0x47C178: room::buttonClicked(Wt::WRadioButton*) (proxyManager.cpp:49)
-==11973==    by 0x484F4D: boost::_mfi::mf1<void, room, Wt::WRadioButton*>::operator()(room*, Wt::WRadioButton*) const (mem_fn_template.hpp:165)
-==11973==    by 0x4847D8: void boost::_bi::list2<boost::_bi::value<room*>, boost::arg<1> >::operator()<boost::_mfi::mf1<void, room, Wt::WRadioButton*>, boost::_bi::list6<Wt::WRadioButton*&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&> >(boost::_bi::type<void>, boost::_mfi::mf1<void, room, Wt::WRadioButton*>&, boost::_bi::list6<Wt::WRadioButton*&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&>&, int) (bind.hpp:313)
-==11973==    by 0x483DFC: void boost::_bi::bind_t<void, boost::_mfi::mf1<void, room, Wt::WRadioButton*>, boost::_bi::list2<boost::_bi::value<room*>, boost::arg<1> > >::operator()<Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass>(Wt::WRadioButton*&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&, Wt::NoClass&) (bind_template.hpp:203)
-==11973==    by 0x483442: boost::detail::function::void_function_obj_invoker6<boost::_bi::bind_t<void, boost::_mfi::mf1<void, room, Wt::WRadioButton*>, boost::_bi::list2<boost::_bi::value<room*>, boost::arg<1> > >, void, Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass>::invoke(boost::detail::function::function_buffer&, Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass) (function_template.hpp:153)
-==11973==    by 0x55761CD: boost::signals2::detail::signal6_impl<void, Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, boost::signals2::optional_last_value<void>, int, std::less<int>, boost::function<void (Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass)>, boost::function<void (boost::signals2::connection const&, Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass)>, boost::signals2::mutex>::operator()(Wt::WRadioButton*, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass, Wt::NoClass) (function_template.hpp:767)
-==11973==    by 0x5572A8A: Wt::WButtonGroup::onButtonChange() (signal_template.hpp:695)
-==11973== 
-==11973== LEAK SUMMARY:
-==11973==    definitely lost: 176 bytes in 1 blocks
-==11973==    indirectly lost: 7,960 bytes in 13 blocks
-==11973==      possibly lost: 4,676 bytes in 83 blocks
-==11973==    still reachable: 110,044 bytes in 182 blocks
-==11973==         suppressed: 0 bytes in 0 blocks
-==11973== Reachable blocks (those to which a pointer was found) are not shown.
-==11973== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==11973== 
-==11973== For counts of detected and suppressed errors, rerun with: -v
-==11973== ERROR SUMMARY: 85 errors from 85 contexts (suppressed: 0 from 0)
+==15712== Memcheck, a memory error detector
+==15712== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==15712== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==15712== Command: dist/Debug/GNU-Linux-x86/weblogin --docroot /usr/share/Wt --http-address 0.0.0.0 --http-port 9090
+==15712== Parent PID: 15710
+==15712== 
+==15712== 
+==15712== HEAP SUMMARY:
+==15712==     in use at exit: 115,072 bytes in 265 blocks
+==15712==   total heap usage: 10,901 allocs, 10,636 frees, 2,938,489 bytes allocated
+==15712== 
+==15712== 192 bytes in 1 blocks are definitely lost in loss record 235 of 249
+==15712==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15712==    by 0xA2F1CAE: my_thread_init (in /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0)
+==15712==    by 0xA2CBF64: mysql_server_init (in /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0)
+==15712==    by 0xA2D208E: mysql_init (in /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0)
+==15712==    by 0x5F517DC: Wt::Dbo::backend::MySQL::connect(std::string const&, std::string const&, std::string const&, std::string const&, unsigned int, std::string const&) (MySQL.C:937)
+==15712==    by 0x5F520C9: Wt::Dbo::backend::MySQL::MySQL(std::string const&, std::string const&, std::string const&, std::string, unsigned int, std::string const&, int) (MySQL.C:891)
+==15712==    by 0x4968B6: userSession::userSession(string const&) (session.cpp:54)
+==15712==    by 0x49306E: application::application(Wt::WEnvironment const&) (application.cpp:24)
+==15712==    by 0x4F02B4: createApplication(Wt::WEnvironment const&) (main.cpp:19)
+==15712==    by 0x4F0DBF: boost::detail::function::function_invoker1<Wt::WApplication* (*)(Wt::WEnvironment const&), Wt::WApplication*, Wt::WEnvironment const&>::invoke(boost::detail::function::function_buffer&, Wt::WEnvironment const&) (function_template.hpp:95)
+==15712==    by 0x5892979: Wt::WebController::doCreateApplication(Wt::WebSession*) (function_template.hpp:767)
+==15712==    by 0x589F54A: Wt::WebSession::start(Wt::WebResponse*) (WebSession.C:636)
+==15712== 
+==15712== LEAK SUMMARY:
+==15712==    definitely lost: 192 bytes in 1 blocks
+==15712==    indirectly lost: 0 bytes in 0 blocks
+==15712==      possibly lost: 4,676 bytes in 83 blocks
+==15712==    still reachable: 110,204 bytes in 181 blocks
+==15712==         suppressed: 0 bytes in 0 blocks
+==15712== Reachable blocks (those to which a pointer was found) are not shown.
+==15712== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==15712== 
+==15712== For counts of detected and suppressed errors, rerun with: -v
+==15712== ERROR SUMMARY: 84 errors from 84 contexts (suppressed: 0 from 0)

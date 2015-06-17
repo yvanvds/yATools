@@ -20,7 +20,9 @@
 #include "yearbook/yearbookReview.h"
 #include "yearbook/yearbookDownload.h"
 #include "yearbook/yearbookDB.h"
-#include "accountManager.h"
+#include "account/changePassword.h"
+#include "account/changeName.h"
+#include "staffManager/staffList.h"
 #include "proxyManager.h"
 #include "ldap/server.h"
 #include "wisaImport.h"
@@ -35,6 +37,9 @@ using namespace y;
  *
  * We use this to defer widget creation until needed.
  */
+
+class application;
+
 template <typename Function>
 class DeferredWidget : public Wt::WContainerWidget
 {
@@ -58,14 +63,12 @@ DeferredWidget<Function> *deferCreate(Function f)
   return new DeferredWidget<Function>(f);
 }
 
-class webLogin : public Wt::WContainerWidget {
+class topContent : public Wt::WContainerWidget {
 public:
-  webLogin(Wt::WApplication * app);
- ~webLogin();
-  
-  void loginButtonClicked();
-  
-  void createContents();
+  topContent(application * app, const string & uid);
+ ~topContent();
+
+  void create();
   
   bool loggedIn;
   y::ldap::account * account;
@@ -84,11 +87,12 @@ private:
   
   // main contents
   Wt::WMenu * mainMenu;
-  Wt::WMenu * yearbookMenu;
+  Wt::WPopupMenu * staffMenu;
+  Wt::WPopupMenu * yearbookMenu;
+  Wt::WMenu * rightMenu;
   
   Wt::WStackedWidget * stack;
   
-  Wt::WWidget * accountFunc();
   Wt::WWidget * webAccessFunc();
   Wt::WWidget * wisaImportFunc();
   //Wt::WWidget * groupFunc();
@@ -96,6 +100,9 @@ private:
   Wt::WWidget * yearbookReviewFunc();
   Wt::WWidget * yearbookDownloadFunc();
   Wt::WWidget * yearbookConfigFunc();
+  Wt::WWidget * changePasswordFunc();
+  Wt::WWidget * changeNameFunc();
+  Wt::WWidget * staffListFunc();
   
   // sub objects
   yearbook * yearbookPtr;
@@ -103,11 +110,16 @@ private:
   yearbookDownload * yearbookDownloadPtr;
   yearbookReview * yearbookReviewPtr;
   yearbookDB * yearbookDBPtr;
-  accountManager * accountManagerPtr;
   proxyManager * proxyManagerPtr;
   wisaImport * wisaImportPtr;
+  changePassword * changePasswordPtr;
+  changeName * changeNamePtr;
+  staffList * staffListPtr;
   
   y::ldap::server ldapServer;
+  
+  // admin rights
+  y::data::adminRights rights;
   
   void createYearbookDB();
   
@@ -115,7 +127,7 @@ private:
   
   void updateTitle();
   //Wt::WWidget * wrapView(Wt::WWidget *(webLogin::*createFunction)());
-  Wt::WApplication * app;
+  application * app;
 };
 
 #endif	/* WEBLOGIN_H */

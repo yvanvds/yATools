@@ -108,6 +108,7 @@ void proxyManager::create() {
   
   Wt::WPanel * panel = new Wt::WPanel(this);
   panel->setStyleClass("panel panel-primary");
+  panel->setMargin("0 auto");
   panel->setCentralWidget(table);
   panel->setTitle("<h3>Webtoegang</h3>");
   

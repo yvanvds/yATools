@@ -618,16 +618,25 @@ y::ldap::MAIL y::ldap::server::createMail(const string& cn, const string& sn) {
 bool y::ldap::server::commitChanges() {
   bool result = false;
   
-  for(int i = 0; i < _groups.elms(); i++) {
+  for(int i = _groups.elms()-1; i >=0 ; i--) {
     if(_groups[i].save()) result = true;
+    if(_groups[i].flaggedForRemoval()) {
+      _groups.remove(i);
+    }
   }
-  
-  for(int i = 0; i < _accounts.elms(); i++) {
+ 
+  for(int i = _accounts.elms() - 1; i >= 0; i--) {
     if(_accounts[i].save()) result = true;
+    if(_accounts[i].flaggedForRemoval()) {
+      _accounts.remove(i);
+    }
   }
   
-  for(int i = 0; i < _classes.elms(); i++) {
+  for(int i = _classes.elms() -1; i >= 0 ; i--) {
     if(_classes[i].save()) result = true;
+    if(_classes[i].flaggedForRemoval()) {
+      _classes.remove(i);
+    }
   }
  
   return result;
