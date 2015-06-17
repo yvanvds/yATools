@@ -107,11 +107,11 @@ LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -lboost_system -lboost_file
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${TESTDIR}/TestFiles/f7
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}
 
-${TESTDIR}/TestFiles/f7: ${OBJECTFILES}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -o ${TESTDIR}/TestFiles/f7 ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}: ${OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
 ${OBJECTDIR}/admin/userAdmin.o: admin/userAdmin.cpp 
 	${MKDIR} -p ${OBJECTDIR}/admin
@@ -963,7 +963,7 @@ ${OBJECTDIR}/utils/stringFunctions_nomain.o: ${OBJECTDIR}/utils/stringFunctions.
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${TESTDIR}/TestFiles/f7
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibadmintools.${CND_DLIB_EXT}
 
 # Subprojects
 .clean-subprojects:

@@ -740,7 +740,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f7</output>
           <linkerAddLib>
             <pElem>/usr/lib/x86_64-linux-gnu</pElem>
             <pElem>/usr/lib</pElem>

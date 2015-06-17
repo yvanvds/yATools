@@ -10,29 +10,25 @@
             <file>file:/home/yvan/github/yATools/weblogin/main.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/auth/authModel.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/staffManager/staffList.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/account/changeName.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/proxyManager.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/staffManager/staffList.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/auth/authService.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/proxyManager.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/account/changePassword.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/topContent.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/auth/authWidget.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/auth/authWidget.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/auth/user.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/auth/authService.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/application.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/auth/session.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookReview.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookReview.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/site_resources/bootstrap3_theme.xml</file>
             <file>file:/home/yvan/github/yATools/weblogin/auth/session.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/topContent.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDB.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/account/changeName.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/account/changeName.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/proxyManager.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/account/changePassword.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/auth/authWidget.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookReview.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/auth/user.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbookDownload.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/account/changePassword.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/topContent.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/application.h</file>
         </group>
     </open-files>
