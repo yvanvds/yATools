@@ -244,7 +244,7 @@ bool y::ldap::account::save() {
     _wisaID.unFlag();
   }
   
-  if(_wisaName.changed()) {
+  if(_wisaName.changed() && !_wisaName().empty()) {
     if(!_hasWisaName) {
       data & d = values.New(ADD);
       d.add("type", TYPE_WISA_NAME);
