@@ -171,15 +171,14 @@ int y::smartschool::savePassword(y::ldap::account& account) {
 
 void y::smartschool::saveUser(y::ldap::account& account) {
   std::string role;
-  if(account.group()() == "extern") return;
-  if(account.group()() == "externmail") return;
+  if(!account.isStaff() && !account.isStudent()) return;
   
-  if(account.group()() == "directie") {
-    role = "directie";
-  } else if(account.group()() == "personeel") {
-    role = "leerkracht";
+  if(account.group()() == y::ldap::ROLE_DIRECTOR) {
+    role = "Directie";
+  } else if(account.isStaff()) {
+    role = "Leerkracht";
   } else {
-    role = "leerling";
+    role = "Leerling";
   }
   
   soap_dom_element result;

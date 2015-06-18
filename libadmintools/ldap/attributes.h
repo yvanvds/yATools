@@ -77,18 +77,32 @@ namespace y {
     };
 
     // used for class, like 1D, extern, personeel...
+    enum SCHOOLROLE {
+      ROLE_NONE,
+      ROLE_TEACHER,
+      ROLE_STUDENT,
+      ROLE_DIRECTOR,
+      ROLE_ADMIN,
+      ROLE_SUPPORT,
+      ROLE_EXTERN,
+      ROLE_EXTERN_WITH_MAIL,
+    };
+    
+    string     SchoolRoleText(SCHOOLROLE     value);
+    SCHOOLROLE SchoolRoleText(const string & value);
+    
     class GID {
     public:
-      explicit GID(const string & val) : val(val) {}
+      explicit GID(SCHOOLROLE val) : val(val) {}
 
       // operators
-      const string & operator()() const; // get value
+      SCHOOLROLE operator()() const; // get value
       GID & operator=(const GID &ref);
       bool operator==(const GID &ref) const;
       bool operator!=(const GID &ref) const;
 
     private:
-      string val;
+      SCHOOLROLE val;
     };
 
     class GID_NUMBER {

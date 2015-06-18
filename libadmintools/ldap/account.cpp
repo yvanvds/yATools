@@ -31,7 +31,7 @@ y::ldap::account::account(y::ldap::server * server) :
   _mail(MAIL("")),
   _birthDay(DATE(DAY(1), MONTH(1), YEAR(1))),
   _password(PASSWORD("")),
-  _group(GID("")),
+  _group(GID(y::ldap::ROLE_NONE)),
   _groupID(GID_NUMBER(0)),
   _new(true),
   _hasKrbName(false),
@@ -74,8 +74,26 @@ bool y::ldap::account::load(const data& d) {
   _fullName (FULL_NAME (          d.getValue(TYPE_FULL_NAME ) ), true);
   _homeDir  (HOMEDIR   (          d.getValue(TYPE_HOMEDIR   ) ), true);
   _mail     (MAIL      (          d.getValue(TYPE_MAIL      ) ), true);
-  _password (PASSWORD  (          d.getValue(TYPE_PASSWORD  ) ), true); 
-  _group    (GID       (          d.getValue(TYPE_GID       ) ), true);
+  _password (PASSWORD  (          d.getValue(TYPE_PASSWORD  ) ), true);
+  string role = d.getValue(TYPE_GID);
+  if(role == SchoolRoleText(ROLE_TEACHER)) {
+    _group(GID(ROLE_TEACHER), true);
+  } else if(role == SchoolRoleText(ROLE_STUDENT)) {
+    _group(GID(ROLE_STUDENT), true);
+  } else if(role == SchoolRoleText(ROLE_DIRECTOR)) {
+    _group(GID(ROLE_DIRECTOR), true);
+  } else if(role == SchoolRoleText(ROLE_ADMIN)) {
+    _group(GID(ROLE_ADMIN), true);
+  } else if(role == SchoolRoleText(ROLE_SUPPORT)) {
+    _group(GID(ROLE_SUPPORT), true);
+  } else if(role == SchoolRoleText(ROLE_EXTERN)) {
+    _group(GID(ROLE_EXTERN), true);
+  } else if(role == SchoolRoleText(ROLE_EXTERN_WITH_MAIL)) {
+    _group(GID(ROLE_EXTERN_WITH_MAIL), true);
+  } else {
+    _group(GID(ROLE_NONE), true);
+    y::utils::Log().add("a user exists without a valid schoolrole");
+  }
   
   if(d.getValue(TYPE_WISA_NAME).size()) {
     _wisaName (d.getValue(TYPE_WISA_NAME), true);
@@ -204,11 +222,11 @@ bool y::ldap::account::save() {
     if(!_hasGroup) {
       data & d = values.New(ADD);
       d.add("type", TYPE_GID);
-      d.add("values", _group()());
+      d.add("values", SchoolRoleText(_group()()));
     } else {
       data & d = values.New(MODIFY);
       d.add("type", TYPE_GID);
-      d.add("values", _group()());
+      d.add("values", SchoolRoleText(_group()()));
     }
     _group.unFlag();
   }
@@ -311,7 +329,7 @@ bool y::ldap::account::save() {
     samba::changePassword(_uid()(), _passwordClearText);
 #endif
     
-    if(_group()() != "extern" && _group()() != "externmail") {
+    if(isStaff() || isStudent()) {
       if(values.elms() == 1) {
         // this means only the password has changed
         y::Smartschool().savePassword(*this);
@@ -327,11 +345,7 @@ bool y::ldap::account::save() {
     server->modify(_dn(), values);
     
     // check if more than just the password is changed
-    if(_group()() == "teacher" 
-            || _group()() == "director"
-            || _group()() == "admin"
-            || _group()() == "support"
-            || _group()() == "student") {
+    if(isStaff() || isStudent()) {
       if(values.elms() > 1 || values.get(0).getValue("type") != TYPE_PASSWORD) {
         y::Smartschool().saveUser(*this);
         string message("Updating smartschool for user ");
@@ -339,16 +353,15 @@ bool y::ldap::account::save() {
         y::utils::Log().add(message);
         
         // add user to group
-        if(this->_groupID()() == 1000) {
+        if(isStudent()) {
           // this is a student
-          y::Smartschool().addUserToGroup(*this, _group()(), false);
-        } else  if(_group()() == "teacher"
-                || _group()() == "admin"
-                || _group()() == "support"
-                ) {
-          y::Smartschool().addUserToGroup(*this, "Leerkrachten", false);
-        } else if (_group()() == "director") {
+          y::Smartschool().addUserToGroup(*this, _schoolClass(), false);
+        } else  if(_group()() == ROLE_DIRECTOR) {
           y::Smartschool().addUserToGroup(*this, "Directie", false);
+        } else if (_group()() == ROLE_SUPPORT) {
+          y::Smartschool().addUserToGroup(*this, "Secretariaat", false);
+        } else if (isStaff()) {
+          y::Smartschool().addUserToGroup(*this, "Leerkrachten", false);
         }
       }
     }
@@ -383,7 +396,7 @@ void y::ldap::account::clear() {
   _mail(MAIL(""));
   _password(PASSWORD(""));
   _birthDay(DATE(DAY(1), MONTH(1), YEAR(1)));
-  _group(GID(""));
+  _group(GID(ROLE_NONE));
   _groupID(GID_NUMBER(0));
   _flaggedForRemoval = false;
 }
@@ -525,78 +538,24 @@ y::ldap::account & y::ldap::account::setImportStatus(WISA_IMPORT status) {
   return *this;
 }
 
-void y::ldap::account::convertToNewAccount() {
-  std::cout << _dn()() << std::endl;
-  if(_password()().empty()) {  
-    std::cout << "is an old account" << std::endl;
-    return;
-  }
-  std::cout << "will be converted" << std::endl;
-  
-  dataset values(server);
-  
-  {
-    data & d = values.New(ADD);
-    d.add("type", "objectClass");
-    d.add("values", "schoolPerson");
-  }
-  
-  string krbName(_uid()());
-  krbName += "@";
-  krbName += utils::Config().getDomain();
-  {
-    data & d = values.New(ADD);
-    d.add("type", "mailAlias");
-    d.add("values", krbName);
-  }
-  
-  {
-    data & d = values.New(ADD);
-    d.add("type", "gMailPassword");
-    d.add("values", _password()());
-  }
-  
-  
-  
-  {
-    data & d = values.New(ADD);
-    d.add("type", "schoolRole");
-    if(_group()() == "extern") {
-      d.add("values", "extern");
-    } else if (_group()() == "externmail") {
-      d.add("values", "externmail");
-    } else if (_group()() == "personeel") {
-      d.add("values", "teacher");
-    } else {
-      d.add("values", "student");
-      {
-        data & d = values.New(ADD);
-        d.add("type", "class");
-        d.add("values", _group()());
-      }
-    }
-  }
-  
-  if(_wisaID()() > 0){
-    data & d = values.New(ADD);
-    d.add("type", "wisaID");
-    d.add("values", string(_wisaID()()));
-  }
-  
-  {
-    data & d = values.New(ADD);
-    d.add("type", "birthday");
-    d.add("values", string(_birthDay()()));
-  }
-  
-  
-  server->modify(_dn(), values);
+bool y::ldap::account::isStaff() const {
+  if(_group()() == ROLE_TEACHER ) return true;
+  if(_group()() == ROLE_ADMIN   ) return true;
+  if(_group()() == ROLE_DIRECTOR) return true;
+  if(_group()() == ROLE_SUPPORT ) return true;
+  return false;
 }
 
-bool y::ldap::account::isStaff() {
-  if(_group()() == "teacher" ) return true;
-  if(_group()() == "admin"   ) return true;
-  if(_group()() == "director") return true;
-  if(_group()() == "support" ) return true;
+bool y::ldap::account::isStudent() const {
+  if(_group()() == ROLE_STUDENT) return true;
   return false;
+}
+
+const string & y::ldap::account::schoolClass() const {
+  return _schoolClass();
+}
+
+y::ldap::account & y::ldap::account::schoolClass(const string& value) {
+  _schoolClass(value);
+  return *this;
 }

@@ -32,7 +32,8 @@ namespace y {
     const string TYPE_PASSWORD  ("gmailPassword"   );
     const string TYPE_BIRTHDAY  ("birthday"        );
     const string TYPE_GID       ("schoolRole"      );
-    const string TYPE_GID_NUMBER("gidNumber"       );   
+    const string TYPE_GID_NUMBER("gidNumber"       );
+    const string TYPE_CLASS     ("class"           );
     
     class server;
     
@@ -45,22 +46,24 @@ namespace y {
       bool save ();
       
       // set - get
-      const UID_NUMBER & uidNumber() const; account & uidNumber(const UID_NUMBER & value);
-      const UID        & uid      () const; account & uid      (const UID        & value);
-      const DN         & dn       () const; 
-      const string     & cn       () const; account & cn       (const string & value);
-      const string     & sn       () const; account & sn       (const string & value);
-      const FULL_NAME  & fullName () const; account & fullName (const FULL_NAME  & value);
-      const HOMEDIR    & homeDir  () const; account & homeDir  (const HOMEDIR    & value);
-      const WISA_ID    & wisaID   () const; account & wisaID   (const WISA_ID    & value);
-      const string     & wisaName () const; account & wisaName (const string  & value);
-      const MAIL       & mail     () const; account & mail     (const MAIL       & value);
-      const DATE       & birthDay () const; account & birthDay (const DATE       & value);
-      const PASSWORD   & password () const; account & password (const PASSWORD   & value);
-      const GID        & group    () const; account & group    (const GID        & value);
-      const GID_NUMBER & groupID  () const; account & groupID  (const GID_NUMBER & value);
+      const UID_NUMBER & uidNumber  () const; account & uidNumber  (const UID_NUMBER & value);
+      const UID        & uid        () const; account & uid        (const UID        & value);
+      const DN         & dn         () const; 
+      const string     & cn         () const; account & cn         (const string & value);
+      const string     & sn         () const; account & sn         (const string & value);
+      const FULL_NAME  & fullName   () const; account & fullName   (const FULL_NAME  & value);
+      const HOMEDIR    & homeDir    () const; account & homeDir    (const HOMEDIR    & value);
+      const WISA_ID    & wisaID     () const; account & wisaID     (const WISA_ID    & value);
+      const string     & wisaName   () const; account & wisaName   (const string  & value);
+      const MAIL       & mail       () const; account & mail       (const MAIL       & value);
+      const DATE       & birthDay   () const; account & birthDay   (const DATE       & value);
+      const PASSWORD   & password   () const; account & password   (const PASSWORD   & value);
+      const GID        & group      () const; account & group      (const GID        & value);
+      const GID_NUMBER & groupID    () const; account & groupID    (const GID_NUMBER & value);
+      const string     & schoolClass() const; account & schoolClass(const string     & value);
       
-      bool isStaff();
+      bool isStaff() const;
+      bool isStudent() const;
       
       // will flag this account for removal during server commit
       void flagForRemoval   () { _flaggedForRemoval = true; }
@@ -101,6 +104,7 @@ namespace y {
       watch<PASSWORD  >  _password ;
       watch<GID       >  _group    ;
       watch<GID_NUMBER>  _groupID  ;
+      watch<string    >  _schoolClass;
 
       bool _new; // false if the account is loaded from ldap
       string _passwordClearText; // used to update samba password

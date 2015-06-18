@@ -48,18 +48,12 @@ void wisaNoID::onShow() {
   Wt::WIntValidator * validator = new Wt::WIntValidator(0, 100000);
   
   for(int i = 0; i < accounts.elms(); i++) {
-    if(accounts[i].group()() == "personeel") {
-      accounts[i].setImportStatus(y::ldap::WI_DISCARD);
-    } else if(accounts[i].group()() == "extern") {
-      accounts[i].setImportStatus(y::ldap::WI_DISCARD);
-    } else if(accounts[i].group()() == "externmail") {
-      accounts[i].setImportStatus(y::ldap::WI_DISCARD);
-    } else if(accounts[i].group()().size() == 0) {
+    if(!accounts[i].isStudent()) {
       accounts[i].setImportStatus(y::ldap::WI_DISCARD);
     } else if(accounts[i].wisaID()() == 0 ) {
       entries->elementAt(row, 0)->addWidget(new Wt::WText(accounts[i].sn().wt()));
       entries->elementAt(row, 1)->addWidget(new Wt::WText(accounts[i].cn().wt()));
-      entries->elementAt(row, 2)->addWidget(new Wt::WText(accounts[i].group()().wt()));
+      entries->elementAt(row, 2)->addWidget(new Wt::WText(accounts[i].schoolClass().wt()));
       Wt::WLineEdit * wisaEdit = new Wt::WLineEdit();
       wisaEdit->setId(accounts[i].uid()().utf8());
       wisaEdit->setValidator(validator);

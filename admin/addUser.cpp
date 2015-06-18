@@ -13,6 +13,8 @@
 
 using namespace std;
 
+TODO(update this class to reflect changes to class, group and role)
+
 addUser & AddUser() {
   static addUser s;
   return s;
@@ -21,12 +23,12 @@ addUser & AddUser() {
 void addUser::printHelp() {
   cout << "Add will add a user to the ldap database and create a home directory." << endl;
   cout << endl;
-  cout << "Usage: admin user add <cn> <sn> [date] [group] [wisaID]" << endl;
+  cout << "Usage: admin user add <cn> <sn> [date] [role] [wisaID]" << endl;
   cout << endl;
   cout << "<cn>      Given name" << endl;
   cout << "<sn>      Surname" << endl;
   cout << "[date]    Date of birth. Defaults to 19700101" << endl;
-  cout << "[group]   Group name. Defaults to extern" << endl;
+  cout << "[role]    School role. Defaults to extern" << endl;
   cout << "[wisaID]  Unique wisa ID. Defaults to 0" << endl;
 }
 
@@ -38,6 +40,16 @@ void addUser::parse(int argc, char ** argv) {
   
   ::string cn(argv[0]);
   ::string sn(argv[1]);
+  
+  y::ldap::SCHOOLROLE role = y::ldap::ROLE_NONE;
+  if (argc < 4) role = y::ldap::ROLE_EXTERN;
+  else {
+    role = y::ldap::SchoolRoleText(argv[3]);
+    if(role == y::ldap::ROLE_NONE) {
+      cout << "Invalid role: " << argv[3];
+      return;
+    }
+  }
   
   y::ldap::GID gid(argc > 3 ? argv[3] : "extern");
   y::ldap::DATE date(argc > 2 ? argv[2] : "19700101");

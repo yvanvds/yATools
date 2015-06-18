@@ -50,7 +50,7 @@ void yearbook::setAccount(y::ldap::account * account) {
     db->name(account->cn());
     db->surname(account->sn());
     db->servername(account->fullName()());
-    db->group(account->group()());
+    db->group(account->schoolClass());
     Wt::WDate date;
     date.setDate(account->birthDay().getYear(),
                  account->birthDay().getMonth(),

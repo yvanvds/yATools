@@ -11,12 +11,14 @@
 #include "samba/samba.h"
 #include "ldap/server.h"
 #include "ldap/account.h"
+#include "utils/log.h"
 #include <assert.h>
 
 
 y::ldap::account & y::admin::userAdmin::add(const string & cn, 
                                             const string & sn,
                                             const y::ldap::GID & gid, 
+                                            const string & schoolClass,
                                             const y::ldap::DATE & dateOfBirth,
                                             const y::ldap::WISA_ID & id, 
                                             const y::ldap::PASSWORD & pw) {
@@ -26,16 +28,22 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
   tempAccount.group(gid); 
   
   // set group id
-  if(gid() == "extern") {
-    tempAccount.groupID(y::ldap::GID_NUMBER(20009));
-  } else if(gid() == "personeel") {
-    tempAccount.groupID(y::ldap::GID_NUMBER(525));
-  } else if(gid() == "directie") {
-    // distinction between personeel and directie is only important
-    // for smartschool
-    tempAccount.groupID(y::ldap::GID_NUMBER(525));
-  }else {
-    tempAccount.groupID(y::ldap::GID_NUMBER(1000));
+  switch(gid()) {
+    case y::ldap::ROLE_EXTERN:
+    case y::ldap::ROLE_EXTERN_WITH_MAIL:
+      tempAccount.groupID(y::ldap::GID_NUMBER(20009));
+      break;
+    case y::ldap::ROLE_TEACHER:
+    case y::ldap::ROLE_DIRECTOR:
+    case y::ldap::ROLE_ADMIN:
+    case y::ldap::ROLE_SUPPORT:
+      tempAccount.groupID(y::ldap::GID_NUMBER(525));
+      break;
+    case y::ldap::ROLE_STUDENT:
+      tempAccount.groupID(y::ldap::GID_NUMBER(1000));
+      break;
+    case y::ldap::ROLE_NONE:
+      y::utils::Log().add("adding user without schoolRole! (this is wrong)");
   }
   
   y::samba::addUser(tempAccount);
@@ -65,19 +73,18 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
   newAccount.mail(server->createMail(cn, sn));
   newAccount.group(tempAccount.group());
   newAccount.groupID(tempAccount.groupID());
+  newAccount.schoolClass(schoolClass);
   
   // add to group
-  if(newAccount.group()() == "personeel" || newAccount.group()() == "directie") {
+  if(newAccount.isStaff()) {
     y::ldap::group & mailGroup = server->getGroup("personeel", true);
     mailGroup.members().New() = newAccount.mail()();
     mailGroup.flagForCommit();
-  } else if(newAccount.group()() != "extern") {
-    if(newAccount.group()() != "externmail") {  
-      // this is a student belonging to a classgroup
-      y::ldap::group & mailGroup = server->getGroup(newAccount.group()(), false);
-      mailGroup.members().New() = newAccount.dn()();
-      mailGroup.flagForCommit();
-    }
+  } else if(newAccount.isStudent()) {
+    // this is a student belonging to a classgroup
+    y::ldap::schoolClass & schoolClass = server->getClass(newAccount.schoolClass());
+    schoolClass.addStudent(newAccount.dn());
+    schoolClass.flagForCommit();
   }
   
   return newAccount;
@@ -86,7 +93,7 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
 void y::admin::userAdmin::remove(const y::ldap::account& acc) {
   // remove from groups first
   // if personeel, remove from that group
-  if (acc.group()() == "personeel" || acc.group()() == "directie") {
+  if (acc.isStaff()) {
     y::ldap::group & personeel = server->getGroup("personeel", true);
     container<string> & members = personeel.members();
     for(int i = 0; i < members.elms(); i++) {
@@ -108,16 +115,10 @@ void y::admin::userAdmin::remove(const y::ldap::account& acc) {
   }
   
   // remove from class group
-  if(acc.group()() != "extern" && acc.group()() != "externmail") {
-    y::ldap::group & classGroup = server->getGroup(acc.group()(), false);
-    container<string> & members = classGroup.members();
-    for(int i = 0; i < members.elms(); i++) {
-      if(members[i] == acc.dn()()) {
-        members.remove(i);
-        classGroup.flagForCommit();
-        break;
-      }
-    }
+  if(acc.isStudent()) {
+    y::ldap::schoolClass & schoolClass = server->getClass(acc.schoolClass());
+    schoolClass.removeStudent(acc.dn());
+    schoolClass.flagForCommit();
   }
   
   y::samba::delUser(acc);

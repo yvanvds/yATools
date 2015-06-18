@@ -80,7 +80,20 @@ bool y::ldap::FULL_NAME::operator !=(const FULL_NAME& ref) const{
   return val != ref.val;
 }
 
-const string & y::ldap::GID::operator ()() const {
+string y::ldap::SchoolRoleText(SCHOOLROLE value) {
+  switch(value) {
+    case ROLE_TEACHER : return "teacher";
+    case ROLE_STUDENT : return "student";
+    case ROLE_DIRECTOR: return "director";
+    case ROLE_ADMIN   : return "admin";
+    case ROLE_SUPPORT : return "support";
+    case ROLE_EXTERN  : return "extern";
+    case ROLE_EXTERN_WITH_MAIL: return "externmail";
+    default: return "none";
+  }
+}
+
+y::ldap::SCHOOLROLE y::ldap::GID::operator ()() const {
   return val;
 }
 

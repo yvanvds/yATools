@@ -107,19 +107,20 @@ void commitThreadFunc(wisaCommitChanges * caller) {
       // create new account
       string cn(account.cn);
       string sn(account.sn);
-      y::ldap::GID gid(account.group);
+      string schoolClass(account.schoolClass);
+      y::ldap::GID gid(y::ldap::ROLE_STUDENT);
       y::ldap::DATE date(account.date, true);
       y::ldap::WISA_ID id(account.ID);
       string password(y::utils::Security().makePassword(8));
       
       
-      y::ldap::account & acc = admin.add(cn, sn, gid, date, id, y::ldap::PASSWORD(password));
+      y::ldap::account & acc = admin.add(cn, sn, gid, schoolClass, date, id, y::ldap::PASSWORD(password));
       string message("Account voor ");
       message += acc.fullName()();
       message += " werd toegevoegd";
       caller->addMessage(message);
       
-      message = account.group;
+      message = account.schoolClass;
       message += " ";
       message += acc.fullName()();
       caller->addNewAccountMessage(message);
@@ -171,16 +172,16 @@ void commitThreadFunc(wisaCommitChanges * caller) {
         caller->addMessage(message);
       }
       
-      if(account.link->group()() != account.group) {
-        y::ldap::group & oldGroup = caller->getParentObject()->ldap()->getGroup(account.link->group()(), false);
-        oldGroup.removeMember(account.link->dn()());
+      if(account.link->schoolClass() != account.schoolClass) {
+        /*y::ldap::schoolClass & oldClass = caller->getParentObject()->ldap()->getClass(account.link->schoolClass()(), false);
+        oldClass.removeMember(account.link->dn()());
         y::ldap::group & newGroup = caller->getParentObject()->ldap()->getGroup(account.group, false);
         newGroup.addMember(account.link->dn()());
         account.link->group(y::ldap::GID(account.group));
         string message("Klas voor ");
         message += account.link->fullName()();
         message += " werd gewijzigd";
-        caller->addMessage(message);
+        caller->addMessage(message);*/
       }
       
       y::ldap::DATE date(account.date, true);

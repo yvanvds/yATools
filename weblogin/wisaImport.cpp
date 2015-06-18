@@ -98,17 +98,17 @@ void wisaImport::setWisaFile(const string& file) {
   wisaGroups.clear();
   
   for(int i = 0; i < wisaAccounts.elms(); i++) {
-    string group = wisaAccounts[i].group;
+    string schoolClass = wisaAccounts[i].schoolClass;
     bool found = false;
     for(int j = 0; j < wisaGroups.elms(); j++) {
-      if(group == wisaGroups[j].name) {
+      if(schoolClass == wisaGroups[j].name) {
         found = true;
         break;
       }
     }
     
     if(!found) {
-      wisaGroups.New().name = group;
+      wisaGroups.New().name = schoolClass;
     }    
   }
 }
@@ -171,7 +171,7 @@ void wisaImport::wisaAccount::set(std::vector<std::wstring>& line) {
   if(line.size() != 5) assert(false);
   sn = string(line[0]);
   cn = string(line[1]);
-  group = string(line[2]);
+  schoolClass = string(line[2]);
   date = string(line[3]);
   ID = std::stoi(line[4]);
 }

@@ -31,7 +31,7 @@ public:
     void set(std::vector<std::wstring> & line);
     string cn;
     string sn;
-    string group;
+    string schoolClass;
     string date;
     int ID;
     y::ldap::account * link;

@@ -51,7 +51,7 @@ void staffList::createDialog() {
   infoTable->elementAt(1,1)->addWidget(group);
   group->addItem("Leraar");
   group->addItem("Directie");
-  group->addItem("Ondersteuning");
+  group->addItem("Secretariaat");
   group->addItem("Admin");
   
   for(int i = 0; i < infoTable->rowCount(); i++) {
@@ -114,7 +114,7 @@ void staffList::loadTableContent() {
   
   table->setHeaderCount(1);
   table->elementAt(0,0)->addWidget(new Wt::WText("naam"));
-  table->elementAt(0,1)->addWidget(new Wt::WText("gebruikersnaam"));
+  table->elementAt(0,1)->addWidget(new Wt::WText("rol"));
   table->elementAt(0,2)->addWidget(new Wt::WText("wisa Naam"));
   table->columnAt(0)->setWidth(200);
   table->columnAt(1)->setWidth(100);
@@ -127,7 +127,17 @@ void staffList::loadTableContent() {
   for (int i = 0; i < accounts.elms(); i++) {
     if(accounts[i].isStaff()) {
       table->elementAt(entry, 0)->addWidget(new Wt::WText(accounts[i].fullName()().wt()));
-      table->elementAt(entry, 1)->addWidget(new Wt::WText(accounts[i].uid()().wt()));
+      
+      if(accounts[i].group()() == y::ldap::ROLE_DIRECTOR) {
+        table->elementAt(entry, 1)->addWidget(new Wt::WText("directie"));
+      } else if(accounts[i].group()() == y::ldap::ROLE_ADMIN) {
+        table->elementAt(entry, 1)->addWidget(new Wt::WText("admin"));
+      } else if(accounts[i].group()() == y::ldap::ROLE_SUPPORT) {
+        table->elementAt(entry, 1)->addWidget(new Wt::WText("secretariaat"));
+      }  else if(accounts[i].group()() == y::ldap::ROLE_TEACHER) {
+        table->elementAt(entry, 1)->addWidget(new Wt::WText("leraar"));
+      }
+      
       table->elementAt(entry, 2)->addWidget(new Wt::WText(accounts[i].wisaName().wt()));
       
       Wt::WPushButton * view = new Wt::WPushButton("edit");
@@ -164,13 +174,13 @@ void staffList::openDialog(int withEntry) {
   dialog->setWindowTitle(accounts[withEntry].fullName()().wt());
   wisaName->setText(accounts[withEntry].wisaName().wt());  
   TODO(Make an enum out of this)
-  if(accounts[withEntry].group()() == "teacher") {
+  if(accounts[withEntry].group()() == y::ldap::ROLE_TEACHER) {
     group->setCurrentIndex(0);
-  } else if(accounts[withEntry].group()() == "director") {
+  } else if(accounts[withEntry].group()() == y::ldap::ROLE_DIRECTOR) {
     group->setCurrentIndex(1);
-  } else if(accounts[withEntry].group()() == "support") {
+  } else if(accounts[withEntry].group()() == y::ldap::ROLE_SUPPORT) {
     group->setCurrentIndex(2);
-  } else if(accounts[withEntry].group()() == "admin") {
+  } else if(accounts[withEntry].group()() == y::ldap::ROLE_ADMIN) {
     group->setCurrentIndex(3);
   } else {
     group->setCurrentIndex(-1);
@@ -258,10 +268,10 @@ void staffList::saveEdit() {
   }
   
   switch(group->currentIndex()) {
-    case 0: accounts[currentEntry].group(y::ldap::GID("teacher")); break;
-    case 1: accounts[currentEntry].group(y::ldap::GID("director")); break;
-    case 2: accounts[currentEntry].group(y::ldap::GID("support")); break;
-    case 3: accounts[currentEntry].group(y::ldap::GID("admin")); break;
+    case 0: accounts[currentEntry].group(y::ldap::GID(y::ldap::ROLE_TEACHER)); break;
+    case 1: accounts[currentEntry].group(y::ldap::GID(y::ldap::ROLE_DIRECTOR)); break;
+    case 2: accounts[currentEntry].group(y::ldap::GID(y::ldap::ROLE_SUPPORT)); break;
+    case 3: accounts[currentEntry].group(y::ldap::GID(y::ldap::ROLE_ADMIN)); break;
   }
   
   accounts[currentEntry].wisaName(string(wisaName->text()));

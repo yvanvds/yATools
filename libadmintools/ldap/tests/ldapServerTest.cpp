@@ -127,7 +127,7 @@ void ldapServerTest::testGetGroup() {
   Server.clear();
   // get mailgroup
   y::ldap::group & mailgroup = Server.getGroup("6IT", false);
-  if(mailgroup.members().elms() != 22) {
+  if(mailgroup.members().elms() != 21) {
     CPPUNIT_ASSERT(false);
   }
   if(mailgroup.owners().elms() != 1) {
@@ -144,10 +144,10 @@ void ldapServerTest::testGetGroup() {
   
   // get editable mailgroup
   y::ldap::group & mailgroup2 = Server.getGroup("directie", true);
-  if(mailgroup2.members().elms() != 3) {
+  if(mailgroup2.members().elms() != 4) {
     CPPUNIT_ASSERT(false);
   }
-  if(mailgroup2.owners().elms() != 3) {
+  if(mailgroup2.owners().elms() != 4) {
     CPPUNIT_ASSERT(false);
   }
 }
@@ -157,7 +157,7 @@ void ldapServerTest::testGetGroup2() {
   Server.clear();
   // get mailgroup
   y::ldap::group & mailgroup = Server.getGroup(y::ldap::DN("cn=6IT,ou=mailGroups,dc=sanctamaria-aarschot,dc=be"));
-  if(mailgroup.members().elms() != 22) {
+  if(mailgroup.members().elms() != 21) {
     CPPUNIT_ASSERT(false);
   }
   if(mailgroup.owners().elms() != 1) {
@@ -174,10 +174,10 @@ void ldapServerTest::testGetGroup2() {
   
   // get editable mailgroup
   y::ldap::group & mailgroup2 = Server.getGroup(y::ldap::DN("cn=directie,ou=editableMailGroups,dc=sanctamaria-aarschot,dc=be"));
-  if(mailgroup2.members().elms() != 3) {
+  if(mailgroup2.members().elms() != 4) {
     CPPUNIT_ASSERT(false);
   }
-  if(mailgroup2.owners().elms() != 3) {
+  if(mailgroup2.owners().elms() != 4) {
     CPPUNIT_ASSERT(false);
   }
 }
