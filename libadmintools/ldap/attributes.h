@@ -159,15 +159,15 @@ private:
   int val;
 };
 
-class MAIL {
+class WISA_NAME {
 public:
-  explicit MAIL(const string & val) : val(val) {}
+  explicit WISA_NAME(const string & val) : val(val) {}
 
   // operators
   const string & get() const; // get value
-  MAIL & operator=(const MAIL &ref);
-  bool operator==(const MAIL &ref) const;
-  bool operator!=(const MAIL &ref) const;
+  WISA_NAME & operator=(const WISA_NAME &ref);
+  bool operator==(const WISA_NAME &ref) const;
+  bool operator!=(const WISA_NAME &ref) const;
 
 private:
   string val;
@@ -182,6 +182,35 @@ public:
   PASSWORD & operator=(const PASSWORD &ref);
   bool operator==(const PASSWORD &ref) const;
   bool operator!=(const PASSWORD &ref) const;
+
+private:
+  string val;
+};
+
+class MAIL {
+public:
+  explicit MAIL(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  MAIL & operator=(const MAIL &ref);
+  bool operator==(const MAIL &ref) const;
+  bool operator!=(const MAIL &ref) const;
+
+private:
+  string val;
+};
+
+
+class MAIL_ALIAS {
+public:
+  explicit MAIL_ALIAS(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  MAIL_ALIAS & operator=(const MAIL_ALIAS &ref);
+  bool operator==(const MAIL_ALIAS &ref) const;
+  bool operator!=(const MAIL_ALIAS &ref) const;
 
 private:
   string val;
@@ -263,6 +292,178 @@ public:
 private:
   string val;
 };
+
+class BIRTHPLACE {
+public:
+  explicit BIRTHPLACE(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  BIRTHPLACE & operator=(const BIRTHPLACE &ref);
+  bool operator==(const BIRTHPLACE &ref) const;
+  bool operator!=(const BIRTHPLACE &ref) const;
+
+private:
+  string val;
+};
+
+class SCHOOLCLASS {
+public:
+  explicit SCHOOLCLASS(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  SCHOOLCLASS & operator=(const SCHOOLCLASS &ref);
+  bool operator==(const SCHOOLCLASS &ref) const;
+  bool operator!=(const SCHOOLCLASS &ref) const;
+
+private:
+  string val;
+};
+
+class GENDER {
+public:
+  enum TYPE {
+    MALE,
+    FEMALE,
+    TRANSGENDER,
+  };
+  
+  explicit GENDER(TYPE val) : val(val) {}
+
+  // operators
+  TYPE get() const; // get value
+  GENDER & operator=(const GENDER &ref);
+  bool operator==(const GENDER &ref) const;
+  bool operator!=(const GENDER &ref) const;
+
+private:
+  TYPE val;
+};
+
+class ADMINGROUP {
+public:
+  explicit ADMINGROUP(int val) : val(val) {}
+
+  // operators
+  int get() const; // get value
+  ADMINGROUP & operator=(const ADMINGROUP &ref);
+  bool operator==(const ADMINGROUP &ref) const;
+  bool operator!=(const ADMINGROUP &ref) const;
+
+private:
+  int val;
+};
+
+class REGISTER_ID {
+public:
+  explicit REGISTER_ID(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  REGISTER_ID & operator=(const REGISTER_ID &ref);
+  bool operator==(const REGISTER_ID &ref) const;
+  bool operator!=(const REGISTER_ID &ref) const;
+
+private:
+  string val;
+};
+
+class NATION {
+public:
+  explicit NATION(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  NATION & operator=(const NATION &ref);
+  bool operator==(const NATION &ref) const;
+  bool operator!=(const NATION &ref) const;
+
+private:
+  string val;
+};
+
+class STEM_ID {
+public:
+  explicit STEM_ID(int val) : val(val) {}
+
+  // operators
+  int get() const; // get value
+  STEM_ID & operator=(const STEM_ID &ref);
+  bool operator==(const STEM_ID &ref) const;
+  bool operator!=(const STEM_ID &ref) const;
+
+private:
+  int val;
+};
+
+class SCHOOL_ID {
+public:
+  explicit SCHOOL_ID(int val) : val(val) {}
+
+  // operators
+  int get() const; // get value
+  SCHOOL_ID & operator=(const SCHOOL_ID &ref);
+  bool operator==(const SCHOOL_ID &ref) const;
+  bool operator!=(const SCHOOL_ID &ref) const;
+
+private:
+  int val;
+};
+
+class DESCRIPTION {
+public:
+  explicit DESCRIPTION(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  DESCRIPTION & operator=(const DESCRIPTION &ref);
+  bool operator==(const DESCRIPTION &ref) const;
+  bool operator!=(const DESCRIPTION &ref) const;
+
+private:
+  string val;
+};
+
+class ADJUNCT {
+public:
+  explicit ADJUNCT(const DN & val) : val(val) {}
+  
+  const DN & get() const;
+  ADJUNCT & operator=(const ADJUNCT &ref);
+  bool operator==(const ADJUNCT & ref) const;
+  bool operator!=(const ADJUNCT & ref) const;
+  
+private:
+  DN val;
+};
+
+class TITULAR {
+public:
+  explicit TITULAR(const DN & val) : val(val) {}
+  
+  const DN & get() const;
+  TITULAR & operator=(const TITULAR &ref);
+  bool operator==(const TITULAR & ref) const;
+  bool operator!=(const TITULAR & ref) const;
+  
+private:
+  DN val;
+};
+
+class MEMBER {
+public:
+  explicit MEMBER(const DN & val) : val(val) {}
+  
+  const DN & get() const;
+  MEMBER & operator=(const MEMBER &ref);
+  bool operator==(const MEMBER & ref) const;
+  bool operator!=(const MEMBER & ref) const;
+  
+private:
+  DN val;
+};
+
 
 enum WISA_IMPORT {
   WI_NOT_ACCOUNTED, // initial status

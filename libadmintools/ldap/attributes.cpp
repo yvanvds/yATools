@@ -10,6 +10,13 @@
 #include <sstream>
 #include <stdexcept>
 #include "utils/convert.h"
+#include "defines.h"
+
+TODO(is there really no way to template these attributes?)
+
+///////////////////////////////////////
+// DN
+///////////////////////////////////////
 
 const string & DN::get() const {
   return val;
@@ -28,6 +35,10 @@ bool DN::operator !=(const DN& ref) const{
   return val != ref.val;
 }
 
+///////////////////////////////////////
+// UID_NUMBER
+///////////////////////////////////////
+
 int UID_NUMBER::get() const{
   return val;
 }
@@ -39,6 +50,10 @@ bool UID_NUMBER::operator ==(const UID_NUMBER& ref) const{
 bool UID_NUMBER::operator !=(const UID_NUMBER& ref) const{
   return val != ref.val;
 }
+
+///////////////////////////////////////
+// UID
+///////////////////////////////////////
 
 const string & UID::get() const {
   return val;
@@ -56,6 +71,52 @@ bool UID::operator ==(const UID& ref) const{
 bool UID::operator !=(const UID& ref) const{
   return val != ref.val;
 }
+
+///////////////////////////////////////
+// CN
+///////////////////////////////////////
+
+const string & CN::get() const {
+  return val;
+}
+
+CN & CN::operator =(const CN& ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool CN::operator ==(const CN& ref) const{
+  return val == ref.val;
+}
+
+bool CN::operator !=(const CN& ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// SN
+///////////////////////////////////////
+
+const string & SN::get() const {
+  return val;
+}
+
+SN & SN::operator =(const SN& ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool SN::operator ==(const SN& ref) const{
+  return val == ref.val;
+}
+
+bool SN::operator !=(const SN& ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// FULL_NAME
+///////////////////////////////////////
 
 FULL_NAME::FULL_NAME(const string & cn, const string & sn) {
   val = cn;
@@ -79,6 +140,10 @@ bool FULL_NAME::operator ==(const FULL_NAME& ref) const{
 bool FULL_NAME::operator !=(const FULL_NAME& ref) const{
   return val != ref.val;
 }
+
+///////////////////////////////////////
+// ROLE
+///////////////////////////////////////
 
 string ROLE::toText(TYPE value) {
   switch(value) {
@@ -121,6 +186,10 @@ bool ROLE::operator !=(const ROLE & ref) const{
   return val != ref.val;
 }
 
+///////////////////////////////////////
+// GID_NUMBER
+///////////////////////////////////////
+
 int GID_NUMBER::get() const {
   return val;
 }
@@ -137,6 +206,10 @@ bool GID_NUMBER::operator==(const GID_NUMBER &ref) const{
 bool GID_NUMBER::operator!=(const GID_NUMBER &ref) const {
   return val != ref.val;
 }
+
+///////////////////////////////////////
+// WISA_ID
+///////////////////////////////////////
 
 int WISA_ID::get() const {
   return val;
@@ -155,22 +228,31 @@ bool WISA_ID::operator!=(const WISA_ID &ref) const {
   return val != ref.val;
 }
 
-const string & MAIL::get() const {
+
+///////////////////////////////////////
+// WISA_NAME
+///////////////////////////////////////
+
+const string & WISA_NAME::get() const {
   return val;
 }
 
-MAIL & MAIL::operator =(const MAIL& ref) {
+WISA_NAME & WISA_NAME::operator =(const WISA_NAME& ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool MAIL::operator ==(const MAIL & ref) const{
+bool WISA_NAME::operator ==(const WISA_NAME& ref) const{
   return val == ref.val;
 }
 
-bool MAIL::operator !=(const MAIL & ref) const{
+bool WISA_NAME::operator !=(const WISA_NAME& ref) const{
   return val != ref.val;
 }
+
+///////////////////////////////////////
+// PASSWORD
+///////////////////////////////////////
 
 const string & PASSWORD::get() const {
   return val;
@@ -188,6 +270,52 @@ bool PASSWORD::operator ==(const PASSWORD & ref) const{
 bool PASSWORD::operator !=(const PASSWORD & ref) const{
   return val != ref.val;
 }
+
+///////////////////////////////////////
+// MAIL
+///////////////////////////////////////
+
+const string & MAIL::get() const {
+  return val;
+}
+
+MAIL & MAIL::operator =(const MAIL& ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool MAIL::operator ==(const MAIL & ref) const{
+  return val == ref.val;
+}
+
+bool MAIL::operator !=(const MAIL & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// MAIL_ALIAS
+///////////////////////////////////////
+
+const string & MAIL_ALIAS::get() const {
+  return val;
+}
+
+MAIL_ALIAS & MAIL_ALIAS::operator =(const MAIL_ALIAS& ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool MAIL_ALIAS::operator ==(const MAIL_ALIAS & ref) const{
+  return val == ref.val;
+}
+
+bool MAIL_ALIAS::operator !=(const MAIL_ALIAS & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// DAY
+///////////////////////////////////////
 
 int DAY::get() const {
   return val;
@@ -211,6 +339,10 @@ bool DAY::operator!=(const DAY &ref) const {
   return val != ref.val;
 }
 
+///////////////////////////////////////
+// MONTH
+///////////////////////////////////////
+
 MONTH::MONTH(int val) : val(val) {
   if(this->val <  1) this->val =  1;
   if(this->val > 12) this->val = 12;
@@ -233,6 +365,10 @@ bool MONTH::operator!=(const MONTH &ref) const {
   return val != ref.val;
 }
 
+///////////////////////////////////////
+// YEAR
+///////////////////////////////////////
+
 int YEAR::get() const {
   return val;
 }
@@ -250,7 +386,9 @@ bool YEAR::operator!=(const YEAR &ref) const {
   return val != ref.val;
 }
 
-
+///////////////////////////////////////
+// DATE
+///////////////////////////////////////
 
 DATE::DATE(const string & date, bool fromWisa) : day(1), month(1), year(1) {
   if(fromWisa) {
@@ -358,6 +496,10 @@ bool DATE::operator !=(const DATE& ref) const {
   return (day != ref.day || month != ref.month || year != ref.year);
 }
 
+///////////////////////////////////////
+// HOMEDIR
+///////////////////////////////////////
+
 const string & HOMEDIR::get() const {
   return val;
 }
@@ -375,3 +517,254 @@ bool HOMEDIR::operator !=(const HOMEDIR & ref) const{
   return val != ref.val;
 }
 
+///////////////////////////////////////
+// BIRTHPLACE
+///////////////////////////////////////
+
+const string & BIRTHPLACE::get() const {
+  return val;
+}
+
+BIRTHPLACE & BIRTHPLACE::operator =(const BIRTHPLACE& ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool BIRTHPLACE::operator ==(const BIRTHPLACE & ref) const{
+  return val == ref.val;
+}
+
+bool BIRTHPLACE::operator !=(const BIRTHPLACE & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// SCHOOLCLASS
+///////////////////////////////////////
+
+const string & SCHOOLCLASS::get() const {
+  return val;
+}
+
+SCHOOLCLASS & SCHOOLCLASS::operator =(const SCHOOLCLASS & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool SCHOOLCLASS::operator ==(const SCHOOLCLASS & ref) const{
+  return val == ref.val;
+}
+
+bool SCHOOLCLASS::operator !=(const SCHOOLCLASS & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// GENDER
+///////////////////////////////////////
+
+GENDER::TYPE GENDER::get() const {
+  return val;
+}
+
+GENDER & GENDER::operator =(const GENDER & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool GENDER::operator ==(const GENDER & ref) const{
+  return val == ref.val;
+}
+
+bool GENDER::operator !=(const GENDER & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// ADMINGROUP
+///////////////////////////////////////
+
+int ADMINGROUP::get() const {
+  return val;
+}
+
+ADMINGROUP & ADMINGROUP::operator=(const ADMINGROUP &ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool ADMINGROUP::operator==(const ADMINGROUP &ref) const{
+  return val == ref.val;
+}
+
+bool ADMINGROUP::operator!=(const ADMINGROUP &ref) const {
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// REGISTER_ID
+///////////////////////////////////////
+
+const string & REGISTER_ID::get() const {
+  return val;
+}
+
+REGISTER_ID & REGISTER_ID::operator =(const REGISTER_ID & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool REGISTER_ID::operator ==(const REGISTER_ID & ref) const{
+  return val == ref.val;
+}
+
+bool REGISTER_ID::operator !=(const REGISTER_ID & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// NATION
+///////////////////////////////////////
+
+const string & NATION::get() const {
+  return val;
+}
+
+NATION & NATION::operator =(const NATION & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool NATION::operator ==(const NATION & ref) const{
+  return val == ref.val;
+}
+
+bool NATION::operator !=(const NATION & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// STEM_ID
+///////////////////////////////////////
+
+int STEM_ID::get() const {
+  return val;
+}
+
+STEM_ID & STEM_ID::operator=(const STEM_ID &ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool STEM_ID::operator==(const STEM_ID &ref) const{
+  return val == ref.val;
+}
+
+bool STEM_ID::operator!=(const STEM_ID &ref) const {
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// SCHOOL_ID
+///////////////////////////////////////
+
+int SCHOOL_ID::get() const {
+  return val;
+}
+
+SCHOOL_ID & SCHOOL_ID::operator=(const SCHOOL_ID &ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool SCHOOL_ID::operator==(const SCHOOL_ID &ref) const{
+  return val == ref.val;
+}
+
+bool SCHOOL_ID::operator!=(const SCHOOL_ID &ref) const {
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// DESCRIPTION
+///////////////////////////////////////
+
+const string & DESCRIPTION::get() const {
+  return val;
+}
+
+DESCRIPTION & DESCRIPTION::operator =(const DESCRIPTION & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool DESCRIPTION::operator ==(const DESCRIPTION & ref) const{
+  return val == ref.val;
+}
+
+bool DESCRIPTION::operator !=(const DESCRIPTION & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// ADJUNCT
+///////////////////////////////////////
+
+const DN & ADJUNCT::get() const {
+  return val;
+}
+
+ADJUNCT & ADJUNCT::operator =(const ADJUNCT & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool ADJUNCT::operator ==(const ADJUNCT & ref) const{
+  return val == ref.val;
+}
+
+bool ADJUNCT::operator !=(const ADJUNCT & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// TITULAR
+///////////////////////////////////////
+
+const DN & TITULAR::get() const {
+  return val;
+}
+
+TITULAR & TITULAR::operator =(const TITULAR & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool TITULAR::operator ==(const TITULAR & ref) const{
+  return val == ref.val;
+}
+
+bool TITULAR::operator !=(const TITULAR & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// MEMBER
+///////////////////////////////////////
+
+const DN & MEMBER::get() const {
+  return val;
+}
+
+MEMBER & MEMBER::operator =(const MEMBER & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool MEMBER::operator ==(const MEMBER & ref) const{
+  return val == ref.val;
+}
+
+bool MEMBER::operator !=(const MEMBER & ref) const{
+  return val != ref.val;
+}
