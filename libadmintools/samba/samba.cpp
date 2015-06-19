@@ -16,8 +16,8 @@
 #include "utils/convert.h"
 
 string groupName(const GID_NUMBER & id) {
-  if(id() ==   525) return "personeel";
-  if(id() == 20009) return "extern"   ;
+  if(id.get() ==   525) return "personeel";
+  if(id.get() == 20009) return "extern"   ;
   
   // of none of the above, calculate according to year
   string result("y");
@@ -41,16 +41,16 @@ void y::samba::changePassword(const string & user, const string & password) {
 
 void y::samba::addUser(const ldap::account & account) { 
   string command("sudo /usr/sbin/smbldap-useradd -a -g ");
-  command += account.groupID()();
+  command += account.groupID().get();
   command += " -m -d /home/";
   command += groupName(account.groupID());
   command += "/";
-  command += account.uid()();
+  command += account.uid().get();
   command += " -o ou=";
   command += groupName(account.groupID());
   command += " -C '\\\\ATSCHOOL\\homes' -D 'H:' -E ' STARTUP.BAT' -F";
   command += " '\\\\ATSCHOOL\\profiles\\Default' -H '[U]' ";
-  command += account.uid()();
+  command += account.uid().get();
   /*if(!y::sys::Exec(command, y::sys::stdOut)) {
     assert(false);
   }*/
@@ -58,6 +58,6 @@ void y::samba::addUser(const ldap::account & account) {
 }
 
 void y::samba::delUser(const ldap::account& account) {
-  string command("sudo /usr/sbin/smbldap-userdel -r " + account.uid()());
+  string command("sudo /usr/sbin/smbldap-userdel -r " + account.uid().get());
   command.execute();
 }

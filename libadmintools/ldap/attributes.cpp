@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include "utils/convert.h"
 
-const string & DN::operator ()() const {
+const string & DN::get() const {
   return val;
 }
 
@@ -28,7 +28,7 @@ bool DN::operator !=(const DN& ref) const{
   return val != ref.val;
 }
 
-int UID_NUMBER::operator ()() const{
+int UID_NUMBER::get() const{
   return val;
 }
 
@@ -40,7 +40,7 @@ bool UID_NUMBER::operator !=(const UID_NUMBER& ref) const{
   return val != ref.val;
 }
 
-const string & UID::operator ()() const {
+const string & UID::get() const {
   return val;
 }
 
@@ -63,7 +63,7 @@ FULL_NAME::FULL_NAME(const string & cn, const string & sn) {
   val += sn;
 }
 
-const string & FULL_NAME::operator ()() const {
+const string & FULL_NAME::get() const {
   return val;
 }
 
@@ -104,7 +104,7 @@ ROLE::TYPE ROLE::toRole(const string & value) {
   return NONE;
 }
 
-ROLE::TYPE ROLE::operator ()() const {
+ROLE::TYPE ROLE::get() const {
   return val;
 }
 
@@ -121,7 +121,7 @@ bool ROLE::operator !=(const ROLE & ref) const{
   return val != ref.val;
 }
 
-int GID_NUMBER::operator()() const {
+int GID_NUMBER::get() const {
   return val;
 }
 
@@ -138,7 +138,7 @@ bool GID_NUMBER::operator!=(const GID_NUMBER &ref) const {
   return val != ref.val;
 }
 
-int WISA_ID::operator()() const {
+int WISA_ID::get() const {
   return val;
 }
 
@@ -155,7 +155,7 @@ bool WISA_ID::operator!=(const WISA_ID &ref) const {
   return val != ref.val;
 }
 
-const string & MAIL::operator ()() const {
+const string & MAIL::get() const {
   return val;
 }
 
@@ -172,7 +172,7 @@ bool MAIL::operator !=(const MAIL & ref) const{
   return val != ref.val;
 }
 
-const string & PASSWORD::operator ()() const {
+const string & PASSWORD::get() const {
   return val;
 }
 
@@ -189,7 +189,7 @@ bool PASSWORD::operator !=(const PASSWORD & ref) const{
   return val != ref.val;
 }
 
-int DAY::operator()() const {
+int DAY::get() const {
   return val;
 }
 
@@ -216,7 +216,7 @@ MONTH::MONTH(int val) : val(val) {
   if(this->val > 12) this->val = 12;
 }
 
-int MONTH::operator()() const {
+int MONTH::get() const {
   return val;
 }
 
@@ -233,7 +233,7 @@ bool MONTH::operator!=(const MONTH &ref) const {
   return val != ref.val;
 }
 
-int YEAR::operator()() const {
+int YEAR::get() const {
   return val;
 }
 
@@ -298,19 +298,19 @@ DATE::DATE(const string & date, bool fromWisa) : day(1), month(1), year(1) {
 DATE::DATE(const DAY& day, const MONTH& month, const YEAR& year) 
         : day(day), month(month), year(year) {}
 
-int DATE::operator ()() const {
-  int result = year();
+int DATE::get() const {
+  int result = year.get();
   result *= 100;
-  result += month();
+  result += month.get();
   result *= 100;
-  result += day();
+  result += day.get();
   return result;
 }
 
 string DATE::asString() const {
   std::stringstream result;
-  result << day();
-  switch(month()) {
+  result << day.get();
+  switch(month.get()) {
     case 1: result << " januari "; break;
     case 2: result << " februari "; break;
     case 3: result << " maart "; break;
@@ -324,21 +324,21 @@ string DATE::asString() const {
     case 11: result << " november "; break;
     case 12: result << " december "; break;
   }
-  result << year();
+  result << year.get();
   std::string s = result.str();
   return string(s);
 }
 
 int DATE::getDay() const {
-  return day();
+  return day.get();
 }
 
 int DATE::getMonth() const {
-  return month();
+  return month.get();
 }
 
 int DATE::getYear() const {
-  return year();
+  return year.get();
 }
 
 DATE & DATE::operator =(const DATE& ref) {
@@ -358,7 +358,7 @@ bool DATE::operator !=(const DATE& ref) const {
   return (day != ref.day || month != ref.month || year != ref.year);
 }
 
-const string & HOMEDIR::operator ()() const {
+const string & HOMEDIR::get() const {
   return val;
 }
 

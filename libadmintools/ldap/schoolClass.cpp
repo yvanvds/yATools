@@ -76,7 +76,7 @@ container<string> & y::ldap::schoolClass::students() {
 
 bool y::ldap::schoolClass::removeStudent(const DN& dn) {
   for(int i = 0; i < _students.elms(); i++) {
-    if(_students[i] == dn()) {
+    if(_students[i] == dn.get()) {
       _students.remove(i);
       _flaggedForCommit = true;
       return true;
@@ -87,11 +87,11 @@ bool y::ldap::schoolClass::removeStudent(const DN& dn) {
 
 bool y::ldap::schoolClass::addStudent(const DN& dn) {
   for(int i = 0; i < _students.elms(); i++) {
-    if(_students[i] == dn()) {
+    if(_students[i] == dn.get()) {
       return false; // student is already in this class
     }
   }
-  _students.New() = dn();
+  _students.New() = dn.get();
   _flaggedForCommit = true;
   return true;
 }
@@ -142,13 +142,13 @@ bool y::ldap::schoolClass::addNew(dataset& values) {
     schoolID.add("values", string(_schoolID()));
   }
   
-  if(!titular()().empty()) {
+  if(!titular().get().empty()) {
     data & titular = values.New(NEW);
     titular.add("type", "titular");
     titular.add("values", _titular());
   }
   
-  if(!adjunct()().empty()) {
+  if(!adjunct().get().empty()) {
     data & adjunct = values.New(NEW);
     adjunct.add("type", "adjunct");
     adjunct.add("values", _adjunct());
@@ -263,12 +263,12 @@ y::ldap::schoolClass & y::ldap::schoolClass::description(const string& desc) {
 }
 
 y::ldap::schoolClass & y::ldap::schoolClass::titular(const DN& dn) {
-  _titular(dn());
+  _titular(dn.get());
   return *this;
 }
 
 y::ldap::schoolClass & y::ldap::schoolClass::adjunct(const DN& dn) {
-  _adjunct(dn());
+  _adjunct(dn.get());
   return *this;
 }
 

@@ -86,7 +86,7 @@ void topContent::create() {
             Wt::WMenuItem::LazyLoading);
   }
   
-  if(account->role()() == ROLE::ADMIN || account->role()() == ROLE::DIRECTOR || rights.has(account->uid()(), y::data::ADMIN_STAFF)) {
+  if(account->role().get() == ROLE::ADMIN || account->role().get() == ROLE::DIRECTOR || rights.has(account->uid(), y::data::ADMIN_STAFF)) {
     staffMenu = new Wt::WPopupMenu(contents);
     Wt::WMenuItem * item = new Wt::WMenuItem("Personeel");
     item->setMenu(staffMenu);
@@ -100,7 +100,7 @@ void topContent::create() {
             Wt::WMenuItem::LazyLoading);
   }
   
-  if(account->role()() == ROLE::ADMIN || rights.has(account->uid()(), y::data::ADMIN_YEARBOOK)) {
+  if(account->role().get() == ROLE::ADMIN || rights.has(account->uid(), y::data::ADMIN_YEARBOOK)) {
     mainMenu->addItem("Wisa Import",
             deferCreate(boost::bind(&topContent::wisaImportFunc, this)),
             Wt::WMenuItem::LazyLoading);
@@ -109,14 +109,14 @@ void topContent::create() {
   // show this for last year students (or me for testing)
   string group = account->schoolClass();
   TODO(only show when yearbook is open)
-  if(group[0] == '6' || account->role()() == ROLE::ADMIN || rights.has(account->uid()(), y::data::ADMIN_YEARBOOK)) {
+  if(group[0] == '6' || account->role().get() == ROLE::ADMIN || rights.has(account->uid(), y::data::ADMIN_YEARBOOK)) {
     mainMenu->addItem("Jaarboek", 
             deferCreate(boost::bind(&topContent::yearbookFunc, this)), 
             Wt::WMenuItem::LazyLoading);
   }
   
   
-  if(account->role()() == ROLE::ADMIN || rights.has(account->uid()(), y::data::ADMIN_YEARBOOK)) {
+  if(account->role().get() == ROLE::ADMIN || rights.has(account->uid(), y::data::ADMIN_YEARBOOK)) {
     yearbookMenu = new Wt::WPopupMenu(contents);
     
     yearbookMenu->addItem("Review", 

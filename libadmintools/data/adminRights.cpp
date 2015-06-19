@@ -48,23 +48,23 @@ void y::data::adminRights::refreshData() {
   db.close();
 }
 
-bool y::data::adminRights::has(const string & name, ADMINRIGHTS category) {
+bool y::data::adminRights::has(const ::UID & name, ADMINRIGHTS category) {
   for(int i = 0; i < data[category].elms(); i++) {
-    if(data[category][i].name == name) return true;
+    if(data[category][i].name == name.get()) return true;
   }
   return false;
 }
 
-void y::data::adminRights::add(const string & name, ADMINRIGHTS category) {
+void y::data::adminRights::add(const ::UID & name, ADMINRIGHTS category) {
   for(int i = 0; i < data[category].elms(); i++) {
-    if(data[category][i].name == name) return;
+    if(data[category][i].name == name.get()) return;
   }
   
   y::data::database db;
   db.open();
   db.use("admintools");
   y::data::row row;
-  row.addString("userName", name);
+  row.addString("userName", name.get());
   row.addShort("category", category);
   db.addRow("adminrights", row);
   db.close();
@@ -72,9 +72,9 @@ void y::data::adminRights::add(const string & name, ADMINRIGHTS category) {
   refreshData();
 }
 
-void y::data::adminRights::remove(const string& name, ADMINRIGHTS category) {
+void y::data::adminRights::remove(const ::UID & name, ADMINRIGHTS category) {
   for(int i = 0; i < data[category].elms(); i++) {
-    if(data[category][i].name == name) {
+    if(data[category][i].name == name.get()) {
       y::data::database db;
       db.open();
       db.use("admintools");

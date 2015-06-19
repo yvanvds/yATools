@@ -45,11 +45,11 @@ yearbook::yearbook(yearbookDB * ptr) : db(ptr), account(nullptr) {
 
 void yearbook::setAccount(y::ldap::account * account) {
   this->account = account;
-  if(!db->loadUser(account->uid()())) {
-    db->ID(account->uid()());    
+  if(!db->loadUser(account->uid().get())) {
+    db->ID(account->uid().get());    
     db->name(account->cn());
     db->surname(account->sn());
-    db->servername(account->fullName()());
+    db->servername(account->fullName().get());
     db->group(account->schoolClass());
     Wt::WDate date;
     date.setDate(account->birthDay().getYear(),

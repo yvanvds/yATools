@@ -173,7 +173,7 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   std::string role;
   if(!account.isStaff() && !account.isStudent()) return;
   
-  if(account.role()() == ROLE::DIRECTOR) {
+  if(account.role().get() == ROLE::DIRECTOR) {
     role = "Directie";
   } else if(account.isStaff()) {
     role = "Leerkracht";
@@ -184,8 +184,8 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   soap_dom_element result;
   if(service.saveUser(
           y::utils::Config().getSSPw().ss(),
-          std::to_string(account.uidNumber()()) , // internal number
-          account.uid()().ss()                 , // username
+          std::to_string(account.uidNumber().get()) , // internal number
+          account.uid().get().ss()                 , // username
           account.getPasswordText().ss()       , // password
           "", // password for first co-account
           "", // password for second co-account
@@ -201,7 +201,7 @@ void y::smartschool::saveUser(y::ldap::account& account) {
           "", // postal code
           "", // city
           "", // country
-          account.mail()().ss(), // email
+          account.mail().get().ss(), // email
           "", // mobile phone
           "", // home phone
           "", // fax
@@ -219,7 +219,7 @@ int y::smartschool::addUserToGroup(y::ldap::account& account, const string& grou
   soap_dom_element result;
   if(service.saveUserToClassesAndGroups(
           y::utils::Config().getSSPw().ss(),
-          account.uid()().ss(),
+          account.uid().get().ss(),
           group.ss(),
           keepCurrent,
           result
@@ -238,7 +238,7 @@ int y::smartschool::deleteUser(y::ldap::account& account, const string & removal
   soap_dom_element result;
   if(service.delUser(
           y::utils::Config().getSSPw().ss(),
-          account.uid()().ss(),
+          account.uid().get().ss(),
           removalDate.ss(), // official date
           result
           ) != SOAP_OK) {

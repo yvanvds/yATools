@@ -8,10 +8,12 @@
 #ifndef ADMINRIGHTS_H
 #define	ADMINRIGHTS_H
 
+#include "ldap/attributes.h"
 #include "utils/string.h"
 
 namespace y {
   namespace data {
+    
     enum ADMINRIGHTS {
       ADMIN_STAFF,
       ADMIN_PASSWORD,
@@ -28,9 +30,9 @@ namespace y {
     class adminRights {
     public:
       adminRights();
-      bool has(const string & name, ADMINRIGHTS category);
-      void add(const string & name, ADMINRIGHTS category);
-      void remove(const string & name, ADMINRIGHTS category);
+      bool has   (const ::UID & name, ADMINRIGHTS category);
+      void add   (const ::UID & name, ADMINRIGHTS category);
+      void remove(const ::UID & name, ADMINRIGHTS category);
       
     private:
       void refreshData();

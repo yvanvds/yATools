@@ -44,7 +44,7 @@ void wisaCompareFile::onShow() {
       validAccounts--;
       if(accounts[i].flaggedForRemoval()) accountsToRemove++;
     } else {
-      int wisaID = accounts[i].wisaID()();
+      int wisaID = accounts[i].wisaID().get();
       for(int j = 0; j < wisaContent.elms(); j++) {
         if(wisaContent[j].ID == wisaID) {
           wisaContent[j].link = &accounts[i];

@@ -50,12 +50,12 @@ void wisaNoID::onShow() {
   for(int i = 0; i < accounts.elms(); i++) {
     if(!accounts[i].isStudent()) {
       accounts[i].setImportStatus(WI_DISCARD);
-    } else if(accounts[i].wisaID()() == 0 ) {
+    } else if(accounts[i].wisaID().get() == 0 ) {
       entries->elementAt(row, 0)->addWidget(new Wt::WText(accounts[i].sn().wt()));
       entries->elementAt(row, 1)->addWidget(new Wt::WText(accounts[i].cn().wt()));
       entries->elementAt(row, 2)->addWidget(new Wt::WText(accounts[i].schoolClass().wt()));
       Wt::WLineEdit * wisaEdit = new Wt::WLineEdit();
-      wisaEdit->setId(accounts[i].uid()().utf8());
+      wisaEdit->setId(accounts[i].uid().get().utf8());
       wisaEdit->setValidator(validator);
       wisaEdit->setStyleClass("alert alert-warning");
       wisaEdit->setHeight(5);

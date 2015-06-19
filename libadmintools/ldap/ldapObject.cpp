@@ -25,7 +25,7 @@ bool y::ldap::ldapObject::isNew() {
 
 bool y::ldap::ldapObject::load(const DN & id) {
   dataset d(server);
-  if(d.createFromDN(id())) {
+  if(d.createFromDN(id.get())) {
     load(d.get(0));
   }
   return !_new;

@@ -228,7 +228,7 @@ ACCOUNTS & y::ldap::server::getAccounts() {
   // keep track of accounts we've already loaded
   container<string> loaded;
   for(int i = 0; i < _accounts.elms(); i++) {
-    loaded.New() = _accounts[i].uid()();
+    loaded.New() = _accounts[i].uid().get();
   }
   
   dataset d(this);
@@ -352,12 +352,12 @@ bool y::ldap::server::auth(const DN& dn, const PASSWORD& password) {
   ldap_set_option(_authServer, LDAP_OPT_PROTOCOL_VERSION, &version);
   
   BerValue credentials;
-  credentials.bv_val = const_cast<char*>(password().ldap());
-  credentials.bv_len = strlen(password().ldap());
+  credentials.bv_val = const_cast<char*>(password.get().ldap());
+  credentials.bv_len = strlen(password.get().ldap());
   
   BerValue * serverCred;
   int result = ldap_sasl_bind_s(_authServer, 
-         dn().ldap(), 
+         dn.get().ldap(), 
           NULL, &credentials, NULL, NULL, &serverCred);
   ldap_unbind_ext(_authServer, NULL, NULL);
   
@@ -391,7 +391,7 @@ void y::ldap::server::printMods(LDAPMod** mods) {
 void y::ldap::server::toLdapModify(const DN & dn, LDAPMod** mods) {
   std::ofstream out;
   out.open("/tmp/tempMods", std::ofstream::out | std::ofstream::trunc);
-  out << "dn: " << dn().utf8() << std::endl;
+  out << "dn: " << dn.get().utf8() << std::endl;
   out << "changetype: modify" << std::endl;
   
   for(int i = 0; mods[i] != NULL; i++) {  
@@ -470,12 +470,12 @@ void y::ldap::server::releaseMods(LDAPMod** mods) {
 void y::ldap::server::modify(const DN & dn, dataset & values) {
   LDAPMod ** mods = createMods(values);
 
-  if(int result = ldap_modify_ext_s(_server, dn().ldap(), mods, NULL, NULL) != LDAP_SUCCESS) {
+  if(int result = ldap_modify_ext_s(_server, dn.get().ldap(), mods, NULL, NULL) != LDAP_SUCCESS) {
     if(result == LDAP_OPERATIONS_ERROR) {
       y::utils::Log().add("Possible utf8 mismatch detected. Trying again with ldapmodify.");
       toLdapModify(dn, mods);
     } else {
-      string message("Error on DN: " + dn());
+      string message("Error on DN: " + dn.get());
       y::utils::Log().add(message);
       message = "y::ldap::server::modify() : ";
       message += ldap_err2string(result);
@@ -493,8 +493,8 @@ void y::ldap::server::add(const DN& dn, dataset& values) {
   //std::cout << dn() << std::endl;
   //printMods(mods);
 
-  if(int result = ldap_add_ext_s(_server, dn().ldap(), mods, NULL, NULL) != LDAP_SUCCESS) {
-    y::utils::Log().add(string("Error on DN: " + dn()));
+  if(int result = ldap_add_ext_s(_server, dn.get().ldap(), mods, NULL, NULL) != LDAP_SUCCESS) {
+    y::utils::Log().add(string("Error on DN: " + dn.get()));
     string message("y::ldap::server::modify() : ");
     message += ldap_err2string(result);
     y::utils::Log().add(message);
@@ -506,7 +506,7 @@ void y::ldap::server::add(const DN& dn, dataset& values) {
 }
 
 void y::ldap::server::remove(const DN& dn) {
-  if(int result = ldap_delete_ext_s(_server, dn().ldap(), NULL, NULL) != LDAP_SUCCESS) {
+  if(int result = ldap_delete_ext_s(_server, dn.get().ldap(), NULL, NULL) != LDAP_SUCCESS) {
     string message("y::ldap::server::removeEntry() : ");
     message += ldap_err2string(result);
     y::utils::Log().add(message);
@@ -525,7 +525,7 @@ int y::ldap::server::findAccounts(const string& query, std::vector<UID_NUMBER> &
       
       // search if this account is already loaded in memory
       for(int j = 0; j < _accounts.elms(); j++) {
-        if(d.getValue("uidNumber").asInt() == _accounts[j].uidNumber()()) {
+        if(d.getValue("uidNumber").asInt() == _accounts[j].uidNumber().get()) {
           found = true;
           results.push_back(_accounts[j].uidNumber());
           break;

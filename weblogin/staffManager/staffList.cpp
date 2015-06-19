@@ -126,15 +126,15 @@ void staffList::loadTableContent() {
   
   for (int i = 0; i < accounts.elms(); i++) {
     if(accounts[i].isStaff()) {
-      table->elementAt(entry, 0)->addWidget(new Wt::WText(accounts[i].fullName()().wt()));
+      table->elementAt(entry, 0)->addWidget(new Wt::WText(accounts[i].fullName().get().wt()));
       
-      if(accounts[i].role()() == ROLE::DIRECTOR) {
+      if(accounts[i].role().get() == ROLE::DIRECTOR) {
         table->elementAt(entry, 1)->addWidget(new Wt::WText("directie"));
-      } else if(accounts[i].role()() == ROLE::ADMIN) {
+      } else if(accounts[i].role().get() == ROLE::ADMIN) {
         table->elementAt(entry, 1)->addWidget(new Wt::WText("admin"));
-      } else if(accounts[i].role()() == ROLE::SUPPORT) {
+      } else if(accounts[i].role().get() == ROLE::SUPPORT) {
         table->elementAt(entry, 1)->addWidget(new Wt::WText("secretariaat"));
-      }  else if(accounts[i].role()() == ROLE::TEACHER) {
+      }  else if(accounts[i].role().get() == ROLE::TEACHER) {
         table->elementAt(entry, 1)->addWidget(new Wt::WText("leraar"));
       }
       
@@ -171,40 +171,40 @@ void staffList::loadDialogContent() {
 
 void staffList::openDialog(int withEntry) {
   ACCOUNTS & accounts = server->getAccounts();
-  dialog->setWindowTitle(accounts[withEntry].fullName()().wt());
+  dialog->setWindowTitle(accounts[withEntry].fullName().get().wt());
   wisaName->setText(accounts[withEntry].wisaName().wt());  
   TODO(Make an enum out of this)
-  if(accounts[withEntry].role()() == ROLE::TEACHER) {
+  if(accounts[withEntry].role().get() == ROLE::TEACHER) {
     group->setCurrentIndex(0);
-  } else if(accounts[withEntry].role()() == ROLE::DIRECTOR) {
+  } else if(accounts[withEntry].role().get() == ROLE::DIRECTOR) {
     group->setCurrentIndex(1);
-  } else if(accounts[withEntry].role()() == ROLE::SUPPORT) {
+  } else if(accounts[withEntry].role().get() == ROLE::SUPPORT) {
     group->setCurrentIndex(2);
-  } else if(accounts[withEntry].role()() == ROLE::ADMIN) {
+  } else if(accounts[withEntry].role().get() == ROLE::ADMIN) {
     group->setCurrentIndex(3);
   } else {
     group->setCurrentIndex(-1);
   }
   
-  if(rights->has(accounts[withEntry].uid()(), y::data::ADMIN_STAFF)) {
+  if(rights->has(accounts[withEntry].uid(), y::data::ADMIN_STAFF)) {
     personeel->setChecked(true);
   } else {
     personeel->setChecked(false);
   }
   
-  if(rights->has(accounts[withEntry].uid()(), y::data::ADMIN_WISA)) {
+  if(rights->has(accounts[withEntry].uid(), y::data::ADMIN_WISA)) {
     wisa->setChecked(true);
   } else {
     wisa->setChecked(false);
   }
   
-  if(rights->has(accounts[withEntry].uid()(), y::data::ADMIN_YEARBOOK)) {
+  if(rights->has(accounts[withEntry].uid(), y::data::ADMIN_YEARBOOK)) {
     yearbook->setChecked(true);
   } else {
     yearbook->setChecked(false);
   }
   
-  if(rights->has(accounts[withEntry].uid()(), y::data::ADMIN_PASSWORD)) {
+  if(rights->has(accounts[withEntry].uid(), y::data::ADMIN_PASSWORD)) {
     passwords->setChecked(true);
   } else {
     passwords->setChecked(false);
@@ -216,7 +216,7 @@ void staffList::openDialog(int withEntry) {
 void staffList::deleteUser(int entry) {
   ACCOUNTS & accounts = server->getAccounts();
   string s("Wil je ");
-  s += accounts[entry].fullName()();
+  s += accounts[entry].fullName().get();
   s += " verwijderen?";
   Wt::WMessageBox * message = new Wt::WMessageBox(
           "Let op!",
@@ -245,27 +245,27 @@ void staffList::saveEdit() {
   
   TODO(This is not very efficient: database is rewritten four times!)
   if(passwords->isChecked()) {
-    rights->add(accounts[currentEntry].uid()(), y::data::ADMIN_PASSWORD);
+    rights->add(accounts[currentEntry].uid(), y::data::ADMIN_PASSWORD);
   } else {
-    rights->remove(accounts[currentEntry].uid()(), y::data::ADMIN_PASSWORD);
+    rights->remove(accounts[currentEntry].uid(), y::data::ADMIN_PASSWORD);
   }
   
   if(personeel->isChecked()) {
-    rights->add(accounts[currentEntry].uid()(), y::data::ADMIN_STAFF);
+    rights->add(accounts[currentEntry].uid(), y::data::ADMIN_STAFF);
   } else {
-    rights->remove(accounts[currentEntry].uid()(), y::data::ADMIN_STAFF);
+    rights->remove(accounts[currentEntry].uid(), y::data::ADMIN_STAFF);
   }
   
   if(wisa->isChecked()) {
-    rights->add(accounts[currentEntry].uid()(), y::data::ADMIN_WISA);
+    rights->add(accounts[currentEntry].uid(), y::data::ADMIN_WISA);
   } else {
-    rights->remove(accounts[currentEntry].uid()(), y::data::ADMIN_WISA);
+    rights->remove(accounts[currentEntry].uid(), y::data::ADMIN_WISA);
   }
   
   if(yearbook->isChecked()) {
-    rights->add(accounts[currentEntry].uid()(), y::data::ADMIN_YEARBOOK);
+    rights->add(accounts[currentEntry].uid(), y::data::ADMIN_YEARBOOK);
   } else {
-    rights->remove(accounts[currentEntry].uid()(), y::data::ADMIN_YEARBOOK);
+    rights->remove(accounts[currentEntry].uid(), y::data::ADMIN_YEARBOOK);
   }
   
   switch(group->currentIndex()) {

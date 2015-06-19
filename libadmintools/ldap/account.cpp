@@ -135,7 +135,7 @@ bool y::ldap::account::load(const data& d) {
   
   
   
-  if(_fullName()() == "System User") {
+  if(_fullName().get() == "System User") {
     string fn = _cn();
     fn += " ";
     fn += _sn();
@@ -152,7 +152,7 @@ bool y::ldap::account::load(const data& d) {
 bool y::ldap::account::load(const UID & id) {
   dataset d(server);
   string filter(TYPE_UID);
-  filter += "=" + id();
+  filter += "=" + id.get();
   
   if(d.create(filter, "ou=People")) {
     load(d.get(0));
@@ -164,7 +164,7 @@ bool y::ldap::account::load(const UID & id) {
 bool y::ldap::account::load(UID_NUMBER id) {
   dataset d(server);
   string filter(TYPE_UID_NUMBER);
-  filter += "=" + string(id());
+  filter += "=" + string(id.get());
   
   if(d.create(filter)) {
     load(d.get(0));
@@ -175,7 +175,7 @@ bool y::ldap::account::load(UID_NUMBER id) {
 
 bool y::ldap::account::load(const DN & id) {
   dataset d(server);  
-  if(d.createFromDN(id())) {
+  if(d.createFromDN(id.get())) {
     load(d.get(0));
   }
   
@@ -202,7 +202,7 @@ bool y::ldap::account::save() {
     d.add("values", "kerberosSecurityObject");
     
     // add kerberos name (for short mail)
-    string krbName(_uid()());
+    string krbName(_uid().get());
     krbName += "@";
     krbName += utils::Config().getDomain();
     data & d1 = values.New(ADD);
@@ -222,11 +222,11 @@ bool y::ldap::account::save() {
     if(!_hasGroup) {
       data & d = values.New(ADD);
       d.add("type", TYPE_ROLE);
-      d.add("values", ROLE::toText(_group()()));
+      d.add("values", ROLE::toText(_group().get()));
     } else {
       data & d = values.New(MODIFY);
       d.add("type", TYPE_ROLE);
-      d.add("values", ROLE::toText(_group()()));
+      d.add("values", ROLE::toText(_group().get()));
     }
     _group.unFlag();
   }
@@ -235,11 +235,11 @@ bool y::ldap::account::save() {
     if(!_hasWisaID) {
       data & d = values.New(ADD);
       d.add("type", TYPE_WISA_ID);
-      d.add("values", string(_wisaID()()));
+      d.add("values", string(_wisaID().get()));
     } else {
       data & d = values.New(MODIFY);
       d.add("type", TYPE_WISA_ID);
-      d.add("values", string(_wisaID()()));
+      d.add("values", string(_wisaID().get()));
     }
     _wisaID.unFlag();
   }
@@ -261,11 +261,11 @@ bool y::ldap::account::save() {
     if(!_hasMail) {
       data & d = values.New(ADD);
       d.add("type", TYPE_MAIL);
-      d.add("values", _mail()());
+      d.add("values", _mail().get());
     } else {
       data & d = values.New(MODIFY);
       d.add("type", TYPE_MAIL);
-      d.add("values", _mail()());
+      d.add("values", _mail().get());
     }
     _mail.unFlag();
   }
@@ -274,12 +274,12 @@ bool y::ldap::account::save() {
     if(!_hasBirthday) {
       data & d = values.New(ADD);
       d.add("type", TYPE_BIRTHDAY);
-      d.add("values", string(_birthDay()()));
+      d.add("values", string(_birthDay().get()));
       
     } else {
       data & d = values.New(MODIFY);
       d.add("type", TYPE_BIRTHDAY);
-      d.add("values", string(_birthDay()()));
+      d.add("values", string(_birthDay().get()));
     }
     _birthDay.unFlag();
   }
@@ -301,28 +301,28 @@ bool y::ldap::account::save() {
   if(_fullName.changed()) {
     data & d = values.New(MODIFY);
     d.add("type", TYPE_FULL_NAME);
-    d.add("values", _fullName()());
+    d.add("values", _fullName().get());
     _fullName.unFlag();
   }
   
   if(_homeDir.changed()) {
     data & d = values.New(MODIFY);
     d.add("type", TYPE_HOMEDIR);
-    d.add("values", _homeDir()());
+    d.add("values", _homeDir().get());
     _homeDir.unFlag();
   }
   
   if(_groupID.changed()) {
     data & d = values.New(MODIFY);
     d.add("type", TYPE_GID_NUMBER);
-    d.add("values", string(_groupID()()));
+    d.add("values", string(_groupID().get()));
     _groupID.unFlag();
   }
   
   if(_password.changed()) {
     data & d = values.New(MODIFY);
     d.add("type", TYPE_PASSWORD);
-    d.add("values", _password()());
+    d.add("values", _password().get());
     _password.unFlag();
     
 #ifndef DEBUG
@@ -334,7 +334,7 @@ bool y::ldap::account::save() {
         // this means only the password has changed
         y::Smartschool().savePassword(*this);
         string message("Updating smartschool password for user ");
-        message += _fullName()();
+        message += _fullName().get();
         y::utils::Log().add(message);
       }
     }
@@ -349,16 +349,16 @@ bool y::ldap::account::save() {
       if(values.elms() > 1 || values.get(0).getValue("type") != TYPE_PASSWORD) {
         y::Smartschool().saveUser(*this);
         string message("Updating smartschool for user ");
-        message += _fullName()();
+        message += _fullName().get();
         y::utils::Log().add(message);
         
         // add user to group
         if(isStudent()) {
           // this is a student
           y::Smartschool().addUserToGroup(*this, _schoolClass(), false);
-        } else  if(_group()() == ROLE::DIRECTOR) {
+        } else  if(_group().get() == ROLE::DIRECTOR) {
           y::Smartschool().addUserToGroup(*this, "Directie", false);
-        } else if (_group()() == ROLE::SUPPORT) {
+        } else if (_group().get() == ROLE::SUPPORT) {
           y::Smartschool().addUserToGroup(*this, "Secretariaat", false);
         } else if (isStaff()) {
           y::Smartschool().addUserToGroup(*this, "Leerkrachten", false);
@@ -508,7 +508,7 @@ y::ldap::account & y::ldap::account::birthDay(const DATE& value) {
 }
 
 y::ldap::account & y::ldap::account::password(const PASSWORD& value) {
-  _passwordClearText = value();
+  _passwordClearText = value.get();
   
   _password(PASSWORD(string(y::utils::sha1(_passwordClearText.utf8()))));
   return *this;
@@ -539,15 +539,15 @@ y::ldap::account & y::ldap::account::setImportStatus(WISA_IMPORT status) {
 }
 
 bool y::ldap::account::isStaff() const {
-  if(_group()() == ROLE::TEACHER ) return true;
-  if(_group()() == ROLE::ADMIN   ) return true;
-  if(_group()() == ROLE::DIRECTOR) return true;
-  if(_group()() == ROLE::SUPPORT ) return true;
+  if(_group().get() == ROLE::TEACHER ) return true;
+  if(_group().get() == ROLE::ADMIN   ) return true;
+  if(_group().get() == ROLE::DIRECTOR) return true;
+  if(_group().get() == ROLE::SUPPORT ) return true;
   return false;
 }
 
 bool y::ldap::account::isStudent() const {
-  if(_group()() == ROLE::STUDENT) return true;
+  if(_group().get() == ROLE::STUDENT) return true;
   return false;
 }
 

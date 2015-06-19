@@ -195,10 +195,10 @@ void newStaff::addAccount() {
   );
   server->commitChanges();
   
-  resultName->setText(account.fullName()().wt());
-  resultUid->setText(account.uid()().wt());
-  resultMail->setText(account.mail()().wt());
-  resultMailAlias->setText(account.mail()().wt());
+  resultName->setText(account.fullName().get().wt());
+  resultUid->setText(account.uid().get().wt());
+  resultMail->setText(account.mail().get().wt());
+  resultMailAlias->setText(account.mail().get().wt());
   resultPassword->setText(password.wt());
   result->show();
   

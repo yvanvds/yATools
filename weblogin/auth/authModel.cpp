@@ -36,10 +36,10 @@ bool authModel::validateField(Field field) {
     if(ldapServer.auth(account.dn(), PASSWORD(valueText(PasswordField)))) {
       setValid(PasswordField);
       
-      Wt::Auth::User user = users().findWithIdentity(Wt::Auth::Identity::LoginName, account.uid()().db());
+      Wt::Auth::User user = users().findWithIdentity(Wt::Auth::Identity::LoginName, account.uid().get().db());
       if(!user.isValid()) {
         Wt::Auth::User user = users().registerNew();
-        user.addIdentity(Wt::Auth::Identity::LoginName, account.uid()().db());
+        user.addIdentity(Wt::Auth::Identity::LoginName, account.uid().get().db());
       }
       return true;
     } else {

@@ -116,22 +116,22 @@ void commitThreadFunc(wisaCommitChanges * caller) {
       
       y::ldap::account & acc = admin.add(cn, sn, gid, schoolClass, date, id, PASSWORD(password));
       string message("Account voor ");
-      message += acc.fullName()();
+      message += acc.fullName().get();
       message += " werd toegevoegd";
       caller->addMessage(message);
       
       message = account.schoolClass;
       message += " ";
-      message += acc.fullName()();
+      message += acc.fullName().get();
       caller->addNewAccountMessage(message);
       message = "Login: ";
-      message += acc.uid()();
+      message += acc.uid().get();
       caller->addNewAccountMessage(message);
       message = "Wachtwoord: ";
       message += password;
       caller->addNewAccountMessage(message);
       message = "Mail Adres: ";
-      message += acc.mail()();
+      message += acc.mail().get();
       caller->addNewAccountMessage(message);
       message = " ";
       caller->addNewAccountMessage(message);
@@ -143,7 +143,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
       if(account.link->sn() != account.sn) {
         account.link->sn(account.sn);
         string message("Naam voor ");
-        message += account.link->fullName()();
+        message += account.link->fullName().get();
         message += " werd gewijzigd";
         caller->addMessage(message);
         namechanged = true;
@@ -151,7 +151,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
       if(account.link->cn() != account.cn) {
         account.link->cn(account.cn);
         string message("Voornaam voor ");
-        message += account.link->fullName()();
+        message += account.link->fullName().get();
         message += " werd gewijzigd";
         caller->addMessage(message);
         namechanged = true;
@@ -164,10 +164,10 @@ void commitThreadFunc(wisaCommitChanges * caller) {
         account.link->fullName(FULL_NAME(name));
       }
       
-      if(account.link->wisaID()() != account.ID) {
+      if(account.link->wisaID().get() != account.ID) {
         account.link->wisaID(WISA_ID(account.ID));
         string message("Wisa ID voor ");
-        message += account.link->fullName()();
+        message += account.link->fullName().get();
         message += " werd gewijzigd";
         caller->addMessage(message);
       }
@@ -188,7 +188,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
       if(account.link->birthDay() != date) {
         account.link->birthDay(date);
         string message("Verjaardag voor ");
-        message += account.link->fullName()();
+        message += account.link->fullName().get();
         message += " werd gewijzigd";
         caller->addMessage(message);
       }
@@ -200,7 +200,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
     if(ldapAcc[i].flaggedForRemoval()) {
       admin.remove(ldapAcc[i]);
       string message("Gebruiker ");
-      message += ldapAcc[i].fullName()();
+      message += ldapAcc[i].fullName().get();
       message += " werd verwijderd";
       caller->addMessage(message);
     }

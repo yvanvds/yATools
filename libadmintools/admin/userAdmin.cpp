@@ -28,7 +28,7 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
   tempAccount.role(gid); 
   
   // set group id
-  switch(gid()) {
+  switch(gid.get()) {
     case ROLE::EXTERN:
     case ROLE::EXTERN_WITH_MAIL:
       tempAccount.groupID(GID_NUMBER(20009));
@@ -52,7 +52,7 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
   y::ldap::account & newAccount = server->getAccount(tempAccount.uid());
   //assert(!newAccount.isNew());
   
-  if(newAccount.uid()().size() == 0) {
+  if(newAccount.uid().get().size() == 0) {
     // this happens on test server
     newAccount.uid(tempAccount.uid());
     newAccount.role(tempAccount.role());
@@ -78,7 +78,7 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
   // add to group
   if(newAccount.isStaff()) {
     y::ldap::group & mailGroup = server->getGroup("personeel", true);
-    mailGroup.members().New() = newAccount.mail()();
+    mailGroup.members().New() = newAccount.mail().get();
     mailGroup.flagForCommit();
   } else if(newAccount.isStudent()) {
     // this is a student belonging to a classgroup
@@ -97,13 +97,13 @@ void y::admin::userAdmin::remove(const y::ldap::account& acc) {
     y::ldap::group & personeel = server->getGroup("personeel", true);
     container<string> & members = personeel.members();
     for(int i = 0; i < members.elms(); i++) {
-      if (members[i] == acc.mail()()) {
+      if (members[i] == acc.mail().get()) {
         members.remove(i);
         personeel.flagForCommit();
         break;
       }
       // for historical reasons members might be added with uid
-      string mail(acc.uid()());
+      string mail(acc.uid().get());
       mail += "@";
       mail += y::utils::Config().getDomain();
       if(members[i] == mail) {

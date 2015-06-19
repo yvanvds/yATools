@@ -18,7 +18,7 @@ public:
   explicit DN(const string & val) : val(val) {}
 
   // operators
-  const string & operator()() const; // get value
+  const string & get() const; // get value
   DN & operator=(const DN &ref);
   bool operator==(const DN &ref) const;
   bool operator!=(const DN &ref) const;
@@ -32,7 +32,7 @@ public:
   explicit UID_NUMBER(const int val) : val(val) {}
 
   // operators
-  int operator()() const; // get value
+  int get() const; // get value
   UID_NUMBER & operator=(const UID_NUMBER &ref) {
     if(this != &ref) {
       val = ref.val;
@@ -51,10 +51,38 @@ public:
   explicit UID(const string & val) : val(val) {}
 
   // operators
-  const string & operator()() const; // get value
+  const string & get() const; // get value
   UID & operator=(const UID &ref);
   bool operator==(const UID &ref) const;
   bool operator!=(const UID &ref) const;
+
+private:
+  string val;
+};
+
+class CN {
+public:
+  explicit CN(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  CN & operator= (const CN &ref);
+  bool operator==(const CN &ref) const;
+  bool operator!=(const CN &ref) const;
+
+private:
+  string val;
+};
+
+class SN {
+public:
+  explicit SN(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  SN & operator= (const SN &ref);
+  bool operator==(const SN &ref) const;
+  bool operator!=(const SN &ref) const;
 
 private:
   string val;
@@ -66,7 +94,7 @@ public:
   explicit FULL_NAME(const string & cn, const string & sn);
 
   // operators
-  const string & operator()() const; // get value
+  const string & get() const; // get value
   FULL_NAME & operator=(const FULL_NAME &ref);
   bool operator==(const FULL_NAME &ref) const;
   bool operator!=(const FULL_NAME &ref) const;
@@ -74,10 +102,6 @@ public:
 private:
   string val;
 };
-
-
-
-
 
 class ROLE {
 public:
@@ -95,7 +119,7 @@ public:
   explicit ROLE(TYPE val) : val(val) {}
 
   // operators
-  TYPE operator()() const; // get value
+  TYPE get() const; // get value
   ROLE & operator=(const ROLE &ref);
   bool operator==(const ROLE &ref) const;
   bool operator!=(const ROLE &ref) const;
@@ -112,7 +136,7 @@ public:
   explicit GID_NUMBER(int val) : val(val) {}
 
   // operators
-  int operator()() const; // get value
+  int get() const; // get value
   GID_NUMBER & operator=(const GID_NUMBER &ref);
   bool operator==(const GID_NUMBER &ref) const;
   bool operator!=(const GID_NUMBER &ref) const;
@@ -126,7 +150,7 @@ public:
   explicit WISA_ID(int val) : val(val) {}
 
   // operators
-  int operator()() const; // get value
+  int get() const; // get value
   WISA_ID & operator=(const WISA_ID &ref);
   bool operator==(const WISA_ID &ref) const;
   bool operator!=(const WISA_ID &ref) const;
@@ -140,7 +164,7 @@ public:
   explicit MAIL(const string & val) : val(val) {}
 
   // operators
-  const string & operator()() const; // get value
+  const string & get() const; // get value
   MAIL & operator=(const MAIL &ref);
   bool operator==(const MAIL &ref) const;
   bool operator!=(const MAIL &ref) const;
@@ -154,7 +178,7 @@ public:
   explicit PASSWORD(const string & val) : val(val) {}
 
   // operators
-  const string & operator()() const; // get value
+  const string & get() const; // get value
   PASSWORD & operator=(const PASSWORD &ref);
   bool operator==(const PASSWORD &ref) const;
   bool operator!=(const PASSWORD &ref) const;
@@ -168,7 +192,7 @@ public:
   explicit DAY(int val);
 
   // operators
-  int operator()() const; // get value
+  int get() const; // get value
   DAY & operator=(const DAY &ref);
   bool operator==(const DAY &ref) const;
   bool operator!=(const DAY &ref) const;
@@ -182,7 +206,7 @@ public:
   explicit MONTH(int val);
 
   // operators
-  int operator()() const; // get value
+  int get() const; // get value
   MONTH & operator=(const MONTH &ref);
   bool operator==(const MONTH &ref) const;
   bool operator!=(const MONTH &ref) const;
@@ -196,7 +220,7 @@ public:
   explicit YEAR(int val) : val(val) {}
 
   // operators
-  int operator()() const; // get value
+  int get() const; // get value
   YEAR & operator=(const YEAR &ref);
   bool operator==(const YEAR &ref) const;
   bool operator!=(const YEAR &ref) const;
@@ -211,7 +235,7 @@ public:
   explicit DATE(const DAY & day, const MONTH & month, const YEAR & year);
 
   // operators
-  int operator()() const; // get value
+  int get() const; // get value
   string asString() const;
   int getDay() const;
   int getMonth() const;
@@ -231,7 +255,7 @@ public:
   explicit HOMEDIR(const string & val) : val(val) {}
 
   // operators
-  const string & operator()() const; // get value
+  const string & get() const; // get value
   HOMEDIR & operator=(const HOMEDIR &ref);
   bool operator==(const HOMEDIR &ref) const;
   bool operator!=(const HOMEDIR &ref) const;
