@@ -49,7 +49,7 @@ void wisaNoID::onShow() {
   
   for(int i = 0; i < accounts.elms(); i++) {
     if(!accounts[i].isStudent()) {
-      accounts[i].setImportStatus(y::ldap::WI_DISCARD);
+      accounts[i].setImportStatus(WI_DISCARD);
     } else if(accounts[i].wisaID()() == 0 ) {
       entries->elementAt(row, 0)->addWidget(new Wt::WText(accounts[i].sn().wt()));
       entries->elementAt(row, 1)->addWidget(new Wt::WText(accounts[i].cn().wt()));
@@ -79,9 +79,9 @@ bool wisaNoID::onNext() {
     Wt::WLineEdit * le = (Wt::WLineEdit*)entries->rowAt(i)->elementAt(3)->widget(0);
     Wt::WCheckBox * cb = (Wt::WCheckBox*)entries->rowAt(i)->elementAt(4)->widget(0);
     if(cb->isChecked()) {
-      y::ldap::account & acc = parentObject->ldap()->getAccount(y::ldap::UID(string(le->id())));
+      y::ldap::account & acc = parentObject->ldap()->getAccount(UID(string(le->id())));
       acc.flagForRemoval();
-      acc.setImportStatus(y::ldap::WI_DISCARD);
+      acc.setImportStatus(WI_DISCARD);
     } else if(le->validate() != Wt::WValidator::Valid) {
       le->setStyleClass("alert alert-danger");
       le->setHeight(5);
@@ -94,8 +94,8 @@ bool wisaNoID::onNext() {
         } catch (boost::bad_lexical_cast) {
           return false;
         }
-        y::ldap::account & acc = parentObject->ldap()->getAccount(y::ldap::UID(string(le->id())));
-        acc.wisaID(y::ldap::WISA_ID(newID));
+        y::ldap::account & acc = parentObject->ldap()->getAccount(UID(string(le->id())));
+        acc.wisaID(WISA_ID(newID));
         le->setStyleClass("alert alert-success");
         le->setHeight(5);
       }

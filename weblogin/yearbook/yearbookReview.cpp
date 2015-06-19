@@ -234,7 +234,7 @@ void yearbookReview::loadDialogContent() {
   dialogClass->setText(db->getEntries()[currentEntry].group.wt());
 
   y::data::dateTime date = db->getEntries()[currentEntry].birthday;
-  y::ldap::DATE dldap(y::ldap::DAY(date.day()), y::ldap::MONTH(date.month()), y::ldap::YEAR(date.year()));      
+  DATE dldap(DAY(date.day()), MONTH(date.month()), YEAR(date.year()));      
   dialogBirthday->setText(dldap.asString().wt());
   
   dialogEmail->setText(db->getEntries()[currentEntry].mail.wt());
@@ -322,7 +322,7 @@ void yearbookReview::loadTableContent() {
     table->elementAt(i+1, 1)->addWidget(new Wt::WText(entries[i].group.wt()));
     
     y::data::dateTime date = entries[i].submitDate;
-    y::ldap::DATE dldap(y::ldap::DAY(date.day()), y::ldap::MONTH(date.month()), y::ldap::YEAR(date.year()));
+    DATE dldap(DAY(date.day()), MONTH(date.month()), YEAR(date.year()));
     table->elementAt(i+1, 2)->addWidget(new Wt::WText(dldap.asString().wt()));
 
     Wt::WPushButton * button = new Wt::WPushButton("view");

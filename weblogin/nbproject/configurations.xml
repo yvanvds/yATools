@@ -7,7 +7,7 @@
       <itemPath>account/changePassword.cpp</itemPath>
       <itemPath>account/changePassword.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f5" displayName="auth" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f5" displayName="auth" projectFiles="true">
       <itemPath>auth/authModel.cpp</itemPath>
       <itemPath>auth/authModel.h</itemPath>
       <itemPath>auth/authService.cpp</itemPath>
@@ -31,19 +31,15 @@
       <itemPath>proxyManager.cpp</itemPath>
       <itemPath>proxyManager.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f6"
-                   displayName="site_resources"
-                   projectFiles="true"
-                   kind="ROOT">
+    <logicalFolder name="f6" displayName="site_resources" projectFiles="true">
       <itemPath>site_resources/auth_css_theme.xml</itemPath>
       <itemPath>site_resources/auth_strings.xml</itemPath>
       <itemPath>site_resources/bootstrap3_theme.xml</itemPath>
       <itemPath>site_resources/bootstrap_theme.xml</itemPath>
     </logicalFolder>
-    <logicalFolder name="f7"
-                   displayName="staffManager"
-                   projectFiles="true"
-                   kind="ROOT">
+    <logicalFolder name="f7" displayName="staffManager" projectFiles="true">
+      <itemPath>staffManager/newStaff.cpp</itemPath>
+      <itemPath>staffManager/newStaff.h</itemPath>
       <itemPath>staffManager/staffList.cpp</itemPath>
       <itemPath>staffManager/staffList.h</itemPath>
     </logicalFolder>
@@ -223,6 +219,10 @@
             flavor2="0">
       </item>
       <item path="site_resources/bootstrap_theme.xml" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="staffManager/newStaff.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="staffManager/newStaff.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="staffManager/staffList.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -423,6 +423,10 @@
             flavor2="0">
       </item>
       <item path="site_resources/bootstrap_theme.xml" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="staffManager/newStaff.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="staffManager/newStaff.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="staffManager/staffList.cpp" ex="false" tool="1" flavor2="0">
       </item>

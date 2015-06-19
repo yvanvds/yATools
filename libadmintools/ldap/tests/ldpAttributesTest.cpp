@@ -125,9 +125,9 @@ void ldpAttributesTest::testFULL_NAME() {
   }
 }
 void ldpAttributesTest::testGID() {
-  y::ldap::GID item1(y::ldap::ROLE_ADMIN);
-  y::ldap::GID item2(y::ldap::ROLE_ADMIN);
-  y::ldap::GID item3(y::ldap::ROLE_SUPPORT);
+  y::ldap::ROLE item1(y::ldap::ROLE_ADMIN);
+  y::ldap::ROLE item2(y::ldap::ROLE_ADMIN);
+  y::ldap::ROLE item3(y::ldap::ROLE_SUPPORT);
   
   // test if we can get the value back
   if(item1() != y::ldap::ROLE_ADMIN) {

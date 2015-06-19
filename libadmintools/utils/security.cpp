@@ -25,7 +25,7 @@ y::utils::security & y::utils::Security() {
 }
 
 bool y::utils::security::test(const y::ldap::account& account, const string& password) {
-  const y::ldap::PASSWORD & p = account.password();
+  const PASSWORD & p = account.password();
   std::string removeCrypt = p().utf8();
   removeCrypt.erase(0, 7);
   const char * pass = removeCrypt.c_str();

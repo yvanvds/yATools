@@ -388,7 +388,7 @@ void y::ldap::server::printMods(LDAPMod** mods) {
 }
 
 
-void y::ldap::server::toLdapModify(const y::ldap::DN & dn, LDAPMod** mods) {
+void y::ldap::server::toLdapModify(const DN & dn, LDAPMod** mods) {
   std::ofstream out;
   out.open("/tmp/tempMods", std::ofstream::out | std::ofstream::trunc);
   out << "dn: " << dn().utf8() << std::endl;
@@ -544,7 +544,7 @@ int y::ldap::server::findAccounts(const string& query, std::vector<UID_NUMBER> &
   return results.size();
 }
 
-y::ldap::UID y::ldap::server::createUID(const string& cn, const string& sn) {
+UID y::ldap::server::createUID(const string& cn, const string& sn) {
   boost::locale::generator gen;
   std::locale loc = gen("en_US.UTF-8");
   std::locale::global(loc);
@@ -582,7 +582,7 @@ y::ldap::UID y::ldap::server::createUID(const string& cn, const string& sn) {
   }
 }
 
-y::ldap::MAIL y::ldap::server::createMail(const string& cn, const string& sn) {
+MAIL y::ldap::server::createMail(const string& cn, const string& sn) {
   boost::locale::generator gen;
   std::locale loc = gen("en_US.UTF-8");
   std::locale::global(loc);

@@ -160,7 +160,7 @@ void changePassword::passwordChanged() {
   feedback4->setStyleClass("alert");
   feedback4->setText("");
   
-  if (!server->auth(account->dn(), y::ldap::PASSWORD(sCurPW))) {
+  if (!server->auth(account->dn(), PASSWORD(sCurPW))) {
     curPW->setStyleClass("form-control invalid");
     curPW->setText("");
     curPW->setFocus();
@@ -202,7 +202,7 @@ void changePassword::passwordChanged() {
   }
   
   // if we get here, change the user's password
-  account->password(y::ldap::PASSWORD(sNewPW1));
+  account->password(PASSWORD(sNewPW1));
   server->commitChanges();
   feedback4->setText("Je wachtwoord is gewijzigd.");
   feedback4->setStyleClass("alert alert-success"); 

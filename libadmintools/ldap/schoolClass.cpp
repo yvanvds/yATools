@@ -241,11 +241,11 @@ const string & y::ldap::schoolClass::description() const {
   return _description();
 }
 
-y::ldap::DN y::ldap::schoolClass::titular() const {
+DN y::ldap::schoolClass::titular() const {
   return DN(_titular());
 }
 
-y::ldap::DN y::ldap::schoolClass::adjunct() const {
+DN y::ldap::schoolClass::adjunct() const {
   return DN(_adjunct());
 }
 

@@ -51,7 +51,7 @@ void addUser::parse(int argc, char ** argv) {
     }
   }
   
-  y::ldap::GID gid(argc > 3 ? argv[3] : "extern");
+  y::ldap::ROLE gid(argc > 3 ? argv[3] : "extern");
   y::ldap::DATE date(argc > 2 ? argv[2] : "19700101");
   y::ldap::WISA_ID id(argc > 4 ? std::stoi(argv[4]) : 0);
   ::string password(y::utils::Security().makePassword(8));
@@ -62,7 +62,7 @@ void addUser::parse(int argc, char ** argv) {
 
   server.commitChanges();
   
-  cout << "Added user "  << account.fullName()() << " to " << account.group()() << endl;
+  cout << "Added user "  << account.fullName()() << " to " << account.role()() << endl;
   cout << "  Login   : " << account.uid()()  << endl;
   cout << "  Password: " << password         << endl;
   cout << "  Mail    : " << account.mail()() << endl;

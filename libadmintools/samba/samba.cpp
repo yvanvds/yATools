@@ -15,7 +15,7 @@
 #include <iomanip>
 #include "utils/convert.h"
 
-string groupName(const y::ldap::GID_NUMBER & id) {
+string groupName(const GID_NUMBER & id) {
   if(id() ==   525) return "personeel";
   if(id() == 20009) return "extern"   ;
   

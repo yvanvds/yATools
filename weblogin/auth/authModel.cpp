@@ -17,7 +17,7 @@ authModel::authModel(userSession & s, Wt::WObject * parent)
 bool authModel::validateField(Field field) {
   if(field == RememberMeField) return true;
   
-  y::ldap::account & account = ldapServer.getAccount(y::ldap::UID(valueText(LoginNameField)));
+  y::ldap::account & account = ldapServer.getAccount(UID(valueText(LoginNameField)));
   
   if(field == LoginNameField) {
     if(!account.isNew()) {
@@ -33,7 +33,7 @@ bool authModel::validateField(Field field) {
   
   if(field == PasswordField) {
     if(account.isNew()) return false;
-    if(ldapServer.auth(account.dn(), y::ldap::PASSWORD(valueText(PasswordField)))) {
+    if(ldapServer.auth(account.dn(), PASSWORD(valueText(PasswordField)))) {
       setValid(PasswordField);
       
       Wt::Auth::User user = users().findWithIdentity(Wt::Auth::Identity::LoginName, account.uid()().db());

@@ -72,7 +72,7 @@ void wisaConfirmSubmit::onShow() {
   int accountsToRemove = 0;
   
   for(int i = 0; i < accounts.elms(); i++) {
-    if(accounts[i].getImportStatus() == y::ldap::WI_DISCARD) {
+    if(accounts[i].getImportStatus() == WI_DISCARD) {
       validAccounts--;
       if(accounts[i].flaggedForRemoval()) accountsToRemove++;
     } 
@@ -120,7 +120,7 @@ void wisaConfirmSubmit::onShow() {
   int groupsToRemove = 0;
   
   for(int i = 0; i < groups.elms(); i++) {
-    if(groups[i].getImportStatus() == y::ldap::WI_DISCARD) {
+    if(groups[i].getImportStatus() == WI_DISCARD) {
       validGroups--;
     } else {
       if(groups[i].flaggedForRemoval()) groupsToRemove++;

@@ -48,6 +48,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/base/stackPageManager.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/proxyManager.o \
+	${OBJECTDIR}/staffManager/newStaff.o \
 	${OBJECTDIR}/staffManager/staffList.o \
 	${OBJECTDIR}/topContent.o \
 	${OBJECTDIR}/wisaImport.o \
@@ -162,6 +163,11 @@ ${OBJECTDIR}/proxyManager.o: proxyManager.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/proxyManager.o proxyManager.cpp
+
+${OBJECTDIR}/staffManager/newStaff.o: staffManager/newStaff.cpp 
+	${MKDIR} -p ${OBJECTDIR}/staffManager
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/staffManager/newStaff.o staffManager/newStaff.cpp
 
 ${OBJECTDIR}/staffManager/staffList.o: staffManager/staffList.cpp 
 	${MKDIR} -p ${OBJECTDIR}/staffManager

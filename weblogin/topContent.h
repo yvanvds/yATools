@@ -103,6 +103,7 @@ private:
   Wt::WWidget * changePasswordFunc();
   Wt::WWidget * changeNameFunc();
   Wt::WWidget * staffListFunc();
+  Wt::WWidget * newStaffFunc();
   
   // sub objects
   yearbook * yearbookPtr;

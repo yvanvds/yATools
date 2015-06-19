@@ -44,12 +44,12 @@ void wisaNewGroups::onShow() {
   int row = 1;
   for(int i = 0; i < groups.elms(); i++) {
     if(groups[i].editable()) {
-      groups[i].setImportStatus(y::ldap::WI_DISCARD);
+      groups[i].setImportStatus(WI_DISCARD);
     } else {
       bool found = false;
       for(int j = 0; j < wisaGroups.elms(); j++) {
         if(wisaGroups[j].name == groups[i].cn()) {
-          groups[i].setImportStatus(y::ldap::WI_ACCOUNTED);
+          groups[i].setImportStatus(WI_ACCOUNTED);
           wisaGroups[j].link = &groups[i];
           found = true;
           break;

@@ -173,7 +173,7 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   std::string role;
   if(!account.isStaff() && !account.isStudent()) return;
   
-  if(account.group()() == y::ldap::ROLE_DIRECTOR) {
+  if(account.role()() == ROLE::DIRECTOR) {
     role = "Directie";
   } else if(account.isStaff()) {
     role = "Leerkracht";

@@ -26,6 +26,7 @@
 #include <Wt/WNavigationBar>
 #include <Wt/WPopupMenu>
 #include <Wt/WMenuItem>
+#include <Wt/WWidget>
 
 
 #include "topContent.h"
@@ -35,7 +36,11 @@
 #include "yearbook/yearbookConfig.h"
 #include "yearbook/yearbookReview.h"
 #include "yearbook/yearbookDownload.h"
+#include "staffManager/newStaff.h"
 #include "application.h"
+
+#include "version.h"
+#include "build_date.h"
 
 topContent::topContent(application * app, const string & uid) : WContainerWidget()
 , yearbookDBPtr(nullptr)
@@ -44,7 +49,7 @@ topContent::topContent(application * app, const string & uid) : WContainerWidget
 , rightMenu(nullptr)
 {
   setOverflow(OverflowHidden);
-  account = &ldapServer.getAccount(y::ldap::UID(uid));
+  account = &ldapServer.getAccount(UID(uid));
   if(!account->isNew()) {
     create();
   } else {
@@ -81,7 +86,7 @@ void topContent::create() {
             Wt::WMenuItem::LazyLoading);
   }
   
-  if(account->group()() == y::ldap::ROLE_ADMIN || account->group()() == y::ldap::ROLE_DIRECTOR || rights.has(account->uid()(), y::data::ADMIN_STAFF)) {
+  if(account->role()() == ROLE::ADMIN || account->role()() == ROLE::DIRECTOR || rights.has(account->uid()(), y::data::ADMIN_STAFF)) {
     staffMenu = new Wt::WPopupMenu(contents);
     Wt::WMenuItem * item = new Wt::WMenuItem("Personeel");
     item->setMenu(staffMenu);
@@ -91,11 +96,11 @@ void topContent::create() {
             deferCreate(boost::bind(&topContent::staffListFunc, this)), 
             Wt::WMenuItem::LazyLoading);
     staffMenu->addItem("Toevoegen",
-            deferCreate(boost::bind(&topContent::yearbookReviewFunc, this)), 
+            deferCreate(boost::bind(&topContent::newStaffFunc, this)), 
             Wt::WMenuItem::LazyLoading);
   }
   
-  if(account->group()() == y::ldap::ROLE_ADMIN || rights.has(account->uid()(), y::data::ADMIN_YEARBOOK)) {
+  if(account->role()() == ROLE::ADMIN || rights.has(account->uid()(), y::data::ADMIN_YEARBOOK)) {
     mainMenu->addItem("Wisa Import",
             deferCreate(boost::bind(&topContent::wisaImportFunc, this)),
             Wt::WMenuItem::LazyLoading);
@@ -104,14 +109,14 @@ void topContent::create() {
   // show this for last year students (or me for testing)
   string group = account->schoolClass();
   TODO(only show when yearbook is open)
-  if(group[0] == '6' || account->group()() == y::ldap::ROLE_ADMIN || rights.has(account->uid()(), y::data::ADMIN_YEARBOOK)) {
+  if(group[0] == '6' || account->role()() == ROLE::ADMIN || rights.has(account->uid()(), y::data::ADMIN_YEARBOOK)) {
     mainMenu->addItem("Jaarboek", 
             deferCreate(boost::bind(&topContent::yearbookFunc, this)), 
             Wt::WMenuItem::LazyLoading);
   }
   
   
-  if(account->group()() == y::ldap::ROLE_ADMIN || rights.has(account->uid()(), y::data::ADMIN_YEARBOOK)) {
+  if(account->role()() == ROLE::ADMIN || rights.has(account->uid()(), y::data::ADMIN_YEARBOOK)) {
     yearbookMenu = new Wt::WPopupMenu(contents);
     
     yearbookMenu->addItem("Review", 
@@ -270,6 +275,12 @@ Wt::WWidget * topContent::staffListFunc() {
   panel->setMaximumSize(800, 700);
   panel->setMargin("0 auto");
   return panel;
+}
+
+Wt::WWidget * topContent::newStaffFunc() {
+  newStaff * ns = new newStaff(&ldapServer);
+  ns->create();
+  return ns;
 }
 
 void topContent::logoutFunc() {

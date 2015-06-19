@@ -12,236 +12,236 @@
  * another are possible.
  */
 
-namespace y {
-  namespace ldap {
-    class DN {
-    public:
-      explicit DN(const string & val) : val(val) {}
 
-      // operators
-      const string & operator()() const; // get value
-      DN & operator=(const DN &ref);
-      bool operator==(const DN &ref) const;
-      bool operator!=(const DN &ref) const;
+class DN {
+public:
+  explicit DN(const string & val) : val(val) {}
 
-    private:
-      string val;
-    };
+  // operators
+  const string & operator()() const; // get value
+  DN & operator=(const DN &ref);
+  bool operator==(const DN &ref) const;
+  bool operator!=(const DN &ref) const;
 
-    class UID_NUMBER {
-    public:
-      explicit UID_NUMBER(const int val) : val(val) {}
+private:
+  string val;
+};
 
-      // operators
-      int operator()() const; // get value
-      UID_NUMBER & operator=(const UID_NUMBER &ref) {
-        if(this != &ref) {
-          val = ref.val;
-        }
-        return *this;
-      }
-      bool operator==(const UID_NUMBER &ref) const;
-      bool operator!=(const UID_NUMBER &ref) const;
+class UID_NUMBER {
+public:
+  explicit UID_NUMBER(const int val) : val(val) {}
 
-    private:
-      int val;
-    };
-
-    class UID {
-    public:
-      explicit UID(const string & val) : val(val) {}
-
-      // operators
-      const string & operator()() const; // get value
-      UID & operator=(const UID &ref);
-      bool operator==(const UID &ref) const;
-      bool operator!=(const UID &ref) const;
-
-    private:
-      string val;
-    };
-
-    class FULL_NAME {
-    public:
-      explicit FULL_NAME(const string & val) : val(val) {}
-      explicit FULL_NAME(const string & cn, const string & sn);
-
-      // operators
-      const string & operator()() const; // get value
-      FULL_NAME & operator=(const FULL_NAME &ref);
-      bool operator==(const FULL_NAME &ref) const;
-      bool operator!=(const FULL_NAME &ref) const;
-
-    private:
-      string val;
-    };
-
-    // used for class, like 1D, extern, personeel...
-    enum SCHOOLROLE {
-      ROLE_NONE,
-      ROLE_TEACHER,
-      ROLE_STUDENT,
-      ROLE_DIRECTOR,
-      ROLE_ADMIN,
-      ROLE_SUPPORT,
-      ROLE_EXTERN,
-      ROLE_EXTERN_WITH_MAIL,
-    };
-    
-    string     SchoolRoleText(SCHOOLROLE     value);
-    SCHOOLROLE SchoolRoleText(const string & value);
-    
-    class GID {
-    public:
-      explicit GID(SCHOOLROLE val) : val(val) {}
-
-      // operators
-      SCHOOLROLE operator()() const; // get value
-      GID & operator=(const GID &ref);
-      bool operator==(const GID &ref) const;
-      bool operator!=(const GID &ref) const;
-
-    private:
-      SCHOOLROLE val;
-    };
-
-    class GID_NUMBER {
-    public:
-      explicit GID_NUMBER(int val) : val(val) {}
-
-      // operators
-      int operator()() const; // get value
-      GID_NUMBER & operator=(const GID_NUMBER &ref);
-      bool operator==(const GID_NUMBER &ref) const;
-      bool operator!=(const GID_NUMBER &ref) const;
-
-    private:
-      int val;
-    };
-
-    class WISA_ID {
-    public:
-      explicit WISA_ID(int val) : val(val) {}
-
-      // operators
-      int operator()() const; // get value
-      WISA_ID & operator=(const WISA_ID &ref);
-      bool operator==(const WISA_ID &ref) const;
-      bool operator!=(const WISA_ID &ref) const;
-
-    private:
-      int val;
-    };
-
-    class MAIL {
-    public:
-      explicit MAIL(const string & val) : val(val) {}
-
-      // operators
-      const string & operator()() const; // get value
-      MAIL & operator=(const MAIL &ref);
-      bool operator==(const MAIL &ref) const;
-      bool operator!=(const MAIL &ref) const;
-
-    private:
-      string val;
-    };
-
-    class PASSWORD {
-    public:
-      explicit PASSWORD(const string & val) : val(val) {}
-
-      // operators
-      const string & operator()() const; // get value
-      PASSWORD & operator=(const PASSWORD &ref);
-      bool operator==(const PASSWORD &ref) const;
-      bool operator!=(const PASSWORD &ref) const;
-
-    private:
-      string val;
-    };
-
-    class DAY {
-    public:
-      explicit DAY(int val);
-
-      // operators
-      int operator()() const; // get value
-      DAY & operator=(const DAY &ref);
-      bool operator==(const DAY &ref) const;
-      bool operator!=(const DAY &ref) const;
-
-    private:
-      int val;
-    };
-
-    class MONTH {
-    public:
-      explicit MONTH(int val);
-
-      // operators
-      int operator()() const; // get value
-      MONTH & operator=(const MONTH &ref);
-      bool operator==(const MONTH &ref) const;
-      bool operator!=(const MONTH &ref) const;
-
-    private:
-      int val;
-    };
-
-    class YEAR {
-    public:
-      explicit YEAR(int val) : val(val) {}
-
-      // operators
-      int operator()() const; // get value
-      YEAR & operator=(const YEAR &ref);
-      bool operator==(const YEAR &ref) const;
-      bool operator!=(const YEAR &ref) const;
-
-    private:
-      int val;
-    };
-
-    class DATE {
-    public: 
-      explicit DATE(const string & ldapDate, bool fromWisa = false);
-      explicit DATE(const DAY & day, const MONTH & month, const YEAR & year);
-
-      // operators
-      int operator()() const; // get value
-      string asString() const;
-      int getDay() const;
-      int getMonth() const;
-      int getYear() const;
-      DATE & operator=(const DATE &ref);
-      bool operator==(const DATE &ref) const;
-      bool operator!=(const DATE &ref) const;
-
-    private:
-      DAY day;
-      MONTH month;
-      YEAR year;
-    };
-
-    class HOMEDIR {
-    public:
-      explicit HOMEDIR(const string & val) : val(val) {}
-
-      // operators
-      const string & operator()() const; // get value
-      HOMEDIR & operator=(const HOMEDIR &ref);
-      bool operator==(const HOMEDIR &ref) const;
-      bool operator!=(const HOMEDIR &ref) const;
-
-    private:
-      string val;
-    };
-    
-    enum WISA_IMPORT {
-      WI_NOT_ACCOUNTED, // initial status
-      WI_ACCOUNTED    , // a wisa entry is found for this entry
-      WI_DISCARD      , // don't process in this session  
-    };
+  // operators
+  int operator()() const; // get value
+  UID_NUMBER & operator=(const UID_NUMBER &ref) {
+    if(this != &ref) {
+      val = ref.val;
+    }
+    return *this;
   }
-}
+  bool operator==(const UID_NUMBER &ref) const;
+  bool operator!=(const UID_NUMBER &ref) const;
+
+private:
+  int val;
+};
+
+class UID {
+public:
+  explicit UID(const string & val) : val(val) {}
+
+  // operators
+  const string & operator()() const; // get value
+  UID & operator=(const UID &ref);
+  bool operator==(const UID &ref) const;
+  bool operator!=(const UID &ref) const;
+
+private:
+  string val;
+};
+
+class FULL_NAME {
+public:
+  explicit FULL_NAME(const string & val) : val(val) {}
+  explicit FULL_NAME(const string & cn, const string & sn);
+
+  // operators
+  const string & operator()() const; // get value
+  FULL_NAME & operator=(const FULL_NAME &ref);
+  bool operator==(const FULL_NAME &ref) const;
+  bool operator!=(const FULL_NAME &ref) const;
+
+private:
+  string val;
+};
+
+
+
+
+
+class ROLE {
+public:
+  enum TYPE {
+    NONE,
+    TEACHER,
+    STUDENT,
+    DIRECTOR,
+    ADMIN,
+    SUPPORT,
+    EXTERN,
+    EXTERN_WITH_MAIL,
+  };
+
+  explicit ROLE(TYPE val) : val(val) {}
+
+  // operators
+  TYPE operator()() const; // get value
+  ROLE & operator=(const ROLE &ref);
+  bool operator==(const ROLE &ref) const;
+  bool operator!=(const ROLE &ref) const;
+
+  static string toText(TYPE           value);
+  static TYPE   toRole(const string & value);
+  
+private:
+  TYPE val;
+};
+
+class GID_NUMBER {
+public:
+  explicit GID_NUMBER(int val) : val(val) {}
+
+  // operators
+  int operator()() const; // get value
+  GID_NUMBER & operator=(const GID_NUMBER &ref);
+  bool operator==(const GID_NUMBER &ref) const;
+  bool operator!=(const GID_NUMBER &ref) const;
+
+private:
+  int val;
+};
+
+class WISA_ID {
+public:
+  explicit WISA_ID(int val) : val(val) {}
+
+  // operators
+  int operator()() const; // get value
+  WISA_ID & operator=(const WISA_ID &ref);
+  bool operator==(const WISA_ID &ref) const;
+  bool operator!=(const WISA_ID &ref) const;
+
+private:
+  int val;
+};
+
+class MAIL {
+public:
+  explicit MAIL(const string & val) : val(val) {}
+
+  // operators
+  const string & operator()() const; // get value
+  MAIL & operator=(const MAIL &ref);
+  bool operator==(const MAIL &ref) const;
+  bool operator!=(const MAIL &ref) const;
+
+private:
+  string val;
+};
+
+class PASSWORD {
+public:
+  explicit PASSWORD(const string & val) : val(val) {}
+
+  // operators
+  const string & operator()() const; // get value
+  PASSWORD & operator=(const PASSWORD &ref);
+  bool operator==(const PASSWORD &ref) const;
+  bool operator!=(const PASSWORD &ref) const;
+
+private:
+  string val;
+};
+
+class DAY {
+public:
+  explicit DAY(int val);
+
+  // operators
+  int operator()() const; // get value
+  DAY & operator=(const DAY &ref);
+  bool operator==(const DAY &ref) const;
+  bool operator!=(const DAY &ref) const;
+
+private:
+  int val;
+};
+
+class MONTH {
+public:
+  explicit MONTH(int val);
+
+  // operators
+  int operator()() const; // get value
+  MONTH & operator=(const MONTH &ref);
+  bool operator==(const MONTH &ref) const;
+  bool operator!=(const MONTH &ref) const;
+
+private:
+  int val;
+};
+
+class YEAR {
+public:
+  explicit YEAR(int val) : val(val) {}
+
+  // operators
+  int operator()() const; // get value
+  YEAR & operator=(const YEAR &ref);
+  bool operator==(const YEAR &ref) const;
+  bool operator!=(const YEAR &ref) const;
+
+private:
+  int val;
+};
+
+class DATE {
+public: 
+  explicit DATE(const string & ldapDate, bool fromWisa = false);
+  explicit DATE(const DAY & day, const MONTH & month, const YEAR & year);
+
+  // operators
+  int operator()() const; // get value
+  string asString() const;
+  int getDay() const;
+  int getMonth() const;
+  int getYear() const;
+  DATE & operator=(const DATE &ref);
+  bool operator==(const DATE &ref) const;
+  bool operator!=(const DATE &ref) const;
+
+private:
+  DAY day;
+  MONTH month;
+  YEAR year;
+};
+
+class HOMEDIR {
+public:
+  explicit HOMEDIR(const string & val) : val(val) {}
+
+  // operators
+  const string & operator()() const; // get value
+  HOMEDIR & operator=(const HOMEDIR &ref);
+  bool operator==(const HOMEDIR &ref) const;
+  bool operator!=(const HOMEDIR &ref) const;
+
+private:
+  string val;
+};
+
+enum WISA_IMPORT {
+  WI_NOT_ACCOUNTED, // initial status
+  WI_ACCOUNTED    , // a wisa entry is found for this entry
+  WI_DISCARD      , // don't process in this session  
+};

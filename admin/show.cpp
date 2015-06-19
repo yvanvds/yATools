@@ -51,7 +51,7 @@ void show::parse(int argc, char ** argv) {
       cout << "email     : " << account.mail    ()() << endl;
       cout << endl;
       cout << "Birthday  : " << account.birthDay().asString() << endl;
-      cout << "Group     : " << account.group   ()() << endl;
+      cout << "Group     : " << account.role   ()() << endl;
       cout << "Homedir   : " << account.homeDir ()() << endl;
     }
   }

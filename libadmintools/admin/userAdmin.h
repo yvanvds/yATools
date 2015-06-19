@@ -18,9 +18,9 @@ namespace y {
       userAdmin(y::ldap::server * server) : server(server) {}
       
       y::ldap::account & add(const string & cn, const string & sn,
-               const y::ldap::GID & gid, 
-               const string & schoolClass, const y::ldap::DATE & dateOfBirth, 
-               const y::ldap::WISA_ID & id, const y::ldap::PASSWORD & pw);
+               const ROLE & gid, 
+               const string & schoolClass, const DATE & dateOfBirth, 
+               const WISA_ID & id, const PASSWORD & pw);
       
       void remove(const y::ldap::account & acc);
       

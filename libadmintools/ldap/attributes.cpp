@@ -11,237 +11,248 @@
 #include <stdexcept>
 #include "utils/convert.h"
 
-const string & y::ldap::DN::operator ()() const {
+const string & DN::operator ()() const {
   return val;
 }
 
-y::ldap::DN & y::ldap::DN::operator =(const DN& ref) {
+DN & DN::operator =(const DN& ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::DN::operator ==(const DN& ref) const{
+bool DN::operator ==(const DN& ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::DN::operator !=(const DN& ref) const{
+bool DN::operator !=(const DN& ref) const{
   return val != ref.val;
 }
 
-int y::ldap::UID_NUMBER::operator ()() const{
+int UID_NUMBER::operator ()() const{
   return val;
 }
 
-bool y::ldap::UID_NUMBER::operator ==(const UID_NUMBER& ref) const{
+bool UID_NUMBER::operator ==(const UID_NUMBER& ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::UID_NUMBER::operator !=(const UID_NUMBER& ref) const{
+bool UID_NUMBER::operator !=(const UID_NUMBER& ref) const{
   return val != ref.val;
 }
 
-const string & y::ldap::UID::operator ()() const {
+const string & UID::operator ()() const {
   return val;
 }
 
-y::ldap::UID & y::ldap::UID::operator =(const UID& ref) {
+UID & UID::operator =(const UID& ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::UID::operator ==(const UID& ref) const{
+bool UID::operator ==(const UID& ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::UID::operator !=(const UID& ref) const{
+bool UID::operator !=(const UID& ref) const{
   return val != ref.val;
 }
 
-y::ldap::FULL_NAME::FULL_NAME(const string & cn, const string & sn) {
+FULL_NAME::FULL_NAME(const string & cn, const string & sn) {
   val = cn;
   val += " ";
   val += sn;
 }
 
-const string & y::ldap::FULL_NAME::operator ()() const {
+const string & FULL_NAME::operator ()() const {
   return val;
 }
 
-y::ldap::FULL_NAME & y::ldap::FULL_NAME::operator =(const FULL_NAME& ref) {
+FULL_NAME & FULL_NAME::operator =(const FULL_NAME& ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::FULL_NAME::operator ==(const FULL_NAME& ref) const{
+bool FULL_NAME::operator ==(const FULL_NAME& ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::FULL_NAME::operator !=(const FULL_NAME& ref) const{
+bool FULL_NAME::operator !=(const FULL_NAME& ref) const{
   return val != ref.val;
 }
 
-string y::ldap::SchoolRoleText(SCHOOLROLE value) {
+string ROLE::toText(TYPE value) {
   switch(value) {
-    case ROLE_TEACHER : return "teacher";
-    case ROLE_STUDENT : return "student";
-    case ROLE_DIRECTOR: return "director";
-    case ROLE_ADMIN   : return "admin";
-    case ROLE_SUPPORT : return "support";
-    case ROLE_EXTERN  : return "extern";
-    case ROLE_EXTERN_WITH_MAIL: return "externmail";
+    case TEACHER : return "teacher";
+    case STUDENT : return "student";
+    case DIRECTOR: return "director";
+    case ADMIN   : return "admin";
+    case SUPPORT : return "support";
+    case EXTERN  : return "extern";
+    case EXTERN_WITH_MAIL: return "externmail";
     default: return "none";
   }
 }
 
-y::ldap::SCHOOLROLE y::ldap::GID::operator ()() const {
+ROLE::TYPE ROLE::toRole(const string & value) {
+  if(value == "teacher"   ) return TEACHER;
+  if(value == "student"   ) return STUDENT;
+  if(value == "director"  ) return DIRECTOR;
+  if(value == "admin"     ) return ADMIN;
+  if(value == "support"   ) return SUPPORT;
+  if(value == "extern"    ) return EXTERN;
+  if(value == "externmail") return EXTERN_WITH_MAIL;
+  return NONE;
+}
+
+ROLE::TYPE ROLE::operator ()() const {
   return val;
 }
 
-y::ldap::GID & y::ldap::GID::operator =(const GID& ref) {
+ROLE & ROLE::operator =(const ROLE& ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::GID::operator ==(const GID & ref) const{
+bool ROLE::operator ==(const ROLE & ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::GID::operator !=(const GID & ref) const{
+bool ROLE::operator !=(const ROLE & ref) const{
   return val != ref.val;
 }
 
-int y::ldap::GID_NUMBER::operator()() const {
+int GID_NUMBER::operator()() const {
   return val;
 }
 
-y::ldap::GID_NUMBER & y::ldap::GID_NUMBER::operator=(const GID_NUMBER &ref) {
+GID_NUMBER & GID_NUMBER::operator=(const GID_NUMBER &ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::GID_NUMBER::operator==(const GID_NUMBER &ref) const{
+bool GID_NUMBER::operator==(const GID_NUMBER &ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::GID_NUMBER::operator!=(const GID_NUMBER &ref) const {
+bool GID_NUMBER::operator!=(const GID_NUMBER &ref) const {
   return val != ref.val;
 }
 
-int y::ldap::WISA_ID::operator()() const {
+int WISA_ID::operator()() const {
   return val;
 }
 
-y::ldap::WISA_ID & y::ldap::WISA_ID::operator=(const WISA_ID &ref) {
+WISA_ID & WISA_ID::operator=(const WISA_ID &ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::WISA_ID::operator==(const WISA_ID &ref) const{
+bool WISA_ID::operator==(const WISA_ID &ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::WISA_ID::operator!=(const WISA_ID &ref) const {
+bool WISA_ID::operator!=(const WISA_ID &ref) const {
   return val != ref.val;
 }
 
-const string & y::ldap::MAIL::operator ()() const {
+const string & MAIL::operator ()() const {
   return val;
 }
 
-y::ldap::MAIL & y::ldap::MAIL::operator =(const MAIL& ref) {
+MAIL & MAIL::operator =(const MAIL& ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::MAIL::operator ==(const MAIL & ref) const{
+bool MAIL::operator ==(const MAIL & ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::MAIL::operator !=(const MAIL & ref) const{
+bool MAIL::operator !=(const MAIL & ref) const{
   return val != ref.val;
 }
 
-const string & y::ldap::PASSWORD::operator ()() const {
+const string & PASSWORD::operator ()() const {
   return val;
 }
 
-y::ldap::PASSWORD & y::ldap::PASSWORD::operator =(const PASSWORD& ref) {
+PASSWORD & PASSWORD::operator =(const PASSWORD& ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::PASSWORD::operator ==(const PASSWORD & ref) const{
+bool PASSWORD::operator ==(const PASSWORD & ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::PASSWORD::operator !=(const PASSWORD & ref) const{
+bool PASSWORD::operator !=(const PASSWORD & ref) const{
   return val != ref.val;
 }
 
-int y::ldap::DAY::operator()() const {
+int DAY::operator()() const {
   return val;
 }
 
-y::ldap::DAY::DAY(int val) : val(val) {
+DAY::DAY(int val) : val(val) {
   if(this->val <  1) this->val =  1;
   if(this->val > 31) this->val = 31;
 }
 
-y::ldap::DAY & y::ldap::DAY::operator=(const DAY &ref) {
+DAY & DAY::operator=(const DAY &ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::DAY::operator==(const DAY &ref) const{
+bool DAY::operator==(const DAY &ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::DAY::operator!=(const DAY &ref) const {
+bool DAY::operator!=(const DAY &ref) const {
   return val != ref.val;
 }
 
-y::ldap::MONTH::MONTH(int val) : val(val) {
+MONTH::MONTH(int val) : val(val) {
   if(this->val <  1) this->val =  1;
   if(this->val > 12) this->val = 12;
 }
 
-int y::ldap::MONTH::operator()() const {
+int MONTH::operator()() const {
   return val;
 }
 
-y::ldap::MONTH & y::ldap::MONTH::operator=(const MONTH &ref) {
+MONTH & MONTH::operator=(const MONTH &ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::MONTH::operator==(const MONTH &ref) const{
+bool MONTH::operator==(const MONTH &ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::MONTH::operator!=(const MONTH &ref) const {
+bool MONTH::operator!=(const MONTH &ref) const {
   return val != ref.val;
 }
 
-int y::ldap::YEAR::operator()() const {
+int YEAR::operator()() const {
   return val;
 }
 
-y::ldap::YEAR & y::ldap::YEAR::operator=(const YEAR &ref) {
+YEAR & YEAR::operator=(const YEAR &ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::YEAR::operator==(const YEAR &ref) const{
+bool YEAR::operator==(const YEAR &ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::YEAR::operator!=(const YEAR &ref) const {
+bool YEAR::operator!=(const YEAR &ref) const {
   return val != ref.val;
 }
 
 
 
-y::ldap::DATE::DATE(const string & date, bool fromWisa) : day(1), month(1), year(1) {
+DATE::DATE(const string & date, bool fromWisa) : day(1), month(1), year(1) {
   if(fromWisa) {
     int currentValue = 0;
     std::wstring value;
@@ -274,7 +285,7 @@ y::ldap::DATE::DATE(const string & date, bool fromWisa) : day(1), month(1), year
   } catch(const std::invalid_argument &e) {
     string message("Invalid ldap::DATE conversion: ");
     message += date;
-    utils::Log().add(message);
+    y::utils::Log().add(message);
     return;
   }
   day = DAY(i % 100);
@@ -284,10 +295,10 @@ y::ldap::DATE::DATE(const string & date, bool fromWisa) : day(1), month(1), year
   year = YEAR(i);
 }
 
-y::ldap::DATE::DATE(const DAY& day, const MONTH& month, const YEAR& year) 
+DATE::DATE(const DAY& day, const MONTH& month, const YEAR& year) 
         : day(day), month(month), year(year) {}
 
-int y::ldap::DATE::operator ()() const {
+int DATE::operator ()() const {
   int result = year();
   result *= 100;
   result += month();
@@ -296,7 +307,7 @@ int y::ldap::DATE::operator ()() const {
   return result;
 }
 
-string y::ldap::DATE::asString() const {
+string DATE::asString() const {
   std::stringstream result;
   result << day();
   switch(month()) {
@@ -318,19 +329,19 @@ string y::ldap::DATE::asString() const {
   return string(s);
 }
 
-int y::ldap::DATE::getDay() const {
+int DATE::getDay() const {
   return day();
 }
 
-int y::ldap::DATE::getMonth() const {
+int DATE::getMonth() const {
   return month();
 }
 
-int y::ldap::DATE::getYear() const {
+int DATE::getYear() const {
   return year();
 }
 
-y::ldap::DATE & y::ldap::DATE::operator =(const DATE& ref) {
+DATE & DATE::operator =(const DATE& ref) {
   if(this != &ref) {
     day = ref.day;
     month = ref.month;
@@ -339,28 +350,28 @@ y::ldap::DATE & y::ldap::DATE::operator =(const DATE& ref) {
   return *this;
 }
 
-bool y::ldap::DATE::operator ==(const DATE& ref) const {
+bool DATE::operator ==(const DATE& ref) const {
   return (day == ref.day && month == ref.month && year == ref.year);
 }
 
-bool y::ldap::DATE::operator !=(const DATE& ref) const {
+bool DATE::operator !=(const DATE& ref) const {
   return (day != ref.day || month != ref.month || year != ref.year);
 }
 
-const string & y::ldap::HOMEDIR::operator ()() const {
+const string & HOMEDIR::operator ()() const {
   return val;
 }
 
-y::ldap::HOMEDIR & y::ldap::HOMEDIR::operator =(const HOMEDIR& ref) {
+HOMEDIR & HOMEDIR::operator =(const HOMEDIR& ref) {
   if(this != &ref) val = ref.val;
   return *this;
 }
 
-bool y::ldap::HOMEDIR::operator ==(const HOMEDIR & ref) const{
+bool HOMEDIR::operator ==(const HOMEDIR & ref) const{
   return val == ref.val;
 }
 
-bool y::ldap::HOMEDIR::operator !=(const HOMEDIR & ref) const{
+bool HOMEDIR::operator !=(const HOMEDIR & ref) const{
   return val != ref.val;
 }
 

@@ -40,7 +40,7 @@ void wisaCompareFile::onShow() {
   int accountedFor = 0;
   int accountsToRemove = 0;
   for(int i = 0; i < accounts.elms(); i++) {
-    if(accounts[i].getImportStatus() == y::ldap::WI_DISCARD) {
+    if(accounts[i].getImportStatus() == WI_DISCARD) {
       validAccounts--;
       if(accounts[i].flaggedForRemoval()) accountsToRemove++;
     } else {
@@ -48,7 +48,7 @@ void wisaCompareFile::onShow() {
       for(int j = 0; j < wisaContent.elms(); j++) {
         if(wisaContent[j].ID == wisaID) {
           wisaContent[j].link = &accounts[i];
-          accounts[i].setImportStatus(y::ldap::WI_ACCOUNTED);
+          accounts[i].setImportStatus(WI_ACCOUNTED);
           accountedFor++;
         }
       }

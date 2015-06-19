@@ -80,8 +80,8 @@ void changeName::nameChanged() {
   
   account->cn(cn);
   account->sn(sn);
-  account->fullName(y::ldap::FULL_NAME(fullname));
-  account->mail(y::ldap::MAIL(server->createMail(cn,sn)));
+  account->fullName(FULL_NAME(fullname));
+  account->mail(MAIL(server->createMail(cn,sn)));
   server->commitChanges();
   
   Wt::WMessageBox * message = new Wt::WMessageBox(

@@ -17,32 +17,32 @@
 
 y::ldap::account & y::admin::userAdmin::add(const string & cn, 
                                             const string & sn,
-                                            const y::ldap::GID & gid, 
+                                            const ROLE & gid, 
                                             const string & schoolClass,
-                                            const y::ldap::DATE & dateOfBirth,
-                                            const y::ldap::WISA_ID & id, 
-                                            const y::ldap::PASSWORD & pw) {
+                                            const DATE & dateOfBirth,
+                                            const WISA_ID & id, 
+                                            const PASSWORD & pw) {
   
   y::ldap::account tempAccount(server);
-  tempAccount.uid(y::ldap::UID(server->createUID(cn, sn)));
-  tempAccount.group(gid); 
+  tempAccount.uid(UID(server->createUID(cn, sn)));
+  tempAccount.role(gid); 
   
   // set group id
   switch(gid()) {
-    case y::ldap::ROLE_EXTERN:
-    case y::ldap::ROLE_EXTERN_WITH_MAIL:
-      tempAccount.groupID(y::ldap::GID_NUMBER(20009));
+    case ROLE::EXTERN:
+    case ROLE::EXTERN_WITH_MAIL:
+      tempAccount.groupID(GID_NUMBER(20009));
       break;
-    case y::ldap::ROLE_TEACHER:
-    case y::ldap::ROLE_DIRECTOR:
-    case y::ldap::ROLE_ADMIN:
-    case y::ldap::ROLE_SUPPORT:
-      tempAccount.groupID(y::ldap::GID_NUMBER(525));
+    case ROLE::TEACHER:
+    case ROLE::DIRECTOR:
+    case ROLE::ADMIN:
+    case ROLE::SUPPORT:
+      tempAccount.groupID(GID_NUMBER(525));
       break;
-    case y::ldap::ROLE_STUDENT:
-      tempAccount.groupID(y::ldap::GID_NUMBER(1000));
+    case ROLE::STUDENT:
+      tempAccount.groupID(GID_NUMBER(1000));
       break;
-    case y::ldap::ROLE_NONE:
+    case ROLE::NONE:
       y::utils::Log().add("adding user without schoolRole! (this is wrong)");
   }
   
@@ -55,7 +55,7 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
   if(newAccount.uid()().size() == 0) {
     // this happens on test server
     newAccount.uid(tempAccount.uid());
-    newAccount.group(tempAccount.group());
+    newAccount.role(tempAccount.role());
     newAccount.groupID(tempAccount.groupID());
   }
   
@@ -64,14 +64,14 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
   
   string fullName(cn);
   fullName += " "; fullName += sn;
-  newAccount.fullName(y::ldap::FULL_NAME(fullName));
+  newAccount.fullName(FULL_NAME(fullName));
   
   newAccount.birthDay(dateOfBirth);
   newAccount.wisaID(id);
   newAccount.password(pw);
   
   newAccount.mail(server->createMail(cn, sn));
-  newAccount.group(tempAccount.group());
+  newAccount.role(tempAccount.role());
   newAccount.groupID(tempAccount.groupID());
   newAccount.schoolClass(schoolClass);
   

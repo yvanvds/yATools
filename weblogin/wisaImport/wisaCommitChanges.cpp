@@ -108,13 +108,13 @@ void commitThreadFunc(wisaCommitChanges * caller) {
       string cn(account.cn);
       string sn(account.sn);
       string schoolClass(account.schoolClass);
-      y::ldap::GID gid(y::ldap::ROLE_STUDENT);
-      y::ldap::DATE date(account.date, true);
-      y::ldap::WISA_ID id(account.ID);
+      ROLE gid(ROLE::STUDENT);
+      DATE date(account.date, true);
+      WISA_ID id(account.ID);
       string password(y::utils::Security().makePassword(8));
       
       
-      y::ldap::account & acc = admin.add(cn, sn, gid, schoolClass, date, id, y::ldap::PASSWORD(password));
+      y::ldap::account & acc = admin.add(cn, sn, gid, schoolClass, date, id, PASSWORD(password));
       string message("Account voor ");
       message += acc.fullName()();
       message += " werd toegevoegd";
@@ -161,11 +161,11 @@ void commitThreadFunc(wisaCommitChanges * caller) {
         string name(account.cn);
         name += " ";
         name += account.sn;
-        account.link->fullName(y::ldap::FULL_NAME(name));
+        account.link->fullName(FULL_NAME(name));
       }
       
       if(account.link->wisaID()() != account.ID) {
-        account.link->wisaID(y::ldap::WISA_ID(account.ID));
+        account.link->wisaID(WISA_ID(account.ID));
         string message("Wisa ID voor ");
         message += account.link->fullName()();
         message += " werd gewijzigd";
@@ -184,7 +184,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
         caller->addMessage(message);*/
       }
       
-      y::ldap::DATE date(account.date, true);
+      DATE date(account.date, true);
       if(account.link->birthDay() != date) {
         account.link->birthDay(date);
         string message("Verjaardag voor ");

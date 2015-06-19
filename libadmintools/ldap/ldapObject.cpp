@@ -39,7 +39,7 @@ bool y::ldap::ldapObject::load(const data& d) {
   return !_new;
 }
 
-y::ldap::WISA_IMPORT y::ldap::ldapObject::getImportStatus() {
+WISA_IMPORT y::ldap::ldapObject::getImportStatus() {
   return _importStatus;
 }
 
@@ -47,7 +47,7 @@ void y::ldap::ldapObject::setImportStatus(WISA_IMPORT status) {
   _importStatus = status;
 }
 
-const y::ldap::DN & y::ldap::ldapObject::dn() const {
+const DN & y::ldap::ldapObject::dn() const {
   return _dn();
 }
 

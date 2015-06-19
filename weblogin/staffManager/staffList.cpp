@@ -128,13 +128,13 @@ void staffList::loadTableContent() {
     if(accounts[i].isStaff()) {
       table->elementAt(entry, 0)->addWidget(new Wt::WText(accounts[i].fullName()().wt()));
       
-      if(accounts[i].group()() == y::ldap::ROLE_DIRECTOR) {
+      if(accounts[i].role()() == ROLE::DIRECTOR) {
         table->elementAt(entry, 1)->addWidget(new Wt::WText("directie"));
-      } else if(accounts[i].group()() == y::ldap::ROLE_ADMIN) {
+      } else if(accounts[i].role()() == ROLE::ADMIN) {
         table->elementAt(entry, 1)->addWidget(new Wt::WText("admin"));
-      } else if(accounts[i].group()() == y::ldap::ROLE_SUPPORT) {
+      } else if(accounts[i].role()() == ROLE::SUPPORT) {
         table->elementAt(entry, 1)->addWidget(new Wt::WText("secretariaat"));
-      }  else if(accounts[i].group()() == y::ldap::ROLE_TEACHER) {
+      }  else if(accounts[i].role()() == ROLE::TEACHER) {
         table->elementAt(entry, 1)->addWidget(new Wt::WText("leraar"));
       }
       
@@ -174,13 +174,13 @@ void staffList::openDialog(int withEntry) {
   dialog->setWindowTitle(accounts[withEntry].fullName()().wt());
   wisaName->setText(accounts[withEntry].wisaName().wt());  
   TODO(Make an enum out of this)
-  if(accounts[withEntry].group()() == y::ldap::ROLE_TEACHER) {
+  if(accounts[withEntry].role()() == ROLE::TEACHER) {
     group->setCurrentIndex(0);
-  } else if(accounts[withEntry].group()() == y::ldap::ROLE_DIRECTOR) {
+  } else if(accounts[withEntry].role()() == ROLE::DIRECTOR) {
     group->setCurrentIndex(1);
-  } else if(accounts[withEntry].group()() == y::ldap::ROLE_SUPPORT) {
+  } else if(accounts[withEntry].role()() == ROLE::SUPPORT) {
     group->setCurrentIndex(2);
-  } else if(accounts[withEntry].group()() == y::ldap::ROLE_ADMIN) {
+  } else if(accounts[withEntry].role()() == ROLE::ADMIN) {
     group->setCurrentIndex(3);
   } else {
     group->setCurrentIndex(-1);
@@ -229,7 +229,8 @@ void staffList::deleteUser(int entry) {
   message->buttonClicked().connect(std::bind([=] () {
     if(message->buttonResult() == Wt::Yes) {
       ACCOUNTS & accounts = server->getAccounts();
-      accounts[entry].flagForRemoval();
+      y::admin::userAdmin admin(server);
+      admin.remove(accounts[entry]);
       server->commitChanges();
       loadTableContent();
     }  
@@ -268,10 +269,10 @@ void staffList::saveEdit() {
   }
   
   switch(group->currentIndex()) {
-    case 0: accounts[currentEntry].group(y::ldap::GID(y::ldap::ROLE_TEACHER)); break;
-    case 1: accounts[currentEntry].group(y::ldap::GID(y::ldap::ROLE_DIRECTOR)); break;
-    case 2: accounts[currentEntry].group(y::ldap::GID(y::ldap::ROLE_SUPPORT)); break;
-    case 3: accounts[currentEntry].group(y::ldap::GID(y::ldap::ROLE_ADMIN)); break;
+    case 0: accounts[currentEntry].role(ROLE(ROLE::TEACHER)); break;
+    case 1: accounts[currentEntry].role(ROLE(ROLE::DIRECTOR)); break;
+    case 2: accounts[currentEntry].role(ROLE(ROLE::SUPPORT)); break;
+    case 3: accounts[currentEntry].role(ROLE(ROLE::ADMIN)); break;
   }
   
   accounts[currentEntry].wisaName(string(wisaName->text()));

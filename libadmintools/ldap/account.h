@@ -18,22 +18,34 @@ namespace y {
     // because of issues in the past, our ldap fields for some
     // values are a bit confusing. This is why we keep a const list
     // with the intended name mapped to the current ldap field.
-    const string TYPE_UID_NUMBER("uidNumber"       );
-    const string TYPE_UID       ("uid"             );
-    const string TYPE_DN        ("DN"              );
-    const string TYPE_CN        ("cn"              );
-    const string TYPE_SN        ("sn"              );
-    const string TYPE_FULL_NAME ("displayName"     );
-    const string TYPE_HOMEDIR   ("homeDirectory"   );
-    const string TYPE_WISA_ID   ("wisaID"          );
-    const string TYPE_WISA_NAME ("wisaName"        );
-    const string TYPE_MAIL      ("mail"            );
-    const string TYPE_MAILALIAS ("mailAlias"       );
-    const string TYPE_PASSWORD  ("gmailPassword"   );
-    const string TYPE_BIRTHDAY  ("birthday"        );
-    const string TYPE_GID       ("schoolRole"      );
-    const string TYPE_GID_NUMBER("gidNumber"       );
-    const string TYPE_CLASS     ("class"           );
+    const string TYPE_UID_NUMBER("uidNumber"         );
+    const string TYPE_UID       ("uid"               );
+    const string TYPE_DN        ("DN"                );
+    const string TYPE_CN        ("cn"                );
+    const string TYPE_SN        ("sn"                );
+    const string TYPE_FULL_NAME ("displayName"       );
+    const string TYPE_HOMEDIR   ("homeDirectory"     );
+    const string TYPE_WISA_ID   ("wisaID"            );
+    const string TYPE_WISA_NAME ("wisaName"          );
+    const string TYPE_MAIL      ("mail"              );
+    const string TYPE_MAILALIAS ("mailAlias"         );
+    const string TYPE_PASSWORD  ("gmailPassword"     );
+    const string TYPE_BIRTHDAY  ("birthday"          );
+    const string TYPE_BIRTHPLACE("placeOfBirth"      );
+    const string TYPE_ROLE      ("schoolRole"        );
+    const string TYPE_GID_NUMBER("gidNumber"         );
+    const string TYPE_CLASS     ("class"             );
+    const string TYPE_GENDER    ("gender"            );
+    const string TYPE_ADMINGROUP("adminGroupID"      );
+    const string TYPE_REGISTERID("nationalRegisterID");
+    const string TYPE_NATION    ("nationality"       );
+    const string TYPE_STEM_ID   ("stemID"            );
+    const string TYPE_SCHOOL_ID ("schoolID"          );
+    const string TYPE_STREET    ("street"            );
+    const string TYPE_HOUSE     ("houseNumber"       );
+    const string TYPE_HOUSE_ADD ("houseNumberAdd"    );
+    const string TYPE_CITY      ("location"          );
+    const string TYPE_POSTALCODE("postalCode"        );
     
     class server;
     
@@ -58,7 +70,7 @@ namespace y {
       const MAIL       & mail       () const; account & mail       (const MAIL       & value);
       const DATE       & birthDay   () const; account & birthDay   (const DATE       & value);
       const PASSWORD   & password   () const; account & password   (const PASSWORD   & value);
-      const GID        & group      () const; account & group      (const GID        & value);
+      const ROLE       & role       () const; account & role       (const ROLE        & value);
       const GID_NUMBER & groupID    () const; account & groupID    (const GID_NUMBER & value);
       const string     & schoolClass() const; account & schoolClass(const string     & value);
       
@@ -102,7 +114,7 @@ namespace y {
       watch<MAIL      >  _mail     ;
       watch<DATE      >  _birthDay ;
       watch<PASSWORD  >  _password ;
-      watch<GID       >  _group    ;
+      watch<ROLE       >  _group    ;
       watch<GID_NUMBER>  _groupID  ;
       watch<string    >  _schoolClass;
 
