@@ -1,4 +1,4 @@
-dn: cn={7}schoolperson,cn=schema,cn=config
+dn: cn={9}schoolperson,cn=schema,cn=config
 changetype: modify
 delete: olcObjectClasses
 olcObjectClasses: {0}( 2.16.56.100.1.1 NAME 'schoolPerson' DESC 'person in a s
