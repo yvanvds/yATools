@@ -217,7 +217,7 @@ bool y::ldap::account::save() {
     _password.saveToLdap(values);
     
 #ifndef DEBUG
-    samba::changePassword(_uid()(), _passwordClearText);
+    samba::changePassword(_uid().get(), _passwordClearText);
 #endif
     
     if(isStaff() || isStudent()) {
