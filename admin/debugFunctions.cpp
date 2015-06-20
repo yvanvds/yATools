@@ -36,8 +36,6 @@ void debugFunctions::parse(int argc, char ** argv) {
     removeAllStudents();
   } else if(::string(argv[0]) == "groupsToSmartschool") {
     groupsToSmartschool();
-  } else if(::string(argv[0]) == "convert") {
-    convertToNewAccount();
   } else if(::string(argv[0]) == "test") {
     testFunction();
   }
@@ -47,7 +45,7 @@ void debugFunctions::removeAllStudents() {
   y::ldap::server s;
   ACCOUNTS & accounts = s.getAccounts();
   for(int i = 0; i < accounts.elms(); i++) {
-    if(accounts[i].groupID()() == 1000) {
+    if(accounts[i].groupID().get() == 1000) {
       accounts[i].flagForRemoval();
     }
   }
@@ -55,21 +53,12 @@ void debugFunctions::removeAllStudents() {
   s.commitChanges();
 }
 
-void debugFunctions::convertToNewAccount() {
-  y::ldap::server s;
-  ACCOUNTS & accounts = s.getAccounts();
-  for(int i = 0; i < accounts.elms(); i++) {
-    accounts[i].convertToNewAccount();
-  }
-  
-}
-
 void debugFunctions::groupsToSmartschool() {
   y::ldap::server s;
   CLASSES & classes = s.getClasses();
   for(int i = 0; i < classes.elms(); i++) {
     y::Smartschool().addClass(classes[i]);
-    std::cout << "Adding class: " << classes[i].cn() << std::endl;
+    std::cout << "Adding class: " << classes[i].cn().get() << std::endl;
   }
   
   /*ACCOUNTS & accounts = s.getAccounts();
@@ -84,7 +73,21 @@ void debugFunctions::groupsToSmartschool() {
 void debugFunctions::testFunction() {
   y::utils::Log().useConsole(true);
   y::ldap::server server;
-  y::ldap::account & account = server.getAccount(y::ldap::UID("yvanym"));
+  ACCOUNTS & accounts = server.getAccounts();
+  
+  for(int i = 0; i < accounts.elms(); i++) {
+    if(accounts[i].isStaff()) {
+      cout << accounts[i].fullName().get() << endl;
+      std::string response;
+      std::getline(std::cin, response);
+      if(response[0] == 'm') {
+        accounts[i].gender(GENDER(GENDER::MALE));
+      } else {
+        accounts[i].gender(GENDER(GENDER::FEMALE));
+      }
+    }
+  }
+  
   server.commitChanges();
   
   std::cin.get();

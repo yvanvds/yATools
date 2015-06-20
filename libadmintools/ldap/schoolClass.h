@@ -26,7 +26,7 @@ namespace y {
       const string & description() const; schoolClass & description(const string & desc);
             DN       titular    () const; schoolClass & titular    (const DN     & dn  );
             DN       adjunct    () const; schoolClass & adjunct    (const DN     & dn  );
-      int            adminCode  () const; schoolClass & adminCode  (      int      id  );
+      int            adminGroup () const; schoolClass & adminGroup (      int      id  );
       int            schoolID   () const; schoolClass & schoolID   (      int      id  );
       
       container<string> & students();
@@ -36,16 +36,18 @@ namespace y {
      
     private:
       using ldapObject::load;
-      bool load    (const string & cn);
+      bool load    (const CN     & cn);
       bool loadData(const data   & d );
       
       virtual bool addNew(dataset & values);
       virtual bool update(dataset & values);
       virtual void beforeRemove();
       
-      watch<string> _description;
-      watch<string> _titular, _adjunct;
-      watch<int> _adminCode, _schoolID;
+      stringWatch<DESCRIPTION> _description;
+      dnWatch    <TITULAR    > _titular    ;
+      dnWatch    <ADJUNCT    > _adjunct    ;
+      intWatch   <ADMINGROUP > _adminGroup ;
+      intWatch   <SCHOOL_ID  > _schoolID   ;
       
       container<string> _students;
       container<string> _studentsInLDAP;

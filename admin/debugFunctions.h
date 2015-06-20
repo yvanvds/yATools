@@ -18,7 +18,6 @@ public:
 private:
   void removeAllStudents();
   void groupsToSmartschool();
-  void convertToNewAccount();
   void testFunction();
 };
 

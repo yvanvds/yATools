@@ -40,11 +40,11 @@ namespace y {
       account & getAccount(      UID_NUMBER   id);
       account & getAccount(const DN         & id);
 
-      group & getGroup(const DN     & id);
-      group & getGroup(const string & cn, bool editable);
+      group & getGroup(const DN & id);
+      group & getGroup(const CN & cn, bool editable);
       
-      schoolClass & getClass(const DN     & id);
-      schoolClass & getClass(const string & cn);
+      schoolClass & getClass(const DN & id         );
+      schoolClass & getClass(const CN & schoolClass);
       
       ACCOUNTS & getAccounts(); 
       GROUPS   & getGroups  (); 
@@ -53,8 +53,8 @@ namespace y {
       // uid numbers of accounts found by this query are stored in results.
       // the function returns the number of accounts found
       int findAccounts(const string & query, std::vector<UID_NUMBER> & results);
-      UID  createUID (const string & cn, const string & sn);
-      MAIL createMail(const string & cn, const string & sn);
+      UID  createUID (const CN & cn, const SN & sn);
+      MAIL createMail(const CN & cn, const SN & sn);
       
       // this
       int countResults(const string &q);

@@ -264,8 +264,8 @@ public:
   explicit DATE(const DAY & day, const MONTH & month, const YEAR & year);
 
   // operators
-  int get() const; // get value
-  string asString() const;
+  string get() const; // get value
+  int asInt () const;
   int getDay() const;
   int getMonth() const;
   int getYear() const;
@@ -327,6 +327,7 @@ public:
     MALE,
     FEMALE,
     TRANSGENDER,
+    NONE, 
   };
   
   explicit GENDER(TYPE val) : val(val) {}
@@ -337,6 +338,9 @@ public:
   bool operator==(const GENDER &ref) const;
   bool operator!=(const GENDER &ref) const;
 
+  static string toText  (TYPE           value);
+  static TYPE   toGender(const string & value);
+  
 private:
   TYPE val;
 };
@@ -411,13 +415,97 @@ private:
   int val;
 };
 
+class COUNTRY {
+public:
+  explicit COUNTRY(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  COUNTRY & operator=(const COUNTRY &ref);
+  bool operator==(const COUNTRY &ref) const;
+  bool operator!=(const COUNTRY &ref) const;
+
+private:
+  string val;
+};
+
+class STREET {
+public:
+  explicit STREET(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  STREET & operator=(const STREET &ref);
+  bool operator==(const STREET &ref) const;
+  bool operator!=(const STREET &ref) const;
+
+private:
+  string val;
+};
+
+class HOUSENUMBER {
+public:
+  explicit HOUSENUMBER(int val) : val(val) {}
+
+  // operators
+  int get() const; // get value
+  HOUSENUMBER & operator=(const HOUSENUMBER &ref);
+  bool operator==(const HOUSENUMBER &ref) const;
+  bool operator!=(const HOUSENUMBER &ref) const;
+
+private:
+  int val;
+};
+
+class HOUSENUMBER_ADD {
+public:
+  explicit HOUSENUMBER_ADD(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  HOUSENUMBER_ADD & operator=(const HOUSENUMBER_ADD &ref);
+  bool operator==(const HOUSENUMBER_ADD &ref) const;
+  bool operator!=(const HOUSENUMBER_ADD &ref) const;
+
+private:
+  string val;
+};
+
+class CITY {
+public:
+  explicit CITY(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  CITY & operator=(const CITY &ref);
+  bool operator==(const CITY &ref) const;
+  bool operator!=(const CITY &ref) const;
+
+private:
+  string val;
+};
+
+class POSTAL_CODE {
+public:
+  explicit POSTAL_CODE(const string & val) : val(val) {}
+
+  // operators
+  const string & get() const; // get value
+  POSTAL_CODE & operator=(const POSTAL_CODE &ref);
+  bool operator==(const POSTAL_CODE &ref) const;
+  bool operator!=(const POSTAL_CODE &ref) const;
+
+private:
+  string val;
+};
+
 class DESCRIPTION {
 public:
   explicit DESCRIPTION(const string & val) : val(val) {}
 
   // operators
   const string & get() const; // get value
-  DESCRIPTION & operator=(const DESCRIPTION &ref);
+  DESCRIPTION & operator= (const DESCRIPTION &ref);
   bool operator==(const DESCRIPTION &ref) const;
   bool operator!=(const DESCRIPTION &ref) const;
 

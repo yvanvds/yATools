@@ -24,9 +24,9 @@ void y::ldap::group::clear() {
   _membersInLDAP.clear();
 }
 
-bool y::ldap::group::load(const string & cn) {
+bool y::ldap::group::load(const CN & cn) {
   dataset d(server);
-  string filter("cn=" + cn);
+  string filter("cn=" + cn.get());
   
   if(!editable() && d.create(filter, "ou=mailGroups")) {
     loadData(d.get(0));
@@ -41,7 +41,7 @@ bool y::ldap::group::load(const string & cn) {
 
 bool y::ldap::group::loadData(const data& d) {
   _dn(DN(d.getValue("DN")), true);
-  _cn(d.getValue("cn"), true);
+  _cn(CN(d.getValue("cn")), true);
   
   if(d.elms("owner")) {
     _editable = false;
@@ -159,7 +159,7 @@ bool y::ldap::group::addNew(dataset & values) {
   } 
 
   // create group first
-  string dn("cn=" + _cn());
+  string dn("cn=" + _cn().get());
   if(_editable) {
     dn += ",ou=editableMailGroups,";
   } else {
@@ -180,7 +180,7 @@ bool y::ldap::group::addNew(dataset & values) {
   
   data & cn = values.New(NEW);
   cn.add("type", "cn");
-  cn.add("values", _cn());
+  cn.add("values", _cn().get());
 
   data & own = values.New(NEW);
   if(_editable) {

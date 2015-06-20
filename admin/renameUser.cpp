@@ -51,15 +51,15 @@ void renameUser::parse(int argc, char ** argv) {
     return;
   }
 
-  acc.cn(cn);
-  acc.sn(sn);
+  acc.cn(CN(cn));
+  acc.sn(SN(sn));
   
   ::string fullname(cn);
   fullname += " " + sn;
   
-  cout << "Name "           << acc.fullName()() 
+  cout << "Name "           << acc.fullName().get() 
        << " replaced with " << fullname         << endl;
   
-  acc.fullName(y::ldap::FULL_NAME(fullname));
+  acc.fullName(FULL_NAME(fullname));
   s.commitChanges();
 }

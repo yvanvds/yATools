@@ -49,7 +49,7 @@ void addGroup::parse(int argc, char** argv) {
   }
   
   y::ldap::server server;
-  group & grp = server.getGroup(name, editable);
+  group & grp = server.getGroup(CN(name), editable);
   if(!grp.isNew()) {
     cout << "This group already exists." << endl;
     return;

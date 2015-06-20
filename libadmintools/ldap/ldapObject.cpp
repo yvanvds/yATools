@@ -12,8 +12,8 @@
 
 y::ldap::ldapObject::ldapObject(y::ldap::server* server) 
         : server(server),
-          _dn(DN("")),
-          _cn(""),
+          _dn("DN", DN("")),
+          _cn("cn", CN("")),
           _new(true),
           _flaggedForCommit(false),
           _flaggedForRemoval(false),
@@ -33,7 +33,7 @@ bool y::ldap::ldapObject::load(const DN & id) {
 
 bool y::ldap::ldapObject::load(const data& d) {
   _dn(DN(d.getValue("DN")), true);
-  _cn(d.getValue("cn"), true);
+  _cn(CN(d.getValue("cn")), true);
   
   _new = !loadData(d);
   return !_new;
@@ -51,11 +51,11 @@ const DN & y::ldap::ldapObject::dn() const {
   return _dn();
 }
 
-const string & y::ldap::ldapObject::cn() const {
+const CN & y::ldap::ldapObject::cn() const {
   return _cn();
 }
 
-void y::ldap::ldapObject::cn(const string& value) {
+void y::ldap::ldapObject::cn(const CN & value) {
   _cn(value);
 }
 
@@ -70,7 +70,7 @@ bool y::ldap::ldapObject::save() {
     clear();
     _new = true; 
     _dn(DN(""));
-    _cn("");
+    _cn(CN(""));
     return true;
   }
   

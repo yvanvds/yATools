@@ -185,7 +185,7 @@ y::ldap::group & y::ldap::server::getGroup(const DN& id) {
   return g;
 }
 
-y::ldap::group & y::ldap::server::getGroup(const string & cn, bool editable) {  
+y::ldap::group & y::ldap::server::getGroup(const CN & cn, bool editable) {  
   for(int i = 0; i < _groups.elms(); i++) {
     if(_groups[i].cn() == cn && _groups[i].editable() == editable) {
       return _groups[i];
@@ -210,7 +210,7 @@ y::ldap::schoolClass & y::ldap::server::getClass(const DN& id) {
   return s;
 }
 
-y::ldap::schoolClass & y::ldap::server::getClass(const string & cn) {
+y::ldap::schoolClass & y::ldap::server::getClass(const CN & cn) {
   for(int i = 0; i < _classes.elms(); i++) {
     if(_classes[i].cn() == cn) {
       return _classes[i];
@@ -236,7 +236,7 @@ ACCOUNTS & y::ldap::server::getAccounts() {
   for(int i = 0; i < d.elms(); i++) {
     data & temp = d.get(i);
     // if data has no uid, it's not an account
-    if(temp.getValue(TYPE_UID).size() && temp.getValue(TYPE_UID_NUMBER).asInt() > 500) {
+    if(temp.getValue(TYPE_UID).size() && temp.getValue(TYPE_UIDNUMBER).asInt() > 500) {
       bool found = false;
       for (int i = 0; i < loaded.elms(); i++) {
         if(loaded[i] == temp.getValue(TYPE_UID)) {
@@ -262,7 +262,7 @@ GROUPS & y::ldap::server::getGroups() {
   // keep track of groups we've already loaded
   container<string> loaded;
   for(int i = 0; i < _groups.elms(); i++) {
-    loaded.New() = _groups[i].cn();
+    loaded.New() = _groups[i].cn().get();
   }
   
   {
@@ -313,7 +313,7 @@ CLASSES & y::ldap::server::getClasses() {
   // keep track of classes we've already loaded
   container<string> loaded;
   for(int i = 0; i < _classes.elms(); i++) {
-    loaded.New() = _classes[i].cn();
+    loaded.New() = _classes[i].cn().get();
   }
   
   {
@@ -544,14 +544,14 @@ int y::ldap::server::findAccounts(const string& query, std::vector<UID_NUMBER> &
   return results.size();
 }
 
-UID y::ldap::server::createUID(const string& cn, const string& sn) {
+UID y::ldap::server::createUID(const CN & cn, const SN & sn) {
   boost::locale::generator gen;
   std::locale loc = gen("en_US.UTF-8");
   std::locale::global(loc);
   
   // To lowercase
-  string first = cn;
-  string last = sn;
+  string first = cn.get();
+  string last  = sn.get();
   
   first.toLower().replaceUTF8().keeponlyChars();
   last.toLower().replaceUTF8().keeponlyChars();
@@ -582,14 +582,14 @@ UID y::ldap::server::createUID(const string& cn, const string& sn) {
   }
 }
 
-MAIL y::ldap::server::createMail(const string& cn, const string& sn) {
+MAIL y::ldap::server::createMail(const CN & cn, const SN & sn) {
   boost::locale::generator gen;
   std::locale loc = gen("en_US.UTF-8");
   std::locale::global(loc);
   
   // To lowercase
-  string first(cn);
-  string last(sn);
+  string first(cn.get());
+  string last (sn.get());
   
   first.toLower().replaceUTF8().keeponlyChars();
   last.toLower().replaceUTF8().keeponlyChars();

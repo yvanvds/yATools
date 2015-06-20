@@ -57,9 +57,10 @@ void newStaff::create() {
     gender = new Wt::WComboBox();
     gender->resize(150, 35);
     gender->setStyleClass("form-control");
-    gender->addItem("Man");
-    gender->addItem("Vrouw");
-    gender->addItem("Transgender");
+    
+    gender->addItem(GENDER::toText(GENDER::MALE).wt());
+    gender->addItem(GENDER::toText(GENDER::FEMALE).wt());
+    gender->addItem(GENDER::toText(GENDER::TRANSGENDER).wt());
     table->elementAt(1,3)->addWidget(gender);
     
     table->elementAt(2,0)->addWidget(new Wt::WText("Wisa ID"));
@@ -180,11 +181,11 @@ void newStaff::addAccount() {
   }
   
   y::admin::userAdmin admin(server);
-  y::ldap::account & account = admin.add(
-            firstName->text()
-          , surName->text()
+  /*y::ldap::account & account = admin.add(
+            CN(firstName->text())
+          , SN(surName->text())
           , ROLE(schoolRole)
-          , " "
+          , SCHOOLCLASS(" ")
           , DATE(
               DAY(dateOfBirth->date().day())
             , MONTH(dateOfBirth->date().month())
@@ -192,16 +193,16 @@ void newStaff::addAccount() {
           )
           , WISA_ID(0)
           , PASSWORD(password)
-  );
+  );*/
   server->commitChanges();
   
-  resultName->setText(account.fullName().get().wt());
-  resultUid->setText(account.uid().get().wt());
-  resultMail->setText(account.mail().get().wt());
-  resultMailAlias->setText(account.mail().get().wt());
+  //resultName->setText(account.fullName().get().wt());
+  //resultUid->setText(account.uid().get().wt());
+  //resultMail->setText(account.mail().get().wt());
+  //resultMailAlias->setText(account.mail().get().wt());
   resultPassword->setText(password.wt());
   result->show();
   
-  admin.remove(account);
+  //admin.remove(account);
   server->commitChanges();
 }

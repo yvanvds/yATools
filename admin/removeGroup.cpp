@@ -51,7 +51,7 @@ void removeGroup::parse(int argc, char** argv) {
   }
   
   y::ldap::server s;
-  group & grp = s.getGroup(name, editable);
+  group & grp = s.getGroup(CN(name), editable);
   
   if(grp.isNew()) {
     cout << "This group does not exist." << endl;

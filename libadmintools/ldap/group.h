@@ -40,7 +40,7 @@ namespace y {
       
     private:
       using ldapObject::load;
-      bool load(const string & cn);
+      bool load(const CN & cn);
       bool loadData(const data& d);
       
       virtual bool addNew(dataset & values);

@@ -107,7 +107,7 @@ void topContent::create() {
   }
   
   // show this for last year students (or me for testing)
-  string group = account->schoolClass();
+  string group = account->schoolClass().get();
   TODO(only show when yearbook is open)
   if(group[0] == '6' || account->role().get() == ROLE::ADMIN || rights.has(account->uid(), y::data::ADMIN_YEARBOOK)) {
     mainMenu->addItem("Jaarboek", 

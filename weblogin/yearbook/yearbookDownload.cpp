@@ -109,7 +109,7 @@ void yearbookDownload::generatePDF() {
     content << "\\begin{varwidth}{\\textwidth}" << std::endl;
     content << "\\begin{itemize}" << std::endl;
     DATE date = DATE(DAY(currentEntry.birthday.day()), MONTH(currentEntry.birthday.month()), YEAR(currentEntry.birthday.year()));
-    content << std::endl << "\\bday \\Large " << date.asString() << std::endl;
+    content << std::endl << "\\bday \\Large " << date.get() << std::endl;
     content << "\\end{itemize}" << std::endl;
     content << "\\end{varwidth}" << std::endl;
     

@@ -13,7 +13,7 @@
 
 using namespace std;
 
-TODO(update this class to reflect changes to class, group and role)
+TODO(update this class to reflect changes to class group and role)
 
 addUser & AddUser() {
   static addUser s;
@@ -38,32 +38,33 @@ void addUser::parse(int argc, char ** argv) {
     return;
   }
   
-  ::string cn(argv[0]);
-  ::string sn(argv[1]);
+  y::ldap::account values(nullptr);
   
-  y::ldap::SCHOOLROLE role = y::ldap::ROLE_NONE;
-  if (argc < 4) role = y::ldap::ROLE_EXTERN;
+  values.cn(CN(argv[0]));
+  values.sn(SN(argv[1]));
+  
+  if (argc < 4) values.role(ROLE(ROLE::EXTERN));
   else {
-    role = y::ldap::SchoolRoleText(argv[3]);
-    if(role == y::ldap::ROLE_NONE) {
+    values.role(ROLE(ROLE::toRole(argv[3])));
+    if(values.role().get() == ROLE::NONE) {
       cout << "Invalid role: " << argv[3];
       return;
     }
   }
-  
-  y::ldap::ROLE gid(argc > 3 ? argv[3] : "extern");
-  y::ldap::DATE date(argc > 2 ? argv[2] : "19700101");
-  y::ldap::WISA_ID id(argc > 4 ? std::stoi(argv[4]) : 0);
+
+  values.birthDay(argc > 2 ? DATE(argv[2]) : DATE("19700101"));
+  values.wisaID(argc > 4 ? WISA_ID(std::stoi(argv[4])) : WISA_ID(0));
   ::string password(y::utils::Security().makePassword(8));
   
   y::ldap::server server;
   y::admin::userAdmin admin(&server);
-  y::ldap::account & account = admin.add(cn, sn, gid, date, id, y::ldap::PASSWORD(password));
+  y::ldap::account & account = admin.add(values, PASSWORD(password));
 
   server.commitChanges();
   
-  cout << "Added user "  << account.fullName()() << " to " << account.role()() << endl;
-  cout << "  Login   : " << account.uid()()  << endl;
-  cout << "  Password: " << password         << endl;
-  cout << "  Mail    : " << account.mail()() << endl;
+  cout << "Added user "  << account.fullName().get() << " to " << account.role().get() << endl;
+  cout << "  Login     : " << account.uid      ().get() << endl;
+  cout << "  Password  : " << password                  << endl;
+  cout << "  Mail Login: " << account.mailAlias().get() << endl;
+  cout << "  Mail      : " << account.mail     ().get() << endl;
 }

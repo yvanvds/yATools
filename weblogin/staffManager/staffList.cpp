@@ -138,7 +138,7 @@ void staffList::loadTableContent() {
         table->elementAt(entry, 1)->addWidget(new Wt::WText("leraar"));
       }
       
-      table->elementAt(entry, 2)->addWidget(new Wt::WText(accounts[i].wisaName().wt()));
+      table->elementAt(entry, 2)->addWidget(new Wt::WText(accounts[i].wisaName().get().wt()));
       
       Wt::WPushButton * view = new Wt::WPushButton("edit");
       view->setWidth(90);
@@ -172,7 +172,7 @@ void staffList::loadDialogContent() {
 void staffList::openDialog(int withEntry) {
   ACCOUNTS & accounts = server->getAccounts();
   dialog->setWindowTitle(accounts[withEntry].fullName().get().wt());
-  wisaName->setText(accounts[withEntry].wisaName().wt());  
+  wisaName->setText(accounts[withEntry].wisaName().get().wt());  
   TODO(Make an enum out of this)
   if(accounts[withEntry].role().get() == ROLE::TEACHER) {
     group->setCurrentIndex(0);
@@ -275,7 +275,7 @@ void staffList::saveEdit() {
     case 3: accounts[currentEntry].role(ROLE(ROLE::ADMIN)); break;
   }
   
-  accounts[currentEntry].wisaName(string(wisaName->text()));
+  accounts[currentEntry].wisaName(WISA_NAME(string(wisaName->text())));
   
   server->commitChanges();
   

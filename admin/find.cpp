@@ -30,7 +30,7 @@ void ::find::parse(int argc, char ** argv) {
   
   ::string cn(argv[0]);
   ::string sn;
-  std::vector<y::ldap::UID_NUMBER> results;
+  std::vector<UID_NUMBER> results;
   y::ldap::server s;
   
   if (argc > 1) {
@@ -46,7 +46,7 @@ void ::find::parse(int argc, char ** argv) {
       cout << "Exact match:" << endl;
       for(int i = 0; i < results.size(); i++) {
         y::ldap::account & account = s.getAccount(results[i]);
-        cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
+        cout << "  " << account.fullName().get() << " (" << account.uid().get() << ")" << endl;
       }
       results.clear();
     } else {
@@ -62,7 +62,7 @@ void ::find::parse(int argc, char ** argv) {
       cout << "similar matches:" << endl;
       for(int i = 0; i < results.size(); i++) {
         y::ldap::account & account = s.getAccount(results[i]);
-        cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
+        cout << "  " << account.fullName().get() << " (" << account.uid().get() << ")" << endl;
       }
       results.clear();
     } else {
@@ -80,7 +80,7 @@ void ::find::parse(int argc, char ** argv) {
         cout << "Exact matches:" << endl;
         for(int i = 0; i < results.size(); i++) {
           y::ldap::account & account = s.getAccount(results[i]);
-          cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
+          cout << "  " << account.fullName().get() << " (" << account.uid().get() << ")" << endl;
         }
         results.clear();
       } else {
@@ -95,7 +95,7 @@ void ::find::parse(int argc, char ** argv) {
         cout << "similar matches:" << endl;
         for(int i = 0; i < results.size(); i++) {
           y::ldap::account & account = s.getAccount(results[i]);
-          cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
+          cout << "  " << account.fullName().get() << " (" << account.uid().get() << ")" << endl;
         }
         results.clear();
       } else {
@@ -112,7 +112,7 @@ void ::find::parse(int argc, char ** argv) {
       cout << "Exact matches:" << endl;
       for(int i = 0; i < results.size(); i++) {
         y::ldap::account & account = s.getAccount(results[i]);
-        cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
+        cout << "  " << account.fullName().get() << " (" << account.uid().get() << ")" << endl;
       }
       results.clear();
     } else {
@@ -127,13 +127,11 @@ void ::find::parse(int argc, char ** argv) {
       cout << "similar matches:" << endl;
       for(int i = 0; i < results.size(); i++) {
         y::ldap::account & account = s.getAccount(results[i]);
-        cout << "  " << account.fullName()() << " (" << account.uid()() << ")" << endl;
+        cout << "  " << account.fullName().get() << " (" << account.uid().get() << ")" << endl;
       }
       results.clear();
     } else {
       cout << "No similar matches found" << endl;
     }
-  }
-  
-  
+  } 
 }

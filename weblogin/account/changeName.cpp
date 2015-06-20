@@ -45,13 +45,13 @@ void changeName::create(y::ldap::account * account) {
     firstName = new Wt::WLineEdit();
     firstName->resize(200, 35);
     firstName->setStyleClass("form-control");
-    firstName->setText(account->cn().wt());
+    firstName->setText(account->cn().get().wt());
     table->elementAt(0,1)->addWidget(firstName);
     
     lastName = new Wt::WLineEdit();
     lastName->resize(200, 35);
     lastName->setStyleClass("form-control");
-    lastName->setText(account->sn().wt());
+    lastName->setText(account->sn().get().wt());
     table->elementAt(1,1)->addWidget(lastName);
     
     saveButton = new Wt::WPushButton("wijzigen");
@@ -78,10 +78,10 @@ void changeName::nameChanged() {
   fullname += " ";
   fullname += sn;
   
-  account->cn(cn);
-  account->sn(sn);
+  account->cn(CN(cn));
+  account->sn(SN(sn));
   account->fullName(FULL_NAME(fullname));
-  account->mail(MAIL(server->createMail(cn,sn)));
+  account->mail(MAIL(server->createMail(CN(cn),SN(sn))));
   server->commitChanges();
   
   Wt::WMessageBox * message = new Wt::WMessageBox(

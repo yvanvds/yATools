@@ -89,7 +89,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
   container<wisaImport::wisaGroup> & wisaGroups = caller->getParentObject()->getWisaGroups();
   for (int i = 0; i < wisaGroups.elms(); i++) {
     if(wisaGroups[i].link == nullptr) {
-      y::ldap::group & g = caller->getParentObject()->ldap()->getGroup(wisaGroups[i].name, false);
+      y::ldap::group & g = caller->getParentObject()->ldap()->getGroup(CN(wisaGroups[i].name), false);
       g.flagForCommit();
       string message("Klas ");
       message += wisaGroups[i].name;
@@ -105,16 +105,16 @@ void commitThreadFunc(wisaCommitChanges * caller) {
     wisaImport::wisaAccount & account = wisaAccounts[i];
     if(account.link == nullptr) {
       // create new account
-      string cn(account.cn);
-      string sn(account.sn);
-      string schoolClass(account.schoolClass);
+      CN cn(account.cn);
+      SN sn(account.sn);
+      SCHOOLCLASS schoolClass(account.schoolClass);
       ROLE gid(ROLE::STUDENT);
       DATE date(account.date, true);
       WISA_ID id(account.ID);
       string password(y::utils::Security().makePassword(8));
       
       
-      y::ldap::account & acc = admin.add(cn, sn, gid, schoolClass, date, id, PASSWORD(password));
+      /*y::ldap::account & acc = admin.add(cn, sn, gid, schoolClass, date, id, PASSWORD(password));
       string message("Account voor ");
       message += acc.fullName().get();
       message += " werd toegevoegd";
@@ -140,16 +140,16 @@ void commitThreadFunc(wisaCommitChanges * caller) {
     } else {
       // account exists, but may not be up to date
       bool namechanged = false;
-      if(account.link->sn() != account.sn) {
-        account.link->sn(account.sn);
+      if(account.link->sn() != SN(account.sn)) {
+        account.link->sn(SN(account.sn));
         string message("Naam voor ");
         message += account.link->fullName().get();
         message += " werd gewijzigd";
         caller->addMessage(message);
         namechanged = true;
       }
-      if(account.link->cn() != account.cn) {
-        account.link->cn(account.cn);
+      if(account.link->cn() != CN(account.cn)) {
+        account.link->cn(CN(account.cn));
         string message("Voornaam voor ");
         message += account.link->fullName().get();
         message += " werd gewijzigd";
@@ -172,8 +172,8 @@ void commitThreadFunc(wisaCommitChanges * caller) {
         caller->addMessage(message);
       }
       
-      if(account.link->schoolClass() != account.schoolClass) {
-        /*y::ldap::schoolClass & oldClass = caller->getParentObject()->ldap()->getClass(account.link->schoolClass()(), false);
+      if(account.link->schoolClass() != SCHOOLCLASS(account.schoolClass)) {
+        y::ldap::schoolClass & oldClass = caller->getParentObject()->ldap()->getClass(account.link->schoolClass()(), false);
         oldClass.removeMember(account.link->dn()());
         y::ldap::group & newGroup = caller->getParentObject()->ldap()->getGroup(account.group, false);
         newGroup.addMember(account.link->dn()());
@@ -181,7 +181,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
         string message("Klas voor ");
         message += account.link->fullName()();
         message += " werd gewijzigd";
-        caller->addMessage(message);*/
+        caller->addMessage(message);
       }
       
       DATE date(account.date, true);
@@ -191,7 +191,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
         message += account.link->fullName().get();
         message += " werd gewijzigd";
         caller->addMessage(message);
-      }
+      }*/
     }
   }
   

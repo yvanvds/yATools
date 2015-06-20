@@ -30,8 +30,8 @@ namespace y {
       bool load(const DN & id);
       bool load(const data& d);
       
-      const DN     & dn() const;
-      const string & cn() const; void cn(const string & value);
+      const DN & dn() const;
+      const CN & cn() const; void cn(const CN & value);
       
       void flagForCommit    () { _flaggedForCommit  = true; }
       // will flag this object for removal during server commit
@@ -50,8 +50,8 @@ namespace y {
       virtual bool update(dataset & values) = 0;
      
       y::ldap::server * server;
-      watch<DN> _dn;
-      watch<string> _cn;
+      stringWatch<DN> _dn;
+      stringWatch<CN> _cn;
       
       bool _new     ; // false if loaded from ldap
       bool _editable;

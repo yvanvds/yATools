@@ -436,7 +436,7 @@ DATE::DATE(const string & date, bool fromWisa) : day(1), month(1), year(1) {
 DATE::DATE(const DAY& day, const MONTH& month, const YEAR& year) 
         : day(day), month(month), year(year) {}
 
-int DATE::get() const {
+int DATE::asInt() const {
   int result = year.get();
   result *= 100;
   result += month.get();
@@ -445,7 +445,7 @@ int DATE::get() const {
   return result;
 }
 
-string DATE::asString() const {
+string DATE::get() const {
   std::stringstream result;
   result << day.get();
   switch(month.get()) {
@@ -562,6 +562,22 @@ bool SCHOOLCLASS::operator !=(const SCHOOLCLASS & ref) const{
 ///////////////////////////////////////
 // GENDER
 ///////////////////////////////////////
+
+string GENDER::toText(TYPE value) {
+  switch(value) {
+    case MALE       : return "male";
+    case FEMALE     : return "female";
+    case TRANSGENDER: return "transgender";
+    default: return "none";
+  }
+}
+
+GENDER::TYPE GENDER::toGender(const string & value) {
+  if(value == "male"       ) return MALE;
+  if(value == "female"     ) return FEMALE;
+  if(value == "transgender") return TRANSGENDER;
+  return NONE;
+}
 
 GENDER::TYPE GENDER::get() const {
   return val;
@@ -768,3 +784,130 @@ bool MEMBER::operator ==(const MEMBER & ref) const{
 bool MEMBER::operator !=(const MEMBER & ref) const{
   return val != ref.val;
 }
+
+///////////////////////////////////////
+// COUNTRY
+///////////////////////////////////////
+
+const string & COUNTRY::get() const {
+  return val;
+}
+
+COUNTRY & COUNTRY::operator =(const COUNTRY & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool COUNTRY::operator ==(const COUNTRY & ref) const{
+  return val == ref.val;
+}
+
+bool COUNTRY::operator !=(const COUNTRY & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// STREET
+///////////////////////////////////////
+
+const string & STREET::get() const {
+  return val;
+}
+
+STREET & STREET::operator =(const STREET & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool STREET::operator ==(const STREET & ref) const{
+  return val == ref.val;
+}
+
+bool STREET::operator !=(const STREET & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// HOUSENUMBER
+///////////////////////////////////////
+
+int HOUSENUMBER::get() const {
+  return val;
+}
+
+HOUSENUMBER & HOUSENUMBER::operator=(const HOUSENUMBER &ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool HOUSENUMBER::operator==(const HOUSENUMBER &ref) const{
+  return val == ref.val;
+}
+
+bool HOUSENUMBER::operator!=(const HOUSENUMBER &ref) const {
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// HOUSENUMBER_ADD
+///////////////////////////////////////
+
+const string & HOUSENUMBER_ADD::get() const {
+  return val;
+}
+
+HOUSENUMBER_ADD & HOUSENUMBER_ADD::operator =(const HOUSENUMBER_ADD & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool HOUSENUMBER_ADD::operator ==(const HOUSENUMBER_ADD & ref) const{
+  return val == ref.val;
+}
+
+bool HOUSENUMBER_ADD::operator !=(const HOUSENUMBER_ADD & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// CITY
+///////////////////////////////////////
+
+const string & CITY::get() const {
+  return val;
+}
+
+CITY & CITY::operator =(const CITY & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool CITY::operator ==(const CITY & ref) const{
+  return val == ref.val;
+}
+
+bool CITY::operator !=(const CITY & ref) const{
+  return val != ref.val;
+}
+
+///////////////////////////////////////
+// POSTAL_CODE
+///////////////////////////////////////
+
+const string & POSTAL_CODE::get() const {
+  return val;
+}
+
+POSTAL_CODE & POSTAL_CODE::operator =(const POSTAL_CODE & ref) {
+  if(this != &ref) val = ref.val;
+  return *this;
+}
+
+bool POSTAL_CODE::operator ==(const POSTAL_CODE & ref) const{
+  return val == ref.val;
+}
+
+bool POSTAL_CODE::operator !=(const POSTAL_CODE & ref) const{
+  return val != ref.val;
+}
+

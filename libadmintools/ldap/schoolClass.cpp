@@ -17,49 +17,35 @@
 
 y::ldap::schoolClass::schoolClass(y::ldap::server* server) 
         : ldapObject(server),
-          _description(""),
-          _titular(""),
-          _adjunct(""),
-          _adminCode(0),
-          _schoolID(0)
+          _description("description" , DESCRIPTION("")),
+          _titular    ("titular"     , TITULAR    (DN(""))),
+          _adjunct    ("adjunct"     , ADJUNCT    (DN(""))),
+          _adminGroup ("adminGroupID", ADMINGROUP (0 )),
+          _schoolID   ("schoolID"    , SCHOOL_ID  (0 ))
           {}
 
-bool y::ldap::schoolClass::load(const string & cn) {
+bool y::ldap::schoolClass::load(const CN & cn) {
   dataset d(server);
-  string filter("cn=" + cn);
+  string filter("cn=" + cn.get());
   
   if(d.create(filter, "ou=classes")) {
     loadData(d.get(0));
   } else {
-    _cn(cn);
+    _cn(CN(cn));
   }
   
   return !_new;
 }
 
 bool y::ldap::schoolClass::loadData(const data& d) {
-  _dn(DN(d.getValue("DN")), true);
-  _cn(d.getValue("cn"), true);
-  _description(d.getValue("description"), true);
-  _titular(d.getValue("titular"), true);
-  _adjunct(d.getValue("adjunct"), true);
-  try {
-    _adminCode(d.getValue("adminGroupID").asInt(), true);
-  } catch (std::exception & e) {
-    string message("Error in schoolClass::loadData adminGroupID: ");
-    message += e.what();
-    utils::Log().add(message);
-    _adminCode(0);
-  }
+  _dn.readFromLdap(d);
+  _cn.readFromLdap(d);
+  _description.readFromLdap(d);
+  _titular.readFromLdap(d);
+  _adjunct.readFromLdap(d);
+  _adminGroup.readFromLdap(d);
+  _schoolID.readFromLdap(d);
   
-  try {
-    _schoolID(d.getValue("schoolID").asInt(), true);
-  } catch (std::exception & e) {
-    string message("Error in schoolClass::loadData schoolID: ");
-    message += e.what();
-    utils::Log().add(message);
-    _schoolID(0);
-  }
   
   for(int i = 0; i < d.elms("member"); i++) {
     string & student = _students.New();
@@ -99,11 +85,11 @@ bool y::ldap::schoolClass::addStudent(const DN& dn) {
 void y::ldap::schoolClass::clear() {
   _students.clear();
   _studentsInLDAP.clear();
-  _description("");
-  _titular("");
-  _adjunct("");
-  _adminCode(0);
-  _schoolID(0);
+  _description.reset(DESCRIPTION(""));
+  _titular    .reset(TITULAR    (DN("")));
+  _adjunct    .reset(ADJUNCT    (DN("")));
+  _adminGroup .reset(ADMINGROUP (0 ));
+  _schoolID   .reset(SCHOOL_ID  (0 ));
 }
 
 void y::ldap::schoolClass::beforeRemove() {
@@ -112,7 +98,7 @@ void y::ldap::schoolClass::beforeRemove() {
 
 bool y::ldap::schoolClass::addNew(dataset& values) {
   // create class first
-  string dn("cn=" + _cn());
+  string dn("cn=" + _cn().get());
   dn += ",ou=classes,";
   dn += utils::Config().getLdapBaseDN();
   _dn(DN(dn), true);
@@ -124,34 +110,34 @@ bool y::ldap::schoolClass::addNew(dataset& values) {
   
   data & cn = values.New(NEW);
   cn.add("type", "cn");
-  cn.add("values", _cn());
+  cn.add("values", _cn().get());
   
   data & description = values.New(NEW);
   description.add("type", "description");
-  description.add("values", _description());
+  description.add("values", _description().get());
   
-  if(adminCode() != 0) {
-    data & adminCode = values.New(NEW);
-    adminCode.add("type", "adminGroupID");
-    adminCode.add("values", string(_adminCode()));
+  if(adminGroup() != 0) {
+    data & adminGroup = values.New(NEW);
+    adminGroup.add("type", "adminGroupID");
+    adminGroup.add("values", string(_adminGroup().get()));
   }
   
   if(schoolID() != 0) {
     data & schoolID = values.New(NEW);
     schoolID.add("type", "schoolID");
-    schoolID.add("values", string(_schoolID()));
+    schoolID.add("values", string(_schoolID().get()));
   }
   
   if(!titular().get().empty()) {
     data & titular = values.New(NEW);
     titular.add("type", "titular");
-    titular.add("values", _titular());
+    titular.add("values", _titular().get().get());
   }
   
   if(!adjunct().get().empty()) {
     data & adjunct = values.New(NEW);
     adjunct.add("type", "adjunct");
-    adjunct.add("values", _adjunct());
+    adjunct.add("values", _adjunct().get().get());
   }
   
   if(_students.elms()) {
@@ -202,35 +188,11 @@ bool y::ldap::schoolClass::update(dataset& values) {
     }
   }
   
-  if(_description.changed()) {
-    data & description = values.New(MODIFY);
-    description.add("type", "description");
-    description.add("values", _description());
-  }
-  
-  if(_adminCode.changed()) {
-    data & adminCode = values.New(MODIFY);
-    adminCode.add("type", "adminGroupID");
-    adminCode.add("values", string(_adminCode()));
-  }
-  
-  if(_schoolID.changed()) {
-    data & schoolID = values.New(MODIFY);
-    schoolID.add("type", "schoolID");
-    schoolID.add("values", string(_schoolID()));
-  }
-  
-  if(_titular.changed()) {
-    data & titular = values.New(MODIFY);
-    titular.add("type", "titular");
-    titular.add("values", _titular());
-  }
-  
-  if(_adjunct.changed()) {
-    data & adjunct = values.New(MODIFY);
-    adjunct.add("type", "adjunct");
-    adjunct.add("values", _adjunct());
-  }
+  _description.saveToLdap(values);
+  _adminGroup.saveToLdap(values);
+  _schoolID.saveToLdap(values);
+  _titular.saveToLdap(values);
+  _adjunct.saveToLdap(values);
   
   // update smartschool
   y::Smartschool().addClass(*this);
@@ -238,46 +200,46 @@ bool y::ldap::schoolClass::update(dataset& values) {
 }
 
 const string & y::ldap::schoolClass::description() const {
-  return _description();
+  return _description().get();
 }
 
 DN y::ldap::schoolClass::titular() const {
-  return DN(_titular());
+  return _titular().get();
 }
 
 DN y::ldap::schoolClass::adjunct() const {
-  return DN(_adjunct());
+  return _adjunct().get();
 }
 
-int y::ldap::schoolClass::adminCode() const {
-  return _adminCode();
+int y::ldap::schoolClass::adminGroup() const {
+  return _adminGroup().get();
 }
 
 int y::ldap::schoolClass::schoolID() const {
-  return _schoolID();
+  return _schoolID().get();
 }
 
 y::ldap::schoolClass & y::ldap::schoolClass::description(const string& desc) {
-  _description(desc);
+  _description(DESCRIPTION(desc));
   return *this;
 }
 
 y::ldap::schoolClass & y::ldap::schoolClass::titular(const DN& dn) {
-  _titular(dn.get());
+  _titular(TITULAR(dn));
   return *this;
 }
 
 y::ldap::schoolClass & y::ldap::schoolClass::adjunct(const DN& dn) {
-  _adjunct(dn.get());
+  _adjunct(ADJUNCT(dn));
   return *this;
 }
 
-y::ldap::schoolClass & y::ldap::schoolClass::adminCode(int id) {
-  _adminCode(id);
+y::ldap::schoolClass & y::ldap::schoolClass::adminGroup(int id) {
+  _adminGroup(ADMINGROUP(id));
   return *this;
 }
 
 y::ldap::schoolClass & y::ldap::schoolClass::schoolID(int id) {
-  _schoolID(id);
+  _schoolID(SCHOOL_ID(id));
   return *this;
 }

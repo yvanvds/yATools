@@ -17,10 +17,8 @@ namespace y {
     public:
       userAdmin(y::ldap::server * server) : server(server) {}
       
-      y::ldap::account & add(const string & cn, const string & sn,
-               const ROLE & gid, 
-               const string & schoolClass, const DATE & dateOfBirth, 
-               const WISA_ID & id, const PASSWORD & pw);
+      // the account argument is only used to retrieve values from
+      y::ldap::account & add(const y::ldap::account & values, const PASSWORD & pw);
       
       void remove(const y::ldap::account & acc);
       

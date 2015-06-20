@@ -12,15 +12,39 @@
 
 #pragma once
 
+#include "ldap/data.h"
+#include "ldap/dataset.h"
+#include "utils/log.h"
+#include "utils/string.h"
+#include "ldap/attributes.h"
 
-template <class T> class watch {
-private:
-  T    _value  ;
-  bool _changed;
+template <class T, typename V> 
+class watchBase {
+protected:
+  string _identifier;
+  T      _value     ;
+  bool   _changed   ;  
+  bool   _inLdap;
   
 public:
-  watch()                :                _changed(false) {}
-  watch(const T & value) : _value(value), _changed(false) {}
+  watchBase(const string & identifier) 
+    : _identifier(identifier)
+    , _changed(false)
+    , _inLdap(false)
+    {}
+  
+  watchBase(const string & identifier, const T & value) 
+    : _identifier(identifier)
+    , _value(value)
+    , _changed(false) 
+    , _inLdap(false)
+    {}
+  
+  void reset(const T & value) {
+    _value = value;
+    _changed = false;
+    _inLdap = false;;
+  }
   
   const T & operator()() const { return _value; }
   
@@ -28,6 +52,9 @@ public:
     _value = value;
     if(!silent) _changed = true;
   }
+  
+  virtual void readFromLdap(const y::ldap::data & d) = 0;
+  virtual void saveToLdap(y::ldap::dataset & values) = 0;
   
   bool changed () {
     return _changed;
@@ -37,4 +64,177 @@ public:
     _changed = false;
   }
   
+};
+
+
+template<class T>
+class intWatch : public watchBase<T, int> {
+  public:
+  intWatch(const string & identifier) : watchBase<T, int>(identifier) {}
+  intWatch(const string & identifier, const T & value) 
+  : watchBase<T, int>(identifier, value) {}
+  
+  void readFromLdap(const y::ldap::data & d) {
+    if(d.getValue(watchBase<T, int>::_identifier).size()) {
+      try {
+        watchBase<T, int>::_value = T(d.getValue(watchBase<T, int>::_identifier).asInt());
+        watchBase<T, int>::_inLdap = true;
+      } catch (const std::invalid_argument &e) {
+        string message("Invalid ldap::GID_NUMBER conversion: ");
+        message += d.getValue(watchBase<T, int>::_identifier);
+        y::utils::Log().add(message);
+      }     
+    }
+  }
+  
+  void saveToLdap(y::ldap::dataset & values) {
+    if(!watchBase<T, int>::_changed) return;
+    
+    string s = string(watchBase<T, int>::_value.get());
+    
+    if(!watchBase<T, int>::_inLdap) {
+      y::ldap::data & d = values.New(y::ldap::ADD);
+      d.add("type", watchBase<T, int>::_identifier);
+      d.add("values", s);
+    } else {
+      y::ldap::data & d = values.New(y::ldap::MODIFY);
+      d.add("type", watchBase<T, int>::_identifier);
+      d.add("values", s);
+    }
+    
+    watchBase<T, int>::unFlag();
+  }
+}; 
+
+template<class T>
+class stringWatch : public watchBase<T, string> {
+  public:
+  stringWatch(const string & identifier) : watchBase<T, string>(identifier) {}
+  stringWatch(const string & identifier, const T & value) 
+  : watchBase<T, string>(identifier, value) {}
+  
+  void readFromLdap(const y::ldap::data & d) {
+    if(d.getValue(watchBase<T, string>::_identifier).size()) {
+     watchBase<T, string>::_value = T(d.getValue(watchBase<T, string>::_identifier));
+     watchBase<T, string>::_inLdap = true;
+    }
+  }
+  
+  void saveToLdap(y::ldap::dataset & values) {
+    if(!watchBase<T, string>::_changed) return;
+    
+    string s = watchBase<T, string>::_value.get();
+    
+    if(!watchBase<T, string>::_inLdap) {
+      y::ldap::data & d = values.New(y::ldap::ADD);
+      d.add("type", watchBase<T, string>::_identifier);
+      d.add("values", s);
+    } else {
+      y::ldap::data & d = values.New(y::ldap::MODIFY);
+      d.add("type", watchBase<T, string>::_identifier);
+      d.add("values", s);
+    }
+    
+    watchBase<T, string>::unFlag();
+  }  
+};
+
+template<class T>
+class roleWatch : public watchBase<T, ROLE> {
+  public:
+  roleWatch(const string & identifier) : watchBase<T, ROLE>(identifier) {}
+  roleWatch(const string & identifier, const T & value) 
+  : watchBase<T, ROLE>(identifier, value) {}
+  
+  void readFromLdap(const y::ldap::data & d) {
+    if(d.getValue(watchBase<T, ROLE>::_identifier).size()) {
+     watchBase<T, ROLE>::_value = T(ROLE::toRole(d.getValue(watchBase<T, ROLE>::_identifier)));
+     watchBase<T, ROLE>::_inLdap = true;
+    }
+  }
+  
+  void saveToLdap(y::ldap::dataset & values) {
+    if(!watchBase<T, ROLE>::_changed) return;
+    
+    string s = ROLE::toText(watchBase<T, ROLE>::_value.get());
+    
+    if(!watchBase<T, ROLE>::_inLdap) {
+      y::ldap::data & d = values.New(y::ldap::ADD);
+      d.add("type", watchBase<T, ROLE>::_identifier);
+      d.add("values", s);
+    } else {
+      y::ldap::data & d = values.New(y::ldap::MODIFY);
+      d.add("type", watchBase<T, ROLE>::_identifier);
+      d.add("values", s);
+    }
+    
+    watchBase<T, ROLE>::unFlag();
+  }  
+};
+
+template<class T>
+class genderWatch : public watchBase<T, GENDER> {
+  public:
+  genderWatch(const string & identifier) : watchBase<T, GENDER>(identifier) {}
+  genderWatch(const string & identifier, const T & value) 
+  : watchBase<T, GENDER>(identifier, value) {}
+  
+  void readFromLdap(const y::ldap::data & d) {
+    if(d.getValue(watchBase<T, GENDER>::_identifier).size()) {
+     watchBase<T, GENDER>::_value = T(GENDER::toGender(d.getValue(watchBase<T, GENDER>::_identifier)));
+     watchBase<T, GENDER>::_inLdap = true;
+    }
+  }
+  
+  void saveToLdap(y::ldap::dataset & values) {
+    if(!watchBase<T, GENDER>::_changed) return;
+    
+    string s = GENDER::toText(watchBase<T, GENDER>::_value.get());
+    
+    if(!watchBase<T, GENDER>::_inLdap) {
+      y::ldap::data & d = values.New(y::ldap::ADD);
+      d.add("type", watchBase<T, GENDER>::_identifier);
+      d.add("values", s);
+    } else {
+      y::ldap::data & d = values.New(y::ldap::MODIFY);
+      d.add("type", watchBase<T, GENDER>::_identifier);
+      d.add("values", s);
+    }
+    
+    watchBase<T, GENDER>::unFlag();
+  }  
+};
+
+
+template<class T>
+class dnWatch : public watchBase<T, DN> {
+  public:
+  dnWatch(const string & identifier) : watchBase<T, DN>(identifier) {}
+  dnWatch(const string & identifier, const T & value) 
+  : watchBase<T, DN>(identifier, value) {}
+  
+  void readFromLdap(const y::ldap::data & d) {
+    if(d.getValue(watchBase<T, DN>::_identifier).size()) {
+     watchBase<T, DN>::_value = T(DN(d.getValue(watchBase<T, DN>::_identifier)));
+     watchBase<T, DN>::_inLdap = true;
+    }
+  }
+  
+  void saveToLdap(y::ldap::dataset & values) {
+    if(!watchBase<T, DN>::_changed) return;
+    
+    string s = watchBase<T, DN>::_value.get().get();
+    
+    if(!watchBase<T, DN>::_inLdap) {
+      y::ldap::data & d = values.New(y::ldap::ADD);
+      d.add("type", watchBase<T, DN>::_identifier);
+      d.add("values", s);
+    } else {
+      y::ldap::data & d = values.New(y::ldap::MODIFY);
+      d.add("type", watchBase<T, DN>::_identifier);
+      d.add("values", s);
+    }
+    
+    watchBase<T, DN>::unFlag();
+  }  
 };

@@ -170,7 +170,7 @@ int y::smartschool::savePassword(y::ldap::account& account) {
 }
 
 void y::smartschool::saveUser(y::ldap::account& account) {
-  std::string role;
+  string role;
   if(!account.isStaff() && !account.isStudent()) return;
   
   if(account.role().get() == ROLE::DIRECTOR) {
@@ -181,33 +181,54 @@ void y::smartschool::saveUser(y::ldap::account& account) {
     role = "Leerling";
   }
   
+  string gender("m");
+  if(account.gender().get() == GENDER::FEMALE) {
+    gender = "v";
+  }
+  
+  string streetAddress = account.street().get();
+  streetAddress += " ";
+  streetAddress += account.houseNumber().get();
+  if (account.houseNumberAdd().get().size()) {
+    streetAddress += " bus ";
+    streetAddress += account.houseNumberAdd().get();
+  }
+  
+  string birthDay = string(account.birthDay().getYear());
+  birthDay += "-"; birthDay += string(account.birthDay().getMonth());
+  birthDay += "-"; birthDay += string(account.birthDay().getDay());
+  
+  string wisaID;
+  if(account.isStaff()) wisaID = account.wisaName().get();
+  else wisaID = string(account.wisaID().get());
+  
   soap_dom_element result;
   if(service.saveUser(
           y::utils::Config().getSSPw().ss(),
-          std::to_string(account.uidNumber().get()) , // internal number
+          wisaID.ss() , // internal number
           account.uid().get().ss()                 , // username
           account.getPasswordText().ss()       , // password
           "", // password for first co-account
           "", // password for second co-account
-          account.cn().ss()                  , // first name
-          account.sn().ss()                  , // last name
+          account.cn().get().ss()                  , // first name
+          account.sn().get().ss()                  , // last name
           "", // extra names
           "", // initials
-          "", // sex
-          "", // birthday
-          "", // birthplace
-          "", // birthcountry
-          "", // street address
-          "", // postal code
-          "", // city
-          "", // country
+          gender.ss(), // sex
+          birthDay.ss(), // birthday
+          account.birthPlace().get().ss(), // birthplace
+          account.nationality().get().ss(), // birthcountry
+          streetAddress.ss(), // street address
+          account.postalCode().get().ss(), // postal code
+          account.city().get().ss(), // city
+          account.country().get().ss(), // country
           account.mail().get().ss(), // email
           "", // mobile phone
           "", // home phone
           "", // fax
-          "", // rijksregisternummer
-          "", // stamboeknummer
-          role, // basisrol
+          account.registerID().get().ss(), // rijksregisternummer
+          string(account.stemID().get()).ss(), // stamboeknummer
+          role.ss(), // basisrol
           "", // untisveld
           result
           ) != SOAP_OK) {
@@ -256,7 +277,7 @@ int y::smartschool::addClass(y::ldap::schoolClass & group) {
   soap_dom_element result;
   string parent;
   
-  switch(group.cn()[0]) {
+  switch(group.cn().get()[0]) {
     case '1': parent = "1stejaar"; break;
     case '2': parent = "2dejaar"; break;
     case '3': parent = "3dejaar"; break;
@@ -267,13 +288,13 @@ int y::smartschool::addClass(y::ldap::schoolClass & group) {
   }
   
   string description("Leerlingen ");
-  description += group.cn(); 
+  description += group.cn().get(); 
   
   if(service.saveClass(
           y::utils::Config().getSSPw().ss() , // password smartschool
-          group.cn().ss()                   , // group name
+          group.cn().get().ss()                   , // group name
           description.ss()                  , // group description
-          group.cn().ss()                   , // unique group ID
+          group.cn().get().ss()                   , // unique group ID
           parent.ss()                       , // parent for this group
           ""                                , // koppeling schoolagenda
           "125252"                          , // institute number
@@ -291,7 +312,7 @@ int y::smartschool::deleteClass(y::ldap::schoolClass & group) {
   soap_dom_element result;
   if(service.delClass(
           y::utils::Config().getSSPw().ss(), // password smartschool
-          group.cn().ss()                  , // unique group ID
+          group.cn().get().ss()                  , // unique group ID
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);

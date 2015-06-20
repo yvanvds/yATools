@@ -15,20 +15,14 @@
 #include <assert.h>
 
 
-y::ldap::account & y::admin::userAdmin::add(const string & cn, 
-                                            const string & sn,
-                                            const ROLE & gid, 
-                                            const string & schoolClass,
-                                            const DATE & dateOfBirth,
-                                            const WISA_ID & id, 
-                                            const PASSWORD & pw) {
+y::ldap::account & y::admin::userAdmin::add(const y::ldap::account & values, const PASSWORD & pw) {
   
   y::ldap::account tempAccount(server);
-  tempAccount.uid(UID(server->createUID(cn, sn)));
-  tempAccount.role(gid); 
+  tempAccount.uid(UID(server->createUID(values.cn(), values.sn())));
+  tempAccount.role(values.role()); 
   
   // set group id
-  switch(gid.get()) {
+  switch(values.role().get()) {
     case ROLE::EXTERN:
     case ROLE::EXTERN_WITH_MAIL:
       tempAccount.groupID(GID_NUMBER(20009));
@@ -59,30 +53,48 @@ y::ldap::account & y::admin::userAdmin::add(const string & cn,
     newAccount.groupID(tempAccount.groupID());
   }
   
-  newAccount.cn(cn);
-  newAccount.sn(sn);
+  newAccount.cn(values.cn());
+  newAccount.sn(values.sn());
   
-  string fullName(cn);
-  fullName += " "; fullName += sn;
+  string fullName(values.cn().get());
+  fullName += " "; fullName += values.sn().get();
   newAccount.fullName(FULL_NAME(fullName));
   
-  newAccount.birthDay(dateOfBirth);
-  newAccount.wisaID(id);
-  newAccount.password(pw);
   
-  newAccount.mail(server->createMail(cn, sn));
+  newAccount.wisaID(values.wisaID());
+  newAccount.wisaName(values.wisaName());
+  newAccount.mail(server->createMail(values.cn(), values.sn()));
+  string alias = newAccount.uid().get();
+  alias += "@";
+  alias += utils::Config().getDomain();
+  newAccount.mailAlias(MAIL_ALIAS(alias));
+  newAccount.birthDay(values.birthDay());
+  newAccount.password(pw);
   newAccount.role(tempAccount.role());
   newAccount.groupID(tempAccount.groupID());
-  newAccount.schoolClass(schoolClass);
+  newAccount.schoolClass(values.schoolClass());
+  newAccount.birthPlace(values.birthPlace());
+  newAccount.gender(values.gender());
+  newAccount.adminGroup(values.adminGroup());
+  newAccount.registerID(values.registerID());
+  newAccount.nationality(values.nationality());
+  newAccount.stemID(values.stemID());
+  newAccount.schoolID(values.schoolID());
+  newAccount.houseNumber(values.houseNumber());
+  newAccount.houseNumberAdd(values.houseNumberAdd());
+  newAccount.city(values.city());
+  newAccount.postalCode(values.postalCode());
+  newAccount.street(values.street());
+  newAccount.country(values.country());
   
   // add to group
   if(newAccount.isStaff()) {
-    y::ldap::group & mailGroup = server->getGroup("personeel", true);
+    y::ldap::group & mailGroup = server->getGroup(CN("personeel"), true);
     mailGroup.members().New() = newAccount.mail().get();
     mailGroup.flagForCommit();
   } else if(newAccount.isStudent()) {
     // this is a student belonging to a classgroup
-    y::ldap::schoolClass & schoolClass = server->getClass(newAccount.schoolClass());
+    y::ldap::schoolClass & schoolClass = server->getClass(CN(newAccount.schoolClass().get()));
     schoolClass.addStudent(newAccount.dn());
     schoolClass.flagForCommit();
   }
@@ -94,7 +106,7 @@ void y::admin::userAdmin::remove(const y::ldap::account& acc) {
   // remove from groups first
   // if personeel, remove from that group
   if (acc.isStaff()) {
-    y::ldap::group & personeel = server->getGroup("personeel", true);
+    y::ldap::group & personeel = server->getGroup(CN("personeel"), true);
     container<string> & members = personeel.members();
     for(int i = 0; i < members.elms(); i++) {
       if (members[i] == acc.mail().get()) {
@@ -116,7 +128,7 @@ void y::admin::userAdmin::remove(const y::ldap::account& acc) {
   
   // remove from class group
   if(acc.isStudent()) {
-    y::ldap::schoolClass & schoolClass = server->getClass(acc.schoolClass());
+    y::ldap::schoolClass & schoolClass = server->getClass(CN(acc.schoolClass().get()));
     schoolClass.removeStudent(acc.dn());
     schoolClass.flagForCommit();
   }

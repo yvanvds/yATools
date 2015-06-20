@@ -43,7 +43,7 @@ void password::parse(int argc, char ** argv) {
     }
     
     y::ldap::server server;
-    y::ldap::account & account = server.getAccount(y::ldap::UID(uid));
+    y::ldap::account & account = server.getAccount(UID(uid));
     if(account.isNew()) {
       cout << "This account does not exist." << endl;
       return;
@@ -62,11 +62,11 @@ void password::parse(int argc, char ** argv) {
         return;
       }
       
-      account.password(y::ldap::PASSWORD(password));
+      account.password(PASSWORD(password));
       server.commitChanges();
       
-      cout << "user    : " << account.uid()() << endl;
-      cout << "password: " << password        << endl;
+      cout << "user    : " << account.uid().get() << endl;
+      cout << "password: " << password            << endl;
       
     }
   }
