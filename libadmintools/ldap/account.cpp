@@ -17,8 +17,7 @@
 
 TODO(base account on ldapObject)
 
-const string TYPE_UID      ("uid"      );
-const string TYPE_UIDNUMBER("uidNumber");
+
 
 y::ldap::account::account(y::ldap::server * server) :
   server(server),
@@ -26,12 +25,12 @@ y::ldap::account::account(y::ldap::server * server) :
   _uidNumber     (TYPE_UIDNUMBER      , UID_NUMBER (0 )),
   _uid           (TYPE_UID            , UID        ("")),
   _dn            ("DN"                , DN         ("")),
-  _cn            ("cn"                , CN         ("")),
+  _cn            (TYPE_CN             , CN         ("")),
   _sn            ("sn"                , SN         ("")),
   _fullName      ("displayName"       , FULL_NAME  ("")),
   _homeDir       ("homeDirectory"     , HOMEDIR    ("")),
   _wisaID        ("wisaID"            , WISA_ID    (0 )),
-  _wisaName      ("wisaName"          , WISA_NAME  ("")),
+  _wisaName      (TYPE_WISANAME       , WISA_NAME  ("")),
   _mail          ("mail"              , MAIL       ("")),
   _mailAlias     ("mailAlias"         , MAIL_ALIAS ("")),
   _birthDay      ("birthday"          , DATE(DAY(1), MONTH(1), YEAR(1))),
@@ -131,7 +130,7 @@ bool y::ldap::account::load(const UID & id) {
   return !_new;
 }
 
-bool y::ldap::account::load(UID_NUMBER id) {
+bool y::ldap::account::load(const UID_NUMBER & id) {
   dataset d(server);
   string filter(TYPE_UIDNUMBER);
   filter += "=" + string(id.get());
@@ -146,6 +145,18 @@ bool y::ldap::account::load(UID_NUMBER id) {
 bool y::ldap::account::load(const DN & id) {
   dataset d(server);  
   if(d.createFromDN(id.get())) {
+    load(d.get(0));
+  }
+  
+  return !_new;
+}
+
+bool y::ldap::account::load(const WISA_NAME & id) {
+  dataset d(server);
+  string filter(TYPE_WISANAME);
+  filter += "=" + string(id.get());
+  
+  if(d.create(filter)) {
     load(d.get(0));
   }
   

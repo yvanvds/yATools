@@ -23,11 +23,11 @@ namespace y {
       
       void clear();
       
-      const string & description() const; schoolClass & description(const string & desc);
-            DN       titular    () const; schoolClass & titular    (const DN     & dn  );
-            DN       adjunct    () const; schoolClass & adjunct    (const DN     & dn  );
-      int            adminGroup () const; schoolClass & adminGroup (      int      id  );
-      int            schoolID   () const; schoolClass & schoolID   (      int      id  );
+      const DESCRIPTION & description() const; schoolClass & description(const DESCRIPTION & desc);
+      const TITULAR     & titular    () const; schoolClass & titular    (const TITULAR     & dn  );
+      const ADJUNCT     & adjunct    () const; schoolClass & adjunct    (const ADJUNCT     & dn  );
+      const ADMINGROUP  & adminGroup () const; schoolClass & adminGroup (const ADMINGROUP  & id  );
+      const SCHOOL_ID   & schoolID   () const; schoolClass & schoolID   (const SCHOOL_ID   & id  );
       
       container<string> & students();
      

@@ -21,15 +21,28 @@ class wisaUpload : public stackPage {
     void onShow();
     void clear();
     
+    int getPageIndex() { return pageIndex; }
+    
   private:
-    Wt::WFileUpload * fileUpload; 
-    Wt::WText * message;
+    Wt::WContainerWidget * classContainer;
+    Wt::WContainerWidget * studentContainer;
+    Wt::WVBoxLayout * classBox;
+    Wt::WVBoxLayout * studentBox;
+    Wt::WFileUpload * classUpload;
+    Wt::WFileUpload * studentUpload; 
+    Wt::WText * classMessage;
+    Wt::WText * studentMessage;
+  
     Wt::WVBoxLayout * box;
     
-    void uploadFunc();
-    void uploadedFunc();
-    void fileTooLargeFunc();
-    void cleanUpload();
+    void classUploadFunc();
+    void studentUploadFunc();
+    void classUploadedFunc();
+    void studentUploadedFunc();
+    void classFileTooLargeFunc();
+    void studentFileTooLargeFunc();
+    void cleanClassUpload();
+    void cleanStudentUpload();
     
     wisaImport * parentObject;
 };

@@ -5,7 +5,7 @@
  * Created on May 6, 2015, 4:20 PM
  */
 
-#include "wisaParseFile.h"
+#include "wisaParseStudentFile.h"
 #include <Wt/WText>
 #include <Wt/WScrollArea>
 #include <Wt/WTable>
@@ -14,11 +14,11 @@
 #include "ldap/server.h"
 #include "../wisaImport.h"
 
-wisaParseFile::wisaParseFile(wisaImport * parentObject)
+wisaParseStudentFile::wisaParseStudentFile(wisaImport * parentObject)
 : parentObject(parentObject) {}
 
 
-void wisaParseFile::setContent(Wt::WVBoxLayout * box) { 
+void wisaParseStudentFile::setContent(Wt::WVBoxLayout * box) { 
   box->addWidget(new Wt::WText("<h4>Controleer of dit er ok uit ziet. (Let op de accenten!)</h4>"));
   
   // table scroll
@@ -33,7 +33,7 @@ void wisaParseFile::setContent(Wt::WVBoxLayout * box) {
   scroll->setMaximumSize(750, 450);
 }
 
-void wisaParseFile::onShow() {
+void wisaParseStudentFile::onShow() {
   entries->clear();
   
   entries->elementAt(0,0)->addWidget(new Wt::WText("Naam"));
@@ -56,4 +56,14 @@ void wisaParseFile::onShow() {
     entries->elementAt(i+1, 3)->addWidget(new Wt::WText(wisaContent[i].date.wt()));
     entries->elementAt(i+1, 4)->addWidget(new Wt::WText(std::to_wstring(wisaContent[i].ID)));
   }
+}
+
+bool wisaParseStudentFile::onNext() {
+  parentObject->showNewPage(W_COMPAREGROUPS);
+  return false;
+}
+
+bool wisaParseStudentFile::onPrevious() {
+  parentObject->showNewPage(W_UPLOAD);
+  return false;
 }

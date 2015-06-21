@@ -116,25 +116,25 @@ bool y::ldap::schoolClass::addNew(dataset& values) {
   description.add("type", "description");
   description.add("values", _description().get());
   
-  if(adminGroup() != 0) {
+  if(adminGroup().get() != 0) {
     data & adminGroup = values.New(NEW);
     adminGroup.add("type", "adminGroupID");
     adminGroup.add("values", string(_adminGroup().get()));
   }
   
-  if(schoolID() != 0) {
+  if(schoolID().get() != 0) {
     data & schoolID = values.New(NEW);
     schoolID.add("type", "schoolID");
     schoolID.add("values", string(_schoolID().get()));
   }
   
-  if(!titular().get().empty()) {
+  if(!titular().get().get().empty()) {
     data & titular = values.New(NEW);
     titular.add("type", "titular");
     titular.add("values", _titular().get().get());
   }
   
-  if(!adjunct().get().empty()) {
+  if(!adjunct().get().get().empty()) {
     data & adjunct = values.New(NEW);
     adjunct.add("type", "adjunct");
     adjunct.add("values", _adjunct().get().get());
@@ -199,47 +199,47 @@ bool y::ldap::schoolClass::update(dataset& values) {
   return true;
 }
 
-const string & y::ldap::schoolClass::description() const {
-  return _description().get();
+const DESCRIPTION & y::ldap::schoolClass::description() const {
+  return _description();
 }
 
-DN y::ldap::schoolClass::titular() const {
-  return _titular().get();
+const TITULAR & y::ldap::schoolClass::titular() const {
+  return _titular();
 }
 
-DN y::ldap::schoolClass::adjunct() const {
-  return _adjunct().get();
+const ADJUNCT & y::ldap::schoolClass::adjunct() const {
+  return _adjunct();
 }
 
-int y::ldap::schoolClass::adminGroup() const {
-  return _adminGroup().get();
+const ADMINGROUP & y::ldap::schoolClass::adminGroup() const {
+  return _adminGroup();
 }
 
-int y::ldap::schoolClass::schoolID() const {
-  return _schoolID().get();
+const SCHOOL_ID & y::ldap::schoolClass::schoolID() const {
+  return _schoolID();
 }
 
-y::ldap::schoolClass & y::ldap::schoolClass::description(const string& desc) {
-  _description(DESCRIPTION(desc));
+y::ldap::schoolClass & y::ldap::schoolClass::description(const DESCRIPTION & desc) {
+  _description(desc);
   return *this;
 }
 
-y::ldap::schoolClass & y::ldap::schoolClass::titular(const DN& dn) {
-  _titular(TITULAR(dn));
+y::ldap::schoolClass & y::ldap::schoolClass::titular(const TITULAR & value) {
+  _titular(value);
   return *this;
 }
 
-y::ldap::schoolClass & y::ldap::schoolClass::adjunct(const DN& dn) {
-  _adjunct(ADJUNCT(dn));
+y::ldap::schoolClass & y::ldap::schoolClass::adjunct(const ADJUNCT & value) {
+  _adjunct(value);
   return *this;
 }
 
-y::ldap::schoolClass & y::ldap::schoolClass::adminGroup(int id) {
-  _adminGroup(ADMINGROUP(id));
+y::ldap::schoolClass & y::ldap::schoolClass::adminGroup(const ADMINGROUP & value) {
+  _adminGroup(value);
   return *this;
 }
 
-y::ldap::schoolClass & y::ldap::schoolClass::schoolID(int id) {
-  _schoolID(SCHOOL_ID(id));
+y::ldap::schoolClass & y::ldap::schoolClass::schoolID(const SCHOOL_ID & value) {
+  _schoolID(value);
   return *this;
 }

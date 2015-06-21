@@ -1,20 +1,21 @@
 /* 
- * File:   wisaParseFile.h
+ * File:   wisaParseClassFile.h
  * Author: yvan
  *
- * Created on May 6, 2015, 4:20 PM
+ * Created on June 21, 2015, 12:30 PM
  */
 
-#ifndef WISAPARSEFILE_H
-#define	WISAPARSEFILE_H
+#ifndef WISAPARSECLASSFILE_H
+#define	WISAPARSECLASSFILE_H
+
 
 #include "../base/stackPage.h"
 
 class wisaImport;
 
-class wisaParseStudentFile : public stackPage {
+class wisaParseClassFile : public stackPage {
 public:
-  wisaParseStudentFile(wisaImport * parentObject);
+  wisaParseClassFile(wisaImport * parentObject);
   
   void setContent(Wt::WVBoxLayout * box);
   int getPageIndex() { return pageIndex; }
@@ -29,5 +30,6 @@ private:
   wisaImport * parentObject;
 };
 
-#endif	/* WISAPARSEFILE_H */
+
+#endif	/* WISAPARSECLASSFILE_H */
 

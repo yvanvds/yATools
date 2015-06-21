@@ -17,11 +17,7 @@ namespace y {
   namespace ldap {
    
     class server;
-    
-    const string TYPE_CN       ("cn"       );
-    const string TYPE_UID      ("uid"      );
-    const string TYPE_UIDNUMBER("uidNumber");
-    
+
     class account {
     public:
       account(y::ldap::server * server);
@@ -80,9 +76,10 @@ namespace y {
       void removeOldAccountDetails();
       
     private:
-      bool load(const UID  & id);
-      bool load(UID_NUMBER   id);
-      bool load(const DN   & id); 
+      bool load(const UID         & id);
+      bool load(const UID_NUMBER  & id);
+      bool load(const DN          & id); 
+      bool load(const WISA_NAME   & id);
       
       // shared code for load functions
       bool load(const data & d);

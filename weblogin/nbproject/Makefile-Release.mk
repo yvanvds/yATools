@@ -52,14 +52,16 @@ OBJECTFILES= \
 	${OBJECTDIR}/staffManager/staffList.o \
 	${OBJECTDIR}/topContent.o \
 	${OBJECTDIR}/wisaImport.o \
+	${OBJECTDIR}/wisaImport/wisaChangeClassMembers.o \
 	${OBJECTDIR}/wisaImport/wisaCommitChanges.o \
+	${OBJECTDIR}/wisaImport/wisaCompareClasses.o \
 	${OBJECTDIR}/wisaImport/wisaCompareFile.o \
-	${OBJECTDIR}/wisaImport/wisaCompareGroups.o \
 	${OBJECTDIR}/wisaImport/wisaCompareNames.o \
 	${OBJECTDIR}/wisaImport/wisaConfirmSubmit.o \
 	${OBJECTDIR}/wisaImport/wisaNewGroups.o \
 	${OBJECTDIR}/wisaImport/wisaNoID.o \
-	${OBJECTDIR}/wisaImport/wisaParseFile.o \
+	${OBJECTDIR}/wisaImport/wisaParseClassFile.o \
+	${OBJECTDIR}/wisaImport/wisaParseStudentFile.o \
 	${OBJECTDIR}/wisaImport/wisaUpload.o \
 	${OBJECTDIR}/yearbook/yearbook.o \
 	${OBJECTDIR}/yearbook/yearbookConfig.o \
@@ -184,20 +186,25 @@ ${OBJECTDIR}/wisaImport.o: wisaImport.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport.o wisaImport.cpp
 
+${OBJECTDIR}/wisaImport/wisaChangeClassMembers.o: wisaImport/wisaChangeClassMembers.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaChangeClassMembers.o wisaImport/wisaChangeClassMembers.cpp
+
 ${OBJECTDIR}/wisaImport/wisaCommitChanges.o: wisaImport/wisaCommitChanges.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCommitChanges.o wisaImport/wisaCommitChanges.cpp
 
+${OBJECTDIR}/wisaImport/wisaCompareClasses.o: wisaImport/wisaCompareClasses.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareClasses.o wisaImport/wisaCompareClasses.cpp
+
 ${OBJECTDIR}/wisaImport/wisaCompareFile.o: wisaImport/wisaCompareFile.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareFile.o wisaImport/wisaCompareFile.cpp
-
-${OBJECTDIR}/wisaImport/wisaCompareGroups.o: wisaImport/wisaCompareGroups.cpp 
-	${MKDIR} -p ${OBJECTDIR}/wisaImport
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareGroups.o wisaImport/wisaCompareGroups.cpp
 
 ${OBJECTDIR}/wisaImport/wisaCompareNames.o: wisaImport/wisaCompareNames.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
@@ -219,10 +226,15 @@ ${OBJECTDIR}/wisaImport/wisaNoID.o: wisaImport/wisaNoID.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaNoID.o wisaImport/wisaNoID.cpp
 
-${OBJECTDIR}/wisaImport/wisaParseFile.o: wisaImport/wisaParseFile.cpp 
+${OBJECTDIR}/wisaImport/wisaParseClassFile.o: wisaImport/wisaParseClassFile.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaParseFile.o wisaImport/wisaParseFile.cpp
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaParseClassFile.o wisaImport/wisaParseClassFile.cpp
+
+${OBJECTDIR}/wisaImport/wisaParseStudentFile.o: wisaImport/wisaParseStudentFile.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaParseStudentFile.o wisaImport/wisaParseStudentFile.cpp
 
 ${OBJECTDIR}/wisaImport/wisaUpload.o: wisaImport/wisaUpload.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport

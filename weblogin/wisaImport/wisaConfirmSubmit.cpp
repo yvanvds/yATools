@@ -107,9 +107,9 @@ void wisaConfirmSubmit::onShow() {
   message5->setText(m5.wt());
   
   // count groups in wisa file
-  container<wisaImport::wisaGroup> & wisaGroups = parentObject->getWisaGroups();
+  container<wisaImport::wisaClass> & wisaClasses = parentObject->getWisaClasses();
   string m6("Nieuw bestand bevat ");
-  m6 += wisaGroups.elms();
+  m6 += wisaClasses.elms();
   m6 += " klassen.";
   message6->setText(m6.wt());
   
@@ -127,13 +127,13 @@ void wisaConfirmSubmit::onShow() {
     } 
   }
   
-  for(int i = 0; i < wisaGroups.elms(); i++) {
-    if(wisaGroups[i].link != nullptr) {
+  for(int i = 0; i < wisaClasses.elms(); i++) {
+    if(wisaClasses[i].link != nullptr) {
       linkedGroups++;
     }
   }
   
-  int newGroups = wisaGroups.elms() - linkedGroups;
+  int newGroups = wisaClasses.elms() - linkedGroups;
   
   string m7("De database bevat ");
   m7 += validGroups;

@@ -86,7 +86,7 @@ void wisaCommitChanges::setContent(Wt::WVBoxLayout* box) {
 
 void commitThreadFunc(wisaCommitChanges * caller) {
   // create groups
-  container<wisaImport::wisaGroup> & wisaGroups = caller->getParentObject()->getWisaGroups();
+  /*container<wisaImport::wisaClass> & wisaGroups = caller->getParentObject()->getWisaGroups();
   for (int i = 0; i < wisaGroups.elms(); i++) {
     if(wisaGroups[i].link == nullptr) {
       y::ldap::group & g = caller->getParentObject()->ldap()->getGroup(CN(wisaGroups[i].name), false);
@@ -114,7 +114,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
       string password(y::utils::Security().makePassword(8));
       
       
-      /*y::ldap::account & acc = admin.add(cn, sn, gid, schoolClass, date, id, PASSWORD(password));
+      y::ldap::account & acc = admin.add(cn, sn, gid, schoolClass, date, id, PASSWORD(password));
       string message("Account voor ");
       message += acc.fullName().get();
       message += " werd toegevoegd";
@@ -191,7 +191,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
         message += account.link->fullName().get();
         message += " werd gewijzigd";
         caller->addMessage(message);
-      }*/
+      }
     }
   }
   
@@ -208,7 +208,7 @@ void commitThreadFunc(wisaCommitChanges * caller) {
   caller->getParentObject()->ldap()->commitChanges();
   caller->addMessage("Alle wijzigingen zijn voltooid.", true);
   
-  y::utils::Log().useFunction();
+  y::utils::Log().useFunction();*/
 }
 
 void wisaCommitChanges::onShow() {

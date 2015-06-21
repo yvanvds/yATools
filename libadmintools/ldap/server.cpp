@@ -146,7 +146,19 @@ y::ldap::account & y::ldap::server::getAccount(const UID & id) {
   return a;
 }
 
-y::ldap::account & y::ldap::server::getAccount(UID_NUMBER id) {
+y::ldap::account & y::ldap::server::getAccount(const WISA_NAME& id) {
+  for(int i = 0; i < _accounts.elms(); i++) {
+    if(_accounts[i].wisaName() == id) {
+      return _accounts[i];
+    }
+  }
+  
+  account & a = _accounts.New();
+  a.load(id);
+  return a;
+}
+
+y::ldap::account & y::ldap::server::getAccount(const UID_NUMBER & id) {
   // first check if already in memory
   for(int i = 0; i < _accounts.elms(); i++) {
     if(_accounts[i].uidNumber() == id) {
@@ -643,11 +655,23 @@ bool y::ldap::server::commitChanges() {
 }
 
 void y::ldap::server::clear() {
+  clearAccounts();
+  clearGroups();
+  clearClasses();
+}
+
+void y::ldap::server::clearAccounts() {
   _accounts.clear();
-  _groups.clear();
-  _classes.clear();
   _allAccountsLoaded = false;
+}
+
+void y::ldap::server::clearGroups() {
+  _groups.clear();
   _allGroupsLoaded = false;
+}
+
+void y::ldap::server::clearClasses() {
+  _classes.clear();
   _allClassesLoaded = false;
 }
 

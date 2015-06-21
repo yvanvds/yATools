@@ -37,9 +37,10 @@ namespace y {
 
       // these functions always create a new account if none is found
       account & getAccount(const UID        & id);
-      account & getAccount(      UID_NUMBER   id);
+      account & getAccount(const UID_NUMBER & id);
       account & getAccount(const DN         & id);
-
+      account & getAccount(const WISA_NAME  & id);
+      
       group & getGroup(const DN & id);
       group & getGroup(const CN & cn, bool editable);
       
@@ -62,6 +63,9 @@ namespace y {
       // clears up all loaded accounts and groups
       // this does not affect the database
       void clear();
+      void clearAccounts();
+      void clearGroups();
+      void clearClasses();
       
     private:
       bool getData(dataset & rs, bool isDN = false);

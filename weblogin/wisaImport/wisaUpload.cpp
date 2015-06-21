@@ -21,61 +21,121 @@
 
 
 wisaUpload::wisaUpload(wisaImport * parentObject)
-: box(nullptr), fileUpload(nullptr), parentObject(parentObject)
+: box(nullptr), classUpload(nullptr), studentUpload(nullptr), parentObject(parentObject)
 {}
 
 void wisaUpload::setContent(Wt::WVBoxLayout * box) {
   this->box = box;
-  cleanUpload();
-  message = new Wt::WText("Kies een wisa export bestand.");
-  message->setStyleClass("alert alert-info");
-  box->addWidget(message);
+  
+  classContainer = new Wt::WContainerWidget();
+  classContainer->addStyleClass("well");
+  classContainer->setPadding("1%");
+  box->addWidget(classContainer);
+  
+  classBox = new Wt::WVBoxLayout();
+  classContainer->setLayout(classBox);
+  
+  studentContainer = new Wt::WContainerWidget();
+  studentContainer->addStyleClass("well");
+  studentContainer->setPadding("1%");
+  box->addWidget(studentContainer);
+  
+  studentBox = new Wt::WVBoxLayout();
+  studentContainer->setLayout(studentBox);
+  
+  classBox->addWidget(new Wt::WText("<h3>Update Klassen</h3>"));
+  studentBox->addWidget(new Wt::WText("<h3>Update Leerlingen</h3>"));
+  
+  cleanClassUpload();
+  cleanStudentUpload();
+  
+  classMessage = new Wt::WText("Kies een wisa export bestand met klassen.");
+  classMessage->setStyleClass("alert alert-info");
+  classBox->addWidget(classMessage);
+  
+  studentMessage = new Wt::WText("Kies een wisa export bestand met klassen.");
+  studentMessage->setStyleClass("alert alert-info");
+  studentBox->addWidget(studentMessage);
+  
   #ifdef DEBUG
-  Wt::WPushButton * button = new Wt::WPushButton("Parse");
-  button->clicked().connect(this, &wisaUpload::uploadedFunc);
-  box->addWidget(button);
+  Wt::WPushButton * cbutton = new Wt::WPushButton("Parse Classes");
+  cbutton->clicked().connect(this, &wisaUpload::classUploadedFunc);
+  box->addWidget(cbutton);
+  
+  Wt::WPushButton * sbutton = new Wt::WPushButton("Parse Students");
+  sbutton->clicked().connect(this, &wisaUpload::studentUploadedFunc);
+  box->addWidget(sbutton);
 #endif
 }
 
-void wisaUpload::cleanUpload() {
-  if(fileUpload) {
-    box->removeWidget(fileUpload);
-    delete fileUpload;
+void wisaUpload::cleanClassUpload() {
+  if(classUpload) {
+    classBox->removeWidget(classUpload);
+    delete classUpload;
   }
   
-  fileUpload = new Wt::WFileUpload();
-  fileUpload->setFileTextSize(1000);
-  fileUpload->setProgressBar(new Wt::WProgressBar());
-  fileUpload->changed().connect(this, &wisaUpload::uploadFunc);
-  fileUpload->fileTooLarge().connect(this, &wisaUpload::fileTooLargeFunc);
-  fileUpload->uploaded().connect(this, &wisaUpload::uploadedFunc);
-  box->insertWidget(0, fileUpload);
-  
+  classUpload = new Wt::WFileUpload();
+  classUpload->setFileTextSize(1000);
+  classUpload->setProgressBar(new Wt::WProgressBar());
+  classUpload->changed().connect(this, &wisaUpload::classUploadFunc);
+  classUpload->fileTooLarge().connect(this, &wisaUpload::classFileTooLargeFunc);
+  classUpload->uploaded().connect(this, &wisaUpload::classUploadedFunc);
+  classBox->insertWidget(1, classUpload);
+}
 
+void wisaUpload::cleanStudentUpload() {
+  if(studentUpload) {
+    studentContainer->removeWidget(studentUpload);
+    delete studentUpload;
+  }
+  
+  studentUpload = new Wt::WFileUpload();
+  studentUpload->setFileTextSize(1000);
+  studentUpload->setProgressBar(new Wt::WProgressBar());
+  studentUpload->changed().connect(this, &wisaUpload::studentUploadFunc);
+  studentUpload->fileTooLarge().connect(this, &wisaUpload::studentFileTooLargeFunc);
+  studentUpload->uploaded().connect(this, &wisaUpload::studentUploadedFunc);
+  studentBox->insertWidget(1, studentUpload);
 }
 
 void wisaUpload::clear() {
-  cleanUpload();
+  cleanClassUpload();
+  cleanStudentUpload();
 }
 
 
-void wisaUpload::uploadFunc() {
-  fileUpload->upload();
-  
+void wisaUpload::classUploadFunc() {
+  classUpload->upload();
 }
 
-void wisaUpload::fileTooLargeFunc() {
-  message->setText("This file is too large");
-  message->setStyleClass("alert alert-danger");
-  cleanUpload();
+void wisaUpload::studentUploadFunc() {
+  studentUpload->upload();
 }
 
-void wisaUpload::uploadedFunc() {
-  parentObject->setWisaFile(string(fileUpload->spoolFileName()));
-  parent->showPage(pageIndex + 1);
-  cleanUpload();
+void wisaUpload::classFileTooLargeFunc() {
+  classMessage->setText("This file is too large");
+  classMessage->setStyleClass("alert alert-danger");
+  cleanClassUpload();
+}
+
+void wisaUpload::studentFileTooLargeFunc() {
+  studentMessage->setText("This file is too large");
+  studentMessage->setStyleClass("alert alert-danger");
+  cleanStudentUpload();
+}
+
+void wisaUpload::classUploadedFunc() {
+  parentObject->setWisaClassFile(string(classUpload->spoolFileName()));
+  parentObject->showNewPage(W_PARSE_CLASS);
+  cleanClassUpload();
+}
+
+void wisaUpload::studentUploadedFunc() {
+  parentObject->setWisaStudentFile(string(studentUpload->spoolFileName()));
+  parentObject->showNewPage(W_PARSE_STUDENT);
+  cleanStudentUpload();
 }
 
 void wisaUpload::onShow() {
-  cleanUpload();
+  clear();
 }

@@ -38,35 +38,31 @@ void wisaNewGroups::onShow() {
   entries->elementAt(0,1)->addWidget(new Wt::WText("Status"));
   entries->elementAt(0,1)->setPadding(5);
   
-  GROUPS & groups = parentObject->ldap()->getGroups();
-  container<wisaImport::wisaGroup> & wisaGroups = parentObject->getWisaGroups();
+  CLASSES & classes = parentObject->ldap()->getClasses();
+  container<wisaImport::wisaClass> & wisaClasses = parentObject->getWisaClasses();
   
   int row = 1;
-  for(int i = 0; i < groups.elms(); i++) {
-    if(groups[i].editable()) {
-      groups[i].setImportStatus(WI_DISCARD);
-    } else {
-      bool found = false;
-      for(int j = 0; j < wisaGroups.elms(); j++) {
-        if(wisaGroups[j].name == groups[i].cn().get()) {
-          groups[i].setImportStatus(WI_ACCOUNTED);
-          wisaGroups[j].link = &groups[i];
-          found = true;
-          break;
-        }
+  for(int i = 0; i < classes.elms(); i++) {
+    bool found = false;
+    for(int j = 0; j < wisaClasses.elms(); j++) {
+      if(wisaClasses[j].name == classes[i].cn().get()) {
+        classes[i].setImportStatus(WI_ACCOUNTED);
+        wisaClasses[j].link = &classes[i];
+        found = true;
+        break;
       }
-      if(!found) {
-        groups[i].flagForRemoval();
-        entries->elementAt(row, 0)->addWidget(new Wt::WText(groups[i].cn().get().wt()));
-        entries->elementAt(row, 1)->addWidget(new Wt::WText("wordt verwijderd"));
-        row++;
-      }
+    }
+    if(!found) {
+      classes[i].flagForRemoval();
+      entries->elementAt(row, 0)->addWidget(new Wt::WText(classes[i].cn().get().wt()));
+      entries->elementAt(row, 1)->addWidget(new Wt::WText("wordt verwijderd"));
+      row++;
     }
   }
   
-  for(int i = 0; i < wisaGroups.elms(); i++) {
-    if(wisaGroups[i].link == nullptr) {
-      entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaGroups[i].name.wt()));
+  for(int i = 0; i < wisaClasses.elms(); i++) {
+    if(wisaClasses[i].link == nullptr) {
+      entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
       entries->elementAt(row, 1)->addWidget(new Wt::WText("wordt toegevoegd"));
       row++;
     }

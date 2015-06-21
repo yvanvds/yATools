@@ -12,12 +12,18 @@
 
 class wisaImport;
 
-class wisaCompareGroups : public stackPage {
+class wisaCompareClasses : public stackPage {
 public:
-  wisaCompareGroups(wisaImport * parentObject) : parentObject(parentObject) {}
+  wisaCompareClasses(wisaImport * parentObject) : parentObject(parentObject) {}
   void setContent(Wt::WVBoxLayout * box);
+  int getPageIndex() { return pageIndex; }
   void onShow();
+  
+  virtual bool onNext();
+  virtual bool onPrevious();
+  
 private:
+  
   Wt::WTable * entries;
   
   wisaImport * parentObject;
