@@ -14,8 +14,8 @@
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/group.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/string.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/account.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/build_date.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/dataset.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/build_date.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/attributes.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/ldapObject.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/schoolClass.h</file>
@@ -33,8 +33,8 @@
             <file>file:/home/yvan/github/yATools/libadmintools/utils/container.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/data.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/attributes.h</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/data/database.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/gui/application.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/data/database.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/data/adminRights.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/admin/userAdmin.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/data/adminRights.cpp</file>
