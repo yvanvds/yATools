@@ -127,7 +127,7 @@ bool y::ldap::schoolClass::addNew(dataset& values) {
     schoolID.add("type", "schoolID");
     schoolID.add("values", string(_schoolID().get()));
   }
-  /*
+  
   if(!titular().get().get().empty()) {
     data & titular = values.New(NEW);
     titular.add("type", "titular");
@@ -146,10 +146,12 @@ bool y::ldap::schoolClass::addNew(dataset& values) {
     for(int i = 0; i < _students.elms(); i++) {
       students.add("values", _students[i]);
     }
-  }*/
+  }
   
   y::Smartschool().addClass(*this);
-  
+  string message(_cn().get());
+  message += " added to database";
+  y::utils::Log().add(message);
   return true;
 }
 
@@ -196,6 +198,9 @@ bool y::ldap::schoolClass::update(dataset& values) {
   
   // update smartschool
   y::Smartschool().addClass(*this);
+  string message(_cn().get());
+  message += " updated";
+  y::utils::Log().add(message);
   return true;
 }
 
