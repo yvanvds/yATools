@@ -25,8 +25,10 @@ public:
 private:
   
   Wt::WTable * entries;
+  Wt::WText * title;
   
   wisaImport * parentObject;
+  bool dbChanges;
 };
 
 #endif	/* WISACOMPAREGROUPS_H */

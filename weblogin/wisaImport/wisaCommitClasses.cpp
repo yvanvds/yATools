@@ -9,6 +9,7 @@
 #include <Wt/WScrollArea>
 #include <Wt/WTable>
 #include <Wt/WApplication>
+#include <Wt/WImage>
 #include <thread>
 #include <functional>
 #include "../wisaImport.h"
@@ -19,6 +20,10 @@ void wisaCommitClasses::setContent(Wt::WVBoxLayout* box) {
   this->box = box;
   progress = new Wt::WText("<h4>Wijzigingen worden uitgevoerd...</h4>");
   box->addWidget(progress);
+  
+  waitImage = new Wt::WImage(Wt::WLink("weblogin/site_resources/wait.gif"));
+  waitImage->resize(50,50);
+  box->addWidget(waitImage);
   
   // table scroll
   Wt::WScrollArea * scroll = new Wt::WScrollArea();
@@ -40,9 +45,14 @@ void CommitThreadFunc(wisaCommitClasses * caller) {
 }
 
 void wisaCommitClasses::threadDone() {
-  addMessage("Alle wijzigingen zijn uitgevoerd.");
-  //progress->setText("<h4>Klaar.</4>");
-  //parentObject->getApplication()->enableUpdates(false);
+  Wt::WApplication::UpdateLock lock(parentObject->getApplication());
+  if(lock) {
+    addMessage("Alle wijzigingen zijn uitgevoerd.");
+    waitImage->hide();
+    showButtons(false, true);
+    progress->setText("<h4>Klaar.</4>");
+    parentObject->getApplication()->enableUpdates(false);
+  }
 }
 
 void wisaCommitClasses::onShow() {

@@ -15,7 +15,8 @@
 #include "../wisaImport.h"
 
 void wisaCompareClasses::setContent(Wt::WVBoxLayout* box) {
-  box->addWidget(new Wt::WText("<h4>De volgende klassen worden aangepast.</h4>"));
+  title = new Wt::WText("<h4>De volgende klassen worden aangepast.</h4>");
+  box->addWidget(title);
   // table scroll
   Wt::WScrollArea * scroll = new Wt::WScrollArea();
   box->addWidget(scroll);
@@ -25,7 +26,7 @@ void wisaCompareClasses::setContent(Wt::WVBoxLayout* box) {
   entries->setHeaderCount(1);
   entries->setWidth(700);
   scroll->setWidget(entries);
-  scroll->setMaximumSize(750, 500);
+  scroll->setMaximumSize(750, 450);
 }
 
 void wisaCompareClasses::onShow() {
@@ -40,6 +41,8 @@ void wisaCompareClasses::onShow() {
   
   entries->elementAt(0,0)->addWidget(new Wt::WText("Klas"));
   entries->elementAt(0,1)->addWidget(new Wt::WText("Actie"));
+  
+  dbChanges = false;
   
   CLASSES & classes = parentObject->ldap()->getClasses();
   container<wisaImport::wisaClass> & wisaClasses = parentObject->getWisaClasses();
@@ -61,6 +64,7 @@ void wisaCompareClasses::onShow() {
       entries->elementAt(row, 0)->addWidget(new Wt::WText(classes[i].cn().get().wt()));
       entries->elementAt(row, 1)->addWidget(new Wt::WText("wordt verwijderd"));
       row++;
+      dbChanges = true;
     } 
   }
   
@@ -91,6 +95,7 @@ void wisaCompareClasses::onShow() {
         entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
         entries->elementAt(row, 1)->addWidget(new Wt::WText("wordt toegevoegd"));
         row++;
+        dbChanges = true;
       }
       
     } else {
@@ -102,6 +107,7 @@ void wisaCompareClasses::onShow() {
         entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
         entries->elementAt(row, 1)->addWidget(new Wt::WText("krijgt beschrijving: "));
         entries->elementAt(row, 2)->addWidget(new Wt::WText(wisaClasses[i].description.wt()));
+        dbChanges = true;
         row++;
       }
       
@@ -111,6 +117,7 @@ void wisaCompareClasses::onShow() {
         entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
         entries->elementAt(row, 1)->addWidget(new Wt::WText("krijgt administratieve group: "));
         entries->elementAt(row, 2)->addWidget(new Wt::WText(string(wisaClasses[i].adminGroup).wt()));
+        dbChanges = true;
         row++;
       }
       
@@ -120,6 +127,7 @@ void wisaCompareClasses::onShow() {
         entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
         entries->elementAt(row, 1)->addWidget(new Wt::WText("krijgt school ID: "));
         entries->elementAt(row, 2)->addWidget(new Wt::WText(string(wisaClasses[i].schoolID).wt()));
+        dbChanges = true;
         row++;
       }
       
@@ -146,6 +154,7 @@ void wisaCompareClasses::onShow() {
           entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
           entries->elementAt(row, 1)->addWidget(new Wt::WText("Nieuwe Titularis: "));
           entries->elementAt(row, 2)->addWidget(new Wt::WText(newTitular.fullName().get().wt()));
+          dbChanges = true;
           row++;
         }
       }
@@ -174,15 +183,32 @@ void wisaCompareClasses::onShow() {
           entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
           entries->elementAt(row, 1)->addWidget(new Wt::WText("Nieuwe Adjunct: "));
           entries->elementAt(row, 2)->addWidget(new Wt::WText(newAdjunct.fullName().get().wt()));
+          dbChanges = true;
           row++;
         }
       }
     }
   }
+  
+  if(dbChanges) {
+    nextButton->setStyleClass("btn btn-danger");
+    nextButton->setText("Wijzig Database");
+    title->setText("<h4>De volgende klassen worden aangepast.</h4>");
+  } else {
+    nextButton->setStyleClass("btn btn-success");
+    nextButton->setText("Terug naar upload");
+    title->setText("<h4>De database wordt niet gewijzigd.</h4>");
+  }
 }
 
 bool wisaCompareClasses::onNext() {
-  parentObject->showNewPage(W_COMMITCLASSES);
+  if(dbChanges) {
+    parentObject->showNewPage(W_COMMITCLASSES);
+  } else {
+    parentObject->ldap()->clearClasses();
+    parentObject->reset();
+    parentObject->showNewPage(W_UPLOAD);
+  }
   return false;
 }
 

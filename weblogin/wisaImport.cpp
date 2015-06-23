@@ -61,7 +61,7 @@ wisaImport::wisaImport(y::ldap::server* server) : ldapServer(server) {
   
   WCompareClasses = new wisaCompareClasses(this);
   addPage(WCompareClasses);
-  WCompareClasses->showButtons(false, true);
+  WCompareClasses->showButtons(true, true);
   
   WCompareNames = new wisaCompareNames(this);
   addPage(WCompareNames);
@@ -81,7 +81,7 @@ wisaImport::wisaImport(y::ldap::server* server) : ldapServer(server) {
   
   WCommitClasses = new wisaCommitClasses(this);
   addPage(WCommitClasses);
-  WCommitClasses->showButtons(false, true);
+  WCommitClasses->showButtons(false, false);
 }
 
 void wisaImport::setWisaStudentFile(const string& file) {
@@ -222,7 +222,9 @@ bool wisaImport::wisaClass::set(std::vector<std::wstring> & line) {
   // we don't need line[3]
   schoolID = string(line[4]).asInt();
   titular = string(line[5]);
+  titular.keeponlyChars().removeNewLine();
   adjunct = string(line[6]);
+  adjunct.keeponlyChars().removeNewLine();
 }
 
 container<wisaImport::wisaClass> & wisaImport::getWisaClasses() {

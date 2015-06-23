@@ -13,6 +13,7 @@
 #include <Wt/Http/Response>
 #include <Wt/Http/ResponseContinuation>
 #include <Wt/WVBoxLayout>
+#include <Wt/WImage>
 #include "admintools.h"
 
 class wisaCommitClasses : public stackPage {
@@ -31,7 +32,7 @@ public:
   
 private:
   wisaImport * parentObject;
-  
+  Wt::WImage * waitImage;
   Wt::WVBoxLayout * box;
   Wt::WText * progress;
   Wt::WTable * entries;
