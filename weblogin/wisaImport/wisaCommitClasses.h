@@ -33,6 +33,7 @@ public:
 private:
   wisaImport * parentObject;
   Wt::WImage * waitImage;
+  Wt::WContainerWidget * imageContainer;
   Wt::WVBoxLayout * box;
   Wt::WText * progress;
   Wt::WTable * entries;

@@ -21,9 +21,12 @@ void wisaCommitClasses::setContent(Wt::WVBoxLayout* box) {
   progress = new Wt::WText("<h4>Wijzigingen worden uitgevoerd...</h4>");
   box->addWidget(progress);
   
-  waitImage = new Wt::WImage(Wt::WLink("weblogin/site_resources/wait.gif"));
-  waitImage->resize(50,50);
-  box->addWidget(waitImage);
+  waitImage = new Wt::WImage();
+  waitImage->setImageLink(Wt::WLink("http://apps.sanctamaria-aarschot.be/weblogin/site_resources/wait.gif"));
+  waitImage->resize(137,100);
+  imageContainer = new Wt::WContainerWidget();
+  imageContainer->addWidget(waitImage);
+  box->addWidget(imageContainer);
   
   // table scroll
   Wt::WScrollArea * scroll = new Wt::WScrollArea();
@@ -48,9 +51,10 @@ void wisaCommitClasses::threadDone() {
   Wt::WApplication::UpdateLock lock(parentObject->getApplication());
   if(lock) {
     addMessage("Alle wijzigingen zijn uitgevoerd.");
-    waitImage->hide();
+    imageContainer->removeWidget(waitImage);
+    delete waitImage;
     showButtons(false, true);
-    progress->setText("<h4>Klaar.</4>");
+    progress->setText("<h4>Klaar.</h4>");
     parentObject->getApplication()->enableUpdates(false);
   }
 }
