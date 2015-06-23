@@ -127,13 +127,13 @@ bool y::ldap::schoolClass::addNew(dataset& values) {
     schoolID.add("type", "schoolID");
     schoolID.add("values", string(_schoolID().get()));
   }
-  
+  /*
   if(!titular().get().get().empty()) {
     data & titular = values.New(NEW);
     titular.add("type", "titular");
     titular.add("values", _titular().get().get());
   }
-  /*
+  
   if(!adjunct().get().get().empty()) {
     data & adjunct = values.New(NEW);
     adjunct.add("type", "adjunct");
