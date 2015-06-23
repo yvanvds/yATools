@@ -27,7 +27,8 @@ bool y::ldap::dataset::createFromDN(const string& dn) {
   std::string temp = dn.utf8();
   std::vector<std::string> strs;
   boost::split(strs, temp, boost::is_any_of(","));
-  assert(strs.size() > 1);
+  if(strs.size() < 2) return false;
+  
   this->filter = strs[0];
   this->directory = strs[1];
   for(unsigned int i = 2; i < strs.size(); i++) {

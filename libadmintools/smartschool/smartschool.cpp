@@ -293,12 +293,12 @@ int y::smartschool::addClass(y::ldap::schoolClass & group) {
   if(service.saveClass(
           y::utils::Config().getSSPw().ss() , // password smartschool
           group.cn().get().ss()                   , // group name
-          description.ss()                  , // group description
+          group.description().get().ss()          , // group description
           group.cn().get().ss()                   , // unique group ID
           parent.ss()                       , // parent for this group
           ""                                , // koppeling schoolagenda
-          "125252"                          , // institute number
-          "502"                             , // admin number
+          string(group.schoolID  ().get()).ss(), // institute number
+          string(group.adminGroup().get()).ss(), // admin number
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);

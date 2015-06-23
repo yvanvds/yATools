@@ -10,6 +10,7 @@
 #include <Wt/WScrollArea>
 #include <Wt/WTable>
 #include <Wt/WApplication>
+#include <Wt/WMessageBox>
 #include "admintools.h"
 #include "../wisaImport.h"
 
@@ -28,6 +29,13 @@ void wisaCompareClasses::setContent(Wt::WVBoxLayout* box) {
 }
 
 void wisaCompareClasses::onShow() {
+  // overwrite buttons
+  previousButton->setStyleClass("btn btn-success");
+  previousButton->setText("Toch maar niet");
+  
+  nextButton->setStyleClass("btn btn-danger");
+  nextButton->setText("Wijzig Database");
+  
   entries->clear();
   
   entries->elementAt(0,0)->addWidget(new Wt::WText("Klas"));
@@ -58,60 +66,115 @@ void wisaCompareClasses::onShow() {
   
   for(int i = 0; i < wisaClasses.elms(); i++) {
     if(wisaClasses[i].link == nullptr) {
-      entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
-      entries->elementAt(row, 1)->addWidget(new Wt::WText("wordt toegevoegd"));
-      row++;
+      y::ldap::schoolClass & newClass = parentObject->ldap()->getClass(CN(wisaClasses[i].name));
+      if(!newClass.isNew()) {
+        string s = "Klas kan niet gemaakt worden: ";
+        s += wisaClasses[i].name;
+        Wt::WMessageBox * message = new Wt::WMessageBox(
+                "Error!",
+                s.c_str(),
+                Wt::Critical, Wt::Ok);
+        message->buttonClicked().connect(std::bind([=] () {
+          parentObject->reset();
+          parentObject->showNewPage(W_UPLOAD);
+          return;
+        }));
+      } else {
+        newClass.description(DESCRIPTION(wisaClasses[i].description));
+        newClass.adminGroup(ADMINGROUP(wisaClasses[i].adminGroup));
+        newClass.schoolID(SCHOOL_ID(wisaClasses[i].schoolID));
+        y::ldap::account & titular = parentObject->ldap()->getAccount(WISA_NAME(wisaClasses[i].titular));
+        newClass.titular(TITULAR(titular.dn()));
+        y::ldap::account & adjunct = parentObject->ldap()->getAccount(WISA_NAME(wisaClasses[i].adjunct));
+        newClass.adjunct(ADJUNCT(adjunct.dn()));
+        newClass.flagForCommit();
+        entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
+        entries->elementAt(row, 1)->addWidget(new Wt::WText("wordt toegevoegd"));
+        row++;
+      }
+      
     } else {
-      if(wisaClasses[i].description != wisaClasses[i].link->description().get()) {
-        wisaClasses[i].link->description(DESCRIPTION(wisaClasses[i].description));
+      y::ldap::schoolClass * link = wisaClasses[i].link;
+      
+      if(wisaClasses[i].description != link->description().get()) {
+        link->description(DESCRIPTION(wisaClasses[i].description));
+        link->flagForCommit();
         entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
         entries->elementAt(row, 1)->addWidget(new Wt::WText("krijgt beschrijving: "));
         entries->elementAt(row, 2)->addWidget(new Wt::WText(wisaClasses[i].description.wt()));
+        row++;
       }
       
-      if(wisaClasses[i].adminGroup != wisaClasses[i].link->adminGroup().get()) {
-        wisaClasses[i].link->adminGroup(ADMINGROUP(wisaClasses[i].adminGroup));
+      if(wisaClasses[i].adminGroup != link->adminGroup().get()) {
+        link->adminGroup(ADMINGROUP(wisaClasses[i].adminGroup));
+        link->flagForCommit();
         entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
         entries->elementAt(row, 1)->addWidget(new Wt::WText("krijgt administratieve group: "));
         entries->elementAt(row, 2)->addWidget(new Wt::WText(string(wisaClasses[i].adminGroup).wt()));
+        row++;
       }
       
-      if(wisaClasses[i].schoolID != wisaClasses[i].link->schoolID().get()) {
-        wisaClasses[i].link->schoolID(SCHOOL_ID(wisaClasses[i].schoolID));
+      if(wisaClasses[i].schoolID != link->schoolID().get()) {
+        link->schoolID(SCHOOL_ID(wisaClasses[i].schoolID));
+        link->flagForCommit();
         entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
         entries->elementAt(row, 1)->addWidget(new Wt::WText("krijgt school ID: "));
         entries->elementAt(row, 2)->addWidget(new Wt::WText(string(wisaClasses[i].schoolID).wt()));
+        row++;
       }
       
       // get account of titular
-      y::ldap::account & oldTitular = parentObject->ldap()->getAccount(wisaClasses[i].link->titular().get());
-      y::ldap::account & newTitular = parentObject->ldap()->getAccount(WISA_NAME(wisaClasses[i].titular));
-      if(oldTitular.uidNumber() != newTitular.uidNumber()) {
-        if(newTitular.isNew()) {
-          entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
-          entries->elementAt(row, 1)->addWidget(new Wt::WText("Error (ongeldige titularis naam): "));
-          entries->elementAt(row, 2)->addWidget(new Wt::WText(wisaClasses[i].titular.wt()));
-        } else {
-          wisaClasses[i].link->titular(TITULAR(newTitular.dn()));
-          entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
-          entries->elementAt(row, 1)->addWidget(new Wt::WText("Nieuwe Titularis: "));
-          entries->elementAt(row, 2)->addWidget(new Wt::WText(newTitular.fullName().get().wt()));
+      y::ldap::account * oldTitular = nullptr;
+      if(!link->titular().get().get().empty()) {
+        oldTitular = &parentObject->ldap()->getAccount(link->titular().get());
+        if(oldTitular->wisaName().get().empty()) {
+          oldTitular = nullptr;
         }
       }
       
+      if((oldTitular == nullptr && !wisaClasses[i].titular.empty())
+      || (oldTitular != nullptr && (oldTitular->wisaName().get() != wisaClasses[i].titular))) {
+        y::ldap::account & newTitular = parentObject->ldap()->getAccount(WISA_NAME(wisaClasses[i].titular));
+        if(newTitular.wisaName().get().empty()) {
+          entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
+          entries->elementAt(row, 1)->addWidget(new Wt::WText("Error (ongeldige titularis naam): "));
+          entries->elementAt(row, 2)->addWidget(new Wt::WText(wisaClasses[i].titular.wt()));
+          row++;
+        } else {
+          link->titular(TITULAR(newTitular.dn()));
+          link->flagForCommit();
+          entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
+          entries->elementAt(row, 1)->addWidget(new Wt::WText("Nieuwe Titularis: "));
+          entries->elementAt(row, 2)->addWidget(new Wt::WText(newTitular.fullName().get().wt()));
+          row++;
+        }
+      }
+      
+      
       // get account of adjunct
-      y::ldap::account & oldAdjunct = parentObject->ldap()->getAccount(wisaClasses[i].link->adjunct().get());
-      y::ldap::account & newAdjunct = parentObject->ldap()->getAccount(WISA_NAME(wisaClasses[i].adjunct));
-      if(oldAdjunct.uidNumber() != newAdjunct.uidNumber()) {
-        if(newAdjunct.isNew()) {
+      y::ldap::account * oldAdjunct = nullptr;
+      if(!link->adjunct().get().get().empty()) {
+        oldAdjunct = &parentObject->ldap()->getAccount(link->adjunct().get());
+        if(oldAdjunct->wisaName().get().empty()) {
+          oldAdjunct = nullptr;
+        }
+      }
+      
+      if((oldAdjunct == nullptr && !wisaClasses[i].adjunct.empty())
+      || (oldAdjunct != nullptr && (oldAdjunct->wisaName().get() != wisaClasses[i].adjunct))) {
+        y::ldap::account & newAdjunct = parentObject->ldap()->getAccount(WISA_NAME(wisaClasses[i].adjunct));
+        if(newAdjunct.wisaName().get().empty()) {
           entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
           entries->elementAt(row, 1)->addWidget(new Wt::WText("Error (ongeldige adjunct naam): "));
           entries->elementAt(row, 2)->addWidget(new Wt::WText(wisaClasses[i].adjunct.wt()));
+          row++;
         } else {
           wisaClasses[i].link->adjunct(ADJUNCT(newAdjunct.dn()));
+          wisaClasses[i].link->flagForCommit();
           entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
           entries->elementAt(row, 1)->addWidget(new Wt::WText("Nieuwe Adjunct: "));
           entries->elementAt(row, 2)->addWidget(new Wt::WText(newAdjunct.fullName().get().wt()));
+          row++;
         }
       }
     }
@@ -119,11 +182,12 @@ void wisaCompareClasses::onShow() {
 }
 
 bool wisaCompareClasses::onNext() {
-  parentObject->showNewPage(W_COMPAREGROUPS);
+  parentObject->showNewPage(W_COMMITCLASSES);
   return false;
 }
 
 bool wisaCompareClasses::onPrevious() {
+  parentObject->ldap()->clearClasses();
   parentObject->showNewPage(W_PARSE_CLASS);
   return false;
 }

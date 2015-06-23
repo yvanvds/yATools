@@ -164,11 +164,18 @@ bool y::ldap::account::load(const WISA_NAME & id) {
 }
 
 bool y::ldap::account::save() {
+  
   // remove user if needed
-  if(flaggedForRemoval()) {
+  if(flaggedForRemoval() && !dn().get().empty()) {
     y::Smartschool().deleteUser(*this);
     server->remove(_dn());
     return true;
+  }
+  
+  // accounts without DN are not valid
+  if(dn().get().empty()) {
+    flagForRemoval();
+    return false; 
   }
   
   

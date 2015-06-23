@@ -133,7 +133,7 @@ bool y::ldap::schoolClass::addNew(dataset& values) {
     titular.add("type", "titular");
     titular.add("values", _titular().get().get());
   }
-  
+  /*
   if(!adjunct().get().get().empty()) {
     data & adjunct = values.New(NEW);
     adjunct.add("type", "adjunct");
@@ -146,7 +146,7 @@ bool y::ldap::schoolClass::addNew(dataset& values) {
     for(int i = 0; i < _students.elms(); i++) {
       students.add("values", _students[i]);
     }
-  }
+  }*/
   
   y::Smartschool().addClass(*this);
   

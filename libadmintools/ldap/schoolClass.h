@@ -43,6 +43,7 @@ namespace y {
       virtual bool update(dataset & values);
       virtual void beforeRemove();
       
+      
       stringWatch<DESCRIPTION> _description;
       dnWatch    <TITULAR    > _titular    ;
       dnWatch    <ADJUNCT    > _adjunct    ;

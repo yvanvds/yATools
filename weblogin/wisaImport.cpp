@@ -78,6 +78,10 @@ wisaImport::wisaImport(y::ldap::server* server) : ldapServer(server) {
   WCommitChanges = new wisaCommitChanges(this);
   addPage(WCommitChanges);
   WCommitChanges->showButtons(false, false);
+  
+  WCommitClasses = new wisaCommitClasses(this);
+  addPage(WCommitClasses);
+  WCommitClasses->showButtons(false, true);
 }
 
 void wisaImport::setWisaStudentFile(const string& file) {
@@ -235,5 +239,6 @@ void wisaImport::showNewPage(WISA_PAGE value) {
     case W_PARSE_STUDENT: showPage(WParseStudentFile->getPageIndex()); break;
     case W_PARSE_CLASS: showPage(WParseClassFile->getPageIndex()); break;
     case W_COMPAREGROUPS: showPage(WCompareClasses->getPageIndex()); break;
+    case W_COMMITCLASSES: showPage(WCommitClasses->getPageIndex()); break;
   }
 }

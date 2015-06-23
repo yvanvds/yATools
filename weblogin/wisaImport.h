@@ -22,6 +22,7 @@
 #include "wisaImport/wisaParseStudentFile.h"
 #include "wisaImport/wisaUpload.h"
 #include "wisaImport/wisaParseClassFile.h"
+#include "wisaImport/wisaCommitClasses.h"
 #include "utils/string.h"
 #include "base/stackPageManager.h"
 
@@ -32,10 +33,10 @@ enum WISA_PAGE {
   W_NOID,
   W_COMPAREFILE,
   W_COMPAREGROUPS,
+  W_ADDGROUPS,
   W_COMPARENAMES,
-  W_NEWGROUPS,
   W_CONFIRM,
-  W_COMMIT,
+  W_COMMITCLASSES,
 };
 
 class wisaImport : public stackPageManager {
@@ -107,6 +108,7 @@ private:
   wisaNewGroups * WNewGroups;
   wisaConfirmSubmit * WConfirmSubmit;
   wisaCommitChanges * WCommitChanges;
+  wisaCommitClasses * WCommitClasses;
   
   Wt::WApplication * app; // for locking
   

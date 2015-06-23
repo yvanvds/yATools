@@ -342,7 +342,16 @@ CLASSES & y::ldap::server::getClasses() {
       }
       if(!found) {
         schoolClass & g = _classes.New();
-        g.loadData(d.get(i));
+        g.load(d.get(i));
+        if(g.cn().get().empty()) {
+          // this is not a class!
+          for(int i = _classes.elms() - 1; i <= 0; i--) {
+            if(_classes[i].dn() == g.dn()) {
+              _classes.remove(i);
+              break;
+            }
+          }
+        }
       }
     }
   }
@@ -501,13 +510,10 @@ void y::ldap::server::modify(const DN & dn, dataset & values) {
  
 void y::ldap::server::add(const DN& dn, dataset& values) {
   LDAPMod ** mods = createMods(values);
-  //std::cout << std::endl;
-  //std::cout << dn() << std::endl;
-  //printMods(mods);
 
   if(int result = ldap_add_ext_s(_server, dn.get().ldap(), mods, NULL, NULL) != LDAP_SUCCESS) {
     y::utils::Log().add(string("Error on DN: " + dn.get()));
-    string message("y::ldap::server::modify() : ");
+    string message("y::ldap::server::add() : ");
     message += ldap_err2string(result);
     y::utils::Log().add(message);
     printMods(mods);

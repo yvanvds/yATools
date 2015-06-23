@@ -9,6 +9,7 @@
 #include "utils/string.h"
 #include <fstream>
 #include <mutex>
+#include <functional>
 
 namespace y {
   namespace utils {
@@ -40,13 +41,20 @@ namespace y {
 
       log & useFunction(void (*logFunction)(const string & message) = nullptr);
       
+      log & bind(const std::function<void(const string &)> & function);
+      log & unbind();
+      
       log(); 
     private:
       bool _useConsole;
       bool _useFile   ;
+      bool _useBind   ;
+      
       string _file;
       std::wofstream _stream;
       void (*_logFunction)(const string & message);
+      std::function<void(const string & )> _bindFunction;
+      
       std::mutex m;
     };
 

@@ -32,8 +32,8 @@ bool y::ldap::ldapObject::load(const DN & id) {
 }
 
 bool y::ldap::ldapObject::load(const data& d) {
-  _dn(DN(d.getValue("DN")), true);
-  _cn(CN(d.getValue("cn")), true);
+  _dn.readFromLdap(d);
+  _cn.readFromLdap(d);
   
   _new = !loadData(d);
   return !_new;
@@ -76,6 +76,7 @@ bool y::ldap::ldapObject::save() {
   
   if(_new) {
     dataset values(server);
+
     if(addNew(values)) {
       if(values.elms()) {
         server->add(_dn(), values);
@@ -85,6 +86,7 @@ bool y::ldap::ldapObject::save() {
     } 
   } else {
     dataset values(server);
+    _cn.saveToLdap(values);
     if(update(values)) {
       if(values.elms()) {
         server->modify(_dn(), values);

@@ -14,7 +14,7 @@ y::utils::log & y::utils::Log() {
   return l;
 }
 
-y::utils::log::log() : _useConsole(true), _useFile(true), _file("/var/log/admintools") {
+y::utils::log::log() : _useConsole(true), _useFile(true), _useBind(false), _file("/var/log/admintools") {
   _stream.open(_file.utf8(), std::ios_base::out | std::ios_base::app);
 }
 
@@ -28,6 +28,9 @@ y::utils::log & y::utils::log::add(const string& message) {
   }
   if(_logFunction != nullptr) {
     (*_logFunction)(message);
+  }
+  if(_useBind) {
+    _bindFunction(message);
   }
   return *this;
 }
@@ -53,5 +56,18 @@ y::utils::log & y::utils::log::useFile(bool enable, const string& file) {
 y::utils::log & y::utils::log::useFunction(void(*logFunction)(const string&)) {
   std::lock_guard<std::mutex> lock(m);
   _logFunction = logFunction;
+  return *this;
+}
+
+y::utils::log & y::utils::log::bind(const std::function<void(const string &)> & function) {
+  std::lock_guard<std::mutex> lock(m);
+  _bindFunction = function;
+  _useBind = true;
+  return *this;
+}
+
+y::utils::log & y::utils::log::unbind() {
+  std::lock_guard<std::mutex> lock(m);
+  _useBind = false;
   return *this;
 }
