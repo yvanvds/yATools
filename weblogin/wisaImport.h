@@ -12,7 +12,7 @@
 #include "ldap/account.h"
 #include "ldap/group.h"
 #include "ldap/server.h"
-#include "wisaImport/wisaCommitChanges.h"
+#include "wisaImport/wisaCommitStudents.h"
 #include "wisaImport/wisaCompareFile.h"
 #include "wisaImport/wisaCompareClasses.h"
 #include "wisaImport/wisaCompareNames.h"
@@ -37,18 +37,30 @@ enum WISA_PAGE {
   W_COMPARENAMES,
   W_CONFIRM,
   W_COMMITCLASSES,
+  W_COMMITSTUDENTS,
 };
 
 class wisaImport : public stackPageManager {
 public:
   struct wisaAccount {
-    wisaAccount() : link(nullptr) {}
+    wisaAccount();
     bool set(std::vector<std::wstring> & line);
-    string cn;
-    string sn;
-    string schoolClass;
-    string date;
-    int ID;
+    CN cn;
+    SN sn;
+    GENDER gender;
+    DATE birthday;
+    BIRTHPLACE birthplace;
+    REGISTER_ID registerID;
+    NATION nationality;
+    STEM_ID stemID;
+    WISA_ID wisaID;
+    SCHOOLCLASS schoolClass;
+    DATE changeClassDate;
+    STREET street;
+    HOUSENUMBER houseNumber;
+    HOUSENUMBER_ADD houseNumberAdd;
+    POSTAL_CODE postalCode;
+    CITY city;
     y::ldap::account * link;
   };
   
@@ -107,7 +119,7 @@ private:
   wisaCompareNames * WCompareNames;
   wisaNewGroups * WNewGroups;
   wisaConfirmSubmit * WConfirmSubmit;
-  wisaCommitChanges * WCommitChanges;
+  wisaCommitStudents * WCommitStudents;
   wisaCommitClasses * WCommitClasses;
   
   Wt::WApplication * app; // for locking

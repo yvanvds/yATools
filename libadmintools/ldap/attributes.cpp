@@ -573,6 +573,8 @@ string GENDER::toText(TYPE value) {
 }
 
 GENDER::TYPE GENDER::toGender(const string & value) {
+  if(value == "M") return MALE;
+  if(value == "V") return FEMALE;
   if(value == "male"       ) return MALE;
   if(value == "female"     ) return FEMALE;
   if(value == "transgender") return TRANSGENDER;

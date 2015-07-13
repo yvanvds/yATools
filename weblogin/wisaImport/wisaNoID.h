@@ -16,8 +16,14 @@ class wisaNoID : public stackPage {
 public:
   wisaNoID(wisaImport * parentObject) : parentObject(parentObject) {}
   void setContent(Wt::WVBoxLayout * box);
+  int getPageIndex() { return pageIndex; }
   void onShow();
-  bool onNext();
+  
+  virtual bool onNext();
+  virtual bool onPrevious();
+  
+  
+  
 private:
   Wt::WTable * entries;
   

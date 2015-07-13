@@ -75,9 +75,9 @@ wisaImport::wisaImport(y::ldap::server* server) : ldapServer(server) {
   addPage(WConfirmSubmit);
   WConfirmSubmit->showButtons(true, true);
   
-  WCommitChanges = new wisaCommitChanges(this);
-  addPage(WCommitChanges);
-  WCommitChanges->showButtons(false, false);
+  WCommitStudents = new wisaCommitStudents(this);
+  addPage(WCommitStudents);
+  WCommitStudents->showButtons(false, false);
   
   WCommitClasses = new wisaCommitClasses(this);
   addPage(WCommitClasses);
@@ -94,13 +94,13 @@ void wisaImport::setWisaStudentFile(const string& file) {
   std::wifstream stream(file.utf8());
   stream.imbue(utf8);
   
-  if(!readLinesUTF8(&stream)) {
+  if(!readLinesUTF8(&stream), true) {
     // probably the file has another encoding
     // Try again with latin1
     std::locale latin = gen("en_US.iso88591");
     std::ifstream stream2(file.utf8());
     stream2.imbue(latin);
-    readLinesLatin(&stream2);
+    readLinesLatin(&stream2, true);
   }
 }
 
@@ -132,10 +132,15 @@ bool wisaImport::readLinesUTF8(std::wifstream * stream, bool students) {
             "Error",
             "<p>Het aantal kolommen in dit bestand klopt niet.</p>",
             Wt::Critical, Wt::Ok);
+      
       message->buttonClicked().connect(std::bind([=] () {
         reset();
         showNewPage(W_UPLOAD);
+        delete message;
       }));
+      
+      message->show();
+      return false;
     }    
   }
   return !wisaAccounts.empty();
@@ -153,7 +158,10 @@ bool wisaImport::readLinesLatin(std::ifstream* stream, bool students) {
       message->buttonClicked().connect(std::bind([=] () {
         reset();
         showNewPage(W_UPLOAD);
+        delete message;
       }));
+      message->show();
+      return false;
     }
   }
   return !wisaAccounts.empty();
@@ -200,15 +208,49 @@ container<wisaImport::wisaAccount> & wisaImport::getWisaAccounts() {
   return wisaAccounts;
 }
 
+wisaImport::wisaAccount::wisaAccount() 
+  : cn("")
+  , sn("")
+  , gender(GENDER::MALE)
+  , birthday(DAY(1), MONTH(1), YEAR(1))
+  , birthplace("")
+  , registerID("")
+  , nationality("Belgische")
+  , stemID(0)
+  , wisaID(0)
+  , schoolClass("")
+  , changeClassDate(DAY(1), MONTH(1), YEAR(1))
+  , street("")
+  , houseNumber(0)
+  , houseNumberAdd("")
+  , postalCode("")
+  , city("") 
+  , link(nullptr) {}
+
 bool wisaImport::wisaAccount::set(std::vector<std::wstring>& line) {
-  if(line.size() != 5) {
+  if(line.size() != 20) {
     return false;
   }
-  sn = string(line[0]);
-  cn = string(line[1]);
-  schoolClass = string(line[2]);
-  date = string(line[3]);
-  ID = std::stoi(line[4]);
+  sn = SN(string(line[0]));
+  cn = CN(string(line[1]));
+  gender = GENDER(GENDER::toGender(string(line[2])));
+  birthday = DATE(string(line[3]), true);
+  registerID = REGISTER_ID(string(line[4]));
+  birthplace = BIRTHPLACE(string(line[5]));
+  nationality = NATION(string(line[6]));
+  stemID = STEM_ID(string(line[7]).asInt());
+  wisaID = WISA_ID(string(line[8]).asInt());
+  // line[9] = school ID
+  schoolClass = SCHOOLCLASS(string(line[10]));
+  // line[11] > klasomschrijving
+  // lien[12] > klasnummer
+  // line[13] > admingroup number
+  changeClassDate = DATE(string(line[14]), true);
+  street = STREET(string(line[15]));
+  houseNumber = HOUSENUMBER(string(line[16]).asInt());
+  houseNumberAdd = HOUSENUMBER_ADD(string(line[17]));
+  postalCode = POSTAL_CODE(string(line[18]));
+  city = CITY(string(line[19]));
   return true;
 }
 
@@ -232,7 +274,7 @@ container<wisaImport::wisaClass> & wisaImport::getWisaClasses() {
 }
 
 void wisaImport::showErrorOnScreen(const string& message) {
-  WCommitChanges->addMessage(message);
+  WCommitStudents->addMessage(message);
 }
 
 void wisaImport::showNewPage(WISA_PAGE value) {
@@ -242,5 +284,9 @@ void wisaImport::showNewPage(WISA_PAGE value) {
     case W_PARSE_CLASS: showPage(WParseClassFile->getPageIndex()); break;
     case W_COMPAREGROUPS: showPage(WCompareClasses->getPageIndex()); break;
     case W_COMMITCLASSES: showPage(WCommitClasses->getPageIndex()); break;
+    case W_COMPAREFILE: showPage(WCompareFile->getPageIndex()); break;
+    case W_NOID: showPage(WNoID->getPageIndex()); break;
+    case W_COMPARENAMES: showPage(WCompareNames->getPageIndex()); break;
+    case W_COMMITSTUDENTS: showPage(WCommitStudents->getPageIndex()); break;
   }
 }

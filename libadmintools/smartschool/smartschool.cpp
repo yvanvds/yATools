@@ -198,9 +198,7 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   birthDay += "-"; birthDay += string(account.birthDay().getMonth());
   birthDay += "-"; birthDay += string(account.birthDay().getDay());
   
-  string wisaID;
-  if(account.isStaff()) wisaID = account.wisaName().get();
-  else wisaID = string(account.wisaID().get());
+  string wisaID = getAccountID(account);
   
   soap_dom_element result;
   if(service.saveUser(
@@ -217,7 +215,7 @@ void y::smartschool::saveUser(y::ldap::account& account) {
           gender.ss(), // sex
           birthDay.ss(), // birthday
           account.birthPlace().get().ss(), // birthplace
-          account.nationality().get().ss(), // birthcountry
+          "", // birthcountry
           streetAddress.ss(), // street address
           account.postalCode().get().ss(), // postal code
           account.city().get().ss(), // city
@@ -236,6 +234,13 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   }
 }
 
+int y::smartschool::saveNationality(y::ldap::account & account) {
+  string ID = getAccountID(account);
+  return saveUserParam(ID, "Nationalititeit", account.nationality().get());
+}
+
+
+
 int y::smartschool::addUserToGroup(y::ldap::account& account, const string& group, bool keepCurrent) {
   soap_dom_element result;
   if(service.saveUserToClassesAndGroups(
@@ -251,6 +256,21 @@ int y::smartschool::addUserToGroup(y::ldap::account& account, const string& grou
     //if(result->soap_type() == SOAP_TYPE_xsd__int) {
     //  return ((xsd__int*)(result))->__item;
     //}
+  }
+  return 0;
+}
+
+int y::smartschool::saveUserParam(const string& ID, const string& param, const string& value) {
+  soap_dom_element result;
+  if(service.saveUserParameter(
+          y::utils::Config().getSSPw().ss(),
+          ID.ss(),
+          param.ss(),
+          value.ss(),
+          result
+          ) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return -1;
   }
   return 0;
 }
@@ -400,4 +420,9 @@ string y::smartschool::errorToText(int code) {
     return errorTable[code];
   }
   return string("no error found with this ID");
+}
+
+string y::smartschool::getAccountID(y::ldap::account& account) {
+  if(account.isStaff()) return account.wisaName().get();
+  else return string(account.wisaID().get());
 }

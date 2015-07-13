@@ -44,9 +44,8 @@ void wisaCompareFile::onShow() {
       validAccounts--;
       if(accounts[i].flaggedForRemoval()) accountsToRemove++;
     } else {
-      int wisaID = accounts[i].wisaID().get();
       for(int j = 0; j < wisaContent.elms(); j++) {
-        if(wisaContent[j].ID == wisaID) {
+        if(wisaContent[j].wisaID == accounts[i].wisaID()) {
           wisaContent[j].link = &accounts[i];
           accounts[i].setImportStatus(WI_ACCOUNTED);
           accountedFor++;
@@ -69,4 +68,14 @@ void wisaCompareFile::onShow() {
   m4 += accountsToRemove;
   m4 += " accounts worden verwijderd.";
   message4->setText(m4.wt());
+}
+
+bool wisaCompareFile::onNext() {
+  parentObject->showNewPage(W_COMPARENAMES);
+  return false;
+}
+
+bool wisaCompareFile::onPrevious() {
+  parentObject->showNewPage(W_NOID);
+  return false;
 }

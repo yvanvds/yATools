@@ -101,5 +101,11 @@ bool wisaNoID::onNext() {
       }
     }
   }
-  return true;
+  parentObject->showNewPage(W_COMPAREFILE);
+  return false;
+}
+
+bool wisaNoID::onPrevious() {
+  parentObject->showNewPage(W_PARSE_STUDENT);
+  return false;
 }

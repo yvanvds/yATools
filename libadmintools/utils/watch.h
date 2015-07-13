@@ -46,6 +46,15 @@ public:
     _inLdap = false;;
   }
   
+  bool update(const T & value) {
+    if(_value != value) {
+      _value = value;
+      _changed = true;
+      return true;
+    }
+    return false;
+  }
+  
   const T & operator()() const { return _value; }
   
   void operator()(const T & value, bool silent = false) {

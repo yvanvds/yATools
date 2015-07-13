@@ -31,25 +31,29 @@ class fileDownload : public Wt::WResource {
 
 class wisaImport;
 
-class wisaCommitChanges : public stackPage {
+class wisaCommitStudents : public stackPage {
 public:
-  wisaCommitChanges(wisaImport * parentObject) : parentObject(parentObject), download(nullptr) {}
- ~wisaCommitChanges();
+  wisaCommitStudents(wisaImport * parentObject) : parentObject(parentObject), download(nullptr) {}
+ ~wisaCommitStudents();
  
   void setContent(Wt::WVBoxLayout * box);
+  int getPageIndex() { return pageIndex; }
   void onShow();
   bool onNext();
-  void addMessage(const string & message, bool lastUpdate = false);
+  
+  void addMessage(const string & message);
   void addNewAccountMessage(const string & message);
+  void threadDone();
   
   wisaImport * getParentObject() { return parentObject; }
   
 private:
   Wt::WTable * entries;
+  Wt::WImage * waitImage;
+  Wt::WContainerWidget * imageContainer;
   Wt::WVBoxLayout * box;
   Wt::WText * progress;
   int rowCounter;
-  int streamCounter;
   fileDownload * download;
   
   wisaImport * parentObject;

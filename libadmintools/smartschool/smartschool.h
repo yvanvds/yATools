@@ -36,6 +36,8 @@ namespace y {
   
    int savePassword(y::ldap::account & account);
    void saveUser(y::ldap::account & account);
+   int saveNationality(y::ldap::account & account);
+   
    int addUserToGroup(y::ldap::account & account, const string & group, bool keepCurrent);
    int deleteUser(y::ldap::account & account, const string & removalDate = string("00/00/0000"));
    
@@ -55,6 +57,9 @@ namespace y {
     void createErrorCodeTable(y::data::database & db);
     void loadErrorCodes(y::data::database & db);
 
+    int saveUserParam(const string & ID, const string & param, const string & value);
+    string getAccountID(y::ldap::account & account);
+    
     container<string> errorTable;
   };
   

@@ -84,4 +84,5 @@ void wisaCommitClasses::addMessage(const string& message) {
 bool wisaCommitClasses::onNext() {
   parentObject->reset();
   parentObject->showNewPage(W_UPLOAD);
+  return false;
 }

@@ -83,6 +83,7 @@ void wisaCompareClasses::onShow() {
           parentObject->showNewPage(W_UPLOAD);
           return;
         }));
+        message->show();
       } else {
         newClass.description(DESCRIPTION(wisaClasses[i].description));
         newClass.adminGroup(ADMINGROUP(wisaClasses[i].adminGroup));
@@ -195,6 +196,7 @@ void wisaCompareClasses::onShow() {
     nextButton->setText("Wijzig Database");
     title->setText("<h4>De volgende klassen worden aangepast.</h4>");
   } else {
+    this->showButtons(false, true);
     nextButton->setStyleClass("btn btn-success");
     nextButton->setText("Terug naar upload");
     title->setText("<h4>De database wordt niet gewijzigd.</h4>");

@@ -13,6 +13,7 @@
             <file>file:/home/yvan/github/yATools/libadmintools/admin/userAdmin.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/group.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/string.h</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/log.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/account.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/dataset.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/build_date.h</file>
@@ -21,10 +22,10 @@
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/schoolClass.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/data/database.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/security.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/smartschool/smartschool.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/watch.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/server.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/account.cpp</file>
-            <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/ldapServerTest.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/schoolClass.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/ldapObject.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/admintools.h</file>
@@ -39,6 +40,8 @@
             <file>file:/home/yvan/github/yATools/libadmintools/admin/userAdmin.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/data/adminRights.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/gui/application.h</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/smartschool/soapV3BindingProxy.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/log.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/defines.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/samba/samba.cpp</file>
         </group>

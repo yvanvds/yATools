@@ -53,8 +53,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/topContent.o \
 	${OBJECTDIR}/wisaImport.o \
 	${OBJECTDIR}/wisaImport/wisaChangeClassMembers.o \
-	${OBJECTDIR}/wisaImport/wisaCommitChanges.o \
 	${OBJECTDIR}/wisaImport/wisaCommitClasses.o \
+	${OBJECTDIR}/wisaImport/wisaCommitStudents.o \
 	${OBJECTDIR}/wisaImport/wisaCompareClasses.o \
 	${OBJECTDIR}/wisaImport/wisaCompareFile.o \
 	${OBJECTDIR}/wisaImport/wisaCompareNames.o \
@@ -192,15 +192,15 @@ ${OBJECTDIR}/wisaImport/wisaChangeClassMembers.o: wisaImport/wisaChangeClassMemb
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaChangeClassMembers.o wisaImport/wisaChangeClassMembers.cpp
 
-${OBJECTDIR}/wisaImport/wisaCommitChanges.o: wisaImport/wisaCommitChanges.cpp 
-	${MKDIR} -p ${OBJECTDIR}/wisaImport
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCommitChanges.o wisaImport/wisaCommitChanges.cpp
-
 ${OBJECTDIR}/wisaImport/wisaCommitClasses.o: wisaImport/wisaCommitClasses.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCommitClasses.o wisaImport/wisaCommitClasses.cpp
+
+${OBJECTDIR}/wisaImport/wisaCommitStudents.o: wisaImport/wisaCommitStudents.cpp 
+	${MKDIR} -p ${OBJECTDIR}/wisaImport
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCommitStudents.o wisaImport/wisaCommitStudents.cpp
 
 ${OBJECTDIR}/wisaImport/wisaCompareClasses.o: wisaImport/wisaCompareClasses.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport

@@ -16,7 +16,12 @@ class wisaCompareFile : public stackPage {
 public:
   wisaCompareFile(wisaImport * parentObject) : parentObject(parentObject) {}
   void setContent(Wt::WVBoxLayout * box);
+  int getPageIndex() { return pageIndex; }
   void onShow();
+  
+  virtual bool onNext();
+  virtual bool onPrevious();
+  
 private:
   Wt::WText * message1;
   Wt::WText * message2;

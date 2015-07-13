@@ -73,20 +73,9 @@ void debugFunctions::groupsToSmartschool() {
 void debugFunctions::testFunction() {
   y::utils::Log().useConsole(true);
   y::ldap::server server;
-  ACCOUNTS & accounts = server.getAccounts();
   
-  for(int i = 0; i < accounts.elms(); i++) {
-    if(accounts[i].isStaff()) {
-      cout << accounts[i].fullName().get() << endl;
-      std::string response;
-      std::getline(std::cin, response);
-      if(response[0] == 'm') {
-        accounts[i].gender(GENDER(GENDER::MALE));
-      } else {
-        accounts[i].gender(GENDER(GENDER::FEMALE));
-      }
-    }
-  }
+  y::ldap::account & acc = server.getAccount(UID("abh"));
+  acc.stemID(STEM_ID(1300002));
   
   server.commitChanges();
   

@@ -46,10 +46,10 @@
     <logicalFolder name="f1" displayName="wisaImport" projectFiles="true">
       <itemPath>wisaImport/wisaChangeClassMembers.cpp</itemPath>
       <itemPath>wisaImport/wisaChangeClassMembers.h</itemPath>
-      <itemPath>wisaImport/wisaCommitChanges.cpp</itemPath>
-      <itemPath>wisaImport/wisaCommitChanges.h</itemPath>
       <itemPath>wisaImport/wisaCommitClasses.cpp</itemPath>
       <itemPath>wisaImport/wisaCommitClasses.h</itemPath>
+      <itemPath>wisaImport/wisaCommitStudents.cpp</itemPath>
+      <itemPath>wisaImport/wisaCommitStudents.h</itemPath>
       <itemPath>wisaImport/wisaCompareClasses.cpp</itemPath>
       <itemPath>wisaImport/wisaCompareClasses.h</itemPath>
       <itemPath>wisaImport/wisaCompareFile.cpp</itemPath>
@@ -252,13 +252,13 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="wisaImport/wisaCommitChanges.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="wisaImport/wisaCommitChanges.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="wisaImport/wisaCommitClasses.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="wisaImport/wisaCommitClasses.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCommitStudents.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCommitStudents.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="wisaImport/wisaCompareClasses.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -477,13 +477,13 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="wisaImport/wisaCommitChanges.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="wisaImport/wisaCommitChanges.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="wisaImport/wisaCommitClasses.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="wisaImport/wisaCommitClasses.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCommitStudents.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="wisaImport/wisaCommitStudents.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="wisaImport/wisaCompareClasses.cpp" ex="false" tool="1" flavor2="0">
       </item>
