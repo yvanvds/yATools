@@ -14,6 +14,8 @@
 #include "data/database.h"
 #include "ldap/group.h"
 #include "utils/log.h"
+#include "utils/base64.h"
+#include "utils/xmlParser.h"
 
 #include "Wt/Json/Parser"
 #include "Wt/Json/Object"
@@ -61,17 +63,15 @@ y::smartschool::~smartschool() {
   service.destroy();
 }
 
-int y::smartschool::getUserDetails(const string& name, const string& password, y::data::row& details) {
+bool y::smartschool::getUserDetails(const string& name, const string& password, y::data::row& details) {
   soap_dom_element result;
-  
-  
   
   if(service.isValidUserCredentials(y::utils::Config().getSSPw().ss(), 
                                     name.ss(), 
                                     password.ss(),
                                     result) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
-    return -1;
+    return false;
   } else {
     Wt::Json::Object data;
     Wt::Json::ParseError error;
@@ -88,23 +88,142 @@ int y::smartschool::getUserDetails(const string& name, const string& password, y
     }
     
   }
-  
-  
-  return 0;
+   
+  return true;
 }
 
-int y::smartschool::addCourse(const string& name, const string& description) {
+bool y::smartschool::addCourse(const string& name, const string& description) {
   std::string result;
   if(service.addCourse(y::utils::Config().getSSPw().ss(), name.ss(), description.ss(), result) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
-    return -1;
+    return false;
   } else {
     // it's a string, but it always returns an int
-    return std::stoi(result);
+    int error = std::stoi(result);
+    if (error == 0) return true;
+    y::utils::Log().add(errorToText(error));
+    return false;
   } 
 }
 
-int y::smartschool::setCourseClasses(const string& courseName, const string& courseDescription, container<string>& groupIDs) {
+bool y::smartschool::getCourses(container<course> & result) {
+  std::string stringResult;
+  if(service.getCourses(
+          y::utils::Config().getSSPw().ss(),
+          stringResult
+          )!= SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return false;
+  } else {
+    std::string decoded = base64_decode(stringResult);
+    
+    tinyxml2::XMLDocument doc;
+    doc.Parse(decoded.c_str(), decoded.length());
+    
+    if(doc.Error()) {
+      y::utils::Log().add(string("xml error in smartschool::getCourses"));
+    }
+    
+    tinyxml2::XMLElement * courses = nullptr;
+    courses = doc.FirstChildElement("courses");
+    if(courses == nullptr) return false;
+    
+    tinyxml2::XMLElement * c = nullptr;
+    c = courses->FirstChildElement("course");
+
+    while (c != nullptr) {
+      course & newcourse = result.New();
+    
+      const tinyxml2::XMLElement * name = nullptr;
+      name = c->FirstChildElement("name");
+      if(name != nullptr) { 
+        newcourse.name = name->GetText();
+      }
+      
+      const tinyxml2::XMLElement * description = nullptr;
+      description = c->FirstChildElement("description");
+      if(description != nullptr) {
+        newcourse.description = description->GetText();
+      }
+      
+      const tinyxml2::XMLElement * active = nullptr;
+      active = c->FirstChildElement("active");
+      if(active != nullptr) {
+        string value(active->GetText());
+        newcourse.active = (value == "1");
+      } 
+      
+      const tinyxml2::XMLElement * mainTeacher = nullptr;
+      mainTeacher = c->FirstChildElement("mainTeacher");
+      if(mainTeacher != nullptr) {
+        const tinyxml2::XMLElement * firstName = nullptr;
+        firstName = mainTeacher->FirstChildElement("firstname");
+        if(firstName != nullptr) {
+          newcourse.mainTeacher.firstname = firstName->GetText();
+        }
+        
+        const tinyxml2::XMLElement * lastName = nullptr;
+        lastName = mainTeacher->FirstChildElement("lastname");
+        if(lastName != nullptr) {
+          newcourse.mainTeacher.lastname = lastName->GetText();
+        }
+        
+        const tinyxml2::XMLElement * userName = nullptr;
+        userName = mainTeacher->FirstChildElement("username");
+        if(userName != nullptr) {
+          newcourse.mainTeacher.username = userName->GetText();
+        }
+        
+        const tinyxml2::XMLElement * number = nullptr;
+        number = mainTeacher->FirstChildElement("number");
+        if(number != nullptr) {
+          newcourse.mainTeacher.wisaID = number->GetText();
+        }
+        
+      }
+      
+      TODO(Retrieve coTeachers)
+      
+      tinyxml2::XMLElement * studentGroups = nullptr;
+      studentGroups = c->FirstChildElement("studentGroups");
+      
+      if(studentGroups != nullptr) {
+        const tinyxml2::XMLElement * s = nullptr;
+        s = studentGroups->FirstChildElement("studentGroup");
+        
+        while (s != nullptr) {
+          studentGroup & g = newcourse.classes.New();
+          
+          const tinyxml2::XMLElement * name = nullptr;
+          name = s->FirstChildElement("name");
+          if(name != nullptr) {
+            g.name = name->GetText();
+          }
+          
+          const tinyxml2::XMLElement * description = nullptr;
+          description = s->FirstChildElement("description");
+          if(description != nullptr) {
+            g.description = description->GetText();
+          }
+          
+          const tinyxml2::XMLElement * type = nullptr;
+          type = s->FirstChildElement("type");
+          if(type != nullptr) {
+            g.type = type->GetText();
+          }
+          
+          s = s->NextSiblingElement();
+        }
+      }
+              
+      c = c->NextSiblingElement();
+    }
+
+    return true;
+  }
+}
+
+bool y::smartschool::setCourseStudents(const string& courseName, const string& courseDescription, container<string>& groupIDs) {
   soap_dom_element result;
   string grouplist;
   for(int i = 0; i < groupIDs.elms(); i++) {
@@ -119,13 +238,13 @@ int y::smartschool::setCourseClasses(const string& courseName, const string& cou
                             , result
     ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
-    return -1;
+    return false;
   } else {
-    return string(result.wide).asInt();
+    return validateSoapResult(result);
   }
 }
 
-int y::smartschool::setCourseTeachers(const string& courseName, const string& courseDescription, const string & teacher, container<string> * coTeachers) {
+bool y::smartschool::setCourseTeachers(const string& courseName, const string& courseDescription, const string & teacher, container<string> * coTeachers) {
   soap_dom_element result;
   string grouplist;
   if(coTeachers != nullptr) {
@@ -143,35 +262,33 @@ int y::smartschool::setCourseTeachers(const string& courseName, const string& co
                               , result
     ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
-    return -1;
+    return false;
   } else {
-    return string(result.wide).asInt();
+    return validateSoapResult(result);
   }
 }
 
 
 
-int y::smartschool::savePassword(y::ldap::account& account) {
-  /*xsd__anyType * result;
+bool y::smartschool::savePassword(const y::ldap::account& account) {
+  soap_dom_element result;
+  
   if(service.savePassword(
           y::utils::Config().getSSPw().ss(),
-          account.uid()().ss(),
+          account.uid().get().ss(),
           account.getPasswordText().ss(),
           0,
           result) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
-    return -1;
+    return false;
   } else {
-    if(result->soap_type() == SOAP_TYPE_xsd__int) {
-      return ((xsd__int*)(result))->__item;
-    }
-  }*/
-  return 0;
+    return validateSoapResult(result);
+  }
 }
 
-void y::smartschool::saveUser(y::ldap::account& account) {
+bool y::smartschool::saveUser(const y::ldap::account& account) {
   string role;
-  if(!account.isStaff() && !account.isStudent()) return;
+  if(!account.isStaff() && !account.isStudent()) return false;
   
   if(account.role().get() == ROLE::DIRECTOR) {
     role = "Directie";
@@ -200,7 +317,13 @@ void y::smartschool::saveUser(y::ldap::account& account) {
   
   string wisaID = getAccountID(account);
   
+  string stamboekNummer(account.stemID().get());
+  if(account.stemID().get() < 1000000) {
+    stamboekNummer = string("0") + stamboekNummer;
+  }
+  
   soap_dom_element result;
+ 
   if(service.saveUser(
           y::utils::Config().getSSPw().ss(),
           wisaID.ss() , // internal number
@@ -225,23 +348,84 @@ void y::smartschool::saveUser(y::ldap::account& account) {
           "", // home phone
           "", // fax
           account.registerID().get().ss(), // rijksregisternummer
-          string(account.stemID().get()).ss(), // stamboeknummer
+          stamboekNummer.ss(), // stamboeknummer
           role.ss(), // basisrol
           "", // untisveld
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
+    return false;
+  } else {
+    // perhaps an existing user does not exist in smartschool
+    // in this case we have to make up a temporary password and 
+    // try again
+    if(string(result.wide).asInt() == 4) {
+      soap_dom_element result;
+      if(service.saveUser(
+              y::utils::Config().getSSPw().ss(),
+              wisaID.ss() , // internal number
+              account.uid().get().ss()                 , // username
+              "UnknowNP4ss"       , // password
+              "", // password for first co-account
+              "", // password for second co-account
+              account.cn().get().ss()                  , // first name
+              account.sn().get().ss()                  , // last name
+              "", // extra names
+              "", // initials
+              gender.ss(), // sex
+              birthDay.ss(), // birthday
+              account.birthPlace().get().ss(), // birthplace
+              "", // birthcountry
+              streetAddress.ss(), // street address
+              account.postalCode().get().ss(), // postal code
+              account.city().get().ss(), // city
+              account.country().get().ss(), // country
+              account.mail().get().ss(), // email
+              "", // mobile phone
+              "", // home phone
+              "", // fax
+              account.registerID().get().ss(), // rijksregisternummer
+              stamboekNummer.ss(), // stamboeknummer
+              role.ss(), // basisrol
+              "", // untisveld
+              result
+              ) != SOAP_OK) {
+        service.soap_stream_fault(std::cerr);
+      } else {
+        return validateSoapResult(result);
+      }
+    }
+    return validateSoapResult(result);
   }
 }
 
-int y::smartschool::saveNationality(y::ldap::account & account) {
+bool y::smartschool::saveNationality(const y::ldap::account & account) {
   string ID = getAccountID(account);
   return saveUserParam(ID, "Nationalititeit", account.nationality().get());
 }
 
+bool y::smartschool::validate(const string & username, const string & password) {
+  soap_dom_element result;
+  if(service.isValidUserCredentials(
+          y::utils::Config().getSSPw().ss(),
+          username.ss(),
+          password.ss(),
+          result
+          ) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return false;
+  } else {
+    Wt::Json::Object data;
+    Wt::Json::ParseError error;
+    if(!Wt::Json::parse(string(result.wide).utf8(), data, error)) {
+      return validateSoapResult(result);
+    } else {
+      return true;
+    }
+  }
+}
 
-
-int y::smartschool::addUserToGroup(y::ldap::account& account, const string& group, bool keepCurrent) {
+bool y::smartschool::addUserToGroup(const y::ldap::account& account, const string& group, bool keepCurrent) {
   soap_dom_element result;
   if(service.saveUserToClassesAndGroups(
           y::utils::Config().getSSPw().ss(),
@@ -251,16 +435,36 @@ int y::smartschool::addUserToGroup(y::ldap::account& account, const string& grou
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
-    return -1;
+    return false;
   } else {
-    //if(result->soap_type() == SOAP_TYPE_xsd__int) {
-    //  return ((xsd__int*)(result))->__item;
-    //}
+    return validateSoapResult(result);
   }
-  return 0;
+
 }
 
-int y::smartschool::saveUserParam(const string& ID, const string& param, const string& value) {
+bool y::smartschool::moveUserToClass(const y::ldap::account& account, const string & group) {
+  soap_dom_element result;
+  
+  string user = account.uid().get();
+  string changeDate = string(account.classChange().getYear());
+  changeDate += "-"; changeDate += string(account.classChange().getMonth());
+  changeDate += "-"; changeDate += string(account.classChange().getDay());
+  
+  if(service.saveUserToClass(
+          y::utils::Config().getSSPw().ss(),
+          user.ss(),
+          group.ss(), 
+          changeDate.ss(),
+          result
+          ) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return false;
+  } else {
+    return validateSoapResult(result);
+  }
+}
+
+bool y::smartschool::saveUserParam(const string& ID, const string& param, const string& value) {
   soap_dom_element result;
   if(service.saveUserParameter(
           y::utils::Config().getSSPw().ss(),
@@ -270,30 +474,32 @@ int y::smartschool::saveUserParam(const string& ID, const string& param, const s
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
-    return -1;
+    return false;
   }
-  return 0;
+  return validateSoapResult(result);
 }
 
-int y::smartschool::deleteUser(y::ldap::account& account, const string & removalDate) {
+bool y::smartschool::deleteUser(const y::ldap::account& account) {
   soap_dom_element result;
+  
+  string changeDate = string(account.classChange().getYear());
+  changeDate += "-"; changeDate += string(account.classChange().getMonth());
+  changeDate += "-"; changeDate += string(account.classChange().getDay());  
+  
   if(service.delUser(
           y::utils::Config().getSSPw().ss(),
           account.uid().get().ss(),
-          removalDate.ss(), // official date
+          changeDate.ss(), // official date
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
-    return -1;
+    return false;
   } else {
-    //if(result->soap_type() == SOAP_TYPE_xsd__int) {
-    //  return ((xsd__int*)(result))->__item;
-    //}
+    return validateSoapResult(result);
   }
-  return 0;
 }
 
-int y::smartschool::addClass(y::ldap::schoolClass & group) {
+bool y::smartschool::saveClass(const y::ldap::schoolClass & group) {
   soap_dom_element result;
   string parent;
   
@@ -322,13 +528,13 @@ int y::smartschool::addClass(y::ldap::schoolClass & group) {
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
-    return -1;
+    return false;
   } else {
-    return string(result.wide).asInt();
+    return validateSoapResult(result);
   }
 }
 
-int y::smartschool::deleteClass(y::ldap::schoolClass & group) {
+bool y::smartschool::deleteClass(const y::ldap::schoolClass & group) {
   soap_dom_element result;
   if(service.delClass(
           y::utils::Config().getSSPw().ss(), // password smartschool
@@ -336,11 +542,10 @@ int y::smartschool::deleteClass(y::ldap::schoolClass & group) {
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
-    return -1;
-  } else {
-    return string(result.wide).asInt();
-  }
-  return 0;
+    return false;
+  } 
+  
+  return validateSoapResult(result);
 }
 
 void y::smartschool::createErrorCodeTable(y::data::database & db) {
@@ -422,7 +627,14 @@ string y::smartschool::errorToText(int code) {
   return string("no error found with this ID");
 }
 
-string y::smartschool::getAccountID(y::ldap::account& account) {
+string y::smartschool::getAccountID(const y::ldap::account& account) {
   if(account.isStaff()) return account.wisaName().get();
   else return string(account.wisaID().get());
+}
+
+bool y::smartschool::validateSoapResult(soap_dom_element& result) {
+  int error = string(result.wide).asInt();
+  if (error == 0) return true;
+  y::utils::Log().add(errorToText(error));
+  return false;
 }

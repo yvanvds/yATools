@@ -255,7 +255,8 @@ bool wisaImport::wisaAccount::set(std::vector<std::wstring>& line) {
 }
 
 bool wisaImport::wisaClass::set(std::vector<std::wstring> & line) {
-  if(line.size() != 7) {
+  if(line.size() != 7 && line.size() != 6) {
+    // class without co-titular have only 6 entries
     return false;
   }
   name = string(line[0]);
@@ -265,8 +266,13 @@ bool wisaImport::wisaClass::set(std::vector<std::wstring> & line) {
   schoolID = string(line[4]).asInt();
   titular = string(line[5]);
   titular.keeponlyChars().removeNewLine();
-  adjunct = string(line[6]);
-  adjunct.keeponlyChars().removeNewLine();
+  if(line.size() > 6) {
+    adjunct = string(line[6]);
+    adjunct.keeponlyChars().removeNewLine();
+  } else {
+    adjunct.clear();
+  }
+  return true;
 }
 
 container<wisaImport::wisaClass> & wisaImport::getWisaClasses() {

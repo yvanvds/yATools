@@ -117,7 +117,7 @@ void commitThreadFunc(wisaCommitStudents * caller) {
       newAccount.nationality(account.nationality);
       newAccount.stemID(account.stemID);
       newAccount.schoolClass(account.schoolClass);
-      //newAccount.changeClassDate(account.changeClassDate);
+      newAccount.classChange(account.changeClassDate);
       newAccount.street(account.street);
       newAccount.houseNumber(account.houseNumber);
       newAccount.houseNumberAdd(account.houseNumberAdd);
@@ -202,10 +202,10 @@ void commitThreadFunc(wisaCommitStudents * caller) {
         updated = true;
       }
       
-      //if(account.link->changeClassDate() != account.changeClassDate){
-      //  account.link->changeClassDate(account.changeClassDate);
-      //  updated = true;
-      //}
+      if(account.link->classChange() != account.changeClassDate){
+        account.link->classChange(account.changeClassDate);
+        updated = true;
+      }
       
       if(account.link->street() != account.street){
         account.link->street(account.street);
@@ -229,6 +229,11 @@ void commitThreadFunc(wisaCommitStudents * caller) {
       
       if(account.link->city() != account.city){
         account.link->city(account.city);
+        updated = true;
+      }
+      
+      if(account.link->role() != ROLE(ROLE::STUDENT)) {
+        account.link->role(ROLE(ROLE::STUDENT));
         updated = true;
       }
       

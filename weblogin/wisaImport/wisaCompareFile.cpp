@@ -24,6 +24,16 @@ void wisaCompareFile::setContent(Wt::WVBoxLayout* box) {
   box->addWidget(message3);
   message4 = new Wt::WText();
   box->addWidget(message4);
+  
+  Wt::WScrollArea * scroll = new Wt::WScrollArea();
+  box->addWidget(scroll);
+  
+  entries = new Wt::WTable();
+  entries->setHeaderCount(0);
+  entries->setWidth(700);
+  scroll->setWidget(entries);
+  scroll->setMaximumSize(750, 200);
+  
 }
 
 void wisaCompareFile::onShow() {
@@ -42,7 +52,11 @@ void wisaCompareFile::onShow() {
   for(int i = 0; i < accounts.elms(); i++) {
     if(accounts[i].getImportStatus() == WI_DISCARD) {
       validAccounts--;
-      if(accounts[i].flaggedForRemoval()) accountsToRemove++;
+      if(accounts[i].flaggedForRemoval()) {
+        string s(accounts[i].fullName().get() + " wordt verwijderd.");
+        entries->elementAt(accountsToRemove,0)->addWidget(new Wt::WText(s.wt()));
+        accountsToRemove++;
+      }
     } else {
       for(int j = 0; j < wisaContent.elms(); j++) {
         if(wisaContent[j].wisaID == accounts[i].wisaID()) {
@@ -50,6 +64,12 @@ void wisaCompareFile::onShow() {
           accounts[i].setImportStatus(WI_ACCOUNTED);
           accountedFor++;
         }
+      }
+      if(accounts[i].getImportStatus() != WI_ACCOUNTED) {
+        string s(accounts[i].fullName().get() + " wordt verwijderd.");
+        entries->elementAt(accountsToRemove,0)->addWidget(new Wt::WText(s.wt()));
+        accounts[i].flagForRemoval();
+        accountsToRemove++;
       }
     }
   }

@@ -37,72 +37,72 @@ void ldapServerTest::testGetAccount() {
   Server.clear();
   // these tests will only work with a valid config file
   // at /etc/yATools.cfg and a working ldap server
-  y::ldap::account & a = Server.getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
+  y::ldap::account & a = Server.getAccount(UID(y::utils::Config().getLdapTestUID()));
   if(a.isNew()) {
     CPPUNIT_ASSERT(false);
   }
   
-  y::ldap::account & a2 = Server.getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
+  y::ldap::account & a2 = Server.getAccount(UID(y::utils::Config().getLdapTestUID()));
   if(a2.isNew()) {
     CPPUNIT_ASSERT(false);
   }
   
-  y::ldap::account & a3 = Server.getAccount(y::ldap::UID_NUMBER(y::utils::Config().getLdapTestUidNumber().asInt()));
+  y::ldap::account & a3 = Server.getAccount(UID_NUMBER(y::utils::Config().getLdapTestUidNumber().asInt()));
   if(a3.isNew()) {
     CPPUNIT_ASSERT(false);
   }
-  if(a3.uidNumber()() != y::utils::Config().getLdapTestUidNumber().asInt()) {
+  if(a3.uidNumber().get() != y::utils::Config().getLdapTestUidNumber().asInt()) {
     CPPUNIT_ASSERT(false);
   }
   
   Server.clear();
-  y::ldap::account & a4 = Server.getAccount(y::ldap::DN(y::utils::Config().getLdapTestDN()));
+  y::ldap::account & a4 = Server.getAccount(DN(y::utils::Config().getLdapTestDN()));
   if(a4.isNew()) {
     CPPUNIT_ASSERT(false);
   }
-  if(a4.uidNumber()() != y::utils::Config().getLdapTestUidNumber().asInt()) {
+  if(a4.uidNumber().get() != y::utils::Config().getLdapTestUidNumber().asInt()) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void ldapServerTest::testAuth() {
   y::ldap::server Server;
-  y::ldap::account & a = Server.getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
+  y::ldap::account & a = Server.getAccount(UID(y::utils::Config().getLdapTestUID()));
   if(a.isNew()) {
     CPPUNIT_ASSERT(false);
   }
   
-  bool result = Server.auth(a.dn(), y::ldap::PASSWORD(y::utils::Config().getLdapTestPassword()));
+  bool result = Server.auth(a.dn(), PASSWORD(y::utils::Config().getLdapTestPassword()));
   if(!result) {
     CPPUNIT_ASSERT(false);
   }
   
-  y::ldap::account & a2 = Server.getAccount(y::ldap::UID(y::utils::Config().getLdapTestUID()));
+  y::ldap::account & a2 = Server.getAccount(UID(y::utils::Config().getLdapTestUID()));
   if(a2.isNew()) {
     CPPUNIT_ASSERT(false);
   }
   
-  result = Server.auth(a2.dn(), y::ldap::PASSWORD(y::utils::Config().getLdapTestPassword()));
+  result = Server.auth(a2.dn(), PASSWORD(y::utils::Config().getLdapTestPassword()));
   if(!result) {
     CPPUNIT_ASSERT(false);
   }
   
-  result = Server.auth(a2.dn(), y::ldap::PASSWORD("wrongpassword"));
+  result = Server.auth(a2.dn(), PASSWORD("wrongpassword"));
   if(result) {
     CPPUNIT_ASSERT(false);
   }
     
-  result = Server.auth(a2.dn(), y::ldap::PASSWORD(y::utils::Config().getLdapTestPassword()));
+  result = Server.auth(a2.dn(), PASSWORD(y::utils::Config().getLdapTestPassword()));
   if(!result) {
     CPPUNIT_ASSERT(false);
   }
     
-  result = Server.auth(a2.dn(), y::ldap::PASSWORD("wrongpassword"));
+  result = Server.auth(a2.dn(), PASSWORD("wrongpassword"));
   if(result) {
     CPPUNIT_ASSERT(false);
   }  
     
-  result = Server.auth(a2.dn(), y::ldap::PASSWORD(y::utils::Config().getLdapTestPassword()));
+  result = Server.auth(a2.dn(), PASSWORD(y::utils::Config().getLdapTestPassword()));
   if(!result) {
     CPPUNIT_ASSERT(false);
   }  
@@ -126,7 +126,7 @@ void ldapServerTest::testGetGroup() {
   y::ldap::server Server;
   Server.clear();
   // get mailgroup
-  y::ldap::group & mailgroup = Server.getGroup("6IT", false);
+  y::ldap::group & mailgroup = Server.getGroup(CN("6IT"), false);
   if(mailgroup.members().elms() != 21) {
     CPPUNIT_ASSERT(false);
   }
@@ -134,7 +134,7 @@ void ldapServerTest::testGetGroup() {
     CPPUNIT_ASSERT(false);
   }
   
-  y::ldap::group & newgroup = Server.getGroup("no group", false);
+  y::ldap::group & newgroup = Server.getGroup(CN("no group"), false);
   if(newgroup.members().elms()) {
     CPPUNIT_ASSERT(false);
   }
@@ -143,7 +143,7 @@ void ldapServerTest::testGetGroup() {
   }
   
   // get editable mailgroup
-  y::ldap::group & mailgroup2 = Server.getGroup("directie", true);
+  y::ldap::group & mailgroup2 = Server.getGroup(CN("directie"), true);
   if(mailgroup2.members().elms() != 4) {
     CPPUNIT_ASSERT(false);
   }
@@ -156,7 +156,7 @@ void ldapServerTest::testGetGroup2() {
   y::ldap::server Server;
   Server.clear();
   // get mailgroup
-  y::ldap::group & mailgroup = Server.getGroup(y::ldap::DN("cn=6IT,ou=mailGroups,dc=sanctamaria-aarschot,dc=be"));
+  y::ldap::group & mailgroup = Server.getGroup(DN("cn=6IT,ou=mailGroups,dc=sanctamaria-aarschot,dc=be"));
   if(mailgroup.members().elms() != 21) {
     CPPUNIT_ASSERT(false);
   }
@@ -164,7 +164,7 @@ void ldapServerTest::testGetGroup2() {
     CPPUNIT_ASSERT(false);
   }
   
-  y::ldap::group & newgroup = Server.getGroup(y::ldap::DN("cn=6INF4,ou=mailGroups,dc=sanctamaria-aarschot,dc=be"));
+  y::ldap::group & newgroup = Server.getGroup(DN("cn=6INF4,ou=mailGroups,dc=sanctamaria-aarschot,dc=be"));
   if(newgroup.members().elms()) {
     CPPUNIT_ASSERT(false);
   }
@@ -173,7 +173,7 @@ void ldapServerTest::testGetGroup2() {
   }
   
   // get editable mailgroup
-  y::ldap::group & mailgroup2 = Server.getGroup(y::ldap::DN("cn=directie,ou=editableMailGroups,dc=sanctamaria-aarschot,dc=be"));
+  y::ldap::group & mailgroup2 = Server.getGroup(DN("cn=directie,ou=editableMailGroups,dc=sanctamaria-aarschot,dc=be"));
   if(mailgroup2.members().elms() != 4) {
     CPPUNIT_ASSERT(false);
   }

@@ -33,7 +33,7 @@ void utilsSecurityTest::testTest() {
   return; TODO(this test is outdated)
   y::ldap::server Server;
   
-  y::ldap::UID uid(y::utils::Config().getLdapTestUID());
+  UID uid(y::utils::Config().getLdapTestUID());
   
   y::ldap::account & acc = Server.getAccount(uid);
   

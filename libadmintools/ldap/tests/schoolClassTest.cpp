@@ -28,11 +28,11 @@ void schoolClassTest::tearDown() {
 
 void schoolClassTest::addTestClass(y::ldap::server& server) {
   server.clear();
-  y::ldap::schoolClass & tempClass = server.getClass("tempClass");
+  y::ldap::schoolClass & tempClass = server.getClass(CN("tempClass"));
   if(tempClass.isNew()) {
-    tempClass.description("class for unit testing");
-    tempClass.schoolID(125252);
-    tempClass.adminCode(32931);
+    tempClass.description(DESCRIPTION("class for unit testing"));
+    tempClass.schoolID(SCHOOL_ID(125252));
+    tempClass.adminGroup(ADMINGROUP(32931));
 
     tempClass.flagForCommit();
     server.commitChanges();
@@ -41,7 +41,7 @@ void schoolClassTest::addTestClass(y::ldap::server& server) {
 
 void schoolClassTest::removeTestClass(y::ldap::server& server) {
   server.clear();
-  y::ldap::schoolClass & tempClass = server.getClass("tempClass");
+  y::ldap::schoolClass & tempClass = server.getClass(CN("tempClass"));
   if(!tempClass.isNew()) {
     tempClass.flagForRemoval();
     server.commitChanges();
@@ -54,15 +54,15 @@ void schoolClassTest::testAddClass() {
   
   {
     Server.clear();
-    y::ldap::schoolClass & tempClass = Server.getClass("tempClass");
+    y::ldap::schoolClass & tempClass = Server.getClass(CN("tempClass"));
     if(!tempClass.isNew()) {
       // class should not have existed
       CPPUNIT_ASSERT(false);
     }
     
-    tempClass.description("class for unit testing");
-    tempClass.schoolID(125252);
-    tempClass.adminCode(32931);
+    tempClass.description(DESCRIPTION("class for unit testing"));
+    tempClass.schoolID(SCHOOL_ID(125252));
+    tempClass.adminGroup(ADMINGROUP(32931));
     
     tempClass.flagForCommit();
     Server.commitChanges();
@@ -70,7 +70,7 @@ void schoolClassTest::testAddClass() {
   
   {
     Server.clear();
-    y::ldap::schoolClass & tempClass = Server.getClass("tempClass");
+    y::ldap::schoolClass & tempClass = Server.getClass(CN("tempClass"));
     if(tempClass.isNew()) {
       // class is still new, should have existed
       CPPUNIT_ASSERT(false);
@@ -82,7 +82,7 @@ void schoolClassTest::testAddClass() {
   
   {
     Server.clear();
-    y::ldap::schoolClass & tempClass = Server.getClass("tempClass");
+    y::ldap::schoolClass & tempClass = Server.getClass(CN("tempClass"));
     if(!tempClass.isNew()) {
       // class exists, but should be new
       CPPUNIT_ASSERT(false);
@@ -97,15 +97,15 @@ void schoolClassTest::testAddStudent() {
   
   {
     Server.clear();
-    y::ldap::schoolClass & tempClass = Server.getClass("tempClass");
-    tempClass.addStudent(y::ldap::DN(y::utils::Config().getLdapTestDN()));
+    y::ldap::schoolClass & tempClass = Server.getClass(CN("tempClass"));
+    tempClass.addStudent(DN(y::utils::Config().getLdapTestDN()));
     tempClass.flagForCommit();
     Server.commitChanges();
   }
   
   {
     Server.clear();
-    y::ldap::schoolClass & tempClass = Server.getClass("tempClass");
+    y::ldap::schoolClass & tempClass = Server.getClass(CN("tempClass"));
     container<string> & students = tempClass.students();
     bool found = false;
     for(int i = 0; i < students.elms(); i++) {
@@ -118,14 +118,14 @@ void schoolClassTest::testAddStudent() {
       CPPUNIT_ASSERT(false);
     }
     
-    tempClass.removeStudent(y::ldap::DN(y::utils::Config().getLdapTestDN()));
+    tempClass.removeStudent(DN(y::utils::Config().getLdapTestDN()));
     tempClass.flagForCommit();
     Server.commitChanges();
   }
   
   {
     Server.clear();
-    y::ldap::schoolClass & tempClass = Server.getClass("tempClass");
+    y::ldap::schoolClass & tempClass = Server.getClass(CN("tempClass"));
     container<string> & students = tempClass.students();
     bool found = false;
     for(int i = 0; i < students.elms(); i++) {
@@ -148,16 +148,16 @@ void schoolClassTest::testAdjunct() {
   
   {
     Server.clear();
-    y::ldap::schoolClass & tempClass = Server.getClass("tempClass");
-    tempClass.adjunct(y::ldap::DN(y::utils::Config().getLdapTestDN()));
+    y::ldap::schoolClass & tempClass = Server.getClass(CN("tempClass"));
+    tempClass.adjunct(ADJUNCT(DN(y::utils::Config().getLdapTestDN())));
     tempClass.flagForCommit();
     Server.commitChanges();
   }
   
   {
     Server.clear();
-    y::ldap::schoolClass & tempClass = Server.getClass("tempClass");
-    if(tempClass.adjunct()() != y::utils::Config().getLdapTestDN()) {
+    y::ldap::schoolClass & tempClass = Server.getClass(CN("tempClass"));
+    if(tempClass.adjunct().get() != DN(y::utils::Config().getLdapTestDN())) {
       CPPUNIT_ASSERT(false);
     }
   }
@@ -172,8 +172,8 @@ void schoolClassTest::testAdminCode() {
   
   {
     server.clear();
-    y::ldap::schoolClass & tempClass = server.getClass("tempClass");
-    if(tempClass.adminCode() != 32931) {
+    y::ldap::schoolClass & tempClass = server.getClass(CN("tempClass"));
+    if(tempClass.adminGroup() != ADMINGROUP(32931)) {
       CPPUNIT_ASSERT(false);
     }
   }
@@ -188,11 +188,11 @@ void schoolClassTest::testDescription() {
   
   {
     server.clear();
-    y::ldap::schoolClass & tempClass = server.getClass("tempClass");
-    if(tempClass.cn() != "tempClass") {
+    y::ldap::schoolClass & tempClass = server.getClass(CN("tempClass"));
+    if(tempClass.cn() != CN("tempClass")) {
       CPPUNIT_ASSERT(false);
     }
-    if(tempClass.description() != "class for unit testing") {
+    if(tempClass.description() != DESCRIPTION("class for unit testing")) {
       CPPUNIT_ASSERT(false);
     }
   }
@@ -206,8 +206,8 @@ y::ldap::server server;
   
   {
     server.clear();
-    y::ldap::schoolClass & tempClass = server.getClass("tempClass");
-    if(tempClass.schoolID() != 125252) {
+    y::ldap::schoolClass & tempClass = server.getClass(CN("tempClass"));
+    if(tempClass.schoolID() != SCHOOL_ID(125252)) {
       CPPUNIT_ASSERT(false);
     }
     
@@ -222,16 +222,16 @@ void schoolClassTest::testTitular() {
   
   {
     Server.clear();
-    y::ldap::schoolClass & tempClass = Server.getClass("tempClass");
-    tempClass.titular(y::ldap::DN(y::utils::Config().getLdapTestDN()));
+    y::ldap::schoolClass & tempClass = Server.getClass(CN("tempClass"));
+    tempClass.titular(TITULAR(DN(y::utils::Config().getLdapTestDN())));
     tempClass.flagForCommit();
     Server.commitChanges();
   }
   
   {
     Server.clear();
-    y::ldap::schoolClass & tempClass = Server.getClass("tempClass");
-    if(tempClass.titular()() != y::utils::Config().getLdapTestDN()) {
+    y::ldap::schoolClass & tempClass = Server.getClass(CN("tempClass"));
+    if(tempClass.titular().get() != DN(y::utils::Config().getLdapTestDN())) {
       CPPUNIT_ASSERT(false);
     }
   }

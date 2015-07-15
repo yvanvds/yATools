@@ -25,12 +25,12 @@ void ldpAttributesTest::tearDown() {
 }
 
 void ldpAttributesTest::testDN() {
-  y::ldap::DN item1("cn=name,dc=domain,dc=com");
-  y::ldap::DN item2("cn=name,dc=domain,dc=com");
-  y::ldap::DN item3("cn=name2,dc=domain,dc=com");
+  DN item1("cn=name,dc=domain,dc=com");
+  DN item2("cn=name,dc=domain,dc=com");
+  DN item3("cn=name2,dc=domain,dc=com");
   
   // test if we can get the string back
-  if(item1() != "cn=name,dc=domain,dc=com") {
+  if(item1.get() != "cn=name,dc=domain,dc=com") {
     CPPUNIT_ASSERT(false);
   }
   
@@ -49,12 +49,12 @@ void ldpAttributesTest::testDN() {
 }
 
 void ldpAttributesTest::testUID_NUMBER() {
-  y::ldap::UID_NUMBER item1(300);
-  y::ldap::UID_NUMBER item2(300);
-  y::ldap::UID_NUMBER item3(301);
+  UID_NUMBER item1(300);
+  UID_NUMBER item2(300);
+  UID_NUMBER item3(301);
   
   // test if we can get an int back
-  if(item1() != 300) {
+  if(item1.get() != 300) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -72,12 +72,12 @@ void ldpAttributesTest::testUID_NUMBER() {
   }
 }
 void ldpAttributesTest::testUID() {
-  y::ldap::UID item1("user1");
-  y::ldap::UID item2("user1");
-  y::ldap::UID item3("user2");
+  UID item1("user1");
+  UID item2("user1");
+  UID item3("user2");
   
   // test if we can get the string back
-  if(item1() != "user1") {
+  if(item1.get() != "user1") {
     CPPUNIT_ASSERT(false);
   }
   
@@ -97,12 +97,12 @@ void ldpAttributesTest::testUID() {
 
 
 void ldpAttributesTest::testFULL_NAME() {
-  y::ldap::FULL_NAME item1("yvan vander sanden");
-  y::ldap::FULL_NAME item2("yvan vander sanden");
-  y::ldap::FULL_NAME item3("firstname surname");
+  FULL_NAME item1("yvan vander sanden");
+  FULL_NAME item2("yvan vander sanden");
+  FULL_NAME item3("firstname surname");
   
   // test if we can get the string back
-  if(item1() != "yvan vander sanden") {
+  if(item1.get() != "yvan vander sanden") {
     CPPUNIT_ASSERT(false);
   }
   
@@ -119,18 +119,18 @@ void ldpAttributesTest::testFULL_NAME() {
     CPPUNIT_ASSERT(false);
   } 
   
-  y::ldap::FULL_NAME item4("yvan", "vander sanden");
+  FULL_NAME item4("yvan", "vander sanden");
   if(item2 != item4) {
     CPPUNIT_ASSERT(false);
   }
 }
 void ldpAttributesTest::testGID() {
-  y::ldap::ROLE item1(y::ldap::ROLE_ADMIN);
-  y::ldap::ROLE item2(y::ldap::ROLE_ADMIN);
-  y::ldap::ROLE item3(y::ldap::ROLE_SUPPORT);
+  ROLE item1(ROLE::ADMIN);
+  ROLE item2(ROLE::ADMIN);
+  ROLE item3(ROLE::SUPPORT);
   
   // test if we can get the value back
-  if(item1() != y::ldap::ROLE_ADMIN) {
+  if(item1.get() != ROLE::ADMIN) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -148,12 +148,12 @@ void ldpAttributesTest::testGID() {
   }  
 }
 void ldpAttributesTest::testGID_NUMBER() {
-  y::ldap::GID_NUMBER item1(300);
-  y::ldap::GID_NUMBER item2(300);
-  y::ldap::GID_NUMBER item3(301);
+  GID_NUMBER item1(300);
+  GID_NUMBER item2(300);
+  GID_NUMBER item3(301);
   
   // test if we can get an int back
-  if(item1() != 300) {
+  if(item1.get() != 300) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -171,12 +171,12 @@ void ldpAttributesTest::testGID_NUMBER() {
   }
 }
 void ldpAttributesTest::testWISA_ID() {
-  y::ldap::WISA_ID item1(300);
-  y::ldap::WISA_ID item2(300);
-  y::ldap::WISA_ID item3(301);
+  WISA_ID item1(300);
+  WISA_ID item2(300);
+  WISA_ID item3(301);
   
   // test if we can get an int back
-  if(item1() != 300) {
+  if(item1.get() != 300) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -194,12 +194,12 @@ void ldpAttributesTest::testWISA_ID() {
   }
 }
 void ldpAttributesTest::testMAIL() {
-  y::ldap::MAIL item1("user1@gmail.com");
-  y::ldap::MAIL item2("user1@gmail.com");
-  y::ldap::MAIL item3("user2@gmail.com");
+  MAIL item1("user1@gmail.com");
+  MAIL item2("user1@gmail.com");
+  MAIL item3("user2@gmail.com");
   
   // test if we can get the string back
-  if(item1() != "user1@gmail.com") {
+  if(item1.get() != "user1@gmail.com") {
     CPPUNIT_ASSERT(false);
   }
   
@@ -217,12 +217,12 @@ void ldpAttributesTest::testMAIL() {
   }
 }
 void ldpAttributesTest::testPASSWORD() {
-  y::ldap::PASSWORD item1("secret1");
-  y::ldap::PASSWORD item2("secret1");
-  y::ldap::PASSWORD item3("secret2");
+  PASSWORD item1("secret1");
+  PASSWORD item2("secret1");
+  PASSWORD item3("secret2");
   
   // test if we can get the string back
-  if(item1() != "secret1") {
+  if(item1.get() != "secret1") {
     CPPUNIT_ASSERT(false);
   }
   
@@ -240,12 +240,12 @@ void ldpAttributesTest::testPASSWORD() {
   }
 }
 void ldpAttributesTest::testDAY() {
-  y::ldap::DAY item1(1);
-  y::ldap::DAY item2(1);
-  y::ldap::DAY item3(31);
+  DAY item1(1);
+  DAY item2(1);
+  DAY item3(31);
   
   // test if we can get an int back
-  if(item1() != 1) {
+  if(item1.get() != 1) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -263,31 +263,31 @@ void ldpAttributesTest::testDAY() {
   }  
   
   // test wrong day values
-  y::ldap::DAY item4(0);
-  y::ldap::DAY item5(-20);
-  y::ldap::DAY item6(32);
+  DAY item4(0);
+  DAY item5(-20);
+  DAY item6(32);
 
-  if(item4() != 1) {
+  if(item4.get() != 1) {
     CPPUNIT_ASSERT(false);
   }
 
-  if(item5() != 1) {
+  if(item5.get() != 1) {
     CPPUNIT_ASSERT(false);
   }
 
-  if(item6() != 31) {
+  if(item6.get() != 31) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 
 void ldpAttributesTest::testMONTH() {
-  y::ldap::MONTH item1(1);
-  y::ldap::MONTH item2(1);
-  y::ldap::MONTH item3(12);
+  MONTH item1(1);
+  MONTH item2(1);
+  MONTH item3(12);
   
   // test if we can get an int back
-  if(item1() != 1) {
+  if(item1.get() != 1) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -305,30 +305,30 @@ void ldpAttributesTest::testMONTH() {
   }  
   
   // test wrong month values
-  y::ldap::MONTH item4(0);
-  y::ldap::MONTH item5(-20);
-  y::ldap::MONTH item6(13);
+  MONTH item4(0);
+  MONTH item5(-20);
+  MONTH item6(13);
 
-  if(item4() != 1) {
+  if(item4.get() != 1) {
     CPPUNIT_ASSERT(false);
   }
 
-  if(item5() != 1) {
+  if(item5.get() != 1) {
     CPPUNIT_ASSERT(false);
   }
 
-  if(item6() != 12) {
+  if(item6.get() != 12) {
     CPPUNIT_ASSERT(false);
   }
 }
 
 void ldpAttributesTest::testYEAR() {
-  y::ldap::YEAR item1(1980);
-  y::ldap::YEAR item2(1980);
-  y::ldap::YEAR item3(2001);
+  YEAR item1(1980);
+  YEAR item2(1980);
+  YEAR item3(2001);
   
   // test if we can get an int back
-  if(item1() != 1980) {
+  if(item1.get() != 1980) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -347,12 +347,12 @@ void ldpAttributesTest::testYEAR() {
 }
 
 void ldpAttributesTest::testDATE() {
-  y::ldap::DATE item1(y::ldap::DAY(2), y::ldap::MONTH(4), y::ldap::YEAR(1980));
-  y::ldap::DATE item2(y::ldap::DAY(2), y::ldap::MONTH(4), y::ldap::YEAR(1980));
-  y::ldap::DATE item3(y::ldap::DAY(2), y::ldap::MONTH(5), y::ldap::YEAR(1980));
+  DATE item1(DAY(2), MONTH(4), YEAR(1980));
+  DATE item2(DAY(2), MONTH(4), YEAR(1980));
+  DATE item3(DAY(2), MONTH(5), YEAR(1980));
   
   // test if we can get an int back
-  if(item1() != 19800402) {
+  if(item1.asInt() != 19800402) {
     CPPUNIT_ASSERT(false);
   }
   
@@ -369,7 +369,7 @@ void ldpAttributesTest::testDATE() {
     CPPUNIT_ASSERT(false);
   }  
   
-  if(item2.asString() != "2 april 1980") {
+  if(item2.get() != "2 april 1980") {
     CPPUNIT_ASSERT(false);
   }
   
@@ -386,7 +386,7 @@ void ldpAttributesTest::testDATE() {
   }
   
   // test for ldap date conversion
-  item1 = y::ldap::DATE("19720809");
+  item1 = DATE("19720809");
    if(item1.getDay() != 9) {
     CPPUNIT_ASSERT(false);
   }
@@ -400,8 +400,8 @@ void ldpAttributesTest::testDATE() {
   } 
   
   // test wisa conversion
-  item1 = y::ldap::DATE("9/8/1972", true);
-  std::cout << item1() << std::endl;
+  item1 = DATE("9/8/1972", true);
+  std::cout << item1.get() << std::endl;
   if(item1.getDay() != 9) {
     CPPUNIT_ASSERT(false);
   }
@@ -416,12 +416,12 @@ void ldpAttributesTest::testDATE() {
 }
 
 void ldpAttributesTest::testHOMEDIR() {
-  y::ldap::HOMEDIR item1("/home/user1");
-  y::ldap::HOMEDIR item2("/home/user1");
-  y::ldap::HOMEDIR item3("/home/user2");
+  HOMEDIR item1("/home/user1");
+  HOMEDIR item2("/home/user1");
+  HOMEDIR item3("/home/user2");
   
   // test if we can get the string back
-  if(item1() != "/home/user1") {
+  if(item1.get() != "/home/user1") {
     CPPUNIT_ASSERT(false);
   }
   

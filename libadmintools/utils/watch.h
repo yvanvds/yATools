@@ -89,7 +89,7 @@ class intWatch : public watchBase<T, int> {
         watchBase<T, int>::_value = T(d.getValue(watchBase<T, int>::_identifier).asInt());
         watchBase<T, int>::_inLdap = true;
       } catch (const std::invalid_argument &e) {
-        string message("Invalid ldap::GID_NUMBER conversion: ");
+        string message("Invalid ldap int conversion: ");
         message += d.getValue(watchBase<T, int>::_identifier);
         y::utils::Log().add(message);
       }     
@@ -133,20 +133,56 @@ class stringWatch : public watchBase<T, string> {
     if(!watchBase<T, string>::_changed) return;
     
     string s = watchBase<T, string>::_value.get();
-    
-    if(!watchBase<T, string>::_inLdap) {
-      y::ldap::data & d = values.New(y::ldap::ADD);
-      d.add("type", watchBase<T, string>::_identifier);
-      d.add("values", s);
-    } else {
-      y::ldap::data & d = values.New(y::ldap::MODIFY);
-      d.add("type", watchBase<T, string>::_identifier);
-      d.add("values", s);
+    if(!s.empty()) {
+      if(!watchBase<T, string>::_inLdap) {
+        y::ldap::data & d = values.New(y::ldap::ADD);
+        d.add("type", watchBase<T, string>::_identifier);
+        d.add("values", s);
+      } else {
+        y::ldap::data & d = values.New(y::ldap::MODIFY);
+        d.add("type", watchBase<T, string>::_identifier);
+        d.add("values", s);
+      }
     }
     
     watchBase<T, string>::unFlag();
   }  
 };
+
+template<class T>
+class dateWatch : public watchBase<T, DATE> {
+  public:
+  dateWatch(const string & identifier) : watchBase<T, DATE>(identifier) {}
+  dateWatch(const string & identifier, const T & value) 
+  : watchBase<T, DATE>(identifier, value) {}
+  
+  void readFromLdap(const y::ldap::data & d) {
+    if(d.getValue(watchBase<T, DATE>::_identifier).size()) {
+     watchBase<T, DATE>::_value = T(d.getValue(watchBase<T, DATE>::_identifier));
+     watchBase<T, DATE>::_inLdap = true;
+    }
+  }
+  
+  void saveToLdap(y::ldap::dataset & values) {
+    if(!watchBase<T, DATE>::_changed) return;
+    
+    string s = string(watchBase<T, DATE>::_value.asInt());
+    if(!s.empty()) {
+      if(!watchBase<T, DATE>::_inLdap) {
+        y::ldap::data & d = values.New(y::ldap::ADD);
+        d.add("type", watchBase<T, DATE>::_identifier);
+        d.add("values", s);
+      } else {
+        y::ldap::data & d = values.New(y::ldap::MODIFY);
+        d.add("type", watchBase<T, DATE>::_identifier);
+        d.add("values", s);
+      }
+    }
+    
+    watchBase<T, DATE>::unFlag();
+  }  
+};
+
 
 template<class T>
 class roleWatch : public watchBase<T, ROLE> {

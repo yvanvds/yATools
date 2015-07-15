@@ -57,7 +57,7 @@ void debugFunctions::groupsToSmartschool() {
   y::ldap::server s;
   CLASSES & classes = s.getClasses();
   for(int i = 0; i < classes.elms(); i++) {
-    y::Smartschool().addClass(classes[i]);
+    y::Smartschool().saveClass(classes[i]);
     std::cout << "Adding class: " << classes[i].cn().get() << std::endl;
   }
   
@@ -74,10 +74,16 @@ void debugFunctions::testFunction() {
   y::utils::Log().useConsole(true);
   y::ldap::server server;
   
-  y::ldap::account & acc = server.getAccount(UID("abh"));
-  acc.stemID(STEM_ID(1300002));
+  y::ldap::account & account = server.getAccount(UID("abeh"));
+  account.schoolClass(account.schoolClass());
+  
+//  for(int i = 0; i < accounts.elms(); i++) {
+//    if(accounts[i].isStudent()) {
+//      accounts[i].schoolClass(accounts[i].schoolClass());
+//    }
+//  }
   
   server.commitChanges();
-  
-  std::cin.get();
+  y::utils::Log().add("end of program");
+  //std::cin.get();
 }

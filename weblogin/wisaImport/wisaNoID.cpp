@@ -98,6 +98,9 @@ bool wisaNoID::onNext() {
         acc.wisaID(WISA_ID(newID));
         le->setStyleClass("alert alert-success");
         le->setHeight(5);
+      } else {
+         y::ldap::account & acc = parentObject->ldap()->getAccount(UID(string(le->id())));
+         acc.setImportStatus(WI_DISCARD);
       }
     }
   }

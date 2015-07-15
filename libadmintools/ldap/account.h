@@ -43,6 +43,7 @@ namespace y {
       const ROLE            & role          () const; account & role          (const ROLE            & value);
       const GID_NUMBER      & groupID       () const; account & groupID       (const GID_NUMBER      & value);
       const SCHOOLCLASS     & schoolClass   () const; account & schoolClass   (const SCHOOLCLASS     & value);
+      const DATE            & classChange   () const; account & classChange   (const DATE            & value);
       const BIRTHPLACE      & birthPlace    () const; account & birthPlace    (const BIRTHPLACE      & value);
       const GENDER          & gender        () const; account & gender        (const GENDER          & value);
       const ADMINGROUP      & adminGroup    () const; account & adminGroup    (const ADMINGROUP      & value);
@@ -65,7 +66,7 @@ namespace y {
       bool flaggedForRemoval() { return _flaggedForRemoval; }   
       
       // returns password if changed during this request, otherwise empty string
-      string getPasswordText();
+      string getPasswordText() const;
       
       // used for wisa import
       WISA_IMPORT getImportStatus();
@@ -97,11 +98,12 @@ namespace y {
       stringWatch<WISA_NAME      >  _wisaName     ;
       stringWatch<MAIL           >  _mail         ;
       stringWatch<MAIL_ALIAS     >  _mailAlias    ;
-      stringWatch<DATE           >  _birthDay     ;
+      dateWatch  <DATE           >  _birthDay     ;
       stringWatch<PASSWORD       >  _password     ;
       roleWatch  <ROLE           >  _role         ;
       intWatch   <GID_NUMBER     >  _groupID      ;
       stringWatch<SCHOOLCLASS    >  _schoolClass  ;
+      dateWatch  <DATE           >  _classChange  ;
       stringWatch<BIRTHPLACE     >  _birthPlace   ;
       genderWatch<GENDER         >  _gender       ;
       intWatch   <ADMINGROUP     >  _adminGroup   ;

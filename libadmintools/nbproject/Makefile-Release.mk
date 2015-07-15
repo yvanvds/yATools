@@ -57,6 +57,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/system/file.o \
 	${OBJECTDIR}/system/process.o \
 	${OBJECTDIR}/system/workDir.o \
+	${OBJECTDIR}/utils/base64.o \
 	${OBJECTDIR}/utils/config.o \
 	${OBJECTDIR}/utils/console.o \
 	${OBJECTDIR}/utils/container.o \
@@ -68,7 +69,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/utils/security.o \
 	${OBJECTDIR}/utils/sha1.o \
 	${OBJECTDIR}/utils/string.o \
-	${OBJECTDIR}/utils/stringFunctions.o
+	${OBJECTDIR}/utils/stringFunctions.o \
+	${OBJECTDIR}/utils/xmlParser.o
 
 # Test Directory
 TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
@@ -85,6 +87,7 @@ TESTFILES= \
 	${TESTDIR}/TestFiles/f1 \
 	${TESTDIR}/TestFiles/f2 \
 	${TESTDIR}/TestFiles/f7 \
+	${TESTDIR}/TestFiles/f14 \
 	${TESTDIR}/TestFiles/f3 \
 	${TESTDIR}/TestFiles/f12 \
 	${TESTDIR}/TestFiles/f6
@@ -223,6 +226,11 @@ ${OBJECTDIR}/system/workDir.o: system/workDir.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/system/workDir.o system/workDir.cpp
 
+${OBJECTDIR}/utils/base64.o: utils/base64.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/base64.o utils/base64.cpp
+
 ${OBJECTDIR}/utils/config.o: utils/config.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
 	${RM} "$@.d"
@@ -283,6 +291,11 @@ ${OBJECTDIR}/utils/stringFunctions.o: utils/stringFunctions.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/stringFunctions.o utils/stringFunctions.cpp
 
+${OBJECTDIR}/utils/xmlParser.o: utils/xmlParser.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/xmlParser.o utils/xmlParser.cpp
+
 # Subprojects
 .build-subprojects:
 
@@ -327,6 +340,10 @@ ${TESTDIR}/TestFiles/f2: ${TESTDIR}/ldap/tests/ldpBaseDataTest.o ${TESTDIR}/ldap
 ${TESTDIR}/TestFiles/f7: ${TESTDIR}/ldap/tests/schoolClassTest.o ${TESTDIR}/ldap/tests/schoolClassTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS} -lldap -llber -lboost_iostreams -lboost_program_options `cppunit-config --libs`   
+
+${TESTDIR}/TestFiles/f14: ${TESTDIR}/smartschool/tests/smartschoolTest.o ${TESTDIR}/smartschool/tests/smartschooltestrunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f14 $^ ${LDLIBSOPTIONS} -lldap -llber -lboost_iostreams -lboost_program_options `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/system/tests/sysConfigTest.o ${TESTDIR}/system/tests/sysConfigTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
@@ -459,6 +476,18 @@ ${TESTDIR}/ldap/tests/schoolClassTestRunner.o: ldap/tests/schoolClassTestRunner.
 	${MKDIR} -p ${TESTDIR}/ldap/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/ldap/tests/schoolClassTestRunner.o ldap/tests/schoolClassTestRunner.cpp
+
+
+${TESTDIR}/smartschool/tests/smartschoolTest.o: smartschool/tests/smartschoolTest.cpp 
+	${MKDIR} -p ${TESTDIR}/smartschool/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/smartschool/tests/smartschoolTest.o smartschool/tests/smartschoolTest.cpp
+
+
+${TESTDIR}/smartschool/tests/smartschooltestrunner.o: smartschool/tests/smartschooltestrunner.cpp 
+	${MKDIR} -p ${TESTDIR}/smartschool/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/smartschool/tests/smartschooltestrunner.o smartschool/tests/smartschooltestrunner.cpp
 
 
 ${TESTDIR}/system/tests/sysConfigTest.o: system/tests/sysConfigTest.cpp 
@@ -783,6 +812,19 @@ ${OBJECTDIR}/system/workDir_nomain.o: ${OBJECTDIR}/system/workDir.o system/workD
 	    ${CP} ${OBJECTDIR}/system/workDir.o ${OBJECTDIR}/system/workDir_nomain.o;\
 	fi
 
+${OBJECTDIR}/utils/base64_nomain.o: ${OBJECTDIR}/utils/base64.o utils/base64.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/base64.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/base64_nomain.o utils/base64.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/utils/base64.o ${OBJECTDIR}/utils/base64_nomain.o;\
+	fi
+
 ${OBJECTDIR}/utils/config_nomain.o: ${OBJECTDIR}/utils/config.o utils/config.cpp 
 	${MKDIR} -p ${OBJECTDIR}/utils
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/config.o`; \
@@ -939,6 +981,19 @@ ${OBJECTDIR}/utils/stringFunctions_nomain.o: ${OBJECTDIR}/utils/stringFunctions.
 	    ${CP} ${OBJECTDIR}/utils/stringFunctions.o ${OBJECTDIR}/utils/stringFunctions_nomain.o;\
 	fi
 
+${OBJECTDIR}/utils/xmlParser_nomain.o: ${OBJECTDIR}/utils/xmlParser.o utils/xmlParser.cpp 
+	${MKDIR} -p ${OBJECTDIR}/utils
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/utils/xmlParser.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -DSOAP_C_UTFSTRING -DWITH_DOM -I. -I../dependencies/boost_process -I/usr/include -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils/xmlParser_nomain.o utils/xmlParser.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/utils/xmlParser.o ${OBJECTDIR}/utils/xmlParser_nomain.o;\
+	fi
+
 # Run Test Targets
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
@@ -953,6 +1008,7 @@ ${OBJECTDIR}/utils/stringFunctions_nomain.o: ${OBJECTDIR}/utils/stringFunctions.
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
 	    ${TESTDIR}/TestFiles/f7 || true; \
+	    ${TESTDIR}/TestFiles/f14 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
 	    ${TESTDIR}/TestFiles/f12 || true; \
 	    ${TESTDIR}/TestFiles/f6 || true; \

@@ -148,7 +148,7 @@ bool y::ldap::schoolClass::addNew(dataset& values) {
     }
   }
   
-  y::Smartschool().addClass(*this);
+  y::Smartschool().saveClass(*this);
   string message(_cn().get());
   message += " added to database";
   y::utils::Log().add(message);
@@ -156,6 +156,8 @@ bool y::ldap::schoolClass::addNew(dataset& values) {
 }
 
 bool y::ldap::schoolClass::update(dataset& values) {
+  bool newStudents = false;
+  
   // remove students if needed
   data * studentDelete = nullptr;
   for(int i = 0; i < _studentsInLDAP.elms(); i++) {
@@ -187,6 +189,7 @@ bool y::ldap::schoolClass::update(dataset& values) {
         studentAdd->add("type", "member");
       }
       studentAdd->add("values", student);
+      newStudents = true;
     }
   }
   
@@ -197,7 +200,15 @@ bool y::ldap::schoolClass::update(dataset& values) {
   _adjunct.saveToLdap(values);
   
   // update smartschool
-  y::Smartschool().addClass(*this);
+  y::Smartschool().saveClass(*this);
+  
+  if(newStudents) {
+    for(int i = 0; i < _students.elms(); i++) {
+      account & a = server->getAccount(DN(_students[i]));
+      y::Smartschool().moveUserToClass(a, this->_cn().get());
+    }
+  }
+  
   string message(_cn().get());
   message += " updated";
   y::utils::Log().add(message);

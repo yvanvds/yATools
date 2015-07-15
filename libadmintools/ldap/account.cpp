@@ -38,6 +38,7 @@ y::ldap::account::account(y::ldap::server * server) :
   _role          ("schoolRole"        , ROLE(ROLE::NONE)),
   _groupID       ("gidNumber"         , GID_NUMBER (0 )),
   _schoolClass   ("class"             , SCHOOLCLASS("")),
+  _classChange   ("classChangeDate"   , DATE(DAY(1), MONTH(1), YEAR(1))),
   _birthPlace    ("placeOfBirth"      , BIRTHPLACE ("")),
   _gender        ("gender"            , GENDER(GENDER::MALE) ),
   _adminGroup    ("adminGroupID"      , ADMINGROUP (0 )),
@@ -87,6 +88,7 @@ bool y::ldap::account::load(const data& d) {
   _role          .readFromLdap(d);
   _groupID       .readFromLdap(d);
   _schoolClass   .readFromLdap(d);
+  _classChange   .readFromLdap(d);
   _birthPlace    .readFromLdap(d);
   _gender        .readFromLdap(d);
   _adminGroup    .readFromLdap(d);
@@ -168,7 +170,10 @@ bool y::ldap::account::save() {
   // remove user if needed
   if(flaggedForRemoval() && !dn().get().empty()) {
     y::Smartschool().deleteUser(*this);
-    server->remove(_dn());
+    y::samba::delUser(*this);
+    
+    if(isStudent())
+    
     return true;
   }
   
@@ -215,6 +220,10 @@ bool y::ldap::account::save() {
   _mail.saveToLdap(values);
   _mailAlias.saveToLdap(values);
   _birthDay.saveToLdap(values);
+  _role.saveToLdap(values);
+  _groupID.saveToLdap(values);
+  _schoolClass.saveToLdap(values);
+  _classChange.saveToLdap(values);
   _birthPlace.saveToLdap(values);
   _gender.saveToLdap(values);
   _adminGroup.saveToLdap(values);
@@ -264,7 +273,7 @@ bool y::ldap::account::save() {
         // add user to group
         if(isStudent()) {
           // this is a student
-          y::Smartschool().addUserToGroup(*this, _schoolClass().get(), false);
+          y::Smartschool().moveUserToClass(*this, _schoolClass().get());
         } else  if(_role().get() == ROLE::DIRECTOR) {
           y::Smartschool().addUserToGroup(*this, "Directie", false);
         } else if (_role().get() == ROLE::SUPPORT) {
@@ -381,6 +390,10 @@ const MAIL_ALIAS & y::ldap::account::mailAlias() const {
 
 const SCHOOLCLASS & y::ldap::account::schoolClass() const {
   return _schoolClass();
+}
+
+const DATE & y::ldap::account::classChange() const {
+  return _classChange();
 }
 
 const BIRTHPLACE & y::ldap::account::birthPlace() const {
@@ -508,7 +521,14 @@ y::ldap::account & y::ldap::account::mailAlias(const MAIL_ALIAS & value) {
 }
 
 y::ldap::account & y::ldap::account::schoolClass(const SCHOOLCLASS & value) {
+  server->getClass(CN(_schoolClass().get())).removeStudent(_dn());
   _schoolClass(value);
+  server->getClass(CN(_schoolClass().get())).addStudent(_dn());
+  return *this;
+}
+
+y::ldap::account & y::ldap::account::classChange(const DATE & value) {
+  _classChange(value);
   return *this;
 }
 
@@ -577,7 +597,7 @@ y::ldap::account & y::ldap::account::country(const COUNTRY & value) {
   return *this;
 }
 
-string y::ldap::account::getPasswordText() {
+string y::ldap::account::getPasswordText() const {
   return _passwordClearText;
 }
 

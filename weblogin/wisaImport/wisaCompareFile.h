@@ -28,6 +28,8 @@ private:
   Wt::WText * message3;
   Wt::WText * message4;
   
+  Wt::WTable * entries;
+  
   wisaImport * parentObject;
 };
 
