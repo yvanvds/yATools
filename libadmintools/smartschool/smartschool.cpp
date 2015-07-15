@@ -286,6 +286,22 @@ bool y::smartschool::savePassword(const y::ldap::account& account) {
   }
 }
 
+bool y::smartschool::setCoAccount(const y::ldap::account& account, const string& pw, bool firstAccount) {
+  soap_dom_element result;
+  
+  if(service.savePassword(
+          y::utils::Config().getSSPw().ss(),
+          account.uid().get().ss(),
+          pw.ss(),
+          firstAccount ? 1 : 2,
+          result) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return false;
+  } else {
+    return validateSoapResult(result);
+  }
+}
+
 bool y::smartschool::saveUser(const y::ldap::account& account) {
   string role;
   if(!account.isStaff() && !account.isStudent()) return false;

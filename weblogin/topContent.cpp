@@ -100,8 +100,17 @@ void topContent::create() {
             Wt::WMenuItem::LazyLoading);
   }
   
-  if(account->role().get() == ROLE::ADMIN || rights.has(account->uid(), y::data::ADMIN_YEARBOOK)) {
-    mainMenu->addItem("Wisa Import",
+  if(account->role().get() == ROLE::ADMIN || rights.has(account->uid(), y::data::ADMIN_STAFF)) {
+    studentMenu = new Wt::WPopupMenu(contents);
+    Wt::WMenuItem * item = new Wt::WMenuItem("Leerlingen");
+    item->setMenu(studentMenu);
+    mainMenu->addItem(item);
+    
+    studentMenu->addItem("Wachtwoord wijzigen",
+            deferCreate(boost::bind(&topContent::studentPasswordFunc, this)),
+            Wt::WMenuItem::LazyLoading);
+    
+    studentMenu->addItem("Wisa Import",
             deferCreate(boost::bind(&topContent::wisaImportFunc, this)),
             Wt::WMenuItem::LazyLoading);
   }
@@ -187,6 +196,12 @@ Wt::WWidget * topContent::webAccessFunc() {
   proxyManagerPtr = new proxyManager();
   proxyManagerPtr->create();
   return proxyManagerPtr;
+}
+
+Wt::WWidget * topContent::studentPasswordFunc() {
+  studentPasswordsPtr = new studentPasswords(&ldapServer);
+  studentPasswordsPtr->create();
+  return studentPasswordsPtr;
 }
 
 Wt::WWidget * topContent::wisaImportFunc() {

@@ -50,6 +50,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/proxyManager.o \
 	${OBJECTDIR}/staffManager/newStaff.o \
 	${OBJECTDIR}/staffManager/staffList.o \
+	${OBJECTDIR}/studentPasswords/passwordFile.o \
+	${OBJECTDIR}/studentPasswords/studentPasswords.o \
 	${OBJECTDIR}/topContent.o \
 	${OBJECTDIR}/wisaImport.o \
 	${OBJECTDIR}/wisaImport/wisaChangeClassMembers.o \
@@ -176,6 +178,16 @@ ${OBJECTDIR}/staffManager/staffList.o: staffManager/staffList.cpp
 	${MKDIR} -p ${OBJECTDIR}/staffManager
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/staffManager/staffList.o staffManager/staffList.cpp
+
+${OBJECTDIR}/studentPasswords/passwordFile.o: studentPasswords/passwordFile.cpp 
+	${MKDIR} -p ${OBJECTDIR}/studentPasswords
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/studentPasswords/passwordFile.o studentPasswords/passwordFile.cpp
+
+${OBJECTDIR}/studentPasswords/studentPasswords.o: studentPasswords/studentPasswords.cpp 
+	${MKDIR} -p ${OBJECTDIR}/studentPasswords
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/studentPasswords/studentPasswords.o studentPasswords/studentPasswords.cpp
 
 ${OBJECTDIR}/topContent.o: topContent.cpp 
 	${MKDIR} -p ${OBJECTDIR}

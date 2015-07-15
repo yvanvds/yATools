@@ -50,6 +50,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/proxyManager.o \
 	${OBJECTDIR}/staffManager/newStaff.o \
 	${OBJECTDIR}/staffManager/staffList.o \
+	${OBJECTDIR}/studentPasswords/passwordFile.o \
+	${OBJECTDIR}/studentPasswords/studentPasswords.o \
 	${OBJECTDIR}/topContent.o \
 	${OBJECTDIR}/wisaImport.o \
 	${OBJECTDIR}/wisaImport/wisaChangeClassMembers.o \
@@ -105,197 +107,207 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/weblogin: ${OBJECTFILES}
 ${OBJECTDIR}/account/changeName.o: account/changeName.cpp 
 	${MKDIR} -p ${OBJECTDIR}/account
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/account/changeName.o account/changeName.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/account/changeName.o account/changeName.cpp
 
 ${OBJECTDIR}/account/changePassword.o: account/changePassword.cpp 
 	${MKDIR} -p ${OBJECTDIR}/account
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/account/changePassword.o account/changePassword.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/account/changePassword.o account/changePassword.cpp
 
 ${OBJECTDIR}/application.o: application.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/application.o application.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/application.o application.cpp
 
 ${OBJECTDIR}/auth/authModel.o: auth/authModel.cpp 
 	${MKDIR} -p ${OBJECTDIR}/auth
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/authModel.o auth/authModel.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/authModel.o auth/authModel.cpp
 
 ${OBJECTDIR}/auth/authService.o: auth/authService.cpp 
 	${MKDIR} -p ${OBJECTDIR}/auth
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/authService.o auth/authService.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/authService.o auth/authService.cpp
 
 ${OBJECTDIR}/auth/authWidget.o: auth/authWidget.cpp 
 	${MKDIR} -p ${OBJECTDIR}/auth
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/authWidget.o auth/authWidget.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/authWidget.o auth/authWidget.cpp
 
 ${OBJECTDIR}/auth/session.o: auth/session.cpp 
 	${MKDIR} -p ${OBJECTDIR}/auth
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/session.o auth/session.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/session.o auth/session.cpp
 
 ${OBJECTDIR}/auth/user.o: auth/user.cpp 
 	${MKDIR} -p ${OBJECTDIR}/auth
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/user.o auth/user.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/user.o auth/user.cpp
 
 ${OBJECTDIR}/base/imageConvert.o: base/imageConvert.cpp 
 	${MKDIR} -p ${OBJECTDIR}/base
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/base/imageConvert.o base/imageConvert.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/base/imageConvert.o base/imageConvert.cpp
 
 ${OBJECTDIR}/base/stackPage.o: base/stackPage.cpp 
 	${MKDIR} -p ${OBJECTDIR}/base
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/base/stackPage.o base/stackPage.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/base/stackPage.o base/stackPage.cpp
 
 ${OBJECTDIR}/base/stackPageManager.o: base/stackPageManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/base
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/base/stackPageManager.o base/stackPageManager.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/base/stackPageManager.o base/stackPageManager.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/proxyManager.o: proxyManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/proxyManager.o proxyManager.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/proxyManager.o proxyManager.cpp
 
 ${OBJECTDIR}/staffManager/newStaff.o: staffManager/newStaff.cpp 
 	${MKDIR} -p ${OBJECTDIR}/staffManager
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/staffManager/newStaff.o staffManager/newStaff.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/staffManager/newStaff.o staffManager/newStaff.cpp
 
 ${OBJECTDIR}/staffManager/staffList.o: staffManager/staffList.cpp 
 	${MKDIR} -p ${OBJECTDIR}/staffManager
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/staffManager/staffList.o staffManager/staffList.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/staffManager/staffList.o staffManager/staffList.cpp
+
+${OBJECTDIR}/studentPasswords/passwordFile.o: studentPasswords/passwordFile.cpp 
+	${MKDIR} -p ${OBJECTDIR}/studentPasswords
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/studentPasswords/passwordFile.o studentPasswords/passwordFile.cpp
+
+${OBJECTDIR}/studentPasswords/studentPasswords.o: studentPasswords/studentPasswords.cpp 
+	${MKDIR} -p ${OBJECTDIR}/studentPasswords
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/studentPasswords/studentPasswords.o studentPasswords/studentPasswords.cpp
 
 ${OBJECTDIR}/topContent.o: topContent.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/topContent.o topContent.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/topContent.o topContent.cpp
 
 ${OBJECTDIR}/wisaImport.o: wisaImport.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport.o wisaImport.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport.o wisaImport.cpp
 
 ${OBJECTDIR}/wisaImport/wisaChangeClassMembers.o: wisaImport/wisaChangeClassMembers.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaChangeClassMembers.o wisaImport/wisaChangeClassMembers.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaChangeClassMembers.o wisaImport/wisaChangeClassMembers.cpp
 
 ${OBJECTDIR}/wisaImport/wisaCommitClasses.o: wisaImport/wisaCommitClasses.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCommitClasses.o wisaImport/wisaCommitClasses.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCommitClasses.o wisaImport/wisaCommitClasses.cpp
 
 ${OBJECTDIR}/wisaImport/wisaCommitStudents.o: wisaImport/wisaCommitStudents.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCommitStudents.o wisaImport/wisaCommitStudents.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCommitStudents.o wisaImport/wisaCommitStudents.cpp
 
 ${OBJECTDIR}/wisaImport/wisaCompareClasses.o: wisaImport/wisaCompareClasses.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareClasses.o wisaImport/wisaCompareClasses.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareClasses.o wisaImport/wisaCompareClasses.cpp
 
 ${OBJECTDIR}/wisaImport/wisaCompareFile.o: wisaImport/wisaCompareFile.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareFile.o wisaImport/wisaCompareFile.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareFile.o wisaImport/wisaCompareFile.cpp
 
 ${OBJECTDIR}/wisaImport/wisaCompareNames.o: wisaImport/wisaCompareNames.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareNames.o wisaImport/wisaCompareNames.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaCompareNames.o wisaImport/wisaCompareNames.cpp
 
 ${OBJECTDIR}/wisaImport/wisaConfirmSubmit.o: wisaImport/wisaConfirmSubmit.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaConfirmSubmit.o wisaImport/wisaConfirmSubmit.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaConfirmSubmit.o wisaImport/wisaConfirmSubmit.cpp
 
 ${OBJECTDIR}/wisaImport/wisaNewGroups.o: wisaImport/wisaNewGroups.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaNewGroups.o wisaImport/wisaNewGroups.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaNewGroups.o wisaImport/wisaNewGroups.cpp
 
 ${OBJECTDIR}/wisaImport/wisaNoID.o: wisaImport/wisaNoID.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaNoID.o wisaImport/wisaNoID.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaNoID.o wisaImport/wisaNoID.cpp
 
 ${OBJECTDIR}/wisaImport/wisaParseClassFile.o: wisaImport/wisaParseClassFile.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaParseClassFile.o wisaImport/wisaParseClassFile.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaParseClassFile.o wisaImport/wisaParseClassFile.cpp
 
 ${OBJECTDIR}/wisaImport/wisaParseStudentFile.o: wisaImport/wisaParseStudentFile.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaParseStudentFile.o wisaImport/wisaParseStudentFile.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaParseStudentFile.o wisaImport/wisaParseStudentFile.cpp
 
 ${OBJECTDIR}/wisaImport/wisaUpload.o: wisaImport/wisaUpload.cpp 
 	${MKDIR} -p ${OBJECTDIR}/wisaImport
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaUpload.o wisaImport/wisaUpload.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wisaImport/wisaUpload.o wisaImport/wisaUpload.cpp
 
 ${OBJECTDIR}/yearbook/yearbook.o: yearbook/yearbook.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbook.o yearbook/yearbook.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbook.o yearbook/yearbook.cpp
 
 ${OBJECTDIR}/yearbook/yearbookConfig.o: yearbook/yearbookConfig.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookConfig.o yearbook/yearbookConfig.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookConfig.o yearbook/yearbookConfig.cpp
 
 ${OBJECTDIR}/yearbook/yearbookConfirmRemove.o: yearbook/yearbookConfirmRemove.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookConfirmRemove.o yearbook/yearbookConfirmRemove.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookConfirmRemove.o yearbook/yearbookConfirmRemove.cpp
 
 ${OBJECTDIR}/yearbook/yearbookDB.o: yearbook/yearbookDB.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookDB.o yearbook/yearbookDB.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookDB.o yearbook/yearbookDB.cpp
 
 ${OBJECTDIR}/yearbook/yearbookDone.o: yearbook/yearbookDone.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookDone.o yearbook/yearbookDone.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookDone.o yearbook/yearbookDone.cpp
 
 ${OBJECTDIR}/yearbook/yearbookDownload.o: yearbook/yearbookDownload.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookDownload.o yearbook/yearbookDownload.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookDownload.o yearbook/yearbookDownload.cpp
 
 ${OBJECTDIR}/yearbook/yearbookPhoto.o: yearbook/yearbookPhoto.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookPhoto.o yearbook/yearbookPhoto.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookPhoto.o yearbook/yearbookPhoto.cpp
 
 ${OBJECTDIR}/yearbook/yearbookQuestion.o: yearbook/yearbookQuestion.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookQuestion.o yearbook/yearbookQuestion.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookQuestion.o yearbook/yearbookQuestion.cpp
 
 ${OBJECTDIR}/yearbook/yearbookReview.o: yearbook/yearbookReview.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookReview.o yearbook/yearbookReview.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookReview.o yearbook/yearbookReview.cpp
 
 ${OBJECTDIR}/yearbook/yearbookVerifyAccount.o: yearbook/yearbookVerifyAccount.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookVerifyAccount.o yearbook/yearbookVerifyAccount.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookVerifyAccount.o yearbook/yearbookVerifyAccount.cpp
 
 # Subprojects
 .build-subprojects:

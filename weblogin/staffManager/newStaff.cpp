@@ -132,9 +132,7 @@ void newStaff::create() {
     table->setStyleClass("panel-body");
     
     result->hide();
-  }
-    
-  
+  }  
 }
 
 void newStaff::addAccount() {

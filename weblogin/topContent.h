@@ -23,6 +23,7 @@
 #include "account/changePassword.h"
 #include "account/changeName.h"
 #include "staffManager/staffList.h"
+#include "studentPasswords/studentPasswords.h"
 #include "proxyManager.h"
 #include "ldap/server.h"
 #include "wisaImport.h"
@@ -88,6 +89,7 @@ private:
   // main contents
   Wt::WMenu * mainMenu;
   Wt::WPopupMenu * staffMenu;
+  Wt::WPopupMenu * studentMenu;
   Wt::WPopupMenu * yearbookMenu;
   Wt::WMenu * rightMenu;
   
@@ -95,6 +97,7 @@ private:
   
   Wt::WWidget * webAccessFunc();
   Wt::WWidget * wisaImportFunc();
+  Wt::WWidget * studentPasswordFunc();
   //Wt::WWidget * groupFunc();
   Wt::WWidget * yearbookFunc();
   Wt::WWidget * yearbookReviewFunc();
@@ -116,6 +119,7 @@ private:
   changePassword * changePasswordPtr;
   changeName * changeNamePtr;
   staffList * staffListPtr;
+  studentPasswords * studentPasswordsPtr;
   
   y::ldap::server ldapServer;
   

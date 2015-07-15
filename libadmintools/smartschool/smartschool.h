@@ -62,7 +62,7 @@ namespace y {
    bool setAccountStatus(const y::ldap::account & account);
    bool unregister      (const y::ldap::account & account);
    
-   bool setCoAccount(const y::ldap::account & account, const string & pw1, const string & pw2 = "");
+   bool setCoAccount(const y::ldap::account & account, const string & pw1, bool firstAccount);
    
    bool validate        (const string & username, const string & password);
    
