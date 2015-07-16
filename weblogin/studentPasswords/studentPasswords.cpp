@@ -150,6 +150,8 @@ void studentPasswords::showClass(string schoolClass) {
   }
 }
 
+
+
 void studentPasswords::changePasswords() {
   buttons->hide();
   table->hide();
@@ -180,6 +182,8 @@ void studentPasswords::changePasswords() {
         pfile.addLine(s);
       }
       {
+        string password = y::utils::Security().makePassword(8);
+        a.password(PASSWORD(password));
         string s("Nieuw wachtwoord: ");
         s += a.getPasswordText();
         pfile.addLine(s);
@@ -283,6 +287,7 @@ void studentPasswords::changePasswords() {
     
     progress->setValue(i);
   }
+  server->commitChanges();
   
   progress->hide();
   

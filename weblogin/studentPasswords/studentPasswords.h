@@ -17,9 +17,7 @@
 
 class studentPasswords : public Wt::WContainerWidget {
 public:
-  studentPasswords(y::ldap::server * server) : server(server) {}
-
-  
+  studentPasswords(y::ldap::server * server) : server(server) {}  
   void create();
   
 private:
