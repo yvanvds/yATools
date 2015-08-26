@@ -193,6 +193,15 @@ void newStaff::addAccount() {
   ));
   
   values.wisaName(WISA_NAME(wisaName->text()));
+  if(gender->currentIndex() == 0) {
+    values.gender(GENDER(GENDER::MALE));
+  } else if (gender->currentIndex() == 1) {
+    values.gender(GENDER(GENDER::FEMALE));
+  } else if (gender->currentIndex() == 2) {
+    values.gender(GENDER(GENDER::TRANSGENDER));
+  } else {
+    values.gender(GENDER(GENDER::NONE));
+  }
   
   y::ldap::account & account = admin.add(values, PASSWORD(password));
   
