@@ -22,6 +22,7 @@ debugFunctions & DebugFunctions() {
 void debugFunctions::printHelp() {
   cout << "You should never use these!!!" << std::endl;
   cout << "  removeAllStudents" << std::endl;
+  cout << "  resetStemID" << std::endl;
   cout << "  groupsToSmartschool" << std::endl;
   cout << "  convert" << std::endl;
 }
@@ -38,8 +39,22 @@ void debugFunctions::parse(int argc, char ** argv) {
     groupsToSmartschool();
   } else if(::string(argv[0]) == "test") {
     testFunction();
+  } else if(::string(argv[0]) == "resetStemID") {
+    resetStemID();
   }
 }
+
+void debugFunctions::resetStemID() {
+  y::ldap::server s;
+  ACCOUNTS & accounts = s.getAccounts();
+  for(int i = 0; i < accounts.elms(); i++) {
+    if(accounts[i].role().get() == ROLE::STUDENT) {
+      std::cout << "changing " << accounts[i].fullName().get() << std::endl;
+      accounts[i].postalCode(POSTAL_CODE("10"));
+    }
+  }
+  s.commitChanges();
+} 
 
 void debugFunctions::removeAllStudents() {
   y::ldap::server s;

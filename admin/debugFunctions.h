@@ -17,6 +17,7 @@ public:
   
 private:
   void removeAllStudents();
+  void resetStemID();
   void groupsToSmartschool();
   void testFunction();
 };
