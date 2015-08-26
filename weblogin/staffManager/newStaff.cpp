@@ -186,7 +186,6 @@ void newStaff::addAccount() {
   values.cn(CN(firstName->text()));
   values.sn(SN(surName->text()));
   values.role(ROLE(schoolRole));
-  values.schoolClass(SCHOOLCLASS(" "));
   values.birthDay(DATE(
       DAY(dateOfBirth->date().day())
     , MONTH(dateOfBirth->date().month())

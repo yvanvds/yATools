@@ -43,10 +43,7 @@
       <itemPath>staffManager/staffList.cpp</itemPath>
       <itemPath>staffManager/staffList.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f8"
-                   displayName="studentPasswords"
-                   projectFiles="true"
-                   kind="ROOT">
+    <logicalFolder name="f8" displayName="studentPasswords" projectFiles="true">
       <itemPath>studentPasswords/passwordFile.cpp</itemPath>
       <itemPath>studentPasswords/passwordFile.h</itemPath>
       <itemPath>studentPasswords/studentPasswords.cpp</itemPath>
