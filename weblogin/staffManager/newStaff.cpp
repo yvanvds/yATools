@@ -14,6 +14,8 @@
 #include <Wt/WDateEdit>
 #include <Wt/WPushButton>
 #include "newStaff.h"
+#include "ldap/account.h"
+#include "utils/string.h"
 
 void newStaff::create() {
   Wt::WPanel * panel = new Wt::WPanel(this);
@@ -179,28 +181,29 @@ void newStaff::addAccount() {
   }
   
   y::admin::userAdmin admin(server);
-  /*y::ldap::account & account = admin.add(
-            CN(firstName->text())
-          , SN(surName->text())
-          , ROLE(schoolRole)
-          , SCHOOLCLASS(" ")
-          , DATE(
-              DAY(dateOfBirth->date().day())
-            , MONTH(dateOfBirth->date().month())
-            , YEAR(dateOfBirth->date().year())
-          )
-          , WISA_ID(0)
-          , PASSWORD(password)
-  );*/
+  
+  y::ldap::account values(nullptr);
+  values.cn(CN(firstName->text()));
+  values.sn(SN(surName->text()));
+  values.role(ROLE(schoolRole));
+  values.schoolClass(SCHOOLCLASS(" "));
+  values.birthDay(DATE(
+      DAY(dateOfBirth->date().day())
+    , MONTH(dateOfBirth->date().month())
+    , YEAR(dateOfBirth->date().year())
+  ));
+  
+  values.wisaName(WISA_NAME(wisaName->text()));
+  
+  y::ldap::account & account = admin.add(values, PASSWORD(password));
+  
   server->commitChanges();
   
-  //resultName->setText(account.fullName().get().wt());
-  //resultUid->setText(account.uid().get().wt());
-  //resultMail->setText(account.mail().get().wt());
-  //resultMailAlias->setText(account.mail().get().wt());
+  resultName->setText(account.fullName().get().wt());
+  resultUid->setText(account.uid().get().wt());
+  resultMail->setText(account.mail().get().wt());
+  resultMailAlias->setText(account.mailAlias().get().wt());
   resultPassword->setText(password.wt());
   result->show();
   
-  //admin.remove(account);
-  server->commitChanges();
 }

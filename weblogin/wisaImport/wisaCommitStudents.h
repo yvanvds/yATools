@@ -42,7 +42,7 @@ public:
   bool onNext();
   
   void addMessage(const string & message);
-  void addNewAccountMessage(const string & message);
+  void addNewAccount(const y::ldap::account & account, const string & pw1, const string & pw2);
   void threadDone();
   
   wisaImport * getParentObject() { return parentObject; }

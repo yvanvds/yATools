@@ -16,6 +16,7 @@
 #include "ldap/account.h"
 #include "wisaCommitStudents.h"
 #include "../wisaImport.h"
+#include "smartschool/smartschool.h"
 
 #include <boost/algorithm/string.hpp>
 
@@ -87,6 +88,14 @@ void wisaCommitStudents::setContent(Wt::WVBoxLayout* box) {
 }
 
 void commitThreadFunc(wisaCommitStudents * caller) {
+  struct coAccountInfo {
+    string login;
+    string pw1;
+    string pw2;
+  };
+  
+  container<coAccountInfo> coAccounts;
+  
   using std::placeholders::_1;
   y::utils::Log().bind(std::bind(&wisaCommitStudents::addMessage, caller, _1));
   
@@ -124,21 +133,16 @@ void commitThreadFunc(wisaCommitStudents * caller) {
       newAccount.postalCode(account.postalCode);
       newAccount.city(account.city);
       
-      message = newAccount.schoolClass().get();
-      message += " ";
-      message += newAccount.fullName().get();
-      caller->addNewAccountMessage(message);
-      message = "Login: ";
-      message += newAccount.uid().get();
-      caller->addNewAccountMessage(message);
-      message = "Wachtwoord: ";
-      message += password;
-      caller->addNewAccountMessage(message);
-      message = "Mail Adres: ";
-      message += newAccount.mail().get();
-      caller->addNewAccountMessage(message);
-      message = " ";
-      caller->addNewAccountMessage(message);
+      // passwords for co-accounts
+      string pw1 = y::utils::Security().makePassword(8);
+      string pw2 = y::utils::Security().makePassword(8);
+      
+      coAccountInfo & co = coAccounts.New();
+      co.login = newAccount.uid().get();
+      co.pw1 = pw1;
+      co.pw2 = pw2;
+      
+      caller->addNewAccount(newAccount, pw1, pw2);
       
     } else {
       // account exists, but may not be up to date
@@ -258,6 +262,12 @@ void commitThreadFunc(wisaCommitStudents * caller) {
   }
   
   caller->getParentObject()->ldap()->commitChanges();
+  
+  // submit passwords for co-accounts to smartschool
+  for(int i = 0; i < coAccounts.elms(); i++) {
+    y::Smartschool().setCoAccount(coAccounts[i].login, coAccounts[i].pw1, true);
+    y::Smartschool().setCoAccount(coAccounts[i].login, coAccounts[i].pw2, false);
+  }
   caller->threadDone();
   y::utils::Log().unbind();
 }
@@ -305,9 +315,117 @@ void wisaCommitStudents::addMessage(const string& message) {
   }  
 }
 
-void wisaCommitStudents::addNewAccountMessage(const string& message) {
-  download->addMessage(message);
+void wisaCommitStudents::addNewAccount(const y::ldap::account & account, const string& pw1, const string& pw2) {
+  download->addMessage(account.fullName().get());
+  {
+    string s("Klas: "); s +=account.schoolClass().get();
+    download->addMessage(s);
+  }
+  {
+    string s("Login: "); s += account.uid().get();
+    download->addMessage(s);
+  }
+  {
+    string s("Wachtwoord: "); s += account.getPasswordText();
+    download->addMessage(s);
+  }
+  
+  download->addMessage(" ");
+  download->addMessage("Laat je wachtwoord niet rondslingeren! Je bent verantwoordelijk voor je account. Indien je dit wachtwoord niet kan onthouden, pas dan je wachtwoord zelf aan via http://apps.sanctamaria-aarschot.be");
+  download->addMessage(" ");
+  
+  // first co-account
+  {
+    string s("Wachtwoord voor ");
+    s += account.fullName().get();
+    download->addMessage(s);    
+  }
+  
+  {
+    string s(account.street().get());
+    s += " ";
+    s += string(account.houseNumber().get());
+    s += " ";
+    s += account.houseNumberAdd().get();
+    download->addMessage(s);
+  }
+  
+  {
+    string s(account.postalCode().get());
+    s += " ";
+    s += string(account.city().get());
+    download->addMessage(s);
+  }
+
+  {
+    string s("Klas: ");
+    s += account.schoolClass().get();
+    download->addMessage(s);
+  }
+  
+  {
+    string s("Login: ");
+    s += account.uid().get();
+    download->addMessage(s);
+  }
+  
+  {
+    string s("Wachtwoord 1ste Co-account: ");
+    s += pw1;
+    download->addMessage(s);
+  }
+  
+  download->addMessage(" ");
+  download->addMessage("Met dit wachtwoord kan je als ouder inloggen op http://sanctamaria-aarschot.smartschool.be");
+  download->addMessage(" ");
+  
+  // second co-account
+  {
+    string s("Wachtwoord voor ");
+    s += account.fullName().get();
+    download->addMessage(s);    
+  }
+  
+  {
+    string s(account.street().get());
+    s += " ";
+    s += string(account.houseNumber().get());
+    s += " ";
+    s += account.houseNumberAdd().get();
+    download->addMessage(s);
+  }
+  
+  {
+    string s(account.postalCode().get());
+    s += " ";
+    s += string(account.city().get());
+    download->addMessage(s);
+  }
+
+  {
+    string s("Klas: ");
+    s += account.schoolClass().get();
+    download->addMessage(s);
+  }
+  
+  {
+    string s("Login: ");
+    s += account.uid().get();
+    download->addMessage(s);
+  }
+  
+  {
+    string s("Wachtwoord 2de Co-account: ");
+    s += pw2;
+    download->addMessage(s);
+  }
+  
+  download->addMessage(" ");
+  download->addMessage("Met dit wachtwoord kan je als ouder inloggen op http://sanctamaria-aarschot.smartschool.be");
+  download->addMessage(" ");
 }
+
+
 
 bool wisaCommitStudents::onNext() {
   parentObject->reset();

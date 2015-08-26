@@ -231,7 +231,7 @@ void studentPasswords::changePasswords() {
         string password = y::utils::Security().makePassword(8);
         string s("Wachtwoord 1ste Co-account: ");
         s += password;
-        y::Smartschool().setCoAccount(a, password, true);
+        y::Smartschool().setCoAccount(a.uid().get(), password, true);
         pfile.addLine(s);
       }
       pfile.addLine(" ");
@@ -277,7 +277,7 @@ void studentPasswords::changePasswords() {
         string password = y::utils::Security().makePassword(8);
         string s("Wachtwoord 2de Co-account: ");
         s += password;
-        y::Smartschool().setCoAccount(a, password, true);
+        y::Smartschool().setCoAccount(a.uid().get(), password, true);
         pfile.addLine(s);
       }
       pfile.addLine(" ");

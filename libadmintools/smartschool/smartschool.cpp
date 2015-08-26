@@ -286,12 +286,12 @@ bool y::smartschool::savePassword(const y::ldap::account& account) {
   }
 }
 
-bool y::smartschool::setCoAccount(const y::ldap::account& account, const string& pw, bool firstAccount) {
+bool y::smartschool::setCoAccount(const string & uid, const string& pw, bool firstAccount) {
   soap_dom_element result;
   
   if(service.savePassword(
           y::utils::Config().getSSPw().ss(),
-          account.uid().get().ss(),
+          uid.ss(),
           pw.ss(),
           firstAccount ? 1 : 2,
           result) != SOAP_OK) {

@@ -7,15 +7,29 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNoID.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/staffManager/staffList.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbook.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/yearbook/yearbook.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/studentPasswords/passwordFile.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaUpload.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareNames.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/studentPasswords/passwordFile.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/staffManager/staffList.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/studentPasswords/studentPasswords.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitClasses.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareFile.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitStudents.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/topContent.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitClasses.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/staffManager/newStaff.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNoID.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareNames.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareFile.h</file>
-            <file>file:/home/yvan/github/yATools/weblogin/wisaImport.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitStudents.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/staffManager/newStaff.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaParseStudentFile.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareFile.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/studentPasswords/studentPasswords.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/topContent.h</file>
         </group>
     </open-files>
 </project-private>
