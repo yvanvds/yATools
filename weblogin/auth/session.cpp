@@ -7,6 +7,8 @@
 
 #include "session.h"
 #include "authService.h"
+#include "passwordService.h"
+
 #include <Wt/Auth/HashFunction>
 #include <Wt/Auth/PasswordService>
 #include <Wt/Auth/PasswordStrengthValidator>
@@ -29,7 +31,7 @@ namespace {
   };
 
   authService myAuthService;
-  Wt::Auth::PasswordService myPasswordService(myAuthService);
+  passwordService myPasswordService(myAuthService);
   MyOAuth myOAuthServices;
 }
 

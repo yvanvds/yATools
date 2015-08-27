@@ -14,6 +14,8 @@
       <itemPath>auth/authService.h</itemPath>
       <itemPath>auth/authWidget.cpp</itemPath>
       <itemPath>auth/authWidget.h</itemPath>
+      <itemPath>auth/passwordService.cpp</itemPath>
+      <itemPath>auth/passwordService.h</itemPath>
       <itemPath>auth/session.cpp</itemPath>
       <itemPath>auth/session.h</itemPath>
       <itemPath>auth/user.cpp</itemPath>
@@ -195,6 +197,10 @@
       <item path="auth/authWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="auth/authWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/passwordService.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/passwordService.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="auth/session.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -434,6 +440,10 @@
       <item path="auth/authWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="auth/authWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="auth/passwordService.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="auth/passwordService.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="auth/session.cpp" ex="false" tool="1" flavor2="0">
       </item>

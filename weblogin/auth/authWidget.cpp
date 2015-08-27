@@ -8,6 +8,7 @@
 #include "authWidget.h"
 #include <Wt/Auth/LostPasswordWidget>
 #include <Wt/Auth/AuthModel>
+#include <Wt/Auth/UpdatePasswordWidget>
 
 authWidget::authWidget(userSession& s) 
   : Wt::Auth::AuthWidget(userSession::auth(), s.users(), s.login())
@@ -25,3 +26,4 @@ Wt::WWidget * authWidget::createLostPasswordView() {
   widget->setWidth(500);
   return widget;
 }
+

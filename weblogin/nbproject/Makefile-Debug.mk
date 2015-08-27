@@ -41,6 +41,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/auth/authModel.o \
 	${OBJECTDIR}/auth/authService.o \
 	${OBJECTDIR}/auth/authWidget.o \
+	${OBJECTDIR}/auth/passwordService.o \
 	${OBJECTDIR}/auth/session.o \
 	${OBJECTDIR}/auth/user.o \
 	${OBJECTDIR}/base/imageConvert.o \
@@ -133,6 +134,11 @@ ${OBJECTDIR}/auth/authWidget.o: auth/authWidget.cpp
 	${MKDIR} -p ${OBJECTDIR}/auth
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/authWidget.o auth/authWidget.cpp
+
+${OBJECTDIR}/auth/passwordService.o: auth/passwordService.cpp 
+	${MKDIR} -p ${OBJECTDIR}/auth
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auth/passwordService.o auth/passwordService.cpp
 
 ${OBJECTDIR}/auth/session.o: auth/session.cpp 
 	${MKDIR} -p ${OBJECTDIR}/auth
