@@ -3,43 +3,43 @@
 
   <!-- BaseAuth, PasswordAuth and OAuth models -->
 
-  <message id="Wt.Auth.error-invalid-token">The operation could not be completed: invalid token.</message>
-  <message id="Wt.Auth.error-token-expired">The operation could not be completed: the token has expired.</message>
+  <message id="Wt.Auth.error-invalid-token">Mislukt: ongeldig token.</message>
+  <message id="Wt.Auth.error-token-expired">Misult: dit token is te oud</message>
   <message id="Wt.Auth.mail-sent">Er is een mail verzonden met verdere instructies.</message>
   <message id="Wt.Auth.info-email-confirmed">Your email address is now confirmed.</message>
 
   <message id="Wt.Auth.passwdqc.reason-error">
-    Check failed
+    Ongeldig wachtwoord
   </message>
   <message id="Wt.Auth.passwdqc.reason-same">
-    The same as the old one
+    Dit wachtwoord is gelijk aan het vorige
   </message>
   <message id="Wt.Auth.passwdqc.reason-similar">
-    Based on the old one
+    Dit wachtwoord lijkt op het vorige
   </message>
   <message id="Wt.Auth.passwdqc.reason-short">
-    Too short
+    Te kort
   </message>
   <message id="Wt.Auth.passwdqc.reason-long">
-    Too long
+    Te lang
   </message>
   <message id="Wt.Auth.passwdqc.reason-simpleshort">
-    Not enough different characters or classes for this length
+    Niet genoeg verschillende soorten karakters
   </message>
   <message id="Wt.Auth.passwdqc.reason-simple">
-    Not enough different characters or classes
+    Niet genoeg verschillende soorten karakters
   </message>
   <message id="Wt.Auth.passwdqc.reason-personal">
-    Based on personal information
+    Gebaseerd op persoonlijke informatie
   </message>
   <message id="Wt.Auth.passwdqc.reason-word">
-    Based on a dictionary word and not a passphrase
+    Gebaseerd op een bestaand woord
   </message>
   <message id="Wt.Auth.passwdqc.reason-seq">
-    Based on a common sequence of characters
+    Bevat herhalingen
   </message>
   <message id="Wt.Auth.passwdqc.reason-ok">
-    Valid
+    Goed zo!
   </message>
 
   <message id="Wt.Auth.GoogleService.badresponse">
@@ -68,7 +68,7 @@
   <message id="Wt.Auth.email">Gebruikersnaam</message>
   <message id="Wt.Auth.email-info">Vul je gebruikersnaam in</message>
   <message id="Wt.Auth.optional-email-info">
-    Enter your email address (optional)
+    Vul je email address in (optioneel)
   </message>
   <message id="Wt.Auth.password">Wachtwoord</message>
   <message id="Wt.Auth.password-info">Vul je wachtwoord in</message>
@@ -82,7 +82,7 @@
   <message id="Wt.Auth.lost-password">Wachtwoord vergeten?</message>
   <message id="Wt.Auth.login">Aanmelden</message>
   <message id="Wt.Auth.logout">Afmelden</message>
-  <message id="Wt.Auth.throttle-retry">Retry in {1}s</message>
+  <message id="Wt.Auth.throttle-retry">Probeer opnieuw over {1}s</message>
 
   <!-- RegistrationWidget -->
 
@@ -91,23 +91,23 @@
   <message id="Wt.Auth.password-registration">Register using a user name and password:</message>
   <message id="Wt.Auth.oauth-registration">Register with an identity provider:</message>
   <message id="Wt.Auth.or-oauth-registration">Or, register with an identity provider:</message>
-  <message id="Wt.Auth.valid">Valid</message>
-  <message id="Wt.Auth.choose-password">Choose Password</message>
-  <message id="Wt.Auth.choose-password-info">Choose a password</message>
-  <message id="Wt.Auth.repeat-password">Repeat password</message>
-  <message id="Wt.Auth.repeat-password-info">Re-enter your password</message>
-  <message id="Wt.Auth.email-invalid">Invalid email address</message>
-  <message id="Wt.Auth.email-exists">Email already registered</message>
+  <message id="Wt.Auth.valid">Geldig</message>
+  <message id="Wt.Auth.choose-password">Kies een wachtwoord</message>
+  <message id="Wt.Auth.choose-password-info">Kies een wachtwoord</message>
+  <message id="Wt.Auth.repeat-password">Herhaal je wachtwoord</message>
+  <message id="Wt.Auth.repeat-password-info">Vul je wachtwoord opnieuw in</message>
+  <message id="Wt.Auth.email-invalid">Ongeldig email adres</message>
+  <message id="Wt.Auth.email-exists">Dit adres is in gebruik</message>
   <message id="Wt.Auth.oauth">Your external account</message>
   <message id="Wt.Auth.oauth-info">Choose one of your accounts</message>
   <message id="Wt.Auth.user-name-exists">User already exists</message>
   <message id="Wt.Auth.confirm-is-you">User exists, is this you?</message>
   <message id="Wt.Auth.user-name-tooshort">Min. size {1} characters</message>
   <message id="Wt.Auth.password-tooshort">Min. size {1} characters</message>
-  <message id="Wt.Auth.passwords-dont-match">Passwords don't match</message>
-  <message id="Wt.Auth.registration">Registration</message>
-  <message id="Wt.Auth.register">Register</message>
-  <message id="Wt.Auth.error-user-invalid">Registration failed.</message>
+  <message id="Wt.Auth.passwords-dont-match">De wachtwoorden zijn niet gelijk</message>
+  <message id="Wt.Auth.registration">Registratie</message>
+  <message id="Wt.Auth.register">Registreer</message>
+  <message id="Wt.Auth.error-user-invalid">Registratie mislukt.</message>
   <message id="Wt.Auth.email-unverified">Please confirm your email first.</message>
   <message id="Wt.Auth.confirm-email-first">
     <h5>Welcome!</h5>
@@ -125,14 +125,14 @@
 
   <!-- UpdatePasswordWidget -->
 
-  <message id="Wt.Auth.updatepassword">Update password</message>
-  <message id="Wt.Auth.update-password-form-title">Update password</message>
-  <message id="Wt.Auth.update-password-form-info">Enter a new password below</message>
+  <message id="Wt.Auth.updatepassword">Update wachtwoord</message>
+  <message id="Wt.Auth.update-password-form-title">Update wachtwoord</message>
+  <message id="Wt.Auth.update-password-form-info">Geef hieronder je wachtwoord in</message>
 
   <!-- LostPasswordDialog -->
 
   <message id="Wt.Auth.lostpassword">Wachtwoord vergeten?</message>
-  <message id="Wt.Auth.lost-password-form-title">Vraag een nieuw wachtwoord aan.</message>
+  <message id="Wt.Auth.lost-password-form-title">Vraag een nieuw wachtwoord aan</message>
   <message id="Wt.Auth.lost-password-form-info">Vul hier je gebruikersnaam in.
   Als je een persoonlijk email adres hebt opgegeven krijg je 
   een mail waarmee je opnieuw kan inloggen.</message>
@@ -140,8 +140,8 @@
 
   <!-- Message boxes -->
 
-  <message id="Wt.Auth.error">Error</message>
-  <message id="Wt.Auth.notice">Notice</message>
+  <message id="Wt.Auth.error">Fout</message>
+  <message id="Wt.Auth.notice">Waarschuwing</message>
 
   <!-- Emails -->
 
