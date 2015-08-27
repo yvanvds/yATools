@@ -209,8 +209,9 @@ void newStaff::addAccount() {
   
   resultName->setText(account.fullName().get().wt());
   resultUid->setText(account.uid().get().wt());
-  resultMail->setText(account.mail().get().wt());
-  resultMailAlias->setText(account.mailAlias().get().wt());
+  // yes, they are switched...
+  resultMail->setText(account.mailAlias().get().wt());
+  resultMailAlias->setText(account.mail().get().wt());
   resultPassword->setText(password.wt());
   result->show();
   
