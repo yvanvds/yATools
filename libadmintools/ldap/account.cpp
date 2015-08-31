@@ -260,6 +260,9 @@ bool y::ldap::account::save() {
   }
   
   if(values.elms()) {
+    bool roleChanged = _role.changed();
+    bool classChanged = _schoolClass.changed();
+    
     server->modify(_dn(), values);
     
     // check if more than just the password is changed
@@ -271,15 +274,15 @@ bool y::ldap::account::save() {
         y::utils::Log().add(message);
         
         // add user to group
-        if(isStudent()) {
+        if(isStudent() && classChanged) {
           // this is a student
           y::Smartschool().moveUserToClass(*this, _schoolClass().get());
-        } else  if(_role().get() == ROLE::DIRECTOR) {
+        } else  if(roleChanged && _role().get() == ROLE::DIRECTOR) {
           y::Smartschool().addUserToGroup(*this, "Directie", false);
-        } else if (_role().get() == ROLE::SUPPORT) {
+        } else if (roleChanged && _role().get() == ROLE::SUPPORT) {
           y::Smartschool().addUserToGroup(*this, "Secretariaat", false);
-        } else if (isStaff()) {
-          y::Smartschool().addUserToGroup(*this, "Leerkrachten", false);
+        } else if (roleChanged && isStaff()) {
+          y::Smartschool().addUserToGroup(*this, "Leerkrachten", true);
         }
       }
     }   
