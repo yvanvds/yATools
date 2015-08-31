@@ -28,6 +28,7 @@
 #include "ldap/server.h"
 #include <boost/locale.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
 #include <Wt/WLineEdit>
 #include <Wt/WCheckBox>
 #include <Wt/WIntValidator>
@@ -185,10 +186,12 @@ WISA_ERROR wisaImport::tokenize(const std::wstring& line, bool students) {
     if(line[i] != ';') {
       item += line[i];
     } else {
+      boost::algorithm::trim(item);
       elms.push_back(std::move(item.c_str())); 
       item.clear();
     }
   }
+  boost::algorithm::trim(item);
   elms.push_back(std::move(item.c_str())); 
 
   // add to wisa contents
