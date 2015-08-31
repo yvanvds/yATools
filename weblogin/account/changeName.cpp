@@ -74,6 +74,8 @@ void changeName::create(y::ldap::account * account) {
 void changeName::nameChanged() {
   string cn = firstName->text();
   string sn = lastName->text();
+  cn.trim(); sn.trim();
+  
   string fullname(cn);
   fullname += " ";
   fullname += sn;

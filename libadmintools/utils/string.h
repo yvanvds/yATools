@@ -120,6 +120,11 @@ public:
     return *this;
   }
   
+  string & trimLeft () { boost::algorithm::trim_left (content); return *this; }
+  string & trimRight() { boost::algorithm::trim_right(content); return *this; }
+  string & trim     () { boost::algorithm::trim      (content); return *this; }
+  
+  
   void execute          () { system(content.c_str()); }
   void clear            () {        content.clear() ; }
 private:
