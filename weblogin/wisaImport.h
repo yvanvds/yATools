@@ -40,11 +40,19 @@ enum WISA_PAGE {
   W_COMMITSTUDENTS,
 };
 
+enum WISA_ERROR {
+  WE_NO_ERROR,
+  WE_NUM_COLUMNS,
+  WE_NO_STEM_ID,
+  WE_NO_WISA_ID,
+  WE_NO_ELEMENTS,
+};
+
 class wisaImport : public stackPageManager {
 public:
   struct wisaAccount {
     wisaAccount();
-    bool set(std::vector<std::wstring> & line);
+    WISA_ERROR set(std::vector<std::wstring> & line);
     CN cn;
     SN sn;
     GENDER gender;
@@ -66,7 +74,7 @@ public:
   
   struct wisaClass {
     wisaClass() : link(nullptr) {}
-    bool set(std::vector<std::wstring> & line);
+    WISA_ERROR set(std::vector<std::wstring> & line);
     string name;
     string description;
     int adminGroup;
@@ -88,7 +96,7 @@ public:
   
   bool readLinesUTF8(std::wifstream * stream, bool students = false);
   bool readLinesLatin(std::ifstream * stream, bool students = false);
-  bool tokenize(const std::wstring & line, bool students = false);
+  WISA_ERROR tokenize(const std::wstring & line, bool students = false);
   void reset();
   
   container<wisaAccount> & getWisaAccounts();

@@ -150,10 +150,19 @@ bool wisaImport::readLinesLatin(std::ifstream* stream, bool students) {
   std::string line;
   while(std::getline(*stream, line)) {
     std::wstring converted = boost::locale::conv::to_utf<wchar_t>(line, "Latin1");
-    if(!tokenize(converted, students)) {
+    WISA_ERROR we = tokenize(converted, students);
+    if(we != WE_NO_ERROR) {
+      string m;
+      switch(we) {
+        case WE_NUM_COLUMNS: m = "<p>Het aantal kolommen in dit bestand klopt niet.</p>"; break;
+        case WE_NO_STEM_ID: m = "<p>Er is een entry zonder stamnummer.</p>"; break;
+        case WE_NO_WISA_ID: m = "<p>Er is een entry zonder WISA ID. </p>"; break;
+        case WE_NO_ELEMENTS: m = "<p>Er werd geen informatie gevonden in dit bestand.</p>"; break;
+      }
+      
       Wt::WMessageBox * message = new Wt::WMessageBox (
             "Error",
-            "<p>Het aantal kolommen in dit bestand klopt niet.</p>",
+            m.wt(),
             Wt::Critical, Wt::Ok);
       message->buttonClicked().connect(std::bind([=] () {
         reset();
@@ -168,7 +177,7 @@ bool wisaImport::readLinesLatin(std::ifstream* stream, bool students) {
 }
 
 
-bool wisaImport::tokenize(const std::wstring& line, bool students) {
+WISA_ERROR wisaImport::tokenize(const std::wstring& line, bool students) {
   std::wstring item;
   std::vector<std::wstring> elms;
 
@@ -187,7 +196,7 @@ bool wisaImport::tokenize(const std::wstring& line, bool students) {
     if(students) return wisaAccounts.New().set(elms);
     else return wisaClasses.New().set(elms);
   }
-  return false;
+  return WE_NO_ELEMENTS;
 }
 
 string wisaImport::getWisaStudentFile() {
@@ -227,9 +236,9 @@ wisaImport::wisaAccount::wisaAccount()
   , city("") 
   , link(nullptr) {}
 
-bool wisaImport::wisaAccount::set(std::vector<std::wstring>& line) {
+WISA_ERROR wisaImport::wisaAccount::set(std::vector<std::wstring>& line) {
   if(line.size() != 20) {
-    return false;
+    return WE_NUM_COLUMNS;
   }
   sn = SN(string(line[0]));
   cn = CN(string(line[1]));
@@ -238,7 +247,15 @@ bool wisaImport::wisaAccount::set(std::vector<std::wstring>& line) {
   registerID = REGISTER_ID(string(line[4]));
   birthplace = BIRTHPLACE(string(line[5]));
   nationality = NATION(string(line[6]));
+  
+  if(!line[7].length()) {
+    return WE_NO_STEM_ID;
+  }
   stemID = STEM_ID(string(line[7]).asInt());
+  
+  if(!line[8].length()) {
+    return WE_NO_WISA_ID;
+  }
   wisaID = WISA_ID(string(line[8]).asInt());
   // line[9] = school ID
   schoolClass = SCHOOLCLASS(string(line[10]));
@@ -247,17 +264,21 @@ bool wisaImport::wisaAccount::set(std::vector<std::wstring>& line) {
   // line[13] > admingroup number
   changeClassDate = DATE(string(line[14]), true);
   street = STREET(string(line[15]));
-  houseNumber = HOUSENUMBER(string(line[16]).asInt());
+  
+  if(line[16].length()) {
+    houseNumber = HOUSENUMBER(string(line[16]).asInt());
+  }
+  
   houseNumberAdd = HOUSENUMBER_ADD(string(line[17]));
   postalCode = POSTAL_CODE(string(line[18]));
   city = CITY(string(line[19]));
-  return true;
+  return WE_NO_ERROR;
 }
 
-bool wisaImport::wisaClass::set(std::vector<std::wstring> & line) {
+WISA_ERROR wisaImport::wisaClass::set(std::vector<std::wstring> & line) {
   if(line.size() != 7 && line.size() != 6) {
     // class without co-titular have only 6 entries
-    return false;
+    return WE_NUM_COLUMNS;
   }
   name = string(line[0]);
   description = string(line[1]);
@@ -272,7 +293,7 @@ bool wisaImport::wisaClass::set(std::vector<std::wstring> & line) {
   } else {
     adjunct.clear();
   }
-  return true;
+  return WE_NO_ERROR;
 }
 
 container<wisaImport::wisaClass> & wisaImport::getWisaClasses() {
