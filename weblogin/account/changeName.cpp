@@ -81,6 +81,8 @@ void changeName::nameChanged() {
   account->cn(CN(cn));
   account->sn(SN(sn));
   account->fullName(FULL_NAME(fullname));
+  account->mail(MAIL("temp@localhost"));
+  server->commitChanges();
   account->mail(MAIL(server->createMail(CN(cn),SN(sn))));
   server->commitChanges();
   
