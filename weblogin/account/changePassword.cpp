@@ -35,7 +35,7 @@ void changePassword::create(y::ldap::account* account, application * app) {
 
     pw->addWidget(new Wt::WText("Je wachtwoord zal aangepast worden voor "
     "alle services op school: de computers, smartschool, moodle, gmail en "
-    "deze applicatie. Een wachtwoord moet minstens 8 tekens lang zijn, een "
+    "deze applicatie. Een wachtwoord moet exact 8 tekens lang zijn, een "
     "hoofdletter, een kleine letter en een cijfer bevaten."));
     
     Wt::WTable * table = new Wt::WTable();
@@ -177,9 +177,9 @@ void changePassword::passwordChanged() {
     return;
   }
   
-  if(sNewPW1.toUTF8().size() < 8) {
+  if(sNewPW1.toUTF8().size() != 8) {
     newPW1->setStyleClass("form-control invalid");
-    feedback2->setText("Minstens 8 tekens, graag.");
+    feedback2->setText("8 tekens, graag.");
     feedback2->setStyleClass("alert alert-danger"); 
     newPW1->setFocus();
     return;

@@ -34,7 +34,7 @@ y::ldap::account::account(y::ldap::server * server) :
   _mail          ("mail"              , MAIL       ("")),
   _mailAlias     ("mailAlias"         , MAIL_ALIAS ("")),
   _birthDay      ("birthday"          , DATE(DAY(1), MONTH(1), YEAR(1))),
-  _password      ("gmailPassword"     , PASSWORD   ("")),
+  _password      ("gMailPassword"     , PASSWORD   ("")),
   _role          ("schoolRole"        , ROLE(ROLE::NONE)),
   _groupID       ("gidNumber"         , GID_NUMBER (0 )),
   _schoolClass   ("class"             , SCHOOLCLASS("")),
