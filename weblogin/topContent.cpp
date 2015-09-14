@@ -159,7 +159,7 @@ void topContent::create() {
   
   Wt::WPopupMenu * popup = new Wt::WPopupMenu(contents);
   
-  if(account->isStaff()) {
+  if(account->isStaff() || account->role().get() == ROLE::EXTERN_WITH_MAIL) {
     popup->addItem("Naam Wijzigen",
             deferCreate(boost::bind(&topContent::changeNameFunc, this)),
             Wt::WMenuItem::LazyLoading);

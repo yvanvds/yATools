@@ -122,6 +122,10 @@ public:
     }
   }
   
+  T & last() {
+    return *_elements[_highIndex];
+  }
+  
 private:
   std::map<int, T*> _elements;
   int _highIndex;
@@ -233,6 +237,10 @@ public:
       if(_highIndex <= pos) _highIndex = pos + 1;
       return *_elements[pos];
     }
+  }
+  
+  T & last() {
+    return *_elements[_highIndex];
   }
   
 private:

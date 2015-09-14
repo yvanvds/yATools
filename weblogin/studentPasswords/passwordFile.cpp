@@ -22,3 +22,8 @@ passwordFile & passwordFile::addLine(const string& line) {
   lines.New() = line;
   return *this;
 }
+
+passwordFile & passwordFile::addCsv(const string& line) {
+  lines.last() += ";";
+  lines.last() += line;
+}

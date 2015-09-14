@@ -71,10 +71,7 @@ namespace y {
       // used for wisa import
       WISA_IMPORT getImportStatus();
       account   & setImportStatus(WISA_IMPORT status);
-      
-      TODO(remove after account conversion is complete)
-      void convertToNewAccount    ();
-      void removeOldAccountDetails();
+     
       
     private:
       bool load(const UID         & id);

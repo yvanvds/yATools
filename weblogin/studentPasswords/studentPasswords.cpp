@@ -165,6 +165,11 @@ void studentPasswords::changePasswords() {
   progress->setRange(0, sc.students().elms());
   progress->show();
   
+  bool csv = false;
+  if(((Wt::WCheckBox*)(table->elementAt(1,1)->widget(0)))->isChecked()) csv = true;
+  if(((Wt::WCheckBox*)(table->elementAt(1,2)->widget(0)))->isChecked()) csv = true;
+  if(((Wt::WCheckBox*)(table->elementAt(1,3)->widget(0)))->isChecked()) csv = true;
+  
   for(int i = 0; i < sc.students().elms(); i++) {
     y::ldap::account & a = server->getAccount(DN(sc.students()[i]));
     
@@ -172,36 +177,55 @@ void studentPasswords::changePasswords() {
     if(((Wt::WCheckBox*)(table->elementAt(i+2, 1)->widget(0)))->isChecked()) {
       pfile.addLine(a.fullName().get());
       {
-        string s("Klas: ");
-        s += a.schoolClass().get();
-        pfile.addLine(s);
+        if(!csv) {
+          string s("Klas: ");
+          s += a.schoolClass().get();
+          pfile.addLine(s);
+        } else {
+          pfile.addCsv(a.schoolClass().get());
+        }
       }
       {
-        string s("Login: ");
-        s += a.uid().get();
-        pfile.addLine(s);
+        if(!csv) {
+          string s("Login: ");
+          s += a.uid().get();
+          pfile.addLine(s);
+        } else {
+          pfile.addCsv(a.uid().get());
+        }
       }
       {
         string password = y::utils::Security().makePassword(8);
         a.password(PASSWORD(password));
-        string s("Nieuw wachtwoord: ");
-        s += a.getPasswordText();
-        pfile.addLine(s);
+        if(!csv) {         
+          string s("Nieuw wachtwoord: ");
+          s += a.getPasswordText();
+          pfile.addLine(s);
+        } else {
+          pfile.addCsv(a.getPasswordText());
+        }
       }
-      pfile.addLine(" ");
-      pfile.addLine("Laat je wachtwoord niet rondslingeren! Je bent verantwoordelijk voor je account. Indien je dit wachtwoord niet kan onthouden, pas dan je wachtwoord zelf aan via http://apps.sanctamaria-aarschot.be");
-      pfile.addLine(" ");
+      if(!csv) {
+        pfile.addLine(" ");
+        pfile.addLine("Laat je wachtwoord niet rondslingeren! Je bent verantwoordelijk voor je account. Indien je dit wachtwoord niet kan onthouden, pas dan je wachtwoord zelf aan via http://apps.sanctamaria-aarschot.be");
+        pfile.addLine(" ");
+      }
     }
     
     // check co-account 1
     if(((Wt::WCheckBox*)(table->elementAt(i+2, 2)->widget(0)))->isChecked()) {
       {
-        string s("Wachtwoord voor ");
-        s += a.fullName().get();
-        pfile.addLine(s);
+        if(!csv) {
+          string s("Wachtwoord voor ");
+          s += a.fullName().get();
+          pfile.addLine(s);
+        } else {
+          pfile.addLine(a.fullName().get());
+          pfile.addCsv("1ste co-account");
+        }
       }
       
-      {
+      if (!csv) {
         string s(a.street().get());
         s += " ";
         s += string(a.houseNumber().get());
@@ -210,7 +234,7 @@ void studentPasswords::changePasswords() {
         pfile.addLine(s);
       }
       
-      {
+      if (!csv) {
         string s(a.postalCode().get());
         s += " ";
         s += string(a.city().get());
@@ -218,36 +242,56 @@ void studentPasswords::changePasswords() {
       }
       
       {
-        string s("Klas: ");
-        s += a.schoolClass().get();
-        pfile.addLine(s);
+        if(!csv) {
+          string s("Klas: ");
+          s += a.schoolClass().get();
+          pfile.addLine(s);
+        } else {
+          pfile.addCsv(a.schoolClass().get());
+        }
       }
       {
-        string s("Login: ");
-        s += a.uid().get();
-        pfile.addLine(s);
+        if(!csv) {
+          string s("Login: ");
+          s += a.uid().get();
+          pfile.addLine(s);
+        } else {
+          pfile.addCsv(a.uid().get());
+        }
       }
       {
         string password = y::utils::Security().makePassword(8);
-        string s("Wachtwoord 1ste Co-account: ");
-        s += password;
         y::Smartschool().setCoAccount(a.uid().get(), password, true);
-        pfile.addLine(s);
+        if(!csv) {
+          string s("Wachtwoord 1ste Co-account: ");
+          s += password;         
+          pfile.addLine(s);
+        } else {
+          pfile.addCsv(password);
+        }
       }
-      pfile.addLine(" ");
-      pfile.addLine("Met dit wachtwoord kan je als ouder inloggen op http://sanctamaria-aarschot.smartschool.be");
-      pfile.addLine(" ");
+      
+      if(!csv) {
+        pfile.addLine(" ");
+        pfile.addLine("Met dit wachtwoord kan je als ouder inloggen op http://sanctamaria-aarschot.smartschool.be");
+        pfile.addLine(" ");
+      }
     }
     
     // check co-account 2
     if(((Wt::WCheckBox*)(table->elementAt(i+2, 3)->widget(0)))->isChecked()) {
       {
-        string s("Wachtwoord voor ");
-        s += a.fullName().get();
-        pfile.addLine(s);
+        if(!csv) {
+          string s("Wachtwoord voor ");
+          s += a.fullName().get();
+          pfile.addLine(s);
+        } else {
+          pfile.addLine(a.fullName().get());
+          pfile.addCsv("2de co-account");
+        }
       }
       
-      {
+      if(!csv) {
         string s(a.street().get());
         s += " ";
         s += string(a.houseNumber().get());
@@ -256,7 +300,7 @@ void studentPasswords::changePasswords() {
         pfile.addLine(s);
       }
       
-      {
+      if(!csv) {
         string s(a.postalCode().get());
         s += " ";
         s += string(a.city().get());
@@ -264,34 +308,46 @@ void studentPasswords::changePasswords() {
       }
       
       {
-        string s("Klas: ");
-        s += a.schoolClass().get();
-        pfile.addLine(s);
+        if(!csv) {
+          string s("Klas: ");
+          s += a.schoolClass().get();
+          pfile.addLine(s);
+        } else {
+          pfile.addCsv(a.schoolClass().get());
+        }
       }
       {
-        string s("Login: ");
-        s += a.uid().get();
-        pfile.addLine(s);
+        if(!csv) {
+          string s("Login: ");
+          s += a.uid().get();
+          pfile.addLine(s);
+        } else {
+          pfile.addCsv(a.uid().get());
+        }
       }
       {
         string password = y::utils::Security().makePassword(8);
-        string s("Wachtwoord 2de Co-account: ");
-        s += password;
         y::Smartschool().setCoAccount(a.uid().get(), password, true);
-        pfile.addLine(s);
+        if(!csv) {        
+          string s("Wachtwoord 2de Co-account: ");
+          s += password;
+          pfile.addLine(s);
+        } else {
+          pfile.addCsv(password);
+        }
       }
-      pfile.addLine(" ");
-      pfile.addLine("Met dit wachtwoord kan je als ouder inloggen op http://sanctamaria-aarschot.smartschool.be");
-      pfile.addLine(" ");
+      if(!csv) {
+        pfile.addLine(" ");
+        pfile.addLine("Met dit wachtwoord kan je als ouder inloggen op http://sanctamaria-aarschot.smartschool.be");
+        pfile.addLine(" ");
+      }
     }
     
     progress->setValue(i);
   }
   server->commitChanges();
   
-  progress->hide();
-  
-  
+  progress->hide();  
   anchor->show();
 }
 

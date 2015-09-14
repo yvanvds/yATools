@@ -26,8 +26,8 @@ public:
  
   virtual void handleRequest(const Wt::Http::Request& request, Wt::Http::Response & response);
   
-  passwordFile & addLine(const string & line);
-  
+  passwordFile & addLine(const string & line);  
+  passwordFile & addCsv (const string & line);
   
 private:
   container<string> lines;
