@@ -327,7 +327,7 @@ void studentPasswords::changePasswords() {
       }
       {
         string password = y::utils::Security().makePassword(8);
-        y::Smartschool().setCoAccount(a.uid().get(), password, true);
+        y::Smartschool().setCoAccount(a.uid().get(), password, false);
         if(!csv) {        
           string s("Wachtwoord 2de Co-account: ");
           s += password;

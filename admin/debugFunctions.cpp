@@ -9,6 +9,11 @@
 #include "admintools.h"
 #include <iostream>
 
+#include <boost/locale.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
+#include <sstream>
+
 using namespace std;
 using namespace y::ldap;
 
@@ -87,18 +92,47 @@ void debugFunctions::groupsToSmartschool() {
 
 void debugFunctions::testFunction() {
   y::utils::Log().useConsole(true);
-  y::ldap::server server;
   
-  y::ldap::account & account = server.getAccount(UID("abeh"));
-  account.schoolClass(account.schoolClass());
+  boost::locale::generator gen;
+  std::locale utf8 = gen("en_US.UTF-8");
+  ::string file = "accounts.csv";
+  std::wifstream stream(file.utf8());
   
-//  for(int i = 0; i < accounts.elms(); i++) {
-//    if(accounts[i].isStudent()) {
-//      accounts[i].schoolClass(accounts[i].schoolClass());
-//    }
-//  }
+  bool firstAccount = true;
   
-  server.commitChanges();
+  std::wstring line;
+  while(std::getline(stream, line)) {
+    std::wstring id;
+    std::wstring pw;
+    int count = 0;
+    for(int i = 0; i < line.size(); i++) {
+      if (count < 3) {
+        if(line[i] == ';') count++;
+      } else {
+        if(count == 3) {
+          if(line[i] != ';') id += line[i];
+          else count = 4;
+        } else if(count == 4) {
+          if(line[i] != ';') pw += line[i];
+          else count = 5;
+        } 
+      }
+    }
+    
+    boost::algorithm::trim(id);
+    boost::algorithm::trim(pw);
+    
+    if(firstAccount) {
+      std::wcout << "id: " << id << " pw1: " << pw << std::endl;
+      y::Smartschool().setCoAccount(::string(id), ::string(pw), true);
+    } else {
+      std::wcout << "id: " << id << " pw2: " << pw << std::endl;
+      y::Smartschool().setCoAccount(::string(id), ::string(pw), false);
+    }
+    firstAccount = !firstAccount;
+  }
+  
+
   y::utils::Log().add("end of program");
   //std::cin.get();
 }
