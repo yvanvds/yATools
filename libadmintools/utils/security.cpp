@@ -14,7 +14,7 @@
 
 #include "../utils/random.h"
 
-char consonants[] = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
+char consonants[] = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'm',
                      'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z', '\0'}; 
 char vowels[] = {'a', 'e', 'i', 'o', 'u', 'y', '\0'};
 
@@ -52,16 +52,17 @@ string y::utils::security::makePassword(int length) {
    
   for(int i = 0; i < length; i++) {
     if (i == numberPos) {
-      result += Random().get(9);
+      result += Random().get(2, 9);
     } else if(vowel) {
       result += vowels[Random().get(5)];
     } else {
-      result += consonants[Random().get(19)];
+      result += consonants[Random().get(18)];
     }
     
     if(i == capitalPos) {
       char c = result[i];
       c = (char)toupper(c);
+      if(c == 'O') c = 'A';
       result[i] = c;
     }
     

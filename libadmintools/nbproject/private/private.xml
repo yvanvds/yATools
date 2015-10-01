@@ -40,11 +40,14 @@
             <file>file:/home/yvan/github/yATools/libadmintools/admin/userAdmin.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/string.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/stringFunctions.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/random.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/account.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/dataset.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/tests/utilsSecurityTest.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/attributes.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/smartschool/smartschool.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/data.h</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/security.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/security.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/watch.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/server.cpp</file>
