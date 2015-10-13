@@ -100,7 +100,7 @@ void topContent::create() {
             Wt::WMenuItem::LazyLoading);
   }
   
-  if(account->role().get() == ROLE::ADMIN || rights.has(account->uid(), y::data::ADMIN_STAFF)) {
+  if(account->role().get() == ROLE::ADMIN || rights.has(account->uid(), y::data::ADMIN_PASSWORD)) {
     studentMenu = new Wt::WPopupMenu(contents);
     Wt::WMenuItem * item = new Wt::WMenuItem("Leerlingen");
     item->setMenu(studentMenu);
