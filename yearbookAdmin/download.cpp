@@ -71,6 +71,12 @@ void download::generatePDF() {
       for (int i = 0; i < parent->db.replacements.elms(); i++) {
         if(parent->db.replacements[i]["original"].asString().compare(currentEntry.group) == 0) {
           groupName = str8(parent->db.replacements[i]["replacement"].asString());
+					for(int i = groupName.size() - 1; i != 0; i--) {
+					  if(groupName[i] == '&') {
+					    groupName.insert(i, '\\');
+					    i--;
+					  }
+          }
         }
       }
       content << std::endl << "\\chapterimage{Pictures/chapter_head_2}" << std::endl;
