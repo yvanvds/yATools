@@ -421,6 +421,7 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerOptionItem>-lpng -ljpeg</linkerOptionItem>
+            <linkerOptionItem>-lpthread</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
