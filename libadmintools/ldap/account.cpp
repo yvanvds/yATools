@@ -169,7 +169,11 @@ bool y::ldap::account::save() {
   
   // remove user if needed
   if(flaggedForRemoval() && !dn().get().empty()) {
-    y::Smartschool().deleteUser(*this);
+    if(isStudent()) {
+      y::Smartschool().unregisterStudent(*this);
+    } else {
+      y::Smartschool().deleteUser(*this);
+    }    
     y::samba::delUser(*this);
     
     if(isStudent())
@@ -238,25 +242,13 @@ bool y::ldap::account::save() {
   _street.saveToLdap(values);
   _country.saveToLdap(values);
   
-  bool passwordOnly = false;
-  
   if(_password.changed()) {
     _password.saveToLdap(values);
     
 #ifndef DEBUG
     samba::changePassword(_uid().get(), _passwordClearText);
 #endif
-    
-    if(isStaff() || isStudent()) {
-      if(values.elms() == 1) {
-        // this means only the password has changed
-        passwordOnly = true;
-        y::Smartschool().savePassword(*this);
-        string message("Updating smartschool password for user ");
-        message += _fullName().get();
-        y::utils::Log().add(message);
-      }
-    }    
+      
   }
   
   if(values.elms()) {
@@ -265,29 +257,32 @@ bool y::ldap::account::save() {
     
     server->modify(_dn(), values);
     
-    // check if more than just the password is changed
     if(isStaff() || isStudent()) {
-      if(!passwordOnly) {
-        y::Smartschool().saveUser(*this);
-        string message("Updating smartschool for user ");
-        message += _fullName().get();
-        y::utils::Log().add(message);
-        
-        // add user to group
-        if(isStudent() && classChanged) {
-          // this is a student
-          y::Smartschool().moveUserToClass(*this, _schoolClass().get());
-        } else  if(roleChanged && _role().get() == ROLE::DIRECTOR) {
-          y::Smartschool().addUserToGroup(*this, "Directie", false);
-        } else if (roleChanged && _role().get() == ROLE::SUPPORT) {
-          y::Smartschool().addUserToGroup(*this, "Secretariaat", false);
-        } else if (roleChanged && isStaff()) {
-          y::Smartschool().addUserToGroup(*this, "Leerkrachten", true);
-        }
-      }
+      y::Smartschool().saveUser(*this);
+      string message("Updating smartschool for user ");
+      message += _fullName().get();
+      y::utils::Log().add(message);
+
+      // add user to group
+      if(isStudent() && classChanged) {
+        // this is a student
+        y::Smartschool().moveUserToClass(*this, _schoolClass().get());
+      } else  if(roleChanged && _role().get() == ROLE::DIRECTOR) {
+        y::Smartschool().addUserToGroup(*this, "Directie", false);
+      } else if (roleChanged && _role().get() == ROLE::SUPPORT) {
+        y::Smartschool().addUserToGroup(*this, "Secretariaat", false);
+      } else if (roleChanged && isStaff()) {
+        y::Smartschool().addUserToGroup(*this, "Leerkrachten", true);
+      }   
     }   
     return true;
   }
+  
+  if(!_ssPassword.empty()) {
+    y::Smartschool().savePassword(*this);
+    return true;
+  }
+  
   return false;
 }
 
@@ -607,6 +602,15 @@ string y::ldap::account::getPasswordText() const {
 
 WISA_IMPORT y::ldap::account::getImportStatus() {
   return _importStatus;
+}
+
+const string & y::ldap::account::ssPassword() const {
+  return _ssPassword;
+}
+
+y::ldap::account & y::ldap::account::ssPassword(const string & value) {
+  _ssPassword = value;
+  return *this;
 }
 
 y::ldap::account & y::ldap::account::setImportStatus(WISA_IMPORT status) {

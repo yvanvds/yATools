@@ -248,12 +248,21 @@ void smartschoolTest::testReplaceWisaID() {
 }
 
 void smartschoolTest::testSaveClass() {
-//  const y::ldap::schoolClass& group;
-//  y::smartschool _smartschool;
-//  bool result = _smartschool.saveClass(group);
-//  if (true /*check result*/) {
-//    CPPUNIT_ASSERT(false);
-//  }
+  y::ldap::server Server;
+  y::ldap::schoolClass & group = Server.getClass(CN("1X"));
+  group.cn(CN("1X"));
+  group.description(DESCRIPTION("1e leerjaar X (test)"));
+  group.schoolID(SCHOOL_ID(125261));
+  group.adminGroup(ADMINGROUP(6246));
+  
+  if(!y::Smartschool().saveClass(group)) {
+    CPPUNIT_ASSERT(false);
+  }
+  
+  if(!y::Smartschool().deleteClass(group)) {
+    CPPUNIT_ASSERT(false);
+  }
+  
 }
 
 void smartschoolTest::testSaveGroup() {
@@ -291,14 +300,14 @@ void smartschoolTest::testValidate() {
 void smartschoolTest::testSavePassword() {
   y::ldap::server Server;
   y::ldap::account & a = Server.getAccount(UID(y::utils::Config().getLdapTestUID()));
-  a.password(PASSWORD("ABcd!eGf"));
+  a.ssPassword("ABcd!eGf");
   y::Smartschool().savePassword(a);
   
   if(!y::Smartschool().validate(y::utils::Config().getLdapTestUID(), "ABcd!eGf")) {
     CPPUNIT_ASSERT(false);
   }
   
-  a.password(PASSWORD(y::utils::Config().getLdapTestPassword()));
+  a.ssPassword(y::utils::Config().getLdapTestPassword());
   y::Smartschool().savePassword(a);
   
   if(!y::Smartschool().validate(y::utils::Config().getLdapTestUID(), y::utils::Config().getLdapTestPassword())) {
@@ -330,6 +339,7 @@ void smartschoolTest::testSaveUser() {
   a.birthDay(DATE(DAY(9), MONTH(8), YEAR(1972)));
   a.wisaID(WISA_ID(111111111));
   a.password(PASSWORD("ABcd!eGf"));
+  a.ssPassword("ABcd!eGf");
   a.cn(CN("unit"));
   a.sn(SN("test"));
   a.birthPlace(BIRTHPLACE("brussels"));

@@ -72,6 +72,9 @@ namespace y {
       WISA_IMPORT getImportStatus();
       account   & setImportStatus(WISA_IMPORT status);
      
+      // smartschool passwords are temporary
+      const string  & ssPassword() const; 
+            account & ssPassword(const string & value);  
       
     private:
       bool load(const UID         & id);
@@ -125,6 +128,7 @@ namespace y {
       WISA_IMPORT _importStatus;
       bool _flaggedForRemoval;
       
+      string _ssPassword;
       
       friend class server;
     };

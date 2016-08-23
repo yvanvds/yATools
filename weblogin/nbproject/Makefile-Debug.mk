@@ -73,6 +73,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/yearbook/yearbookDB.o \
 	${OBJECTDIR}/yearbook/yearbookDone.o \
 	${OBJECTDIR}/yearbook/yearbookDownload.o \
+	${OBJECTDIR}/yearbook/yearbookMailinglist.o \
 	${OBJECTDIR}/yearbook/yearbookPhoto.o \
 	${OBJECTDIR}/yearbook/yearbookQuestion.o \
 	${OBJECTDIR}/yearbook/yearbookReview.o \
@@ -93,7 +94,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -lwthttp -lwt -lwtdbo -lwtdbomysql -Wl,-rpath,../libadmintools/../Debug -L../libadmintools/../Debug -lsystem -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals -llber -lldap -lboost_locale -lpng -ljpeg
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -lwthttp -lwt -lwtdbo -lwtdbomysql -Wl,-rpath,../libadmintools/../Debug -L../libadmintools/../Debug -lsystem -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals -llber -lldap -lboost_locale -lpng -ljpeg -lpthread
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -294,6 +295,11 @@ ${OBJECTDIR}/yearbook/yearbookDownload.o: yearbook/yearbookDownload.cpp
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookDownload.o yearbook/yearbookDownload.cpp
+
+${OBJECTDIR}/yearbook/yearbookMailinglist.o: yearbook/yearbookMailinglist.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookMailinglist.o yearbook/yearbookMailinglist.cpp
 
 ${OBJECTDIR}/yearbook/yearbookPhoto.o: yearbook/yearbookPhoto.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook

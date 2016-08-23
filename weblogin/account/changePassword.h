@@ -23,6 +23,7 @@ public:
   
   void create(y::ldap::account * account, application * app);
   void passwordChanged();
+  void requestSmartschoolPassword();
   void mailChanged();
   
 private:
@@ -38,6 +39,7 @@ private:
   Wt::WText       * feedback3;
   Wt::WText       * feedback4;
   Wt::WPushButton * savePW   ;
+  Wt::WPushButton * smartschoolPW;
   
   Wt::WLineEdit   * email       ;
   Wt::WPushButton * saveMail    ;

@@ -26,7 +26,7 @@ public:
   }
   
   ~container() {
-    for(int i = 0; i < _elements.size(); i++) {
+    for(unsigned int i = 0; i < _elements.size(); i++) {
       delete _elements[i];
     }
   }
@@ -143,7 +143,7 @@ public:
   }
   
   ~container() {
-    for(int i = 0; i < _elements.size(); i++) {
+    for(unsigned int i = 0; i < _elements.size(); i++) {
       delete _elements[i];
     }
   }

@@ -197,12 +197,18 @@ void studentPasswords::changePasswords() {
       {
         string password = y::utils::Security().makePassword(8);
         a.password(PASSWORD(password));
+        string sspassword = y::utils::Security().makePassword(8);
+        a.ssPassword(password);
         if(!csv) {         
           string s("Nieuw wachtwoord: ");
           s += a.getPasswordText();
           pfile.addLine(s);
+          string s2("Eenmalig Smartschool Wachtwoord: ");
+          s2 += sspassword;
+          pfile.addLine(s2);
         } else {
           pfile.addCsv(a.getPasswordText());
+          pfile.addCsv(sspassword);
         }
       }
       if(!csv) {

@@ -19,6 +19,7 @@
 #include "yearbook/yearbookConfig.h"
 #include "yearbook/yearbookReview.h"
 #include "yearbook/yearbookDownload.h"
+#include "yearbook/yearbookMailinglist.h"
 #include "yearbook/yearbookDB.h"
 #include "account/changePassword.h"
 #include "account/changeName.h"
@@ -102,6 +103,7 @@ private:
   Wt::WWidget * yearbookFunc();
   Wt::WWidget * yearbookReviewFunc();
   Wt::WWidget * yearbookDownloadFunc();
+  Wt::WWidget * yearbookMailinglistFunc();
   Wt::WWidget * yearbookConfigFunc();
   Wt::WWidget * changePasswordFunc();
   Wt::WWidget * changeNameFunc();
@@ -111,6 +113,7 @@ private:
   // sub objects
   yearbook * yearbookPtr;
   yearbookConfig * yearbookConfigPtr;
+  yearbookMailinglist * yearbookMailinglistPtr;
   yearbookDownload * yearbookDownloadPtr;
   yearbookReview * yearbookReviewPtr;
   yearbookDB * yearbookDBPtr;

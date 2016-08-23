@@ -276,7 +276,7 @@ bool y::smartschool::savePassword(const y::ldap::account& account) {
   if(service.savePassword(
           y::utils::Config().getSSPw().ss(),
           account.uid().get().ss(),
-          account.getPasswordText().ss(),
+          account.ssPassword().ss(),
           0,
           result) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
@@ -344,7 +344,7 @@ bool y::smartschool::saveUser(const y::ldap::account& account) {
           y::utils::Config().getSSPw().ss(),
           wisaID.ss() , // internal number
           account.uid().get().ss()                 , // username
-          account.getPasswordText().ss()       , // password
+          account.ssPassword().ss()       , // password
           "", // password for first co-account
           "", // password for second co-account
           account.cn().get().ss()                  , // first name
@@ -515,6 +515,26 @@ bool y::smartschool::deleteUser(const y::ldap::account& account) {
   }
 }
 
+bool y::smartschool::unregisterStudent(const y::ldap::account& account) {
+  soap_dom_element result;
+  
+  string changeDate = string(account.classChange().getYear());
+  changeDate += "-"; changeDate += string(account.classChange().getMonth());
+  changeDate += "-"; changeDate += string(account.classChange().getDay());  
+  
+  if(service.unregisterStudent(
+          y::utils::Config().getSSPw().ss(),
+          account.uid().get().ss(),
+          changeDate.ss(), // official date
+          result
+          ) != SOAP_OK) {
+    service.soap_stream_fault(std::cerr);
+    return false;
+  } else {
+    return validateSoapResult(result);
+  }
+}
+
 bool y::smartschool::saveClass(const y::ldap::schoolClass & group) {
   soap_dom_element result;
   string parent;
@@ -534,13 +554,14 @@ bool y::smartschool::saveClass(const y::ldap::schoolClass & group) {
   
   if(service.saveClass(
           y::utils::Config().getSSPw().ss() , // password smartschool
-          group.cn().get().ss()                   , // group name
-          group.description().get().ss()          , // group description
-          group.cn().get().ss()                   , // unique group ID
-          parent.ss()                       , // parent for this group
-          ""                                , // koppeling schoolagenda
-          string(group.schoolID  ().get()).ss(), // institute number
-          string(group.adminGroup().get()).ss(), // admin number
+          soap_dom_element(nullptr, nullptr, "name", group.cn().get().ss().c_str()), // group name
+          soap_dom_element(nullptr, nullptr, "desc", group.description().get().ss().c_str())          , // group description
+          soap_dom_element(nullptr, nullptr, "code", group.cn().get().ss().c_str())                   , // unique group ID
+          soap_dom_element(nullptr, nullptr, "parent", parent.ss().c_str())                       , // parent for this group
+          soap_dom_element(nullptr, nullptr, "untis", "")                                , // koppeling schoolagenda
+          soap_dom_element(nullptr, nullptr, "instituteNumber", string(group.schoolID  ().get()).ss().c_str()), // institute number
+          soap_dom_element(nullptr, nullptr, "adminNumber", string(group.adminGroup().get()).ss().c_str()), // admin number
+          soap_dom_element(nullptr, nullptr, "schoolYearDate", ""), // schoolyeardate
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);

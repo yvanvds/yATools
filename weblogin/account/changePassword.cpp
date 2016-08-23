@@ -8,6 +8,8 @@
 #include <Wt/WPanel>
 #include <Wt/WTable>
 #include <Wt/WRegExpValidator>
+#include <Wt/WMessageBox>
+
 #include "../application.h"
 #include "changePassword.h"
 #include "admintools.h"
@@ -34,7 +36,7 @@ void changePassword::create(y::ldap::account* account, application * app) {
     pw->addWidget(new Wt::WText("<h4>Wachtwoord Aanpassen</h4>"));
 
     pw->addWidget(new Wt::WText("Je wachtwoord zal aangepast worden voor "
-    "alle services op school: de computers, smartschool, moodle, gmail en "
+    "alle services op school: de computers, gmail en "
     "deze applicatie. Een wachtwoord moet minstens 8 tekens lang zijn, een "
     "hoofdletter, een kleine letter en een cijfer bevaten."));
     
@@ -83,16 +85,42 @@ void changePassword::create(y::ldap::account* account, application * app) {
     savePW->setWidth(150);
     savePW->setStyleClass("btn btn-primary");
     savePW->clicked().connect(this, &changePassword::passwordChanged);
-    table->elementAt(3,1)->addWidget(savePW);
-
+    table->elementAt(3,1)->addWidget(savePW); 
+    
     for(int i = 0; i < table->rowCount(); i++) {
       for(int j = 0; j < table->columnCount(); j++) {
         table->elementAt(i,j)->setPadding(5);
         table->elementAt(i,j)->setVerticalAlignment(Wt::AlignmentFlag::AlignMiddle);
       }
     }
+    
+    
 
     table->setStyleClass("panel-body");
+  }
+  
+  content->addWidget(new Wt::WText(" "));
+  
+  {
+    Wt::WContainerWidget * pw = new Wt::WContainerWidget(content);
+    pw->addStyleClass("well");
+    pw->setPadding("1%");
+    pw->addWidget(new Wt::WText("<h4>Smartschool Wachtwoord</h4>"));
+    
+    pw->addWidget(new Wt::WText(
+      "Je kan je wachtwoord zelf aanpassen via smartschool. Indien je "
+      "je wachtwoord kwijt bent kan hier een "
+      "eenmalig wachtwoord aanvragen."
+    ));
+    
+    
+    smartschoolPW = new Wt::WPushButton("Ik ben het kwijt.");
+    smartschoolPW->setWidth(300);
+    smartschoolPW->setStyleClass("btn btn-primary");
+    smartschoolPW->clicked().connect(this, &changePassword::requestSmartschoolPassword);
+    smartschoolPW->setMargin("10px");
+    pw->addWidget(smartschoolPW);
+    
   }
   
   content->addWidget(new Wt::WText(" "));
@@ -225,4 +253,16 @@ void changePassword::mailChanged() {
   }
 }
 
+void changePassword::requestSmartschoolPassword() {
+  string password = y::utils::Security().makePassword(8);
+  
+  account->ssPassword(password);
+  server->commitChanges();
+  
+  Wt::WMessageBox::show("Smartschool wachtwoord",
+          "<p><a href=\"http://sanctamaria-aarschot.smartschool.be\" target=\"_blank\">Log in op smartschool</a> met dit tijdelijke wachtwoord: </p>"
+          "<p>" + password.wt() + "</p>"
+          "<p>Daar zal je een nieuw wachtwoord moeten kiezen. Je kan dan je school wachtwoord gebruiken.</p>"
+          , Wt::Ok);
+}
 

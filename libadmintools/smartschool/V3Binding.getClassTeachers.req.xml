@@ -8,6 +8,7 @@
  <SOAP-ENV:Body  SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
   <ns1:getClassTeachers>
    <accesscode></accesscode>
+   <getAllOwners>false</getAllOwners>
   </ns1:getClassTeachers>
  </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>

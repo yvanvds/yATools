@@ -55,12 +55,12 @@ namespace y {
    bool getSkoreInfo(container<string> & result);
    
    // user management
-   bool saveUser        (const y::ldap::account & account);
-   bool savePassword    (const y::ldap::account & account);
-   bool saveNationality (const y::ldap::account & account);
-   bool savePhoto       (const y::ldap::account & account);
-   bool setAccountStatus(const y::ldap::account & account);
-   bool unregister      (const y::ldap::account & account);
+   bool saveUser         (const y::ldap::account & account);
+   bool savePassword     (const y::ldap::account & account);
+   bool saveNationality  (const y::ldap::account & account);
+   bool savePhoto        (const y::ldap::account & account);
+   bool setAccountStatus (const y::ldap::account & account);
+   bool unregisterStudent(const y::ldap::account & account);
    
    bool setCoAccount(const string & uid, const string & pw, bool firstAccount);
    

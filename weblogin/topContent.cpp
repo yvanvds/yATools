@@ -136,6 +136,10 @@ void topContent::create() {
             deferCreate(boost::bind(&topContent::yearbookDownloadFunc, this)), 
             Wt::WMenuItem::LazyLoading);
     
+    yearbookMenu->addItem("Mailing List",
+            deferCreate(boost::bind(&topContent::yearbookMailinglistFunc, this)),
+            Wt::WMenuItem::LazyLoading);
+    
     yearbookMenu->addItem("Config", 
             deferCreate(boost::bind(&topContent::yearbookConfigFunc, this)), 
             Wt::WMenuItem::LazyLoading);
@@ -251,6 +255,19 @@ Wt::WWidget * topContent::yearbookDownloadFunc() {
   panel->setStyleClass("panel panel-primary");
   yearbookDownloadPtr = new yearbookDownload(yearbookDBPtr);
   panel->setCentralWidget(yearbookDownloadPtr);
+  panel->setMaximumSize(800, 700);
+  panel->setMargin("0 auto");
+  return panel;
+}
+
+Wt::WWidget * topContent::yearbookMailinglistFunc() {
+  createYearbookDB();
+  
+  Wt::WPanel * panel = new Wt::WPanel();
+  panel->setTitle("<h3>Jaarboek Mailing list</h3>");
+  panel->setStyleClass("panel panel-primary");
+  yearbookMailinglistPtr = new yearbookMailinglist(yearbookDBPtr);
+  panel->setCentralWidget(yearbookMailinglistPtr);
   panel->setMaximumSize(800, 700);
   panel->setMargin("0 auto");
   return panel;

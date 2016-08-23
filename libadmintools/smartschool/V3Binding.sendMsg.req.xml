@@ -12,9 +12,7 @@
    <title></title>
    <body></body>
    <senderIdentifier></senderIdentifier>
-   <attachments>
-    <item>    </item>
-   </attachments>
+   <attachments></attachments>
    <coaccount>0</coaccount>
   </ns1:sendMsg>
  </SOAP-ENV:Body>

@@ -15,6 +15,7 @@
    <untis></untis>
    <instituteNumber></instituteNumber>
    <adminNumber></adminNumber>
+   <schoolYearDate></schoolYearDate>
   </ns1:saveClass>
  </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>

@@ -38,6 +38,7 @@ private:
   Wt::WText * resultMail;
   Wt::WText * resultMailAlias;
   Wt::WText * resultPassword;
+  Wt::WText * resultSSPassword;
 };
 
 #endif	/* NEWSTAFF_H */

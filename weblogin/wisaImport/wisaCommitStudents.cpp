@@ -133,6 +133,9 @@ void commitThreadFunc(wisaCommitStudents * caller) {
       newAccount.postalCode(account.postalCode);
       newAccount.city(account.city);
       
+      // add temporary smartschool password
+      newAccount.ssPassword(y::utils::Security().makePassword(8));
+      
       // passwords for co-accounts
       string pw1 = y::utils::Security().makePassword(8);
       string pw2 = y::utils::Security().makePassword(8);
@@ -327,6 +330,10 @@ void wisaCommitStudents::addNewAccount(const y::ldap::account & account, const s
   }
   {
     string s("Wachtwoord: "); s += account.getPasswordText();
+    download->addMessage(s);
+  }
+  {
+    string s("Eenmalig Smartschool Wachtwoord: "); s + account.ssPassword();
     download->addMessage(s);
   }
   

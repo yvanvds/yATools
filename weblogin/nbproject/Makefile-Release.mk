@@ -73,6 +73,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/yearbook/yearbookDB.o \
 	${OBJECTDIR}/yearbook/yearbookDone.o \
 	${OBJECTDIR}/yearbook/yearbookDownload.o \
+	${OBJECTDIR}/yearbook/yearbookMailinglist.o \
 	${OBJECTDIR}/yearbook/yearbookPhoto.o \
 	${OBJECTDIR}/yearbook/yearbookQuestion.o \
 	${OBJECTDIR}/yearbook/yearbookReview.o \
@@ -294,6 +295,11 @@ ${OBJECTDIR}/yearbook/yearbookDownload.o: yearbook/yearbookDownload.cpp
 	${MKDIR} -p ${OBJECTDIR}/yearbook
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookDownload.o yearbook/yearbookDownload.cpp
+
+${OBJECTDIR}/yearbook/yearbookMailinglist.o: yearbook/yearbookMailinglist.cpp 
+	${MKDIR} -p ${OBJECTDIR}/yearbook
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/yearbook/yearbookMailinglist.o yearbook/yearbookMailinglist.cpp
 
 ${OBJECTDIR}/yearbook/yearbookPhoto.o: yearbook/yearbookPhoto.cpp 
 	${MKDIR} -p ${OBJECTDIR}/yearbook

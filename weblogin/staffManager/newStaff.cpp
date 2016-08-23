@@ -124,6 +124,10 @@ void newStaff::create() {
     resultPassword = new Wt::WText();
     table->elementAt(4,1)->addWidget(resultPassword);
     
+    table->elementAt(5,0)->addWidget(new Wt::WText("smartschool wachtwoord: "));
+    resultSSPassword = new Wt::WText();
+    table->elementAt(5,1)->addWidget(resultSSPassword);
+    
     for(int i = 0; i < table->rowCount(); i++) {
       for(int j = 0; j < table->columnCount(); j++) {
         table->elementAt(i,j)->setPadding(5);
@@ -172,6 +176,7 @@ void newStaff::addAccount() {
   
   // if we get here, add the account
   string password(y::utils::Security().makePassword(8));
+  string sspassword(y::utils::Security().makePassword(8));
   
   ROLE::TYPE schoolRole = ROLE::NONE;
   switch(role->currentIndex()) {
@@ -204,6 +209,7 @@ void newStaff::addAccount() {
   }
   
   y::ldap::account & account = admin.add(values, PASSWORD(password));
+  account.ssPassword(sspassword);
   
   server->commitChanges();
   
@@ -213,6 +219,7 @@ void newStaff::addAccount() {
   resultMail->setText(account.mailAlias().get().wt());
   resultMailAlias->setText(account.mail().get().wt());
   resultPassword->setText(password.wt());
+  resultSSPassword->setText(sspassword.wt());
   result->show();
   
 }
