@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux-x86
+CND_PLATFORM=GNU-Linux
 CND_DLIB_EXT=so
 CND_CONF=Debug
 CND_DISTDIR=dist
@@ -35,8 +35,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/1736800395/password.o \
-	${OBJECTDIR}/_ext/1736800395/show.o \
+	${OBJECTDIR}/_ext/6785788b/password.o \
+	${OBJECTDIR}/_ext/6785788b/show.o \
 	${OBJECTDIR}/addGroup.o \
 	${OBJECTDIR}/addUser.o \
 	${OBJECTDIR}/debugFunctions.o \
@@ -74,15 +74,15 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/admin: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/admin ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/1736800395/password.o: /home/yvan/github/yATools/admin/password.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1736800395
+${OBJECTDIR}/_ext/6785788b/password.o: /home/yvan/github/yATools/admin/password.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/6785788b
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1736800395/password.o /home/yvan/github/yATools/admin/password.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/6785788b/password.o /home/yvan/github/yATools/admin/password.cpp
 
-${OBJECTDIR}/_ext/1736800395/show.o: /home/yvan/github/yATools/admin/show.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1736800395
+${OBJECTDIR}/_ext/6785788b/show.o: /home/yvan/github/yATools/admin/show.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/6785788b
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1736800395/show.o /home/yvan/github/yATools/admin/show.cpp
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/6785788b/show.o /home/yvan/github/yATools/admin/show.cpp
 
 ${OBJECTDIR}/addGroup.o: addGroup.cpp 
 	${MKDIR} -p ${OBJECTDIR}

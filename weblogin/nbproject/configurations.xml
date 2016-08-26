@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="95">
+<configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="f3" displayName="accountManager" projectFiles="true">
       <itemPath>account/changeName.cpp</itemPath>
       <itemPath>account/changeName.h</itemPath>
       <itemPath>account/changePassword.cpp</itemPath>
       <itemPath>account/changePassword.h</itemPath>
+      <itemPath>account/viewAccount.cpp</itemPath>
+      <itemPath>account/viewAccount.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f5" displayName="auth" projectFiles="true">
       <itemPath>auth/authModel.cpp</itemPath>
@@ -184,6 +186,10 @@
       <item path="account/changePassword.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="account/changePassword.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="account/viewAccount.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="account/viewAccount.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="application.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -432,6 +438,10 @@
       <item path="account/changePassword.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="account/changePassword.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="account/viewAccount.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="account/viewAccount.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="application.cpp" ex="false" tool="1" flavor2="0">
       </item>

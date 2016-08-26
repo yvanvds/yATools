@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux-x86
+CND_PLATFORM=GNU-Linux
 CND_DLIB_EXT=so
 CND_CONF=Debug
 CND_DISTDIR=dist
@@ -91,6 +91,37 @@ TESTFILES= \
 	${TESTDIR}/TestFiles/f3 \
 	${TESTDIR}/TestFiles/f12 \
 	${TESTDIR}/TestFiles/f6
+
+# Test Object Files
+TESTOBJECTFILES= \
+	${TESTDIR}/data/tests/dataDatabaseTest.o \
+	${TESTDIR}/data/tests/dataDatabaseTestRun.o \
+	${TESTDIR}/data/tests/dataDateTimeTest.o \
+	${TESTDIR}/data/tests/dataDateTimeTestRun.o \
+	${TESTDIR}/data/tests/dataFieldTest.o \
+	${TESTDIR}/data/tests/dataFieldTestRun.o \
+	${TESTDIR}/data/tests/dataRowTest.o \
+	${TESTDIR}/data/tests/dataRowTestRun.o \
+	${TESTDIR}/ldap/tests/ldapDataTest.o \
+	${TESTDIR}/ldap/tests/ldapDataTestRun.o \
+	${TESTDIR}/ldap/tests/ldapGroupTest.o \
+	${TESTDIR}/ldap/tests/ldapGroupTestRun.o \
+	${TESTDIR}/ldap/tests/ldapServerTest.o \
+	${TESTDIR}/ldap/tests/ldapServerTestRun.o \
+	${TESTDIR}/ldap/tests/ldpAttributesTest.o \
+	${TESTDIR}/ldap/tests/ldpAttributesTestRun.o \
+	${TESTDIR}/ldap/tests/ldpBaseDataTest.o \
+	${TESTDIR}/ldap/tests/ldpBaseDataTestRun.o \
+	${TESTDIR}/ldap/tests/schoolClassTest.o \
+	${TESTDIR}/ldap/tests/schoolClassTestRunner.o \
+	${TESTDIR}/smartschool/tests/smartschoolTest.o \
+	${TESTDIR}/smartschool/tests/smartschooltestrunner.o \
+	${TESTDIR}/system/tests/sysConfigTest.o \
+	${TESTDIR}/system/tests/sysConfigTestRun.o \
+	${TESTDIR}/system/tests/systemProcessTest.o \
+	${TESTDIR}/system/tests/systemProcessTestRun.o \
+	${TESTDIR}/utils/tests/utilsSecurityTest.o \
+	${TESTDIR}/utils/tests/utilsSecurityTestRun.o
 
 # C Compiler Flags
 CFLAGS=`cppunit-config --cflags` 
@@ -300,7 +331,9 @@ ${OBJECTDIR}/utils/xmlParser.o: utils/xmlParser.cpp
 .build-subprojects:
 
 # Build Test Targets
-.build-tests-conf: .build-conf ${TESTFILES}
+.build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
+.build-tests-subprojects:
+
 ${TESTDIR}/TestFiles/f10: ${TESTDIR}/data/tests/dataDatabaseTest.o ${TESTDIR}/data/tests/dataDatabaseTestRun.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f10 $^ ${LDLIBSOPTIONS} -lldap -llber ../Debug/libsystem.so -lboost_filesystem -lboost_system -lboost_iostreams `cppunit-config --libs`   

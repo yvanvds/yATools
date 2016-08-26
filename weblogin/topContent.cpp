@@ -173,6 +173,12 @@ void topContent::create() {
           deferCreate(boost::bind(&topContent::changePasswordFunc, this)),
           Wt::WMenuItem::LazyLoading);
   
+
+  popup->addItem("Bekijk Account",
+        deferCreate(boost::bind(&topContent::viewAccountFunc, this)),
+        Wt::WMenuItem::LazyLoading);          
+  
+  
   Wt::WMenuItem * item = new Wt::WMenuItem("Account");
   item->setMenu(popup);
   rightMenu->addItem(item);
@@ -296,6 +302,12 @@ Wt::WWidget * topContent::changeNameFunc() {
   changeNamePtr = new changeName(&ldapServer);
   changeNamePtr->create(account);
   return changeNamePtr;
+}
+
+Wt::WWidget * topContent::viewAccountFunc() {
+  viewAccountPtr = new viewAccount(&ldapServer);
+  viewAccountPtr->create(account);
+  return viewAccountPtr;
 }
 
 Wt::WWidget * topContent::staffListFunc() {

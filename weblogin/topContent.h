@@ -23,6 +23,7 @@
 #include "yearbook/yearbookDB.h"
 #include "account/changePassword.h"
 #include "account/changeName.h"
+#include "account/viewAccount.h"
 #include "staffManager/staffList.h"
 #include "studentPasswords/studentPasswords.h"
 #include "proxyManager.h"
@@ -107,6 +108,7 @@ private:
   Wt::WWidget * yearbookConfigFunc();
   Wt::WWidget * changePasswordFunc();
   Wt::WWidget * changeNameFunc();
+  Wt::WWidget * viewAccountFunc();
   Wt::WWidget * staffListFunc();
   Wt::WWidget * newStaffFunc();
   
@@ -123,6 +125,7 @@ private:
   changeName * changeNamePtr;
   staffList * staffListPtr;
   studentPasswords * studentPasswordsPtr;
+  viewAccount * viewAccountPtr;
   
   y::ldap::server ldapServer;
   

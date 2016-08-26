@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux-x86
+CND_PLATFORM=GNU-Linux
 CND_DLIB_EXT=so
 CND_CONF=Debug
 CND_DISTDIR=dist
@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/account/changeName.o \
 	${OBJECTDIR}/account/changePassword.o \
+	${OBJECTDIR}/account/viewAccount.o \
 	${OBJECTDIR}/application.o \
 	${OBJECTDIR}/auth/authModel.o \
 	${OBJECTDIR}/auth/authService.o \
@@ -115,6 +116,11 @@ ${OBJECTDIR}/account/changePassword.o: account/changePassword.cpp
 	${MKDIR} -p ${OBJECTDIR}/account
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/account/changePassword.o account/changePassword.cpp
+
+${OBJECTDIR}/account/viewAccount.o: account/viewAccount.cpp 
+	${MKDIR} -p ${OBJECTDIR}/account
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DDEBUG -I../libadmintools -I/usr/local/include -I../build/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/account/viewAccount.o account/viewAccount.cpp
 
 ${OBJECTDIR}/application.o: application.cpp 
 	${MKDIR} -p ${OBJECTDIR}

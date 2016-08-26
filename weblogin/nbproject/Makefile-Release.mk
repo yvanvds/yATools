@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux-x86
+CND_PLATFORM=GNU-Linux
 CND_DLIB_EXT=so
 CND_CONF=Release
 CND_DISTDIR=dist
@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/account/changeName.o \
 	${OBJECTDIR}/account/changePassword.o \
+	${OBJECTDIR}/account/viewAccount.o \
 	${OBJECTDIR}/application.o \
 	${OBJECTDIR}/auth/authModel.o \
 	${OBJECTDIR}/auth/authService.o \
@@ -94,13 +95,13 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -lwtfcgi -lwt -lwtdbo -lwtdbomysql -lldap -llber -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals -lboost_locale -Wl,-rpath,../libadmintools/dist/Release/GNU-Linux-x86 -L../libadmintools/dist/Release/GNU-Linux-x86 -llibadmintools -lpng -ljpeg -lpthread
+LDLIBSOPTIONS=-L/usr/lib/x86_64-linux-gnu -L/usr/lib -L/usr/local/lib -lwtfcgi -lwt -lwtdbo -lwtdbomysql -lldap -llber -lboost_system -lboost_filesystem -lboost_iostreams -lboost_program_options -lboost_signals -lboost_locale -Wl,-rpath,../libadmintools/dist/Release/GNU-Linux -L../libadmintools/dist/Release/GNU-Linux -llibadmintools -lpng -ljpeg -lpthread
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/weblogin
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/weblogin: ../libadmintools/dist/Release/GNU-Linux-x86/liblibadmintools.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/weblogin: ../libadmintools/dist/Release/GNU-Linux/liblibadmintools.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/weblogin: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -115,6 +116,11 @@ ${OBJECTDIR}/account/changePassword.o: account/changePassword.cpp
 	${MKDIR} -p ${OBJECTDIR}/account
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/account/changePassword.o account/changePassword.cpp
+
+${OBJECTDIR}/account/viewAccount.o: account/viewAccount.cpp 
+	${MKDIR} -p ${OBJECTDIR}/account
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../libadmintools -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/account/viewAccount.o account/viewAccount.cpp
 
 ${OBJECTDIR}/application.o: application.cpp 
 	${MKDIR} -p ${OBJECTDIR}

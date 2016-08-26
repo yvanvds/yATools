@@ -11,10 +11,6 @@
             <file>file:/home/yvan/github/yATools/admin/debugFunctions.cpp</file>
             <file>file:/home/yvan/github/yATools/admin/debugFunctions.h</file>
         </group>
-        <group name="yAtools">
-            <file>file:/home/yvan/github/yATools/admin/password.cpp</file>
-            <file>file:/home/yvan/github/yATools/admin/debugFunctions.cpp</file>
-            <file>file:/home/yvan/github/yATools/admin/debugFunctions.h</file>
-        </group>
+        <group name="yAtools"/>
     </open-files>
 </project-private>

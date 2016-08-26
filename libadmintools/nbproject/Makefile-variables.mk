@@ -7,21 +7,21 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=GNU-Linux-x86
+CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=../Debug
 CND_ARTIFACT_NAME_Debug=libsystem.so
 CND_ARTIFACT_PATH_Debug=../Debug/libsystem.so
-CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
+CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
 CND_PACKAGE_NAME_Debug=liblibadmintools.so.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/liblibadmintools.so.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/liblibadmintools.so.tar
 # Release configuration
-CND_PLATFORM_Release=GNU-Linux-x86
-CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
+CND_PLATFORM_Release=GNU-Linux
+CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
 CND_ARTIFACT_NAME_Release=liblibadmintools.so
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/liblibadmintools.so
-CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/liblibadmintools.so
+CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
 CND_PACKAGE_NAME_Release=liblibadmintools.so.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/liblibadmintools.so.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/liblibadmintools.so.tar
 #
 # include compiler specific variables
 #

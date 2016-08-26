@@ -125,7 +125,9 @@ void wisaUpload::studentFileTooLargeFunc() {
 }
 
 void wisaUpload::classUploadedFunc() {
-  parentObject->setWisaClassFile(string(classUpload->spoolFileName()));
+  std::string file = classUpload->spoolFileName();
+  string f = string(file);
+  parentObject->setWisaClassFile(f);
   parentObject->showNewPage(W_PARSE_CLASS);
   cleanClassUpload();
 }
