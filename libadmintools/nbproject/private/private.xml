@@ -34,6 +34,9 @@
             <file>file:/home/yvan/github/yATools/libadmintools/utils/string.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/samba/samba.cpp</file>
         </group>
-        <group name="yAtools"/>
+        <group name="yAtools">
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/string.h</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/utils/container.h</file>
+        </group>
     </open-files>
 </project-private>

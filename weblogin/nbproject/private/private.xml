@@ -2,7 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>1</activeConfTypeElem>
-        <activeConfIndexElem>0</activeConfIndexElem>
+        <activeConfIndexElem>1</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
@@ -44,6 +44,17 @@
             <file>file:/home/yvan/github/yATools/weblogin/studentPasswords/studentPasswords.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/application.h</file>
         </group>
-        <group name="yAtools"/>
+        <group name="yAtools">
+            <file>file:/home/yvan/github/yATools/weblogin/main.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/account/viewAccount.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/account/changeName.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/account/viewAccount.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/account/changeName.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaUpload.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/account/changePassword.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/topContent.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/topContent.h</file>
+        </group>
     </open-files>
 </project-private>

@@ -44,12 +44,14 @@ void viewAccount::create(y::ldap::account* account) {
   row++;
   
   table->elementAt(row,0)->addWidget(new Wt::WText("E-mail account: "));
-  table->elementAt(row,1)->addWidget(new Wt::WText(account->mail().get().wt()));
+  table->elementAt(row,1)->addWidget(new Wt::WText(account->mailAlias().get().wt()));
   row++;
   
   table->elementAt(row,0)->addWidget(new Wt::WText("E-mail alias: "));
-  table->elementAt(row,1)->addWidget(new Wt::WText(account->mailAlias().get().wt()));
+  table->elementAt(row,1)->addWidget(new Wt::WText(account->mail().get().wt()));
   row++;
+  
+  
   
   if(account->isStaff()) {
     table->elementAt(row,0)->addWidget(new Wt::WText("Copy Code: "));
