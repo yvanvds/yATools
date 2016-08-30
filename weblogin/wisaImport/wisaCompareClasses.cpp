@@ -173,7 +173,15 @@ void wisaCompareClasses::onShow() {
       if((oldAdjunct == nullptr && !wisaClasses[i].adjunct.empty())
       || (oldAdjunct != nullptr && (oldAdjunct->wisaName().get() != wisaClasses[i].adjunct))) {
         y::ldap::account & newAdjunct = parentObject->ldap()->getAccount(WISA_NAME(wisaClasses[i].adjunct));
-        if(newAdjunct.wisaName().get().empty()) {
+        if(wisaClasses[i].adjunct.empty()) {
+          wisaClasses[i].link->adjunct(ADJUNCT(DN("")));
+          wisaClasses[i].link->flagForCommit();
+          entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
+          entries->elementAt(row, 1)->addWidget(new Wt::WText("Adjunct verwijderd."));
+          dbChanges = true;
+          row++;
+        }
+        else if(newAdjunct.wisaName().get().empty()) {
           entries->elementAt(row, 0)->addWidget(new Wt::WText(wisaClasses[i].name.wt()));
           entries->elementAt(row, 1)->addWidget(new Wt::WText("Error (ongeldige adjunct naam): "));
           entries->elementAt(row, 2)->addWidget(new Wt::WText(wisaClasses[i].adjunct.wt()));
