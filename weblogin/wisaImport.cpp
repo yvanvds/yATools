@@ -128,7 +128,7 @@ void wisaImport::setWisaClassFile(const string& file) {
 bool wisaImport::readLinesUTF8(std::wifstream * stream, bool students) {
   std::wstring line;
   while(std::getline(*stream, line)) {
-    if(!tokenize(line, students)) {
+    if(tokenize(line, students) != WE_NO_ERROR) {
       Wt::WMessageBox * message = new Wt::WMessageBox (
             "Error",
             "<p>Het aantal kolommen in dit bestand klopt niet.</p>",
@@ -194,12 +194,18 @@ WISA_ERROR wisaImport::tokenize(const std::wstring& line, bool students) {
   boost::algorithm::trim(item);
   elms.push_back(std::move(item.c_str())); 
 
+  WISA_ERROR err = WE_NO_ELEMENTS;
   // add to wisa contents
   if(elms.size()) {
-    if(students) return wisaAccounts.New().set(elms);
-    else return wisaClasses.New().set(elms);
-  }
-  return WE_NO_ELEMENTS;
+    if(students) {
+      err = wisaAccounts.New().set(elms);
+    }
+    else {     
+      err = wisaClasses.New().set(elms);
+    }
+  } 
+  
+  return err;
 }
 
 string wisaImport::getWisaStudentFile() {
