@@ -120,7 +120,7 @@ installAdmintools(){
   fi
 
   make CONF=Release build
-  cp dist/Release/GNU-Linux-x86/liblibadmintools.so /usr/lib
+  cp dist/Release/GNU-Linux/liblibadmintools.so /usr/lib
   cd ..
   rm /var/log/admintools
   touch /var/log/admintools
@@ -163,7 +163,7 @@ installWebLogin() {
   if [ -f /var/www/apps/weblogin/weblogin.wt ]; then
     rm /var/www/apps/weblogin/weblogin.wt
   fi
-  cp dist/Release/GNU-Linux-x86/weblogin /var/www/apps/weblogin/weblogin.wt
+  cp dist/Release/GNU-Linux/weblogin /var/www/apps/weblogin/weblogin.wt
 
 
   cp -fr yearbook_latex /var/www/apps/weblogin
