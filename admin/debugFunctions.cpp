@@ -111,12 +111,15 @@ void debugFunctions::cleanupClasses() {
         if(input == "y") {
           std::cout << "removing..." << std::endl;
           classes[i].removeStudent(DN(classes[i].students()[j]));
-        }      
+        } else if(input == "done") {
+          s.commitChanges();
+          return;
+        }     
         
       } else {
         y::ldap::account & account = s.getAccount(DN(classes[i].students()[j]));
         if(account.schoolClass().get() != classes[i].cn().get()) {
-          std::cout << "Move to " << classes[i].cn().get() << "?" << std::endl;
+          std::cout << "Move to " << account.schoolClass().get() << "?" << std::endl;
           std::string input;
           std::cin >> input;
         
@@ -125,7 +128,10 @@ void debugFunctions::cleanupClasses() {
           
             s.getClass(CN(account.schoolClass().get())).addStudent(account.dn());
             classes[i].removeStudent(DN(classes[i].students()[j]));
-          }
+          } else if(input == "done") {
+            s.commitChanges();
+            return;
+          }   
         }
       }
     }
