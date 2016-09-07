@@ -104,7 +104,8 @@ bool y::ldap::account::load(const data& d) {
   _country       .readFromLdap(d);
   
   if(_role().get() == ROLE::NONE) {
-    y::utils::Log().add("a user exists without a valid schoolrole");
+    y::utils::Log().add("a user exists without a valid schoolrole: ");
+    y::utils::Log().add(_dn().get());
   }
   if(d.getValue("krbName" ).size()) _hasKrbName  = true;
 

@@ -46,16 +46,23 @@
         </group>
         <group name="yAtools">
             <file>file:/home/yvan/github/yATools/weblogin/main.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/account/viewAccount.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaUpload.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareClasses.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/account/viewAccount.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/account/changeName.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaUpload.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/account/changeName.h</file>
             <file>file:/home/yvan/github/yATools/weblogin/account/changePassword.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCommitStudents.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareFile.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/topContent.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/account/viewAccount.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/account/viewAccount.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaNoID.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaCompareNames.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaParseClassFile.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/wisaImport.cpp</file>
-            <file>file:/home/yvan/github/yATools/weblogin/topContent.cpp</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport.h</file>
+            <file>file:/home/yvan/github/yATools/weblogin/wisaImport/wisaParseStudentFile.cpp</file>
             <file>file:/home/yvan/github/yATools/weblogin/topContent.h</file>
         </group>
     </open-files>
