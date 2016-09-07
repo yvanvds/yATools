@@ -111,6 +111,7 @@ void debugFunctions::cleanupClasses() {
         if(input == "y") {
           std::cout << "removing..." << std::endl;
           classes[i].removeStudent(DN(classes[i].students()[j]));
+          classes[i].flagForCommit();
         } else if(input == "done") {
           s.commitChanges();
           return;
@@ -127,7 +128,9 @@ void debugFunctions::cleanupClasses() {
             std::cout << "moving..." << std::endl;
           
             s.getClass(CN(account.schoolClass().get())).addStudent(account.dn());
+            s.getClass(CN(account.schoolClass().get())).flagForCommit();
             classes[i].removeStudent(DN(classes[i].students()[j]));
+            classes[i].flagForCommit();
           } else if(input == "done") {
             s.commitChanges();
             return;
