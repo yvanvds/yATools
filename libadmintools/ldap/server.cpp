@@ -186,7 +186,9 @@ y::ldap::account & y::ldap::server::getAccount(const DN & id) {
 
 bool y::ldap::server::hasAccount(const DN & id) {
   for(int i = 0; i < _accounts.elms(); i++) {
-    if(_accounts[i].dn() == id) return true;
+    if(_accounts[i].dn() == id) {
+      return true;
+    }
   }
   return false;
 }

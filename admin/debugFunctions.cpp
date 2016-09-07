@@ -94,6 +94,7 @@ void debugFunctions::groupsToSmartschool() {
 
 void debugFunctions::cleanupClasses() {
   y::ldap::server s;
+  ACCOUNTS & accounts = s.getAccounts();
   CLASSES & classes = s.getClasses();
   for (int i =0; i < classes.elms(); i++) {
     std::cout << "Cleaning class " << classes[i].cn().get() << std::endl;
