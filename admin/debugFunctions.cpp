@@ -99,7 +99,7 @@ void debugFunctions::cleanupClasses() {
   for (int i =0; i < classes.elms(); i++) {
     std::cout << "Cleaning class " << classes[i].cn().get() << std::endl;
 
-    for(int j = classes[i].students().elms() - 1; j != 0 ; j--) {
+    for(int j = classes[i].students().elms() - 1; j >= 0 ; j--) {
       std::cout << "  " << classes[i].students()[j].c_str() << std::endl;
       
       if(!s.hasAccount(DN(classes[i].students()[j]))) {
@@ -132,6 +132,7 @@ void debugFunctions::cleanupClasses() {
             s.commitChanges();
             return;
           }   
+          
         }
       }
     }
