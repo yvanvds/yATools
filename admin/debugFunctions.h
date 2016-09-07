@@ -20,6 +20,7 @@ private:
   void resetStemID();
   void groupsToSmartschool();
   void testFunction();
+  void cleanupClasses();
 };
 
 debugFunctions & DebugFunctions();

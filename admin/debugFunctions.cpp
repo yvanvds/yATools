@@ -46,6 +46,8 @@ void debugFunctions::parse(int argc, char ** argv) {
     testFunction();
   } else if(::string(argv[0]) == "resetStemID") {
     resetStemID();
+  } else if(::string(argv[0]) == "cleanup") {
+    cleanupClasses();
   }
 }
 
@@ -88,6 +90,47 @@ void debugFunctions::groupsToSmartschool() {
       std::cout << "Adding " << accounts[i].fullName()() << " to group " << accounts[i].group()() << std::endl;
     }
   }*/
+}
+
+void debugFunctions::cleanupClasses() {
+  y::ldap::server s;
+  CLASSES & classes = s.getClasses();
+  for (int i =0; i < classes.elms(); i++) {
+    std::cout << "Cleaning class " << classes[i].cn().get() << std::endl;
+
+    for(int j = classes[i].students().elms() - 1; j != 0 ; j--) {
+      std::cout << "  " << classes[i].students()[j].c_str() << std::endl;
+      
+      if(!s.hasAccount(DN(classes[i].students()[j]))) {
+        std::cout << "Remove this user?" << std::endl;
+        
+        std::string input;
+        std::cin >> input;
+        
+        if(input == "y") {
+          std::cout << "removing..." << std::endl;
+          classes[i].removeStudent(DN(classes[i].students()[j]));
+        }      
+        
+      } else {
+        y::ldap::account & account = s.getAccount(DN(classes[i].students()[j]));
+        if(account.schoolClass().get() != classes[i].cn().get()) {
+          std::cout << "Move to " << classes[i].cn().get() << "?" << std::endl;
+          std::string input;
+          std::cin >> input;
+        
+          if(input == "y") {
+            std::cout << "moving..." << std::endl;
+          
+            s.getClass(CN(account.schoolClass().get())).addStudent(account.dn());
+            classes[i].removeStudent(DN(classes[i].students()[j]));
+          }
+        }
+      }
+    }
+  }
+  
+  s.commitChanges();
 }
 
 void debugFunctions::testFunction() {

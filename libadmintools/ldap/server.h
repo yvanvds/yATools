@@ -40,6 +40,7 @@ namespace y {
       account & getAccount(const UID_NUMBER & id);
       account & getAccount(const DN         & id);
       account & getAccount(const WISA_NAME  & id);
+      bool hasAccount(const DN & id);
       
       group & getGroup(const DN & id);
       group & getGroup(const CN & cn, bool editable);
