@@ -35,6 +35,7 @@
             <file>file:/home/yvan/github/yATools/libadmintools/samba/samba.cpp</file>
         </group>
         <group name="yAtools">
+            <file>file:/home/yvan/github/yATools/libadmintools/ldap/account.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/schoolClass.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/ldapObject.cpp</file>
             <file>file:/home/yvan/github/yATools/libadmintools/admin/userAdmin.cpp</file>

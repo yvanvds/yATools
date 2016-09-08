@@ -127,8 +127,17 @@ void debugFunctions::cleanupClasses() {
           if(input == "y") {
             std::cout << "moving..." << std::endl;
           
-            s.getClass(CN(account.schoolClass().get())).addStudent(account.dn());
-            s.getClass(CN(account.schoolClass().get())).flagForCommit();
+            bool found = false;
+            for(int x = 0; x < s.getClass(CN(account.schoolClass().get())).students().elms(); x++) {
+              if(s.getClass(CN(account.schoolClass().get())).students()[x] == account.dn().get()) {
+                found = true;
+              }
+            }
+            if(!found) {
+              s.getClass(CN(account.schoolClass().get())).addStudent(account.dn());
+              s.getClass(CN(account.schoolClass().get())).flagForCommit();
+            }
+
             classes[i].removeStudent(DN(classes[i].students()[j]));
             classes[i].flagForCommit();
           } else if(input == "done") {
