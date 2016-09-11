@@ -52,6 +52,7 @@
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/data.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/utils/watch.h</file>
             <file>file:/home/yvan/github/yATools/libadmintools/ldap/server.cpp</file>
+            <file>file:/home/yvan/github/yATools/libadmintools/ldap/tests/schoolClassTest.h</file>
         </group>
     </open-files>
 </project-private>

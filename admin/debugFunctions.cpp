@@ -98,55 +98,54 @@ void debugFunctions::cleanupClasses() {
   CLASSES & classes = s.getClasses();
   for (int i =0; i < classes.elms(); i++) {
     std::cout << "Cleaning class " << classes[i].cn().get() << std::endl;
+    
+    // remove empty values
+    classes[i].removeStudent(DN(""));
+    
+startover:
 
-    for(int j = classes[i].students().elms() - 1; j >= 0 ; j--) {
-      std::cout << "  " << classes[i].students()[j].c_str() << std::endl;
+    for(auto it = classes[i].students().begin(); it != classes[i].students().end(); ++it) {
+      std::cout << "  " << it->c_str() << std::endl;
       
-      if(!s.hasAccount(DN(classes[i].students()[j]))) {
-        std::cout << "Remove this user?" << std::endl;
-        
+      if(!s.hasAccount(DN(*it))) {
+        std::cout << "Remove this user? " << it->c_str() << std::endl;
         std::string input;
         std::cin >> input;
-        
         if(input == "y") {
           std::cout << "removing..." << std::endl;
-          classes[i].removeStudent(DN(classes[i].students()[j]));
+          classes[i].removeStudent(DN(*it));
           classes[i].flagForCommit();
-        } else if(input == "done") {
+          goto startover;
+          
+        } else if (input == "done") {
           s.commitChanges();
           return;
-        }     
-        
+        }
       } else {
-        y::ldap::account & account = s.getAccount(DN(classes[i].students()[j]));
+        // account is found
+        y::ldap::account & account = s.getAccount(DN(*it));
         if(account.schoolClass().get() != classes[i].cn().get()) {
           std::cout << "Move to " << account.schoolClass().get() << "?" << std::endl;
           std::string input;
           std::cin >> input;
-        
-          if(input == "y") {
-            std::cout << "moving..." << std::endl;
           
-            bool found = false;
-            for(int x = 0; x < s.getClass(CN(account.schoolClass().get())).students().elms(); x++) {
-              if(s.getClass(CN(account.schoolClass().get())).students()[x] == account.dn().get()) {
-                found = true;
-              }
-            }
-            if(!found) {
-              s.getClass(CN(account.schoolClass().get())).addStudent(account.dn());
-              s.getClass(CN(account.schoolClass().get())).flagForCommit();
-            }
-
-            classes[i].removeStudent(DN(classes[i].students()[j]));
-            classes[i].flagForCommit();
+          if(input == "y") {
+            std::cout << "Moving..." << std::endl;
+            
+            // remove from current class
+            classes[i].removeStudent(account.dn());
+            
+            // add to new class
+            s.getClass(CN(account.schoolClass().get())).addStudent(account.dn());
+            goto startover;
+          
           } else if(input == "done") {
             s.commitChanges();
             return;
-          }   
-          
+          }
         }
       }
+    
     }
   }
   

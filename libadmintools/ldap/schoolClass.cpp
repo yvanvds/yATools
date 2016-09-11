@@ -48,36 +48,41 @@ bool y::ldap::schoolClass::loadData(const data& d) {
   
   
   for(int i = 0; i < d.elms("member"); i++) {
-    string & student = _students.New();
-    student = d.getValue("member", i);
-    _studentsInLDAP.New() = student;
+    _students.emplace_back(d.getValue("member", i));
+    _studentsInLDAP.emplace_back(_students.back());
   }
   _new = false;
   return true;
 }
 
-container<string> & y::ldap::schoolClass::students() {
+std::list<string> & y::ldap::schoolClass::students() {
   return _students;
 }
 
 bool y::ldap::schoolClass::removeStudent(const DN& dn) {
-  for(int i = 0; i < _students.elms(); i++) {
-    if(_students[i] == dn.get()) {
-      _students.remove(i);
-      _flaggedForCommit = true;
-      return true;
-    }
+  bool studentRemoved = false;
+  
+  auto i = _students.begin();
+  while(i != _students.end()) {
+    if(*i == dn.get()) {
+      i = _students.erase(i);
+      studentRemoved = _flaggedForCommit = true;
+    } else {
+      ++i;
+    } 
   }
-  return false;
+
+  return studentRemoved;
 }
 
 bool y::ldap::schoolClass::addStudent(const DN& dn) {
-  for(int i = 0; i < _students.elms(); i++) {
-    if(_students[i] == dn.get()) {
-      return false; // student is already in this class
+  for(auto i = _students.begin(); i != _students.end(); ++i) {
+    if(*i == dn.get()) {
+      return false; // students is already a member
     }
   }
-  _students.New() = dn.get();
+
+  _students.emplace_back(dn.get());
   _flaggedForCommit = true;
   return true;
 }
@@ -140,11 +145,11 @@ bool y::ldap::schoolClass::addNew(dataset& values) {
     adjunct.add("values", _adjunct().get().get());
   }
   
-  if(_students.elms()) {
+  if(_students.size()) {
     data & students = values.New(NEW);
     students.add("type", "member");
-    for(int i = 0; i < _students.elms(); i++) {
-      students.add("values", _students[i]);
+    for(auto i = _students.begin(); i != _students.end(); ++i) {
+      students.add("values", *i);
     }
   }
   
@@ -160,35 +165,36 @@ bool y::ldap::schoolClass::update(dataset& values) {
   
   // remove students if needed
   data * studentDelete = nullptr;
-  for(int i = 0; i < _studentsInLDAP.elms(); i++) {
-    const string & student = _studentsInLDAP[i];
+  
+  for(auto i = _studentsInLDAP.begin(); i != _studentsInLDAP.end(); ++i) {
     bool found = false;
-    for(int j = 0; j < _students.elms(); j++) {
-      if(student == _students[j]) found = true;
+    for(auto j = _students.begin(); j != _students.end(); ++j) {
+      if(*i == *j) found = true;
     }
+    
     if(!found) {
       if(!studentDelete) {
         studentDelete = &values.New(DELETE);
         studentDelete->add("type", "member");
       }
-      studentDelete->add("values", student);
+      studentDelete->add("values", *i);
     }
   }
   
   // add students if needed
   data * studentAdd = nullptr;
-  for(int i = 0; i < _students.elms(); i++) {
-    const string & student = _students[i];
+  for(auto i = _students.begin(); i != _students.end(); ++i) {
+
     bool found = false;
-    for(int j = 0; j < _studentsInLDAP.elms(); j++) {
-      if(student == _studentsInLDAP[j]) found = true;
+    for(auto j = _studentsInLDAP.begin(); j != _studentsInLDAP.end(); ++j) {
+      if(*i == *j) found = true;
     }
     if(!found) {
       if(!studentAdd) {
         studentAdd = &values.New(ADD);
         studentAdd->add("type", "member");
       }
-      studentAdd->add("values", student);
+      studentAdd->add("values", *i);
       newStudents = true;
     }
   }
@@ -203,8 +209,8 @@ bool y::ldap::schoolClass::update(dataset& values) {
   y::Smartschool().saveClass(*this);
   
   if(newStudents) {
-    for(int i = 0; i < _students.elms(); i++) {
-      account & a = server->getAccount(DN(_students[i]));
+    for(auto i = _students.begin(); i != _students.end(); ++i) {
+      account & a = server->getAccount(DN(*i));
       y::Smartschool().moveUserToClass(a, this->_cn().get());
     }
   }

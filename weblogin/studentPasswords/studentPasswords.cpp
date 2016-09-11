@@ -13,6 +13,7 @@
 #include <Wt/WTable>
 #include <Wt/WCheckBox>
 #include <Wt/WHBoxLayout>
+#include <list>
 #include "utils/string.h"
 #include "ldap/account.h"
 #include "utils/security.h"
@@ -134,12 +135,14 @@ void studentPasswords::showClass(string schoolClass) {
   table->setHeaderCount(2, Wt::Orientation::Horizontal);
   
   y::ldap::schoolClass & sc = server->getClass(CN(schoolClass));
-  for(int i = 0; i < sc.students().elms(); i++) {
-    y::ldap::account & student = server->getAccount(DN(sc.students()[i]));
-    table->elementAt(2+i,0)->addWidget(new Wt::WText(student.fullName().get().wt()));
-    table->elementAt(2+i,1)->addWidget(new Wt::WCheckBox());
-    table->elementAt(2+i,2)->addWidget(new Wt::WCheckBox());
-    table->elementAt(2+i,3)->addWidget(new Wt::WCheckBox());
+  int row = 0;
+  for(auto it = sc.students().begin(); it != sc.students().end(); ++it) {
+    y::ldap::account & student = server->getAccount(DN(*it));
+    table->elementAt(2+row,0)->addWidget(new Wt::WText(student.fullName().get().wt()));
+    table->elementAt(2+row,1)->addWidget(new Wt::WCheckBox());
+    table->elementAt(2+row,2)->addWidget(new Wt::WCheckBox());
+    table->elementAt(2+row,3)->addWidget(new Wt::WCheckBox());
+    row++;
   }
   
   for(int i = 0; i < table->rowCount(); i++) {
@@ -162,7 +165,7 @@ void studentPasswords::changePasswords() {
   
   y::ldap::schoolClass & sc = server->getClass(CN(currentClass));
   
-  progress->setRange(0, sc.students().elms());
+  progress->setRange(0, sc.students().size());
   progress->show();
   
   bool csv = false;
@@ -170,11 +173,12 @@ void studentPasswords::changePasswords() {
   if(((Wt::WCheckBox*)(table->elementAt(1,2)->widget(0)))->isChecked()) csv = true;
   if(((Wt::WCheckBox*)(table->elementAt(1,3)->widget(0)))->isChecked()) csv = true;
   
-  for(int i = 0; i < sc.students().elms(); i++) {
-    y::ldap::account & a = server->getAccount(DN(sc.students()[i]));
+  int row = 0;
+  for(auto it = sc.students().begin(); it != sc.students().end(); ++it) {
+    y::ldap::account & a = server->getAccount(DN(*it));
     
     // check main account
-    if(((Wt::WCheckBox*)(table->elementAt(i+2, 1)->widget(0)))->isChecked()) {
+    if(((Wt::WCheckBox*)(table->elementAt(row+2, 1)->widget(0)))->isChecked()) {
       pfile.addLine(a.fullName().get());
       {
         if(!csv) {
@@ -219,7 +223,7 @@ void studentPasswords::changePasswords() {
     }
     
     // check co-account 1
-    if(((Wt::WCheckBox*)(table->elementAt(i+2, 2)->widget(0)))->isChecked()) {
+    if(((Wt::WCheckBox*)(table->elementAt(row+2, 2)->widget(0)))->isChecked()) {
       {
         if(!csv) {
           string s("Wachtwoord voor ");
@@ -285,7 +289,7 @@ void studentPasswords::changePasswords() {
     }
     
     // check co-account 2
-    if(((Wt::WCheckBox*)(table->elementAt(i+2, 3)->widget(0)))->isChecked()) {
+    if(((Wt::WCheckBox*)(table->elementAt(row+2, 3)->widget(0)))->isChecked()) {
       {
         if(!csv) {
           string s("Wachtwoord voor ");
@@ -349,7 +353,8 @@ void studentPasswords::changePasswords() {
       }
     }
     
-    progress->setValue(i);
+    progress->setValue(row);
+    row++;
   }
   server->commitChanges();
   

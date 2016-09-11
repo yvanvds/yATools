@@ -12,6 +12,7 @@
 #include "ldap/attributes.h"
 #include "data.h"
 #include "ldapObject.h"
+#include <list>
 
 namespace y {
   namespace ldap {
@@ -29,7 +30,7 @@ namespace y {
       const ADMINGROUP  & adminGroup () const; schoolClass & adminGroup (const ADMINGROUP  & id  );
       const SCHOOL_ID   & schoolID   () const; schoolClass & schoolID   (const SCHOOL_ID   & id  );
       
-      container<string> & students();
+      std::list<string> & students();
      
       bool addStudent   (const DN & dn);
       bool removeStudent(const DN & dn);
@@ -50,8 +51,8 @@ namespace y {
       intWatch   <ADMINGROUP > _adminGroup ;
       intWatch   <SCHOOL_ID  > _schoolID   ;
       
-      container<string> _students;
-      container<string> _studentsInLDAP;
+      std::list<string> _students;
+      std::list<string> _studentsInLDAP;
       
       friend class server;
       
