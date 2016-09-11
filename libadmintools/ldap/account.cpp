@@ -324,6 +324,7 @@ void y::ldap::account::clear() {
   _city          .reset(CITY       (""));
   _postalCode    .reset(POSTAL_CODE(""));
   _country       .reset(COUNTRY    (""));
+  _ssPassword.clear();
   _flaggedForRemoval = false;
 }
 

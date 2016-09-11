@@ -333,7 +333,7 @@ void wisaCommitStudents::addNewAccount(const y::ldap::account & account, const s
     download->addMessage(s);
   }
   {
-    string s("Eenmalig Smartschool Wachtwoord: "); s + account.ssPassword();
+    string s("Eenmalig Smartschool Wachtwoord: "); s += account.ssPassword();
     download->addMessage(s);
   }
   
