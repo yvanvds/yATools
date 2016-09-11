@@ -21,6 +21,7 @@ private:
   void groupsToSmartschool();
   void testFunction();
   void cleanupClasses();
+  void reAddAllStudentsToClasses();
 };
 
 debugFunctions & DebugFunctions();

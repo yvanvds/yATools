@@ -48,6 +48,8 @@ void debugFunctions::parse(int argc, char ** argv) {
     resetStemID();
   } else if(::string(argv[0]) == "cleanup") {
     cleanupClasses();
+  } else if(::string(argv[0]) == "studentsToClasses") {
+    reAddAllStudentsToClasses();
   }
 }
 
@@ -108,44 +110,57 @@ startover:
       std::cout << "  " << it->c_str() << std::endl;
       
       if(!s.hasAccount(DN(*it))) {
-        std::cout << "Remove this user? " << it->c_str() << std::endl;
-        std::string input;
-        std::cin >> input;
-        if(input == "y") {
-          std::cout << "removing..." << std::endl;
-          classes[i].removeStudent(DN(*it));
-          classes[i].flagForCommit();
-          goto startover;
+        std::cout << "removing..." << std::endl;
+        classes[i].removeStudent(DN(*it));
+        classes[i].flagForCommit();
+        goto startover;
           
-        } else if (input == "done") {
-          s.commitChanges();
-          return;
-        }
       } else {
         // account is found
         y::ldap::account & account = s.getAccount(DN(*it));
         if(account.schoolClass().get() != classes[i].cn().get()) {
-          std::cout << "Move to " << account.schoolClass().get() << "?" << std::endl;
-          std::string input;
-          std::cin >> input;
-          
-          if(input == "y") {
-            std::cout << "Moving..." << std::endl;
+          std::cout << "Moving..." << std::endl;
             
-            // remove from current class
-            classes[i].removeStudent(account.dn());
+          // remove from current class
+          classes[i].removeStudent(account.dn());
             
-            // add to new class
-            s.getClass(CN(account.schoolClass().get())).addStudent(account.dn());
-            goto startover;
+          // add to new class
+          s.getClass(CN(account.schoolClass().get())).addStudent(account.dn());
+          goto startover;
           
-          } else if(input == "done") {
-            s.commitChanges();
-            return;
-          }
         }
       }
     
+    }
+  }
+  
+  s.commitChanges();
+}
+
+void debugFunctions::reAddAllStudentsToClasses() {
+  y::ldap::server s;
+  ACCOUNTS & accounts = s.getAccounts();
+  CLASSES & classes = s.getClasses();
+  for(int i = 0; i < accounts.elms(); i++) {
+    if(accounts[i].isStudent()) {
+      ::string currentClass = accounts[i].schoolClass().get();
+      
+      if(currentClass.empty()) {
+        std::cout << "This student has no class: " << std::endl;
+        std::cout << accounts[i].dn().get() << std::endl;
+        std::cout << "continue?";
+        std::string input;
+        std::cin >> input;
+        if(input != "y") return;
+      } else {
+        schoolClass & sc = s.getClass(CN(currentClass));
+        if(sc.addStudent(accounts[i].dn())) {
+          std::cout << "Student added to class: " << std::endl;
+          std::cout << accounts[i].dn().get() << std::endl;
+        }
+      }
+      
+      
     }
   }
   
