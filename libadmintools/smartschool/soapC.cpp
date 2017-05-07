@@ -15,7 +15,7 @@ compiling, linking, and/or using OpenSSL is allowed.
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.17r 2016-08-21 15:23:06 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.17r 2017-04-29 06:17:48 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -206,6 +206,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_ns1__returnCsvErrorCodesResponse(soap, NULL, NULL, "ns1:returnCsvErrorCodesResponse");
 	case SOAP_TYPE_ns1__returnErrorCodes:
 		return soap_in_ns1__returnErrorCodes(soap, NULL, NULL, "ns1:returnErrorCodes");
+	case SOAP_TYPE_ns1__deactivateTwoFactorAuthentication:
+		return soap_in_ns1__deactivateTwoFactorAuthentication(soap, NULL, NULL, "ns1:deactivateTwoFactorAuthentication");
+	case SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse:
+		return soap_in_ns1__deactivateTwoFactorAuthenticationResponse(soap, NULL, NULL, "ns1:deactivateTwoFactorAuthenticationResponse");
 	case SOAP_TYPE_ns1__getStudentCareer:
 		return soap_in_ns1__getStudentCareer(soap, NULL, NULL, "ns1:getStudentCareer");
 	case SOAP_TYPE_ns1__getStudentCareerResponse:
@@ -238,10 +242,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_ns1__getAbsentsByDate(soap, NULL, NULL, "ns1:getAbsentsByDate");
 	case SOAP_TYPE_ns1__getAbsentsByDateResponse:
 		return soap_in_ns1__getAbsentsByDateResponse(soap, NULL, NULL, "ns1:getAbsentsByDateResponse");
-	case SOAP_TYPE_ns1__isValidUserCredentials:
-		return soap_in_ns1__isValidUserCredentials(soap, NULL, NULL, "ns1:isValidUserCredentials");
-	case SOAP_TYPE_ns1__isValidUserCredentialsResponse:
-		return soap_in_ns1__isValidUserCredentialsResponse(soap, NULL, NULL, "ns1:isValidUserCredentialsResponse");
 	case SOAP_TYPE_ns1__getClassTeachers:
 		return soap_in_ns1__getClassTeachers(soap, NULL, NULL, "ns1:getClassTeachers");
 	case SOAP_TYPE_ns1__getClassTeachersResponse:
@@ -262,10 +262,18 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_ns1__savePassword(soap, NULL, NULL, "ns1:savePassword");
 	case SOAP_TYPE_ns1__savePasswordResponse:
 		return soap_in_ns1__savePasswordResponse(soap, NULL, NULL, "ns1:savePasswordResponse");
+	case SOAP_TYPE_ns1__forcePasswordReset:
+		return soap_in_ns1__forcePasswordReset(soap, NULL, NULL, "ns1:forcePasswordReset");
+	case SOAP_TYPE_ns1__forcePasswordResetResponse:
+		return soap_in_ns1__forcePasswordResetResponse(soap, NULL, NULL, "ns1:forcePasswordResetResponse");
 	case SOAP_TYPE_ns1__replaceInum:
 		return soap_in_ns1__replaceInum(soap, NULL, NULL, "ns1:replaceInum");
 	case SOAP_TYPE_ns1__replaceInumResponse:
 		return soap_in_ns1__replaceInumResponse(soap, NULL, NULL, "ns1:replaceInumResponse");
+	case SOAP_TYPE_ns1__getAccountPhoto:
+		return soap_in_ns1__getAccountPhoto(soap, NULL, NULL, "ns1:getAccountPhoto");
+	case SOAP_TYPE_ns1__getAccountPhotoResponse:
+		return soap_in_ns1__getAccountPhotoResponse(soap, NULL, NULL, "ns1:getAccountPhotoResponse");
 	case SOAP_TYPE_ns1__setAccountPhoto:
 		return soap_in_ns1__setAccountPhoto(soap, NULL, NULL, "ns1:setAccountPhoto");
 	case SOAP_TYPE_ns1__setAccountPhotoResponse:
@@ -346,6 +354,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_ns1__getAllAccounts(soap, NULL, NULL, "ns1:getAllAccounts");
 	case SOAP_TYPE_ns1__getAllAccountsResponse:
 		return soap_in_ns1__getAllAccountsResponse(soap, NULL, NULL, "ns1:getAllAccountsResponse");
+	case SOAP_TYPE_ns1__saveGroup:
+		return soap_in_ns1__saveGroup(soap, NULL, NULL, "ns1:saveGroup");
+	case SOAP_TYPE_ns1__saveGroupResponse:
+		return soap_in_ns1__saveGroupResponse(soap, NULL, NULL, "ns1:saveGroupResponse");
 	case SOAP_TYPE_ns1__saveClass:
 		return soap_in_ns1__saveClass(soap, NULL, NULL, "ns1:saveClass");
 	case SOAP_TYPE_ns1__saveClassResponse:
@@ -411,6 +423,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		{	*type = SOAP_TYPE_ns1__returnErrorCodes;
 			return soap_in_ns1__returnErrorCodes(soap, NULL, NULL, NULL);
 		}
+		if (!soap_match_tag(soap, t, "ns1:deactivateTwoFactorAuthentication"))
+		{	*type = SOAP_TYPE_ns1__deactivateTwoFactorAuthentication;
+			return soap_in_ns1__deactivateTwoFactorAuthentication(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:deactivateTwoFactorAuthenticationResponse"))
+		{	*type = SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse;
+			return soap_in_ns1__deactivateTwoFactorAuthenticationResponse(soap, NULL, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "ns1:getStudentCareer"))
 		{	*type = SOAP_TYPE_ns1__getStudentCareer;
 			return soap_in_ns1__getStudentCareer(soap, NULL, NULL, NULL);
@@ -475,14 +495,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		{	*type = SOAP_TYPE_ns1__getAbsentsByDateResponse;
 			return soap_in_ns1__getAbsentsByDateResponse(soap, NULL, NULL, NULL);
 		}
-		if (!soap_match_tag(soap, t, "ns1:isValidUserCredentials"))
-		{	*type = SOAP_TYPE_ns1__isValidUserCredentials;
-			return soap_in_ns1__isValidUserCredentials(soap, NULL, NULL, NULL);
-		}
-		if (!soap_match_tag(soap, t, "ns1:isValidUserCredentialsResponse"))
-		{	*type = SOAP_TYPE_ns1__isValidUserCredentialsResponse;
-			return soap_in_ns1__isValidUserCredentialsResponse(soap, NULL, NULL, NULL);
-		}
 		if (!soap_match_tag(soap, t, "ns1:getClassTeachers"))
 		{	*type = SOAP_TYPE_ns1__getClassTeachers;
 			return soap_in_ns1__getClassTeachers(soap, NULL, NULL, NULL);
@@ -523,6 +535,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		{	*type = SOAP_TYPE_ns1__savePasswordResponse;
 			return soap_in_ns1__savePasswordResponse(soap, NULL, NULL, NULL);
 		}
+		if (!soap_match_tag(soap, t, "ns1:forcePasswordReset"))
+		{	*type = SOAP_TYPE_ns1__forcePasswordReset;
+			return soap_in_ns1__forcePasswordReset(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:forcePasswordResetResponse"))
+		{	*type = SOAP_TYPE_ns1__forcePasswordResetResponse;
+			return soap_in_ns1__forcePasswordResetResponse(soap, NULL, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "ns1:replaceInum"))
 		{	*type = SOAP_TYPE_ns1__replaceInum;
 			return soap_in_ns1__replaceInum(soap, NULL, NULL, NULL);
@@ -530,6 +550,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		if (!soap_match_tag(soap, t, "ns1:replaceInumResponse"))
 		{	*type = SOAP_TYPE_ns1__replaceInumResponse;
 			return soap_in_ns1__replaceInumResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:getAccountPhoto"))
+		{	*type = SOAP_TYPE_ns1__getAccountPhoto;
+			return soap_in_ns1__getAccountPhoto(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:getAccountPhotoResponse"))
+		{	*type = SOAP_TYPE_ns1__getAccountPhotoResponse;
+			return soap_in_ns1__getAccountPhotoResponse(soap, NULL, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "ns1:setAccountPhoto"))
 		{	*type = SOAP_TYPE_ns1__setAccountPhoto;
@@ -691,6 +719,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		{	*type = SOAP_TYPE_ns1__getAllAccountsResponse;
 			return soap_in_ns1__getAllAccountsResponse(soap, NULL, NULL, NULL);
 		}
+		if (!soap_match_tag(soap, t, "ns1:saveGroup"))
+		{	*type = SOAP_TYPE_ns1__saveGroup;
+			return soap_in_ns1__saveGroup(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:saveGroupResponse"))
+		{	*type = SOAP_TYPE_ns1__saveGroupResponse;
+			return soap_in_ns1__saveGroupResponse(soap, NULL, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "ns1:saveClass"))
 		{	*type = SOAP_TYPE_ns1__saveClass;
 			return soap_in_ns1__saveClass(soap, NULL, NULL, NULL);
@@ -810,6 +846,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_ns1__returnCsvErrorCodesResponse(soap, tag, id, (const struct ns1__returnCsvErrorCodesResponse *)ptr, "ns1:returnCsvErrorCodesResponse");
 	case SOAP_TYPE_ns1__returnErrorCodes:
 		return soap_out_ns1__returnErrorCodes(soap, tag, id, (const struct ns1__returnErrorCodes *)ptr, "ns1:returnErrorCodes");
+	case SOAP_TYPE_ns1__deactivateTwoFactorAuthentication:
+		return soap_out_ns1__deactivateTwoFactorAuthentication(soap, tag, id, (const struct ns1__deactivateTwoFactorAuthentication *)ptr, "ns1:deactivateTwoFactorAuthentication");
+	case SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse:
+		return soap_out_ns1__deactivateTwoFactorAuthenticationResponse(soap, tag, id, (const struct ns1__deactivateTwoFactorAuthenticationResponse *)ptr, "ns1:deactivateTwoFactorAuthenticationResponse");
 	case SOAP_TYPE_ns1__getStudentCareer:
 		return soap_out_ns1__getStudentCareer(soap, tag, id, (const struct ns1__getStudentCareer *)ptr, "ns1:getStudentCareer");
 	case SOAP_TYPE_ns1__getStudentCareerResponse:
@@ -842,10 +882,6 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_ns1__getAbsentsByDate(soap, tag, id, (const struct ns1__getAbsentsByDate *)ptr, "ns1:getAbsentsByDate");
 	case SOAP_TYPE_ns1__getAbsentsByDateResponse:
 		return soap_out_ns1__getAbsentsByDateResponse(soap, tag, id, (const struct ns1__getAbsentsByDateResponse *)ptr, "ns1:getAbsentsByDateResponse");
-	case SOAP_TYPE_ns1__isValidUserCredentials:
-		return soap_out_ns1__isValidUserCredentials(soap, tag, id, (const struct ns1__isValidUserCredentials *)ptr, "ns1:isValidUserCredentials");
-	case SOAP_TYPE_ns1__isValidUserCredentialsResponse:
-		return soap_out_ns1__isValidUserCredentialsResponse(soap, tag, id, (const struct ns1__isValidUserCredentialsResponse *)ptr, "ns1:isValidUserCredentialsResponse");
 	case SOAP_TYPE_ns1__getClassTeachers:
 		return soap_out_ns1__getClassTeachers(soap, tag, id, (const struct ns1__getClassTeachers *)ptr, "ns1:getClassTeachers");
 	case SOAP_TYPE_ns1__getClassTeachersResponse:
@@ -866,10 +902,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_ns1__savePassword(soap, tag, id, (const struct ns1__savePassword *)ptr, "ns1:savePassword");
 	case SOAP_TYPE_ns1__savePasswordResponse:
 		return soap_out_ns1__savePasswordResponse(soap, tag, id, (const struct ns1__savePasswordResponse *)ptr, "ns1:savePasswordResponse");
+	case SOAP_TYPE_ns1__forcePasswordReset:
+		return soap_out_ns1__forcePasswordReset(soap, tag, id, (const struct ns1__forcePasswordReset *)ptr, "ns1:forcePasswordReset");
+	case SOAP_TYPE_ns1__forcePasswordResetResponse:
+		return soap_out_ns1__forcePasswordResetResponse(soap, tag, id, (const struct ns1__forcePasswordResetResponse *)ptr, "ns1:forcePasswordResetResponse");
 	case SOAP_TYPE_ns1__replaceInum:
 		return soap_out_ns1__replaceInum(soap, tag, id, (const struct ns1__replaceInum *)ptr, "ns1:replaceInum");
 	case SOAP_TYPE_ns1__replaceInumResponse:
 		return soap_out_ns1__replaceInumResponse(soap, tag, id, (const struct ns1__replaceInumResponse *)ptr, "ns1:replaceInumResponse");
+	case SOAP_TYPE_ns1__getAccountPhoto:
+		return soap_out_ns1__getAccountPhoto(soap, tag, id, (const struct ns1__getAccountPhoto *)ptr, "ns1:getAccountPhoto");
+	case SOAP_TYPE_ns1__getAccountPhotoResponse:
+		return soap_out_ns1__getAccountPhotoResponse(soap, tag, id, (const struct ns1__getAccountPhotoResponse *)ptr, "ns1:getAccountPhotoResponse");
 	case SOAP_TYPE_ns1__setAccountPhoto:
 		return soap_out_ns1__setAccountPhoto(soap, tag, id, (const struct ns1__setAccountPhoto *)ptr, "ns1:setAccountPhoto");
 	case SOAP_TYPE_ns1__setAccountPhotoResponse:
@@ -950,6 +994,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_ns1__getAllAccounts(soap, tag, id, (const struct ns1__getAllAccounts *)ptr, "ns1:getAllAccounts");
 	case SOAP_TYPE_ns1__getAllAccountsResponse:
 		return soap_out_ns1__getAllAccountsResponse(soap, tag, id, (const struct ns1__getAllAccountsResponse *)ptr, "ns1:getAllAccountsResponse");
+	case SOAP_TYPE_ns1__saveGroup:
+		return soap_out_ns1__saveGroup(soap, tag, id, (const struct ns1__saveGroup *)ptr, "ns1:saveGroup");
+	case SOAP_TYPE_ns1__saveGroupResponse:
+		return soap_out_ns1__saveGroupResponse(soap, tag, id, (const struct ns1__saveGroupResponse *)ptr, "ns1:saveGroupResponse");
 	case SOAP_TYPE_ns1__saveClass:
 		return soap_out_ns1__saveClass(soap, tag, id, (const struct ns1__saveClass *)ptr, "ns1:saveClass");
 	case SOAP_TYPE_ns1__saveClassResponse:
@@ -1002,6 +1050,12 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_ns1__returnErrorCodes:
 		soap_serialize_ns1__returnErrorCodes(soap, (const struct ns1__returnErrorCodes *)ptr);
 		break;
+	case SOAP_TYPE_ns1__deactivateTwoFactorAuthentication:
+		soap_serialize_ns1__deactivateTwoFactorAuthentication(soap, (const struct ns1__deactivateTwoFactorAuthentication *)ptr);
+		break;
+	case SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse:
+		soap_serialize_ns1__deactivateTwoFactorAuthenticationResponse(soap, (const struct ns1__deactivateTwoFactorAuthenticationResponse *)ptr);
+		break;
 	case SOAP_TYPE_ns1__getStudentCareer:
 		soap_serialize_ns1__getStudentCareer(soap, (const struct ns1__getStudentCareer *)ptr);
 		break;
@@ -1050,12 +1104,6 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_ns1__getAbsentsByDateResponse:
 		soap_serialize_ns1__getAbsentsByDateResponse(soap, (const struct ns1__getAbsentsByDateResponse *)ptr);
 		break;
-	case SOAP_TYPE_ns1__isValidUserCredentials:
-		soap_serialize_ns1__isValidUserCredentials(soap, (const struct ns1__isValidUserCredentials *)ptr);
-		break;
-	case SOAP_TYPE_ns1__isValidUserCredentialsResponse:
-		soap_serialize_ns1__isValidUserCredentialsResponse(soap, (const struct ns1__isValidUserCredentialsResponse *)ptr);
-		break;
 	case SOAP_TYPE_ns1__getClassTeachers:
 		soap_serialize_ns1__getClassTeachers(soap, (const struct ns1__getClassTeachers *)ptr);
 		break;
@@ -1086,11 +1134,23 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_ns1__savePasswordResponse:
 		soap_serialize_ns1__savePasswordResponse(soap, (const struct ns1__savePasswordResponse *)ptr);
 		break;
+	case SOAP_TYPE_ns1__forcePasswordReset:
+		soap_serialize_ns1__forcePasswordReset(soap, (const struct ns1__forcePasswordReset *)ptr);
+		break;
+	case SOAP_TYPE_ns1__forcePasswordResetResponse:
+		soap_serialize_ns1__forcePasswordResetResponse(soap, (const struct ns1__forcePasswordResetResponse *)ptr);
+		break;
 	case SOAP_TYPE_ns1__replaceInum:
 		soap_serialize_ns1__replaceInum(soap, (const struct ns1__replaceInum *)ptr);
 		break;
 	case SOAP_TYPE_ns1__replaceInumResponse:
 		soap_serialize_ns1__replaceInumResponse(soap, (const struct ns1__replaceInumResponse *)ptr);
+		break;
+	case SOAP_TYPE_ns1__getAccountPhoto:
+		soap_serialize_ns1__getAccountPhoto(soap, (const struct ns1__getAccountPhoto *)ptr);
+		break;
+	case SOAP_TYPE_ns1__getAccountPhotoResponse:
+		soap_serialize_ns1__getAccountPhotoResponse(soap, (const struct ns1__getAccountPhotoResponse *)ptr);
 		break;
 	case SOAP_TYPE_ns1__setAccountPhoto:
 		soap_serialize_ns1__setAccountPhoto(soap, (const struct ns1__setAccountPhoto *)ptr);
@@ -1212,6 +1272,12 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_ns1__getAllAccountsResponse:
 		soap_serialize_ns1__getAllAccountsResponse(soap, (const struct ns1__getAllAccountsResponse *)ptr);
 		break;
+	case SOAP_TYPE_ns1__saveGroup:
+		soap_serialize_ns1__saveGroup(soap, (const struct ns1__saveGroup *)ptr);
+		break;
+	case SOAP_TYPE_ns1__saveGroupResponse:
+		soap_serialize_ns1__saveGroupResponse(soap, (const struct ns1__saveGroupResponse *)ptr);
+		break;
 	case SOAP_TYPE_ns1__saveClass:
 		soap_serialize_ns1__saveClass(soap, (const struct ns1__saveClass *)ptr);
 		break;
@@ -1258,6 +1324,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_ns1__saveClassResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__saveClass:
 		return (void*)soap_instantiate_ns1__saveClass(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns1__saveGroupResponse:
+		return (void*)soap_instantiate_ns1__saveGroupResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns1__saveGroup:
+		return (void*)soap_instantiate_ns1__saveGroup(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__getAllAccountsResponse:
 		return (void*)soap_instantiate_ns1__getAllAccountsResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__getAllAccounts:
@@ -1338,10 +1408,18 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_ns1__setAccountPhotoResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__setAccountPhoto:
 		return (void*)soap_instantiate_ns1__setAccountPhoto(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns1__getAccountPhotoResponse:
+		return (void*)soap_instantiate_ns1__getAccountPhotoResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns1__getAccountPhoto:
+		return (void*)soap_instantiate_ns1__getAccountPhoto(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__replaceInumResponse:
 		return (void*)soap_instantiate_ns1__replaceInumResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__replaceInum:
 		return (void*)soap_instantiate_ns1__replaceInum(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns1__forcePasswordResetResponse:
+		return (void*)soap_instantiate_ns1__forcePasswordResetResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns1__forcePasswordReset:
+		return (void*)soap_instantiate_ns1__forcePasswordReset(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__savePasswordResponse:
 		return (void*)soap_instantiate_ns1__savePasswordResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__savePassword:
@@ -1362,10 +1440,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_ns1__getClassTeachersResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__getClassTeachers:
 		return (void*)soap_instantiate_ns1__getClassTeachers(soap, -1, type, arrayType, n);
-	case SOAP_TYPE_ns1__isValidUserCredentialsResponse:
-		return (void*)soap_instantiate_ns1__isValidUserCredentialsResponse(soap, -1, type, arrayType, n);
-	case SOAP_TYPE_ns1__isValidUserCredentials:
-		return (void*)soap_instantiate_ns1__isValidUserCredentials(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__getAbsentsByDateResponse:
 		return (void*)soap_instantiate_ns1__getAbsentsByDateResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__getAbsentsByDate:
@@ -1398,6 +1472,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_ns1__getStudentCareerResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__getStudentCareer:
 		return (void*)soap_instantiate_ns1__getStudentCareer(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse:
+		return (void*)soap_instantiate_ns1__deactivateTwoFactorAuthenticationResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns1__deactivateTwoFactorAuthentication:
+		return (void*)soap_instantiate_ns1__deactivateTwoFactorAuthentication(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__returnErrorCodes:
 		return (void*)soap_instantiate_ns1__returnErrorCodes(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns1__returnCsvErrorCodesResponse:
@@ -1468,6 +1546,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 			SOAP_DELETE((struct ns1__saveClass*)p->ptr);
 		else
 			SOAP_DELETE_ARRAY((struct ns1__saveClass*)p->ptr);
+		break;
+	case SOAP_TYPE_ns1__saveGroupResponse:
+		if (p->size < 0)
+			SOAP_DELETE((struct ns1__saveGroupResponse*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ns1__saveGroupResponse*)p->ptr);
+		break;
+	case SOAP_TYPE_ns1__saveGroup:
+		if (p->size < 0)
+			SOAP_DELETE((struct ns1__saveGroup*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ns1__saveGroup*)p->ptr);
 		break;
 	case SOAP_TYPE_ns1__getAllAccountsResponse:
 		if (p->size < 0)
@@ -1709,6 +1799,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY((struct ns1__setAccountPhoto*)p->ptr);
 		break;
+	case SOAP_TYPE_ns1__getAccountPhotoResponse:
+		if (p->size < 0)
+			SOAP_DELETE((struct ns1__getAccountPhotoResponse*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ns1__getAccountPhotoResponse*)p->ptr);
+		break;
+	case SOAP_TYPE_ns1__getAccountPhoto:
+		if (p->size < 0)
+			SOAP_DELETE((struct ns1__getAccountPhoto*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ns1__getAccountPhoto*)p->ptr);
+		break;
 	case SOAP_TYPE_ns1__replaceInumResponse:
 		if (p->size < 0)
 			SOAP_DELETE((struct ns1__replaceInumResponse*)p->ptr);
@@ -1720,6 +1822,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 			SOAP_DELETE((struct ns1__replaceInum*)p->ptr);
 		else
 			SOAP_DELETE_ARRAY((struct ns1__replaceInum*)p->ptr);
+		break;
+	case SOAP_TYPE_ns1__forcePasswordResetResponse:
+		if (p->size < 0)
+			SOAP_DELETE((struct ns1__forcePasswordResetResponse*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ns1__forcePasswordResetResponse*)p->ptr);
+		break;
+	case SOAP_TYPE_ns1__forcePasswordReset:
+		if (p->size < 0)
+			SOAP_DELETE((struct ns1__forcePasswordReset*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ns1__forcePasswordReset*)p->ptr);
 		break;
 	case SOAP_TYPE_ns1__savePasswordResponse:
 		if (p->size < 0)
@@ -1780,18 +1894,6 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 			SOAP_DELETE((struct ns1__getClassTeachers*)p->ptr);
 		else
 			SOAP_DELETE_ARRAY((struct ns1__getClassTeachers*)p->ptr);
-		break;
-	case SOAP_TYPE_ns1__isValidUserCredentialsResponse:
-		if (p->size < 0)
-			SOAP_DELETE((struct ns1__isValidUserCredentialsResponse*)p->ptr);
-		else
-			SOAP_DELETE_ARRAY((struct ns1__isValidUserCredentialsResponse*)p->ptr);
-		break;
-	case SOAP_TYPE_ns1__isValidUserCredentials:
-		if (p->size < 0)
-			SOAP_DELETE((struct ns1__isValidUserCredentials*)p->ptr);
-		else
-			SOAP_DELETE_ARRAY((struct ns1__isValidUserCredentials*)p->ptr);
 		break;
 	case SOAP_TYPE_ns1__getAbsentsByDateResponse:
 		if (p->size < 0)
@@ -1888,6 +1990,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 			SOAP_DELETE((struct ns1__getStudentCareer*)p->ptr);
 		else
 			SOAP_DELETE_ARRAY((struct ns1__getStudentCareer*)p->ptr);
+		break;
+	case SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse:
+		if (p->size < 0)
+			SOAP_DELETE((struct ns1__deactivateTwoFactorAuthenticationResponse*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ns1__deactivateTwoFactorAuthenticationResponse*)p->ptr);
+		break;
+	case SOAP_TYPE_ns1__deactivateTwoFactorAuthentication:
+		if (p->size < 0)
+			SOAP_DELETE((struct ns1__deactivateTwoFactorAuthentication*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ns1__deactivateTwoFactorAuthentication*)p->ptr);
 		break;
 	case SOAP_TYPE_ns1__returnErrorCodes:
 		if (p->size < 0)
@@ -3398,6 +3512,245 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__returnErrorCodes(struct soap *soap, in
 	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
 	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__returnErrorCodes %p -> %p\n", q, p));
 	*(struct ns1__returnErrorCodes*)p = *(struct ns1__returnErrorCodes*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__deactivateTwoFactorAuthentication(struct soap *soap, struct ns1__deactivateTwoFactorAuthentication *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_std__string(soap, &a->accesscode);
+	soap_default_std__string(soap, &a->userIdentifier);
+	soap_default_int(soap, &a->accountType);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__deactivateTwoFactorAuthentication(struct soap *soap, const struct ns1__deactivateTwoFactorAuthentication *a)
+{
+#ifndef WITH_NOIDREF
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_std__string(soap, &a->accesscode);
+	soap_serialize_std__string(soap, &a->userIdentifier);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__deactivateTwoFactorAuthentication(struct soap *soap, const char *tag, int id, const struct ns1__deactivateTwoFactorAuthentication *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns1__deactivateTwoFactorAuthentication), type))
+		return soap->error;
+	if (soap_out_std__string(soap, "accesscode", -1, &a->accesscode, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "userIdentifier", -1, &a->userIdentifier, ""))
+		return soap->error;
+	if (soap_out_int(soap, "accountType", -1, &a->accountType, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ns1__deactivateTwoFactorAuthentication * SOAP_FMAC4 soap_in_ns1__deactivateTwoFactorAuthentication(struct soap *soap, const char *tag, struct ns1__deactivateTwoFactorAuthentication *a, const char *type)
+{
+	size_t soap_flag_accesscode = 1;
+	size_t soap_flag_userIdentifier = 1;
+	size_t soap_flag_accountType = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ns1__deactivateTwoFactorAuthentication *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ns1__deactivateTwoFactorAuthentication, sizeof(struct ns1__deactivateTwoFactorAuthentication), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ns1__deactivateTwoFactorAuthentication(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_accesscode && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "accesscode", &a->accesscode, "xsd:string"))
+				{	soap_flag_accesscode--;
+					continue;
+				}
+			if (soap_flag_userIdentifier && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "userIdentifier", &a->userIdentifier, "xsd:string"))
+				{	soap_flag_userIdentifier--;
+					continue;
+				}
+			if (soap_flag_accountType && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "accountType", &a->accountType, "xsd:int"))
+				{	soap_flag_accountType--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ns1__deactivateTwoFactorAuthentication *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns1__deactivateTwoFactorAuthentication, 0, sizeof(struct ns1__deactivateTwoFactorAuthentication), 0, soap_copy_ns1__deactivateTwoFactorAuthentication);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_accesscode > 0 || soap_flag_userIdentifier > 0 || soap_flag_accountType > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__deactivateTwoFactorAuthentication(struct soap *soap, const struct ns1__deactivateTwoFactorAuthentication *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ns1__deactivateTwoFactorAuthentication);
+	if (soap_out_ns1__deactivateTwoFactorAuthentication(soap, tag?tag:"ns1:deactivateTwoFactorAuthentication", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ns1__deactivateTwoFactorAuthentication * SOAP_FMAC4 soap_get_ns1__deactivateTwoFactorAuthentication(struct soap *soap, struct ns1__deactivateTwoFactorAuthentication *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns1__deactivateTwoFactorAuthentication(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ns1__deactivateTwoFactorAuthentication * SOAP_FMAC2 soap_instantiate_ns1__deactivateTwoFactorAuthentication(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns1__deactivateTwoFactorAuthentication(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ns1__deactivateTwoFactorAuthentication, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ns1__deactivateTwoFactorAuthentication);
+		if (size)
+			*size = sizeof(struct ns1__deactivateTwoFactorAuthentication);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW_ARRAY(struct ns1__deactivateTwoFactorAuthentication, n);
+		if (size)
+			*size = n * sizeof(struct ns1__deactivateTwoFactorAuthentication);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	if (!cp->ptr)
+		soap->error = SOAP_EOM;
+	return (struct ns1__deactivateTwoFactorAuthentication*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__deactivateTwoFactorAuthentication(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__deactivateTwoFactorAuthentication %p -> %p\n", q, p));
+	*(struct ns1__deactivateTwoFactorAuthentication*)p = *(struct ns1__deactivateTwoFactorAuthentication*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, struct ns1__deactivateTwoFactorAuthenticationResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_xsd__anyType(soap, &a->return_);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, const struct ns1__deactivateTwoFactorAuthenticationResponse *a)
+{
+#ifndef WITH_NOIDREF
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_xsd__anyType(soap, &a->return_);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, const char *tag, int id, const struct ns1__deactivateTwoFactorAuthenticationResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse), type))
+		return soap->error;
+	if (soap_out_xsd__anyType(soap, "return", -1, &a->return_, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ns1__deactivateTwoFactorAuthenticationResponse * SOAP_FMAC4 soap_in_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, const char *tag, struct ns1__deactivateTwoFactorAuthenticationResponse *a, const char *type)
+{
+	size_t soap_flag_return_ = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ns1__deactivateTwoFactorAuthenticationResponse *)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse, sizeof(struct ns1__deactivateTwoFactorAuthenticationResponse), 0, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default_ns1__deactivateTwoFactorAuthenticationResponse(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_return_ && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_xsd__anyType(soap, "return", &a->return_, "xsd:anyType"))
+				{	soap_flag_return_--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ns1__deactivateTwoFactorAuthenticationResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse, 0, sizeof(struct ns1__deactivateTwoFactorAuthenticationResponse), 0, NULL);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_return_ > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, const struct ns1__deactivateTwoFactorAuthenticationResponse *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse);
+	if (soap_out_ns1__deactivateTwoFactorAuthenticationResponse(soap, tag?tag:"ns1:deactivateTwoFactorAuthenticationResponse", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ns1__deactivateTwoFactorAuthenticationResponse * SOAP_FMAC4 soap_get_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, struct ns1__deactivateTwoFactorAuthenticationResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns1__deactivateTwoFactorAuthenticationResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ns1__deactivateTwoFactorAuthenticationResponse * SOAP_FMAC2 soap_instantiate_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns1__deactivateTwoFactorAuthenticationResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ns1__deactivateTwoFactorAuthenticationResponse);
+		if (size)
+			*size = sizeof(struct ns1__deactivateTwoFactorAuthenticationResponse);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW_ARRAY(struct ns1__deactivateTwoFactorAuthenticationResponse, n);
+		if (size)
+			*size = n * sizeof(struct ns1__deactivateTwoFactorAuthenticationResponse);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	if (!cp->ptr)
+		soap->error = SOAP_EOM;
+	return (struct ns1__deactivateTwoFactorAuthenticationResponse*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__deactivateTwoFactorAuthenticationResponse %p -> %p\n", q, p));
+	*(struct ns1__deactivateTwoFactorAuthenticationResponse*)p = *(struct ns1__deactivateTwoFactorAuthenticationResponse*)q;
 }
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getStudentCareer(struct soap *soap, struct ns1__getStudentCareer *a)
@@ -5278,246 +5631,6 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAbsentsByDateResponse(struct soap *
 	*(struct ns1__getAbsentsByDateResponse*)p = *(struct ns1__getAbsentsByDateResponse*)q;
 }
 
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__isValidUserCredentials(struct soap *soap, struct ns1__isValidUserCredentials *a)
-{
-	(void)soap; (void)a; /* appease -Wall -Werror */
-	soap_default_std__string(soap, &a->accesscode);
-	soap_default_std__string(soap, &a->username);
-	soap_default_std__string(soap, &a->password);
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__isValidUserCredentials(struct soap *soap, const struct ns1__isValidUserCredentials *a)
-{
-#ifndef WITH_NOIDREF
-	(void)soap; (void)a; /* appease -Wall -Werror */
-	soap_serialize_std__string(soap, &a->accesscode);
-	soap_serialize_std__string(soap, &a->username);
-	soap_serialize_std__string(soap, &a->password);
-#endif
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__isValidUserCredentials(struct soap *soap, const char *tag, int id, const struct ns1__isValidUserCredentials *a, const char *type)
-{
-	(void)soap; (void)tag; (void)id; (void)type;
-	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns1__isValidUserCredentials), type))
-		return soap->error;
-	if (soap_out_std__string(soap, "accesscode", -1, &a->accesscode, ""))
-		return soap->error;
-	if (soap_out_std__string(soap, "username", -1, &a->username, ""))
-		return soap->error;
-	if (soap_out_std__string(soap, "password", -1, &a->password, ""))
-		return soap->error;
-	return soap_element_end_out(soap, tag);
-}
-
-SOAP_FMAC3 struct ns1__isValidUserCredentials * SOAP_FMAC4 soap_in_ns1__isValidUserCredentials(struct soap *soap, const char *tag, struct ns1__isValidUserCredentials *a, const char *type)
-{
-	size_t soap_flag_accesscode = 1;
-	size_t soap_flag_username = 1;
-	size_t soap_flag_password = 1;
-	if (soap_element_begin_in(soap, tag, 0, type))
-		return NULL;
-	a = (struct ns1__isValidUserCredentials *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ns1__isValidUserCredentials, sizeof(struct ns1__isValidUserCredentials), soap->type, soap->arrayType);
-	if (!a)
-		return NULL;
-	soap_default_ns1__isValidUserCredentials(soap, a);
-	if (soap->body && !*soap->href)
-	{
-		for (;;)
-		{	soap->error = SOAP_TAG_MISMATCH;
-			if (soap_flag_accesscode && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-				if (soap_in_std__string(soap, "accesscode", &a->accesscode, "xsd:string"))
-				{	soap_flag_accesscode--;
-					continue;
-				}
-			if (soap_flag_username && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-				if (soap_in_std__string(soap, "username", &a->username, "xsd:string"))
-				{	soap_flag_username--;
-					continue;
-				}
-			if (soap_flag_password && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-				if (soap_in_std__string(soap, "password", &a->password, "xsd:string"))
-				{	soap_flag_password--;
-					continue;
-				}
-			if (soap->error == SOAP_TAG_MISMATCH)
-				soap->error = soap_ignore_element(soap);
-			if (soap->error == SOAP_NO_TAG)
-				break;
-			if (soap->error)
-				return NULL;
-		}
-		if (soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	else
-	{	a = (struct ns1__isValidUserCredentials *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns1__isValidUserCredentials, 0, sizeof(struct ns1__isValidUserCredentials), 0, soap_copy_ns1__isValidUserCredentials);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_accesscode > 0 || soap_flag_username > 0 || soap_flag_password > 0))
-	{	soap->error = SOAP_OCCURS;
-		return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__isValidUserCredentials(struct soap *soap, const struct ns1__isValidUserCredentials *a, const char *tag, const char *type)
-{
-	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ns1__isValidUserCredentials);
-	if (soap_out_ns1__isValidUserCredentials(soap, tag?tag:"ns1:isValidUserCredentials", id, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-SOAP_FMAC3 struct ns1__isValidUserCredentials * SOAP_FMAC4 soap_get_ns1__isValidUserCredentials(struct soap *soap, struct ns1__isValidUserCredentials *p, const char *tag, const char *type)
-{
-	if ((p = soap_in_ns1__isValidUserCredentials(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-SOAP_FMAC1 struct ns1__isValidUserCredentials * SOAP_FMAC2 soap_instantiate_ns1__isValidUserCredentials(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
-{
-	(void)type; (void)arrayType; /* appease -Wall -Werror */
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns1__isValidUserCredentials(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
-	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ns1__isValidUserCredentials, n, soap_fdelete);
-	if (!cp)
-		return NULL;
-	if (n < 0)
-	{	cp->ptr = (void*)SOAP_NEW(struct ns1__isValidUserCredentials);
-		if (size)
-			*size = sizeof(struct ns1__isValidUserCredentials);
-	}
-	else
-	{	cp->ptr = (void*)SOAP_NEW_ARRAY(struct ns1__isValidUserCredentials, n);
-		if (size)
-			*size = n * sizeof(struct ns1__isValidUserCredentials);
-	}
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
-	if (!cp->ptr)
-		soap->error = SOAP_EOM;
-	return (struct ns1__isValidUserCredentials*)cp->ptr;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__isValidUserCredentials(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
-{
-	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__isValidUserCredentials %p -> %p\n", q, p));
-	*(struct ns1__isValidUserCredentials*)p = *(struct ns1__isValidUserCredentials*)q;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__isValidUserCredentialsResponse(struct soap *soap, struct ns1__isValidUserCredentialsResponse *a)
-{
-	(void)soap; (void)a; /* appease -Wall -Werror */
-	soap_default_xsd__anyType(soap, &a->return_);
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__isValidUserCredentialsResponse(struct soap *soap, const struct ns1__isValidUserCredentialsResponse *a)
-{
-#ifndef WITH_NOIDREF
-	(void)soap; (void)a; /* appease -Wall -Werror */
-	soap_serialize_xsd__anyType(soap, &a->return_);
-#endif
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__isValidUserCredentialsResponse(struct soap *soap, const char *tag, int id, const struct ns1__isValidUserCredentialsResponse *a, const char *type)
-{
-	(void)soap; (void)tag; (void)id; (void)type;
-	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns1__isValidUserCredentialsResponse), type))
-		return soap->error;
-	if (soap_out_xsd__anyType(soap, "return", -1, &a->return_, ""))
-		return soap->error;
-	return soap_element_end_out(soap, tag);
-}
-
-SOAP_FMAC3 struct ns1__isValidUserCredentialsResponse * SOAP_FMAC4 soap_in_ns1__isValidUserCredentialsResponse(struct soap *soap, const char *tag, struct ns1__isValidUserCredentialsResponse *a, const char *type)
-{
-	size_t soap_flag_return_ = 1;
-	if (soap_element_begin_in(soap, tag, 0, type))
-		return NULL;
-	a = (struct ns1__isValidUserCredentialsResponse *)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns1__isValidUserCredentialsResponse, sizeof(struct ns1__isValidUserCredentialsResponse), 0, NULL, NULL, NULL);
-	if (!a)
-		return NULL;
-	soap_default_ns1__isValidUserCredentialsResponse(soap, a);
-	if (soap->body && !*soap->href)
-	{
-		for (;;)
-		{	soap->error = SOAP_TAG_MISMATCH;
-			if (soap_flag_return_ && soap->error == SOAP_TAG_MISMATCH)
-				if (soap_in_xsd__anyType(soap, "return", &a->return_, "xsd:anyType"))
-				{	soap_flag_return_--;
-					continue;
-				}
-			if (soap->error == SOAP_TAG_MISMATCH)
-				soap->error = soap_ignore_element(soap);
-			if (soap->error == SOAP_NO_TAG)
-				break;
-			if (soap->error)
-				return NULL;
-		}
-		if (soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	else
-	{	a = (struct ns1__isValidUserCredentialsResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns1__isValidUserCredentialsResponse, 0, sizeof(struct ns1__isValidUserCredentialsResponse), 0, NULL);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_return_ > 0))
-	{	soap->error = SOAP_OCCURS;
-		return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__isValidUserCredentialsResponse(struct soap *soap, const struct ns1__isValidUserCredentialsResponse *a, const char *tag, const char *type)
-{
-	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ns1__isValidUserCredentialsResponse);
-	if (soap_out_ns1__isValidUserCredentialsResponse(soap, tag?tag:"ns1:isValidUserCredentialsResponse", id, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-SOAP_FMAC3 struct ns1__isValidUserCredentialsResponse * SOAP_FMAC4 soap_get_ns1__isValidUserCredentialsResponse(struct soap *soap, struct ns1__isValidUserCredentialsResponse *p, const char *tag, const char *type)
-{
-	if ((p = soap_in_ns1__isValidUserCredentialsResponse(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-SOAP_FMAC1 struct ns1__isValidUserCredentialsResponse * SOAP_FMAC2 soap_instantiate_ns1__isValidUserCredentialsResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
-{
-	(void)type; (void)arrayType; /* appease -Wall -Werror */
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns1__isValidUserCredentialsResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
-	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ns1__isValidUserCredentialsResponse, n, soap_fdelete);
-	if (!cp)
-		return NULL;
-	if (n < 0)
-	{	cp->ptr = (void*)SOAP_NEW(struct ns1__isValidUserCredentialsResponse);
-		if (size)
-			*size = sizeof(struct ns1__isValidUserCredentialsResponse);
-	}
-	else
-	{	cp->ptr = (void*)SOAP_NEW_ARRAY(struct ns1__isValidUserCredentialsResponse, n);
-		if (size)
-			*size = n * sizeof(struct ns1__isValidUserCredentialsResponse);
-	}
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
-	if (!cp->ptr)
-		soap->error = SOAP_EOM;
-	return (struct ns1__isValidUserCredentialsResponse*)cp->ptr;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__isValidUserCredentialsResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
-{
-	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__isValidUserCredentialsResponse %p -> %p\n", q, p));
-	*(struct ns1__isValidUserCredentialsResponse*)p = *(struct ns1__isValidUserCredentialsResponse*)q;
-}
-
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getClassTeachers(struct soap *soap, struct ns1__getClassTeachers *a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -6735,6 +6848,245 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__savePasswordResponse(struct soap *soap
 	*(struct ns1__savePasswordResponse*)p = *(struct ns1__savePasswordResponse*)q;
 }
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__forcePasswordReset(struct soap *soap, struct ns1__forcePasswordReset *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_std__string(soap, &a->accesscode);
+	soap_default_std__string(soap, &a->userIdentifier);
+	soap_default_int(soap, &a->accountType);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__forcePasswordReset(struct soap *soap, const struct ns1__forcePasswordReset *a)
+{
+#ifndef WITH_NOIDREF
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_std__string(soap, &a->accesscode);
+	soap_serialize_std__string(soap, &a->userIdentifier);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__forcePasswordReset(struct soap *soap, const char *tag, int id, const struct ns1__forcePasswordReset *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns1__forcePasswordReset), type))
+		return soap->error;
+	if (soap_out_std__string(soap, "accesscode", -1, &a->accesscode, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "userIdentifier", -1, &a->userIdentifier, ""))
+		return soap->error;
+	if (soap_out_int(soap, "accountType", -1, &a->accountType, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ns1__forcePasswordReset * SOAP_FMAC4 soap_in_ns1__forcePasswordReset(struct soap *soap, const char *tag, struct ns1__forcePasswordReset *a, const char *type)
+{
+	size_t soap_flag_accesscode = 1;
+	size_t soap_flag_userIdentifier = 1;
+	size_t soap_flag_accountType = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ns1__forcePasswordReset *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ns1__forcePasswordReset, sizeof(struct ns1__forcePasswordReset), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ns1__forcePasswordReset(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_accesscode && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "accesscode", &a->accesscode, "xsd:string"))
+				{	soap_flag_accesscode--;
+					continue;
+				}
+			if (soap_flag_userIdentifier && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "userIdentifier", &a->userIdentifier, "xsd:string"))
+				{	soap_flag_userIdentifier--;
+					continue;
+				}
+			if (soap_flag_accountType && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "accountType", &a->accountType, "xsd:int"))
+				{	soap_flag_accountType--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ns1__forcePasswordReset *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns1__forcePasswordReset, 0, sizeof(struct ns1__forcePasswordReset), 0, soap_copy_ns1__forcePasswordReset);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_accesscode > 0 || soap_flag_userIdentifier > 0 || soap_flag_accountType > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__forcePasswordReset(struct soap *soap, const struct ns1__forcePasswordReset *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ns1__forcePasswordReset);
+	if (soap_out_ns1__forcePasswordReset(soap, tag?tag:"ns1:forcePasswordReset", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ns1__forcePasswordReset * SOAP_FMAC4 soap_get_ns1__forcePasswordReset(struct soap *soap, struct ns1__forcePasswordReset *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns1__forcePasswordReset(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ns1__forcePasswordReset * SOAP_FMAC2 soap_instantiate_ns1__forcePasswordReset(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns1__forcePasswordReset(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ns1__forcePasswordReset, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ns1__forcePasswordReset);
+		if (size)
+			*size = sizeof(struct ns1__forcePasswordReset);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW_ARRAY(struct ns1__forcePasswordReset, n);
+		if (size)
+			*size = n * sizeof(struct ns1__forcePasswordReset);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	if (!cp->ptr)
+		soap->error = SOAP_EOM;
+	return (struct ns1__forcePasswordReset*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__forcePasswordReset(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__forcePasswordReset %p -> %p\n", q, p));
+	*(struct ns1__forcePasswordReset*)p = *(struct ns1__forcePasswordReset*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__forcePasswordResetResponse(struct soap *soap, struct ns1__forcePasswordResetResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_xsd__anyType(soap, &a->return_);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__forcePasswordResetResponse(struct soap *soap, const struct ns1__forcePasswordResetResponse *a)
+{
+#ifndef WITH_NOIDREF
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_xsd__anyType(soap, &a->return_);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__forcePasswordResetResponse(struct soap *soap, const char *tag, int id, const struct ns1__forcePasswordResetResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns1__forcePasswordResetResponse), type))
+		return soap->error;
+	if (soap_out_xsd__anyType(soap, "return", -1, &a->return_, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ns1__forcePasswordResetResponse * SOAP_FMAC4 soap_in_ns1__forcePasswordResetResponse(struct soap *soap, const char *tag, struct ns1__forcePasswordResetResponse *a, const char *type)
+{
+	size_t soap_flag_return_ = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ns1__forcePasswordResetResponse *)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns1__forcePasswordResetResponse, sizeof(struct ns1__forcePasswordResetResponse), 0, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default_ns1__forcePasswordResetResponse(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_return_ && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_xsd__anyType(soap, "return", &a->return_, "xsd:anyType"))
+				{	soap_flag_return_--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ns1__forcePasswordResetResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns1__forcePasswordResetResponse, 0, sizeof(struct ns1__forcePasswordResetResponse), 0, NULL);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_return_ > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__forcePasswordResetResponse(struct soap *soap, const struct ns1__forcePasswordResetResponse *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ns1__forcePasswordResetResponse);
+	if (soap_out_ns1__forcePasswordResetResponse(soap, tag?tag:"ns1:forcePasswordResetResponse", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ns1__forcePasswordResetResponse * SOAP_FMAC4 soap_get_ns1__forcePasswordResetResponse(struct soap *soap, struct ns1__forcePasswordResetResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns1__forcePasswordResetResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ns1__forcePasswordResetResponse * SOAP_FMAC2 soap_instantiate_ns1__forcePasswordResetResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns1__forcePasswordResetResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ns1__forcePasswordResetResponse, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ns1__forcePasswordResetResponse);
+		if (size)
+			*size = sizeof(struct ns1__forcePasswordResetResponse);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW_ARRAY(struct ns1__forcePasswordResetResponse, n);
+		if (size)
+			*size = n * sizeof(struct ns1__forcePasswordResetResponse);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	if (!cp->ptr)
+		soap->error = SOAP_EOM;
+	return (struct ns1__forcePasswordResetResponse*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__forcePasswordResetResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__forcePasswordResetResponse %p -> %p\n", q, p));
+	*(struct ns1__forcePasswordResetResponse*)p = *(struct ns1__forcePasswordResetResponse*)q;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__replaceInum(struct soap *soap, struct ns1__replaceInum *a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -6973,6 +7325,236 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__replaceInumResponse(struct soap *soap,
 	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
 	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__replaceInumResponse %p -> %p\n", q, p));
 	*(struct ns1__replaceInumResponse*)p = *(struct ns1__replaceInumResponse*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAccountPhoto(struct soap *soap, struct ns1__getAccountPhoto *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_std__string(soap, &a->accesscode);
+	soap_default_std__string(soap, &a->userIdentifier);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAccountPhoto(struct soap *soap, const struct ns1__getAccountPhoto *a)
+{
+#ifndef WITH_NOIDREF
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_std__string(soap, &a->accesscode);
+	soap_serialize_std__string(soap, &a->userIdentifier);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__getAccountPhoto(struct soap *soap, const char *tag, int id, const struct ns1__getAccountPhoto *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns1__getAccountPhoto), type))
+		return soap->error;
+	if (soap_out_std__string(soap, "accesscode", -1, &a->accesscode, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "userIdentifier", -1, &a->userIdentifier, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ns1__getAccountPhoto * SOAP_FMAC4 soap_in_ns1__getAccountPhoto(struct soap *soap, const char *tag, struct ns1__getAccountPhoto *a, const char *type)
+{
+	size_t soap_flag_accesscode = 1;
+	size_t soap_flag_userIdentifier = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ns1__getAccountPhoto *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ns1__getAccountPhoto, sizeof(struct ns1__getAccountPhoto), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ns1__getAccountPhoto(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_accesscode && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "accesscode", &a->accesscode, "xsd:string"))
+				{	soap_flag_accesscode--;
+					continue;
+				}
+			if (soap_flag_userIdentifier && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "userIdentifier", &a->userIdentifier, "xsd:string"))
+				{	soap_flag_userIdentifier--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ns1__getAccountPhoto *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns1__getAccountPhoto, 0, sizeof(struct ns1__getAccountPhoto), 0, soap_copy_ns1__getAccountPhoto);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_accesscode > 0 || soap_flag_userIdentifier > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__getAccountPhoto(struct soap *soap, const struct ns1__getAccountPhoto *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ns1__getAccountPhoto);
+	if (soap_out_ns1__getAccountPhoto(soap, tag?tag:"ns1:getAccountPhoto", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ns1__getAccountPhoto * SOAP_FMAC4 soap_get_ns1__getAccountPhoto(struct soap *soap, struct ns1__getAccountPhoto *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns1__getAccountPhoto(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ns1__getAccountPhoto * SOAP_FMAC2 soap_instantiate_ns1__getAccountPhoto(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns1__getAccountPhoto(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ns1__getAccountPhoto, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ns1__getAccountPhoto);
+		if (size)
+			*size = sizeof(struct ns1__getAccountPhoto);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW_ARRAY(struct ns1__getAccountPhoto, n);
+		if (size)
+			*size = n * sizeof(struct ns1__getAccountPhoto);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	if (!cp->ptr)
+		soap->error = SOAP_EOM;
+	return (struct ns1__getAccountPhoto*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAccountPhoto(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__getAccountPhoto %p -> %p\n", q, p));
+	*(struct ns1__getAccountPhoto*)p = *(struct ns1__getAccountPhoto*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAccountPhotoResponse(struct soap *soap, struct ns1__getAccountPhotoResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_std__string(soap, &a->return_);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAccountPhotoResponse(struct soap *soap, const struct ns1__getAccountPhotoResponse *a)
+{
+#ifndef WITH_NOIDREF
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_std__string(soap, &a->return_);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__getAccountPhotoResponse(struct soap *soap, const char *tag, int id, const struct ns1__getAccountPhotoResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns1__getAccountPhotoResponse), type))
+		return soap->error;
+	if (soap_out_std__string(soap, "return", -1, &a->return_, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ns1__getAccountPhotoResponse * SOAP_FMAC4 soap_in_ns1__getAccountPhotoResponse(struct soap *soap, const char *tag, struct ns1__getAccountPhotoResponse *a, const char *type)
+{
+	size_t soap_flag_return_ = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ns1__getAccountPhotoResponse *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ns1__getAccountPhotoResponse, sizeof(struct ns1__getAccountPhotoResponse), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ns1__getAccountPhotoResponse(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_return_ && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "return", &a->return_, "xsd:string"))
+				{	soap_flag_return_--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ns1__getAccountPhotoResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns1__getAccountPhotoResponse, 0, sizeof(struct ns1__getAccountPhotoResponse), 0, soap_copy_ns1__getAccountPhotoResponse);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_return_ > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__getAccountPhotoResponse(struct soap *soap, const struct ns1__getAccountPhotoResponse *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ns1__getAccountPhotoResponse);
+	if (soap_out_ns1__getAccountPhotoResponse(soap, tag?tag:"ns1:getAccountPhotoResponse", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ns1__getAccountPhotoResponse * SOAP_FMAC4 soap_get_ns1__getAccountPhotoResponse(struct soap *soap, struct ns1__getAccountPhotoResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns1__getAccountPhotoResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ns1__getAccountPhotoResponse * SOAP_FMAC2 soap_instantiate_ns1__getAccountPhotoResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns1__getAccountPhotoResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ns1__getAccountPhotoResponse, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ns1__getAccountPhotoResponse);
+		if (size)
+			*size = sizeof(struct ns1__getAccountPhotoResponse);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW_ARRAY(struct ns1__getAccountPhotoResponse, n);
+		if (size)
+			*size = n * sizeof(struct ns1__getAccountPhotoResponse);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	if (!cp->ptr)
+		soap->error = SOAP_EOM;
+	return (struct ns1__getAccountPhotoResponse*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAccountPhotoResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__getAccountPhotoResponse %p -> %p\n", q, p));
+	*(struct ns1__getAccountPhotoResponse*)p = *(struct ns1__getAccountPhotoResponse*)q;
 }
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__setAccountPhoto(struct soap *soap, struct ns1__setAccountPhoto *a)
@@ -11734,18 +12316,288 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAllAccountsResponse(struct soap *so
 	*(struct ns1__getAllAccountsResponse*)p = *(struct ns1__getAllAccountsResponse*)q;
 }
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveGroup(struct soap *soap, struct ns1__saveGroup *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_std__string(soap, &a->accesscode);
+	soap_default_std__string(soap, &a->name);
+	soap_default_std__string(soap, &a->desc);
+	soap_default_std__string(soap, &a->code);
+	soap_default_std__string(soap, &a->parent);
+	soap_default_std__string(soap, &a->untis);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveGroup(struct soap *soap, const struct ns1__saveGroup *a)
+{
+#ifndef WITH_NOIDREF
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_std__string(soap, &a->accesscode);
+	soap_serialize_std__string(soap, &a->name);
+	soap_serialize_std__string(soap, &a->desc);
+	soap_serialize_std__string(soap, &a->code);
+	soap_serialize_std__string(soap, &a->parent);
+	soap_serialize_std__string(soap, &a->untis);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__saveGroup(struct soap *soap, const char *tag, int id, const struct ns1__saveGroup *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns1__saveGroup), type))
+		return soap->error;
+	if (soap_out_std__string(soap, "accesscode", -1, &a->accesscode, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "name", -1, &a->name, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "desc", -1, &a->desc, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "code", -1, &a->code, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "parent", -1, &a->parent, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "untis", -1, &a->untis, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ns1__saveGroup * SOAP_FMAC4 soap_in_ns1__saveGroup(struct soap *soap, const char *tag, struct ns1__saveGroup *a, const char *type)
+{
+	size_t soap_flag_accesscode = 1;
+	size_t soap_flag_name = 1;
+	size_t soap_flag_desc = 1;
+	size_t soap_flag_code = 1;
+	size_t soap_flag_parent = 1;
+	size_t soap_flag_untis = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ns1__saveGroup *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ns1__saveGroup, sizeof(struct ns1__saveGroup), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ns1__saveGroup(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_accesscode && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "accesscode", &a->accesscode, "xsd:string"))
+				{	soap_flag_accesscode--;
+					continue;
+				}
+			if (soap_flag_name && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "name", &a->name, "xsd:string"))
+				{	soap_flag_name--;
+					continue;
+				}
+			if (soap_flag_desc && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "desc", &a->desc, "xsd:string"))
+				{	soap_flag_desc--;
+					continue;
+				}
+			if (soap_flag_code && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "code", &a->code, "xsd:string"))
+				{	soap_flag_code--;
+					continue;
+				}
+			if (soap_flag_parent && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "parent", &a->parent, "xsd:string"))
+				{	soap_flag_parent--;
+					continue;
+				}
+			if (soap_flag_untis && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "untis", &a->untis, "xsd:string"))
+				{	soap_flag_untis--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ns1__saveGroup *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns1__saveGroup, 0, sizeof(struct ns1__saveGroup), 0, soap_copy_ns1__saveGroup);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_accesscode > 0 || soap_flag_name > 0 || soap_flag_desc > 0 || soap_flag_code > 0 || soap_flag_parent > 0 || soap_flag_untis > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__saveGroup(struct soap *soap, const struct ns1__saveGroup *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ns1__saveGroup);
+	if (soap_out_ns1__saveGroup(soap, tag?tag:"ns1:saveGroup", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ns1__saveGroup * SOAP_FMAC4 soap_get_ns1__saveGroup(struct soap *soap, struct ns1__saveGroup *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns1__saveGroup(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ns1__saveGroup * SOAP_FMAC2 soap_instantiate_ns1__saveGroup(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns1__saveGroup(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ns1__saveGroup, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ns1__saveGroup);
+		if (size)
+			*size = sizeof(struct ns1__saveGroup);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW_ARRAY(struct ns1__saveGroup, n);
+		if (size)
+			*size = n * sizeof(struct ns1__saveGroup);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	if (!cp->ptr)
+		soap->error = SOAP_EOM;
+	return (struct ns1__saveGroup*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveGroup(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__saveGroup %p -> %p\n", q, p));
+	*(struct ns1__saveGroup*)p = *(struct ns1__saveGroup*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveGroupResponse(struct soap *soap, struct ns1__saveGroupResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_xsd__anyType(soap, &a->return_);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveGroupResponse(struct soap *soap, const struct ns1__saveGroupResponse *a)
+{
+#ifndef WITH_NOIDREF
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_xsd__anyType(soap, &a->return_);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__saveGroupResponse(struct soap *soap, const char *tag, int id, const struct ns1__saveGroupResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns1__saveGroupResponse), type))
+		return soap->error;
+	if (soap_out_xsd__anyType(soap, "return", -1, &a->return_, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ns1__saveGroupResponse * SOAP_FMAC4 soap_in_ns1__saveGroupResponse(struct soap *soap, const char *tag, struct ns1__saveGroupResponse *a, const char *type)
+{
+	size_t soap_flag_return_ = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ns1__saveGroupResponse *)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns1__saveGroupResponse, sizeof(struct ns1__saveGroupResponse), 0, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default_ns1__saveGroupResponse(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_return_ && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_xsd__anyType(soap, "return", &a->return_, "xsd:anyType"))
+				{	soap_flag_return_--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ns1__saveGroupResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns1__saveGroupResponse, 0, sizeof(struct ns1__saveGroupResponse), 0, NULL);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_return_ > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__saveGroupResponse(struct soap *soap, const struct ns1__saveGroupResponse *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ns1__saveGroupResponse);
+	if (soap_out_ns1__saveGroupResponse(soap, tag?tag:"ns1:saveGroupResponse", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ns1__saveGroupResponse * SOAP_FMAC4 soap_get_ns1__saveGroupResponse(struct soap *soap, struct ns1__saveGroupResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns1__saveGroupResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ns1__saveGroupResponse * SOAP_FMAC2 soap_instantiate_ns1__saveGroupResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns1__saveGroupResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ns1__saveGroupResponse, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ns1__saveGroupResponse);
+		if (size)
+			*size = sizeof(struct ns1__saveGroupResponse);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW_ARRAY(struct ns1__saveGroupResponse, n);
+		if (size)
+			*size = n * sizeof(struct ns1__saveGroupResponse);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	if (!cp->ptr)
+		soap->error = SOAP_EOM;
+	return (struct ns1__saveGroupResponse*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveGroupResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ns1__saveGroupResponse %p -> %p\n", q, p));
+	*(struct ns1__saveGroupResponse*)p = *(struct ns1__saveGroupResponse*)q;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveClass(struct soap *soap, struct ns1__saveClass *a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
 	soap_default_std__string(soap, &a->accesscode);
-	soap_default_xsd__anyType(soap, &a->name);
-	soap_default_xsd__anyType(soap, &a->desc);
-	soap_default_xsd__anyType(soap, &a->code);
-	soap_default_xsd__anyType(soap, &a->parent);
-	soap_default_xsd__anyType(soap, &a->untis);
-	soap_default_xsd__anyType(soap, &a->instituteNumber);
-	soap_default_xsd__anyType(soap, &a->adminNumber);
-	soap_default_xsd__anyType(soap, &a->schoolYearDate);
+	soap_default_std__string(soap, &a->name);
+	soap_default_std__string(soap, &a->desc);
+	soap_default_std__string(soap, &a->code);
+	soap_default_std__string(soap, &a->parent);
+	soap_default_std__string(soap, &a->untis);
+	soap_default_std__string(soap, &a->instituteNumber);
+	soap_default_std__string(soap, &a->adminNumber);
+	soap_default_std__string(soap, &a->schoolYearDate);
 }
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveClass(struct soap *soap, const struct ns1__saveClass *a)
@@ -11753,14 +12605,14 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveClass(struct soap *soap, cons
 #ifndef WITH_NOIDREF
 	(void)soap; (void)a; /* appease -Wall -Werror */
 	soap_serialize_std__string(soap, &a->accesscode);
-	soap_serialize_xsd__anyType(soap, &a->name);
-	soap_serialize_xsd__anyType(soap, &a->desc);
-	soap_serialize_xsd__anyType(soap, &a->code);
-	soap_serialize_xsd__anyType(soap, &a->parent);
-	soap_serialize_xsd__anyType(soap, &a->untis);
-	soap_serialize_xsd__anyType(soap, &a->instituteNumber);
-	soap_serialize_xsd__anyType(soap, &a->adminNumber);
-	soap_serialize_xsd__anyType(soap, &a->schoolYearDate);
+	soap_serialize_std__string(soap, &a->name);
+	soap_serialize_std__string(soap, &a->desc);
+	soap_serialize_std__string(soap, &a->code);
+	soap_serialize_std__string(soap, &a->parent);
+	soap_serialize_std__string(soap, &a->untis);
+	soap_serialize_std__string(soap, &a->instituteNumber);
+	soap_serialize_std__string(soap, &a->adminNumber);
+	soap_serialize_std__string(soap, &a->schoolYearDate);
 #endif
 }
 
@@ -11771,21 +12623,21 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__saveClass(struct soap *soap, const char 
 		return soap->error;
 	if (soap_out_std__string(soap, "accesscode", -1, &a->accesscode, ""))
 		return soap->error;
-	if (soap_out_xsd__anyType(soap, "name", -1, &a->name, ""))
+	if (soap_out_std__string(soap, "name", -1, &a->name, ""))
 		return soap->error;
-	if (soap_out_xsd__anyType(soap, "desc", -1, &a->desc, ""))
+	if (soap_out_std__string(soap, "desc", -1, &a->desc, ""))
 		return soap->error;
-	if (soap_out_xsd__anyType(soap, "code", -1, &a->code, ""))
+	if (soap_out_std__string(soap, "code", -1, &a->code, ""))
 		return soap->error;
-	if (soap_out_xsd__anyType(soap, "parent", -1, &a->parent, ""))
+	if (soap_out_std__string(soap, "parent", -1, &a->parent, ""))
 		return soap->error;
-	if (soap_out_xsd__anyType(soap, "untis", -1, &a->untis, ""))
+	if (soap_out_std__string(soap, "untis", -1, &a->untis, ""))
 		return soap->error;
-	if (soap_out_xsd__anyType(soap, "instituteNumber", -1, &a->instituteNumber, ""))
+	if (soap_out_std__string(soap, "instituteNumber", -1, &a->instituteNumber, ""))
 		return soap->error;
-	if (soap_out_xsd__anyType(soap, "adminNumber", -1, &a->adminNumber, ""))
+	if (soap_out_std__string(soap, "adminNumber", -1, &a->adminNumber, ""))
 		return soap->error;
-	if (soap_out_xsd__anyType(soap, "schoolYearDate", -1, &a->schoolYearDate, ""))
+	if (soap_out_std__string(soap, "schoolYearDate", -1, &a->schoolYearDate, ""))
 		return soap->error;
 	return soap_element_end_out(soap, tag);
 }
@@ -11816,43 +12668,43 @@ SOAP_FMAC3 struct ns1__saveClass * SOAP_FMAC4 soap_in_ns1__saveClass(struct soap
 				{	soap_flag_accesscode--;
 					continue;
 				}
-			if (soap_flag_name && soap->error == SOAP_TAG_MISMATCH)
-				if (soap_in_xsd__anyType(soap, "name", &a->name, "xsd:anyType"))
+			if (soap_flag_name && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "name", &a->name, "xsd:string"))
 				{	soap_flag_name--;
 					continue;
 				}
-			if (soap_flag_desc && soap->error == SOAP_TAG_MISMATCH)
-				if (soap_in_xsd__anyType(soap, "desc", &a->desc, "xsd:anyType"))
+			if (soap_flag_desc && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "desc", &a->desc, "xsd:string"))
 				{	soap_flag_desc--;
 					continue;
 				}
-			if (soap_flag_code && soap->error == SOAP_TAG_MISMATCH)
-				if (soap_in_xsd__anyType(soap, "code", &a->code, "xsd:anyType"))
+			if (soap_flag_code && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "code", &a->code, "xsd:string"))
 				{	soap_flag_code--;
 					continue;
 				}
-			if (soap_flag_parent && soap->error == SOAP_TAG_MISMATCH)
-				if (soap_in_xsd__anyType(soap, "parent", &a->parent, "xsd:anyType"))
+			if (soap_flag_parent && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "parent", &a->parent, "xsd:string"))
 				{	soap_flag_parent--;
 					continue;
 				}
-			if (soap_flag_untis && soap->error == SOAP_TAG_MISMATCH)
-				if (soap_in_xsd__anyType(soap, "untis", &a->untis, "xsd:anyType"))
+			if (soap_flag_untis && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "untis", &a->untis, "xsd:string"))
 				{	soap_flag_untis--;
 					continue;
 				}
-			if (soap_flag_instituteNumber && soap->error == SOAP_TAG_MISMATCH)
-				if (soap_in_xsd__anyType(soap, "instituteNumber", &a->instituteNumber, "xsd:anyType"))
+			if (soap_flag_instituteNumber && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "instituteNumber", &a->instituteNumber, "xsd:string"))
 				{	soap_flag_instituteNumber--;
 					continue;
 				}
-			if (soap_flag_adminNumber && soap->error == SOAP_TAG_MISMATCH)
-				if (soap_in_xsd__anyType(soap, "adminNumber", &a->adminNumber, "xsd:anyType"))
+			if (soap_flag_adminNumber && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "adminNumber", &a->adminNumber, "xsd:string"))
 				{	soap_flag_adminNumber--;
 					continue;
 				}
-			if (soap_flag_schoolYearDate && soap->error == SOAP_TAG_MISMATCH)
-				if (soap_in_xsd__anyType(soap, "schoolYearDate", &a->schoolYearDate, "xsd:anyType"))
+			if (soap_flag_schoolYearDate && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "schoolYearDate", &a->schoolYearDate, "xsd:string"))
 				{	soap_flag_schoolYearDate--;
 					continue;
 				}

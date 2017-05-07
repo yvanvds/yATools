@@ -67,8 +67,12 @@ class SOAP_CMAC V3BindingProxy : public soap
 	virtual	int saveUser(const char *endpoint, const char *soap_action, std::string accesscode, std::string internnumber, std::string username, std::string passwd1, std::string passwd2, std::string passwd3, std::string name, std::string surname, std::string extranames, std::string initials, std::string sex, std::string birthday, std::string birthplace, std::string birthcountry, std::string address, std::string postalcode, std::string location, std::string country, std::string email, std::string mobilephone, std::string homephone, std::string fax, std::string prn, std::string stamboeknummer, std::string basisrol, std::string untis, struct soap_dom_element &return_);
 
 	/// Web service operation 'saveClass' (returns error code or SOAP_OK)
-	virtual	int saveClass(std::string accesscode, struct soap_dom_element name, struct soap_dom_element desc, struct soap_dom_element code, struct soap_dom_element parent, struct soap_dom_element untis, struct soap_dom_element instituteNumber, struct soap_dom_element adminNumber, struct soap_dom_element schoolYearDate, struct soap_dom_element &return_) { return this->saveClass(NULL, NULL, accesscode, name, desc, code, parent, untis, instituteNumber, adminNumber, schoolYearDate, return_); }
-	virtual	int saveClass(const char *endpoint, const char *soap_action, std::string accesscode, struct soap_dom_element name, struct soap_dom_element desc, struct soap_dom_element code, struct soap_dom_element parent, struct soap_dom_element untis, struct soap_dom_element instituteNumber, struct soap_dom_element adminNumber, struct soap_dom_element schoolYearDate, struct soap_dom_element &return_);
+	virtual	int saveClass(std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, std::string instituteNumber, std::string adminNumber, std::string schoolYearDate, struct soap_dom_element &return_) { return this->saveClass(NULL, NULL, accesscode, name, desc, code, parent, untis, instituteNumber, adminNumber, schoolYearDate, return_); }
+	virtual	int saveClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, std::string instituteNumber, std::string adminNumber, std::string schoolYearDate, struct soap_dom_element &return_);
+
+	/// Web service operation 'saveGroup' (returns error code or SOAP_OK)
+	virtual	int saveGroup(std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, struct soap_dom_element &return_) { return this->saveGroup(NULL, NULL, accesscode, name, desc, code, parent, untis, return_); }
+	virtual	int saveGroup(const char *endpoint, const char *soap_action, std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, struct soap_dom_element &return_);
 
 	/// Web service operation 'getAllAccounts' (returns error code or SOAP_OK)
 	virtual	int getAllAccounts(std::string accesscode, std::string code, std::string recursive, struct soap_dom_element &return_) { return this->getAllAccounts(NULL, NULL, accesscode, code, recursive, return_); }
@@ -150,9 +154,17 @@ class SOAP_CMAC V3BindingProxy : public soap
 	virtual	int setAccountPhoto(std::string accesscode, std::string userIdentifier, std::string photo, struct soap_dom_element &return_) { return this->setAccountPhoto(NULL, NULL, accesscode, userIdentifier, photo, return_); }
 	virtual	int setAccountPhoto(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string photo, struct soap_dom_element &return_);
 
+	/// Web service operation 'getAccountPhoto' (returns error code or SOAP_OK)
+	virtual	int getAccountPhoto(std::string accesscode, std::string userIdentifier, std::string &return_) { return this->getAccountPhoto(NULL, NULL, accesscode, userIdentifier, return_); }
+	virtual	int getAccountPhoto(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string &return_);
+
 	/// Web service operation 'replaceInum' (returns error code or SOAP_OK)
 	virtual	int replaceInum(std::string accesscode, std::string oldInum, std::string newInum, struct soap_dom_element &return_) { return this->replaceInum(NULL, NULL, accesscode, oldInum, newInum, return_); }
 	virtual	int replaceInum(const char *endpoint, const char *soap_action, std::string accesscode, std::string oldInum, std::string newInum, struct soap_dom_element &return_);
+
+	/// Web service operation 'forcePasswordReset' (returns error code or SOAP_OK)
+	virtual	int forcePasswordReset(std::string accesscode, std::string userIdentifier, int accountType, struct soap_dom_element &return_) { return this->forcePasswordReset(NULL, NULL, accesscode, userIdentifier, accountType, return_); }
+	virtual	int forcePasswordReset(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, int accountType, struct soap_dom_element &return_);
 
 	/// Web service operation 'savePassword' (returns error code or SOAP_OK)
 	virtual	int savePassword(std::string accesscode, std::string userIdentifier, std::string password, int accountType, struct soap_dom_element &return_) { return this->savePassword(NULL, NULL, accesscode, userIdentifier, password, accountType, return_); }
@@ -173,10 +185,6 @@ class SOAP_CMAC V3BindingProxy : public soap
 	/// Web service operation 'getClassTeachers' (returns error code or SOAP_OK)
 	virtual	int getClassTeachers(std::string accesscode, bool getAllOwners, struct soap_dom_element &return_) { return this->getClassTeachers(NULL, NULL, accesscode, getAllOwners, return_); }
 	virtual	int getClassTeachers(const char *endpoint, const char *soap_action, std::string accesscode, bool getAllOwners, struct soap_dom_element &return_);
-
-	/// Web service operation 'isValidUserCredentials' (returns error code or SOAP_OK)
-	virtual	int isValidUserCredentials(std::string accesscode, std::string username, std::string password, struct soap_dom_element &return_) { return this->isValidUserCredentials(NULL, NULL, accesscode, username, password, return_); }
-	virtual	int isValidUserCredentials(const char *endpoint, const char *soap_action, std::string accesscode, std::string username, std::string password, struct soap_dom_element &return_);
 
 	/// Web service operation 'getAbsentsByDate' (returns error code or SOAP_OK)
 	virtual	int getAbsentsByDate(std::string accesscode, std::string date, std::string &return_) { return this->getAbsentsByDate(NULL, NULL, accesscode, date, return_); }
@@ -209,6 +217,10 @@ class SOAP_CMAC V3BindingProxy : public soap
 	/// Web service operation 'getStudentCareer' (returns error code or SOAP_OK)
 	virtual	int getStudentCareer(std::string accesscode, std::string userIdentifier, std::string &return_) { return this->getStudentCareer(NULL, NULL, accesscode, userIdentifier, return_); }
 	virtual	int getStudentCareer(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string &return_);
+
+	/// Web service operation 'deactivateTwoFactorAuthentication' (returns error code or SOAP_OK)
+	virtual	int deactivateTwoFactorAuthentication(std::string accesscode, std::string userIdentifier, int accountType, struct soap_dom_element &return_) { return this->deactivateTwoFactorAuthentication(NULL, NULL, accesscode, userIdentifier, accountType, return_); }
+	virtual	int deactivateTwoFactorAuthentication(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, int accountType, struct soap_dom_element &return_);
 
 	/// Web service one-way send operation 'send_returnErrorCodes' (returns error code or SOAP_OK)
 	virtual	int send_returnErrorCodes() { return this->send_returnErrorCodes(NULL, NULL); }

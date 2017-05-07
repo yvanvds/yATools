@@ -193,7 +193,7 @@ int V3BindingProxy::saveUser(const char *endpoint, const char *soap_action, std:
 	return soap_closesock(soap);
 }
 
-int V3BindingProxy::saveClass(const char *endpoint, const char *soap_action, std::string accesscode, struct soap_dom_element name, struct soap_dom_element desc, struct soap_dom_element code, struct soap_dom_element parent, struct soap_dom_element untis, struct soap_dom_element instituteNumber, struct soap_dom_element adminNumber, struct soap_dom_element schoolYearDate, struct soap_dom_element &return_)
+int V3BindingProxy::saveClass(const char *endpoint, const char *soap_action, std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, std::string instituteNumber, std::string adminNumber, std::string schoolYearDate, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__saveClass soap_tmp_ns1__saveClass;
 	struct ns1__saveClassResponse *soap_tmp_ns1__saveClassResponse;
@@ -256,6 +256,69 @@ int V3BindingProxy::saveClass(const char *endpoint, const char *soap_action, std
 	 || soap_end_recv(soap))
 		return soap_closesock(soap);
 	return_ = soap_tmp_ns1__saveClassResponse->return_;
+	return soap_closesock(soap);
+}
+
+int V3BindingProxy::saveGroup(const char *endpoint, const char *soap_action, std::string accesscode, std::string name, std::string desc, std::string code, std::string parent, std::string untis, struct soap_dom_element &return_)
+{	struct soap *soap = this;
+	struct ns1__saveGroup soap_tmp_ns1__saveGroup;
+	struct ns1__saveGroupResponse *soap_tmp_ns1__saveGroupResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3";
+	if (soap_action == NULL)
+		soap_action = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3#saveGroup";
+	soap_begin(soap);
+	soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
+	soap_tmp_ns1__saveGroup.accesscode = accesscode;
+	soap_tmp_ns1__saveGroup.name = name;
+	soap_tmp_ns1__saveGroup.desc = desc;
+	soap_tmp_ns1__saveGroup.code = code;
+	soap_tmp_ns1__saveGroup.parent = parent;
+	soap_tmp_ns1__saveGroup.untis = untis;
+	soap_serializeheader(soap);
+	soap_serialize_ns1__saveGroup(soap, &soap_tmp_ns1__saveGroup);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ns1__saveGroup(soap, &soap_tmp_ns1__saveGroup, "ns1:saveGroup", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_url(soap, soap_endpoint, NULL), soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ns1__saveGroup(soap, &soap_tmp_ns1__saveGroup, "ns1:saveGroup", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	if (soap_recv_fault(soap, 1))
+		return soap->error;
+	soap_tmp_ns1__saveGroupResponse = soap_get_ns1__saveGroupResponse(soap, NULL, "", "");
+	if (!soap_tmp_ns1__saveGroupResponse || soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return_ = soap_tmp_ns1__saveGroupResponse->return_;
 	return soap_closesock(soap);
 }
 
@@ -1455,6 +1518,65 @@ int V3BindingProxy::setAccountPhoto(const char *endpoint, const char *soap_actio
 	return soap_closesock(soap);
 }
 
+int V3BindingProxy::getAccountPhoto(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, std::string &return_)
+{	struct soap *soap = this;
+	struct ns1__getAccountPhoto soap_tmp_ns1__getAccountPhoto;
+	struct ns1__getAccountPhotoResponse *soap_tmp_ns1__getAccountPhotoResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3";
+	if (soap_action == NULL)
+		soap_action = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3#getAccountPhoto";
+	soap_begin(soap);
+	soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
+	soap_tmp_ns1__getAccountPhoto.accesscode = accesscode;
+	soap_tmp_ns1__getAccountPhoto.userIdentifier = userIdentifier;
+	soap_serializeheader(soap);
+	soap_serialize_ns1__getAccountPhoto(soap, &soap_tmp_ns1__getAccountPhoto);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ns1__getAccountPhoto(soap, &soap_tmp_ns1__getAccountPhoto, "ns1:getAccountPhoto", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_url(soap, soap_endpoint, NULL), soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ns1__getAccountPhoto(soap, &soap_tmp_ns1__getAccountPhoto, "ns1:getAccountPhoto", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_std__string(soap, &return_);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	if (soap_recv_fault(soap, 1))
+		return soap->error;
+	soap_tmp_ns1__getAccountPhotoResponse = soap_get_ns1__getAccountPhotoResponse(soap, NULL, "", "");
+	if (!soap_tmp_ns1__getAccountPhotoResponse || soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return_ = soap_tmp_ns1__getAccountPhotoResponse->return_;
+	return soap_closesock(soap);
+}
+
 int V3BindingProxy::replaceInum(const char *endpoint, const char *soap_action, std::string accesscode, std::string oldInum, std::string newInum, struct soap_dom_element &return_)
 {	struct soap *soap = this;
 	struct ns1__replaceInum soap_tmp_ns1__replaceInum;
@@ -1512,6 +1634,66 @@ int V3BindingProxy::replaceInum(const char *endpoint, const char *soap_action, s
 	 || soap_end_recv(soap))
 		return soap_closesock(soap);
 	return_ = soap_tmp_ns1__replaceInumResponse->return_;
+	return soap_closesock(soap);
+}
+
+int V3BindingProxy::forcePasswordReset(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, int accountType, struct soap_dom_element &return_)
+{	struct soap *soap = this;
+	struct ns1__forcePasswordReset soap_tmp_ns1__forcePasswordReset;
+	struct ns1__forcePasswordResetResponse *soap_tmp_ns1__forcePasswordResetResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3";
+	if (soap_action == NULL)
+		soap_action = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3#forcePasswordReset";
+	soap_begin(soap);
+	soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
+	soap_tmp_ns1__forcePasswordReset.accesscode = accesscode;
+	soap_tmp_ns1__forcePasswordReset.userIdentifier = userIdentifier;
+	soap_tmp_ns1__forcePasswordReset.accountType = accountType;
+	soap_serializeheader(soap);
+	soap_serialize_ns1__forcePasswordReset(soap, &soap_tmp_ns1__forcePasswordReset);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ns1__forcePasswordReset(soap, &soap_tmp_ns1__forcePasswordReset, "ns1:forcePasswordReset", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_url(soap, soap_endpoint, NULL), soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ns1__forcePasswordReset(soap, &soap_tmp_ns1__forcePasswordReset, "ns1:forcePasswordReset", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	if (soap_recv_fault(soap, 1))
+		return soap->error;
+	soap_tmp_ns1__forcePasswordResetResponse = soap_get_ns1__forcePasswordResetResponse(soap, NULL, "", "");
+	if (!soap_tmp_ns1__forcePasswordResetResponse || soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return_ = soap_tmp_ns1__forcePasswordResetResponse->return_;
 	return soap_closesock(soap);
 }
 
@@ -1814,66 +1996,6 @@ int V3BindingProxy::getClassTeachers(const char *endpoint, const char *soap_acti
 	 || soap_end_recv(soap))
 		return soap_closesock(soap);
 	return_ = soap_tmp_ns1__getClassTeachersResponse->return_;
-	return soap_closesock(soap);
-}
-
-int V3BindingProxy::isValidUserCredentials(const char *endpoint, const char *soap_action, std::string accesscode, std::string username, std::string password, struct soap_dom_element &return_)
-{	struct soap *soap = this;
-	struct ns1__isValidUserCredentials soap_tmp_ns1__isValidUserCredentials;
-	struct ns1__isValidUserCredentialsResponse *soap_tmp_ns1__isValidUserCredentialsResponse;
-	if (endpoint)
-		soap_endpoint = endpoint;
-	if (soap_endpoint == NULL)
-		soap_endpoint = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3";
-	if (soap_action == NULL)
-		soap_action = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3#isValidUserCredentials";
-	soap_begin(soap);
-	soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
-	soap_tmp_ns1__isValidUserCredentials.accesscode = accesscode;
-	soap_tmp_ns1__isValidUserCredentials.username = username;
-	soap_tmp_ns1__isValidUserCredentials.password = password;
-	soap_serializeheader(soap);
-	soap_serialize_ns1__isValidUserCredentials(soap, &soap_tmp_ns1__isValidUserCredentials);
-	if (soap_begin_count(soap))
-		return soap->error;
-	if (soap->mode & SOAP_IO_LENGTH)
-	{	if (soap_envelope_begin_out(soap)
-		 || soap_putheader(soap)
-		 || soap_body_begin_out(soap)
-		 || soap_put_ns1__isValidUserCredentials(soap, &soap_tmp_ns1__isValidUserCredentials, "ns1:isValidUserCredentials", NULL)
-		 || soap_body_end_out(soap)
-		 || soap_envelope_end_out(soap))
-			 return soap->error;
-	}
-	if (soap_end_count(soap))
-		return soap->error;
-	if (soap_connect(soap, soap_url(soap, soap_endpoint, NULL), soap_action)
-	 || soap_envelope_begin_out(soap)
-	 || soap_putheader(soap)
-	 || soap_body_begin_out(soap)
-	 || soap_put_ns1__isValidUserCredentials(soap, &soap_tmp_ns1__isValidUserCredentials, "ns1:isValidUserCredentials", NULL)
-	 || soap_body_end_out(soap)
-	 || soap_envelope_end_out(soap)
-	 || soap_end_send(soap))
-		return soap_closesock(soap);
-	if (!&return_)
-		return soap_closesock(soap);
-	soap_default_xsd__anyType(soap, &return_);
-	if (soap_begin_recv(soap)
-	 || soap_envelope_begin_in(soap)
-	 || soap_recv_header(soap)
-	 || soap_body_begin_in(soap))
-		return soap_closesock(soap);
-	if (soap_recv_fault(soap, 1))
-		return soap->error;
-	soap_tmp_ns1__isValidUserCredentialsResponse = soap_get_ns1__isValidUserCredentialsResponse(soap, NULL, "", "");
-	if (!soap_tmp_ns1__isValidUserCredentialsResponse || soap->error)
-		return soap_recv_fault(soap, 0);
-	if (soap_body_end_in(soap)
-	 || soap_envelope_end_in(soap)
-	 || soap_end_recv(soap))
-		return soap_closesock(soap);
-	return_ = soap_tmp_ns1__isValidUserCredentialsResponse->return_;
 	return soap_closesock(soap);
 }
 
@@ -2350,6 +2472,66 @@ int V3BindingProxy::getStudentCareer(const char *endpoint, const char *soap_acti
 	 || soap_end_recv(soap))
 		return soap_closesock(soap);
 	return_ = soap_tmp_ns1__getStudentCareerResponse->return_;
+	return soap_closesock(soap);
+}
+
+int V3BindingProxy::deactivateTwoFactorAuthentication(const char *endpoint, const char *soap_action, std::string accesscode, std::string userIdentifier, int accountType, struct soap_dom_element &return_)
+{	struct soap *soap = this;
+	struct ns1__deactivateTwoFactorAuthentication soap_tmp_ns1__deactivateTwoFactorAuthentication;
+	struct ns1__deactivateTwoFactorAuthenticationResponse *soap_tmp_ns1__deactivateTwoFactorAuthenticationResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3";
+	if (soap_action == NULL)
+		soap_action = "https://sanctamaria-aarschot.smartschool.be/Webservices/V3#deactivateTwoFactorAuthentication";
+	soap_begin(soap);
+	soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
+	soap_tmp_ns1__deactivateTwoFactorAuthentication.accesscode = accesscode;
+	soap_tmp_ns1__deactivateTwoFactorAuthentication.userIdentifier = userIdentifier;
+	soap_tmp_ns1__deactivateTwoFactorAuthentication.accountType = accountType;
+	soap_serializeheader(soap);
+	soap_serialize_ns1__deactivateTwoFactorAuthentication(soap, &soap_tmp_ns1__deactivateTwoFactorAuthentication);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ns1__deactivateTwoFactorAuthentication(soap, &soap_tmp_ns1__deactivateTwoFactorAuthentication, "ns1:deactivateTwoFactorAuthentication", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_url(soap, soap_endpoint, NULL), soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ns1__deactivateTwoFactorAuthentication(soap, &soap_tmp_ns1__deactivateTwoFactorAuthentication, "ns1:deactivateTwoFactorAuthentication", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&return_)
+		return soap_closesock(soap);
+	soap_default_xsd__anyType(soap, &return_);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	if (soap_recv_fault(soap, 1))
+		return soap->error;
+	soap_tmp_ns1__deactivateTwoFactorAuthenticationResponse = soap_get_ns1__deactivateTwoFactorAuthenticationResponse(soap, NULL, "", "");
+	if (!soap_tmp_ns1__deactivateTwoFactorAuthenticationResponse || soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return_ = soap_tmp_ns1__deactivateTwoFactorAuthenticationResponse->return_;
 	return soap_closesock(soap);
 }
 

@@ -87,7 +87,7 @@ SOAP_FMAC3 int * SOAP_FMAC4 soap_get_int(struct soap*, int *, const char*, const
 
 
 #ifndef SOAP_TYPE_bool
-#define SOAP_TYPE_bool (97)
+#define SOAP_TYPE_bool (106)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_bool(struct soap*, bool *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_out_bool(struct soap*, const char*, int, const bool *, const char*);
@@ -145,7 +145,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__string(struct soap*, int, int, void*, 
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (144)
+#define SOAP_TYPE_SOAP_ENV__Fault (153)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_SOAP_ENV__Fault(struct soap*, struct SOAP_ENV__Fault *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_SOAP_ENV__Fault(struct soap*, const struct SOAP_ENV__Fault *);
@@ -181,7 +181,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Fault(struct soap*, int, int, voi
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (143)
+#define SOAP_TYPE_SOAP_ENV__Reason (152)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_SOAP_ENV__Reason(struct soap*, struct SOAP_ENV__Reason *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_SOAP_ENV__Reason(struct soap*, const struct SOAP_ENV__Reason *);
@@ -217,7 +217,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Reason(struct soap*, int, int, vo
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (141)
+#define SOAP_TYPE_SOAP_ENV__Detail (150)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_SOAP_ENV__Detail(struct soap*, struct SOAP_ENV__Detail *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_SOAP_ENV__Detail(struct soap*, const struct SOAP_ENV__Detail *);
@@ -253,7 +253,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Detail(struct soap*, int, int, vo
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (139)
+#define SOAP_TYPE_SOAP_ENV__Code (148)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_SOAP_ENV__Code(struct soap*, struct SOAP_ENV__Code *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_SOAP_ENV__Code(struct soap*, const struct SOAP_ENV__Code *);
@@ -289,7 +289,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Code(struct soap*, int, int, void
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (138)
+#define SOAP_TYPE_SOAP_ENV__Header (147)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_SOAP_ENV__Header(struct soap*, struct SOAP_ENV__Header *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_SOAP_ENV__Header(struct soap*, const struct SOAP_ENV__Header *);
@@ -323,7 +323,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Header(struct soap*, int, int, vo
 #endif
 
 #ifndef SOAP_TYPE_ns1__returnJsonErrorCodes
-#define SOAP_TYPE_ns1__returnJsonErrorCodes (137)
+#define SOAP_TYPE_ns1__returnJsonErrorCodes (146)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__returnJsonErrorCodes(struct soap*, struct ns1__returnJsonErrorCodes *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__returnJsonErrorCodes(struct soap*, const struct ns1__returnJsonErrorCodes *);
@@ -355,7 +355,7 @@ inline void soap_delete_ns1__returnJsonErrorCodes(struct soap *soap, struct ns1_
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__returnJsonErrorCodes(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__returnJsonErrorCodesResponse
-#define SOAP_TYPE_ns1__returnJsonErrorCodesResponse (136)
+#define SOAP_TYPE_ns1__returnJsonErrorCodesResponse (145)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__returnJsonErrorCodesResponse(struct soap*, struct ns1__returnJsonErrorCodesResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__returnJsonErrorCodesResponse(struct soap*, const struct ns1__returnJsonErrorCodesResponse *);
@@ -387,7 +387,7 @@ inline void soap_delete_ns1__returnJsonErrorCodesResponse(struct soap *soap, str
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__returnJsonErrorCodesResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__returnCsvErrorCodes
-#define SOAP_TYPE_ns1__returnCsvErrorCodes (134)
+#define SOAP_TYPE_ns1__returnCsvErrorCodes (143)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__returnCsvErrorCodes(struct soap*, struct ns1__returnCsvErrorCodes *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__returnCsvErrorCodes(struct soap*, const struct ns1__returnCsvErrorCodes *);
@@ -419,7 +419,7 @@ inline void soap_delete_ns1__returnCsvErrorCodes(struct soap *soap, struct ns1__
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__returnCsvErrorCodes(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__returnCsvErrorCodesResponse
-#define SOAP_TYPE_ns1__returnCsvErrorCodesResponse (133)
+#define SOAP_TYPE_ns1__returnCsvErrorCodesResponse (142)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__returnCsvErrorCodesResponse(struct soap*, struct ns1__returnCsvErrorCodesResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__returnCsvErrorCodesResponse(struct soap*, const struct ns1__returnCsvErrorCodesResponse *);
@@ -451,7 +451,7 @@ inline void soap_delete_ns1__returnCsvErrorCodesResponse(struct soap *soap, stru
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__returnCsvErrorCodesResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__returnErrorCodes
-#define SOAP_TYPE_ns1__returnErrorCodes (131)
+#define SOAP_TYPE_ns1__returnErrorCodes (140)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__returnErrorCodes(struct soap*, struct ns1__returnErrorCodes *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__returnErrorCodes(struct soap*, const struct ns1__returnErrorCodes *);
@@ -482,8 +482,72 @@ inline void soap_delete_ns1__returnErrorCodes(struct soap *soap, struct ns1__ret
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__returnErrorCodes(struct soap*, int, int, void*, size_t, const void*, size_t);
 
+#ifndef SOAP_TYPE_ns1__deactivateTwoFactorAuthentication
+#define SOAP_TYPE_ns1__deactivateTwoFactorAuthentication (137)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__deactivateTwoFactorAuthentication(struct soap*, struct ns1__deactivateTwoFactorAuthentication *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__deactivateTwoFactorAuthentication(struct soap*, const struct ns1__deactivateTwoFactorAuthentication *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__deactivateTwoFactorAuthentication(struct soap*, const char*, int, const struct ns1__deactivateTwoFactorAuthentication *, const char*);
+SOAP_FMAC3 struct ns1__deactivateTwoFactorAuthentication * SOAP_FMAC4 soap_in_ns1__deactivateTwoFactorAuthentication(struct soap*, const char*, struct ns1__deactivateTwoFactorAuthentication *, const char*);
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__deactivateTwoFactorAuthentication(struct soap*, const struct ns1__deactivateTwoFactorAuthentication *, const char*, const char*);
+
+#ifndef soap_write_ns1__deactivateTwoFactorAuthentication
+#define soap_write_ns1__deactivateTwoFactorAuthentication(soap, data) ( soap_free_temp(soap), soap_begin_send(soap) || (soap_serialize_ns1__deactivateTwoFactorAuthentication(soap, data),0) || soap_put_ns1__deactivateTwoFactorAuthentication(soap, data, "ns1:deactivateTwoFactorAuthentication", NULL) || soap_end_send(soap), (soap)->error )
+#endif
+
+SOAP_FMAC3 struct ns1__deactivateTwoFactorAuthentication * SOAP_FMAC4 soap_get_ns1__deactivateTwoFactorAuthentication(struct soap*, struct ns1__deactivateTwoFactorAuthentication *, const char*, const char*);
+
+#ifndef soap_read_ns1__deactivateTwoFactorAuthentication
+#define soap_read_ns1__deactivateTwoFactorAuthentication(soap, data) ( soap_begin_recv(soap) || !soap_get_ns1__deactivateTwoFactorAuthentication(soap, data, NULL, NULL) || soap_end_recv(soap), (soap)->error )
+#endif
+
+SOAP_FMAC1 struct ns1__deactivateTwoFactorAuthentication * SOAP_FMAC2 soap_instantiate_ns1__deactivateTwoFactorAuthentication(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct ns1__deactivateTwoFactorAuthentication * soap_new_ns1__deactivateTwoFactorAuthentication(struct soap *soap, int n = -1) { return soap_instantiate_ns1__deactivateTwoFactorAuthentication(soap, n, NULL, NULL, NULL); }
+
+inline struct ns1__deactivateTwoFactorAuthentication * soap_new_req_ns1__deactivateTwoFactorAuthentication(struct soap *soap, std::string& accesscode, std::string& userIdentifier, int accountType) { struct ns1__deactivateTwoFactorAuthentication *_p = soap_instantiate_ns1__deactivateTwoFactorAuthentication(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__deactivateTwoFactorAuthentication(soap, _p); _p->accesscode = accesscode; _p->userIdentifier = userIdentifier; _p->accountType = accountType; } return _p; }
+
+inline struct ns1__deactivateTwoFactorAuthentication * soap_new_set_ns1__deactivateTwoFactorAuthentication(struct soap *soap, std::string& accesscode, std::string& userIdentifier, int accountType) { struct ns1__deactivateTwoFactorAuthentication *_p = soap_instantiate_ns1__deactivateTwoFactorAuthentication(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__deactivateTwoFactorAuthentication(soap, _p); _p->accesscode = accesscode; _p->userIdentifier = userIdentifier; _p->accountType = accountType; } return _p; }
+
+inline void soap_delete_ns1__deactivateTwoFactorAuthentication(struct soap *soap, struct ns1__deactivateTwoFactorAuthentication *p) { soap_delete(soap, p); }
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__deactivateTwoFactorAuthentication(struct soap*, int, int, void*, size_t, const void*, size_t);
+
+#ifndef SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse
+#define SOAP_TYPE_ns1__deactivateTwoFactorAuthenticationResponse (136)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__deactivateTwoFactorAuthenticationResponse(struct soap*, struct ns1__deactivateTwoFactorAuthenticationResponse *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__deactivateTwoFactorAuthenticationResponse(struct soap*, const struct ns1__deactivateTwoFactorAuthenticationResponse *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__deactivateTwoFactorAuthenticationResponse(struct soap*, const char*, int, const struct ns1__deactivateTwoFactorAuthenticationResponse *, const char*);
+SOAP_FMAC3 struct ns1__deactivateTwoFactorAuthenticationResponse * SOAP_FMAC4 soap_in_ns1__deactivateTwoFactorAuthenticationResponse(struct soap*, const char*, struct ns1__deactivateTwoFactorAuthenticationResponse *, const char*);
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__deactivateTwoFactorAuthenticationResponse(struct soap*, const struct ns1__deactivateTwoFactorAuthenticationResponse *, const char*, const char*);
+
+#ifndef soap_write_ns1__deactivateTwoFactorAuthenticationResponse
+#define soap_write_ns1__deactivateTwoFactorAuthenticationResponse(soap, data) ( soap_free_temp(soap), soap_begin_send(soap) || (soap_serialize_ns1__deactivateTwoFactorAuthenticationResponse(soap, data),0) || soap_put_ns1__deactivateTwoFactorAuthenticationResponse(soap, data, "ns1:deactivateTwoFactorAuthenticationResponse", NULL) || soap_end_send(soap), (soap)->error )
+#endif
+
+SOAP_FMAC3 struct ns1__deactivateTwoFactorAuthenticationResponse * SOAP_FMAC4 soap_get_ns1__deactivateTwoFactorAuthenticationResponse(struct soap*, struct ns1__deactivateTwoFactorAuthenticationResponse *, const char*, const char*);
+
+#ifndef soap_read_ns1__deactivateTwoFactorAuthenticationResponse
+#define soap_read_ns1__deactivateTwoFactorAuthenticationResponse(soap, data) ( soap_begin_recv(soap) || !soap_get_ns1__deactivateTwoFactorAuthenticationResponse(soap, data, NULL, NULL) || soap_end_recv(soap), (soap)->error )
+#endif
+
+SOAP_FMAC1 struct ns1__deactivateTwoFactorAuthenticationResponse * SOAP_FMAC2 soap_instantiate_ns1__deactivateTwoFactorAuthenticationResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct ns1__deactivateTwoFactorAuthenticationResponse * soap_new_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, int n = -1) { return soap_instantiate_ns1__deactivateTwoFactorAuthenticationResponse(soap, n, NULL, NULL, NULL); }
+
+inline struct ns1__deactivateTwoFactorAuthenticationResponse * soap_new_req_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, struct soap_dom_element& return_) { struct ns1__deactivateTwoFactorAuthenticationResponse *_p = soap_instantiate_ns1__deactivateTwoFactorAuthenticationResponse(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__deactivateTwoFactorAuthenticationResponse(soap, _p); _p->return_ = return_; } return _p; }
+
+inline struct ns1__deactivateTwoFactorAuthenticationResponse * soap_new_set_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, struct soap_dom_element& return_) { struct ns1__deactivateTwoFactorAuthenticationResponse *_p = soap_instantiate_ns1__deactivateTwoFactorAuthenticationResponse(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__deactivateTwoFactorAuthenticationResponse(soap, _p); _p->return_ = return_; } return _p; }
+
+inline void soap_delete_ns1__deactivateTwoFactorAuthenticationResponse(struct soap *soap, struct ns1__deactivateTwoFactorAuthenticationResponse *p) { soap_delete(soap, p); }
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__deactivateTwoFactorAuthenticationResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
+
 #ifndef SOAP_TYPE_ns1__getStudentCareer
-#define SOAP_TYPE_ns1__getStudentCareer (128)
+#define SOAP_TYPE_ns1__getStudentCareer (134)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getStudentCareer(struct soap*, struct ns1__getStudentCareer *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getStudentCareer(struct soap*, const struct ns1__getStudentCareer *);
@@ -515,7 +579,7 @@ inline void soap_delete_ns1__getStudentCareer(struct soap *soap, struct ns1__get
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getStudentCareer(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getStudentCareerResponse
-#define SOAP_TYPE_ns1__getStudentCareerResponse (127)
+#define SOAP_TYPE_ns1__getStudentCareerResponse (133)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getStudentCareerResponse(struct soap*, struct ns1__getStudentCareerResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getStudentCareerResponse(struct soap*, const struct ns1__getStudentCareerResponse *);
@@ -547,7 +611,7 @@ inline void soap_delete_ns1__getStudentCareerResponse(struct soap *soap, struct 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getStudentCareerResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveSignature
-#define SOAP_TYPE_ns1__saveSignature (125)
+#define SOAP_TYPE_ns1__saveSignature (131)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveSignature(struct soap*, struct ns1__saveSignature *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveSignature(struct soap*, const struct ns1__saveSignature *);
@@ -579,7 +643,7 @@ inline void soap_delete_ns1__saveSignature(struct soap *soap, struct ns1__saveSi
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveSignature(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveSignatureResponse
-#define SOAP_TYPE_ns1__saveSignatureResponse (124)
+#define SOAP_TYPE_ns1__saveSignatureResponse (130)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveSignatureResponse(struct soap*, struct ns1__saveSignatureResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveSignatureResponse(struct soap*, const struct ns1__saveSignatureResponse *);
@@ -611,7 +675,7 @@ inline void soap_delete_ns1__saveSignatureResponse(struct soap *soap, struct ns1
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveSignatureResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getUserOfficialClass
-#define SOAP_TYPE_ns1__getUserOfficialClass (121)
+#define SOAP_TYPE_ns1__getUserOfficialClass (127)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getUserOfficialClass(struct soap*, struct ns1__getUserOfficialClass *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getUserOfficialClass(struct soap*, const struct ns1__getUserOfficialClass *);
@@ -643,7 +707,7 @@ inline void soap_delete_ns1__getUserOfficialClass(struct soap *soap, struct ns1_
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getUserOfficialClass(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getUserOfficialClassResponse
-#define SOAP_TYPE_ns1__getUserOfficialClassResponse (120)
+#define SOAP_TYPE_ns1__getUserOfficialClassResponse (126)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getUserOfficialClassResponse(struct soap*, struct ns1__getUserOfficialClassResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getUserOfficialClassResponse(struct soap*, const struct ns1__getUserOfficialClassResponse *);
@@ -675,7 +739,7 @@ inline void soap_delete_ns1__getUserOfficialClassResponse(struct soap *soap, str
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getUserOfficialClassResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getUserDetailsByUsername
-#define SOAP_TYPE_ns1__getUserDetailsByUsername (118)
+#define SOAP_TYPE_ns1__getUserDetailsByUsername (124)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getUserDetailsByUsername(struct soap*, struct ns1__getUserDetailsByUsername *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getUserDetailsByUsername(struct soap*, const struct ns1__getUserDetailsByUsername *);
@@ -707,7 +771,7 @@ inline void soap_delete_ns1__getUserDetailsByUsername(struct soap *soap, struct 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getUserDetailsByUsername(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getUserDetailsByUsernameResponse
-#define SOAP_TYPE_ns1__getUserDetailsByUsernameResponse (117)
+#define SOAP_TYPE_ns1__getUserDetailsByUsernameResponse (123)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getUserDetailsByUsernameResponse(struct soap*, struct ns1__getUserDetailsByUsernameResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getUserDetailsByUsernameResponse(struct soap*, const struct ns1__getUserDetailsByUsernameResponse *);
@@ -739,7 +803,7 @@ inline void soap_delete_ns1__getUserDetailsByUsernameResponse(struct soap *soap,
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getUserDetailsByUsernameResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getUserDetailsByNumber
-#define SOAP_TYPE_ns1__getUserDetailsByNumber (115)
+#define SOAP_TYPE_ns1__getUserDetailsByNumber (121)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getUserDetailsByNumber(struct soap*, struct ns1__getUserDetailsByNumber *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getUserDetailsByNumber(struct soap*, const struct ns1__getUserDetailsByNumber *);
@@ -771,7 +835,7 @@ inline void soap_delete_ns1__getUserDetailsByNumber(struct soap *soap, struct ns
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getUserDetailsByNumber(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getUserDetailsByNumberResponse
-#define SOAP_TYPE_ns1__getUserDetailsByNumberResponse (114)
+#define SOAP_TYPE_ns1__getUserDetailsByNumberResponse (120)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getUserDetailsByNumberResponse(struct soap*, struct ns1__getUserDetailsByNumberResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getUserDetailsByNumberResponse(struct soap*, const struct ns1__getUserDetailsByNumberResponse *);
@@ -803,7 +867,7 @@ inline void soap_delete_ns1__getUserDetailsByNumberResponse(struct soap *soap, s
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getUserDetailsByNumberResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getUserDetails
-#define SOAP_TYPE_ns1__getUserDetails (112)
+#define SOAP_TYPE_ns1__getUserDetails (118)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getUserDetails(struct soap*, struct ns1__getUserDetails *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getUserDetails(struct soap*, const struct ns1__getUserDetails *);
@@ -835,7 +899,7 @@ inline void soap_delete_ns1__getUserDetails(struct soap *soap, struct ns1__getUs
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getUserDetails(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getUserDetailsResponse
-#define SOAP_TYPE_ns1__getUserDetailsResponse (111)
+#define SOAP_TYPE_ns1__getUserDetailsResponse (117)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getUserDetailsResponse(struct soap*, struct ns1__getUserDetailsResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getUserDetailsResponse(struct soap*, const struct ns1__getUserDetailsResponse *);
@@ -867,7 +931,7 @@ inline void soap_delete_ns1__getUserDetailsResponse(struct soap *soap, struct ns
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getUserDetailsResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getAbsents
-#define SOAP_TYPE_ns1__getAbsents (109)
+#define SOAP_TYPE_ns1__getAbsents (115)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAbsents(struct soap*, struct ns1__getAbsents *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAbsents(struct soap*, const struct ns1__getAbsents *);
@@ -899,7 +963,7 @@ inline void soap_delete_ns1__getAbsents(struct soap *soap, struct ns1__getAbsent
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAbsents(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getAbsentsResponse
-#define SOAP_TYPE_ns1__getAbsentsResponse (108)
+#define SOAP_TYPE_ns1__getAbsentsResponse (114)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAbsentsResponse(struct soap*, struct ns1__getAbsentsResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAbsentsResponse(struct soap*, const struct ns1__getAbsentsResponse *);
@@ -931,7 +995,7 @@ inline void soap_delete_ns1__getAbsentsResponse(struct soap *soap, struct ns1__g
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAbsentsResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getAbsentsByDate
-#define SOAP_TYPE_ns1__getAbsentsByDate (106)
+#define SOAP_TYPE_ns1__getAbsentsByDate (112)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAbsentsByDate(struct soap*, struct ns1__getAbsentsByDate *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAbsentsByDate(struct soap*, const struct ns1__getAbsentsByDate *);
@@ -963,7 +1027,7 @@ inline void soap_delete_ns1__getAbsentsByDate(struct soap *soap, struct ns1__get
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAbsentsByDate(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getAbsentsByDateResponse
-#define SOAP_TYPE_ns1__getAbsentsByDateResponse (105)
+#define SOAP_TYPE_ns1__getAbsentsByDateResponse (111)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAbsentsByDateResponse(struct soap*, struct ns1__getAbsentsByDateResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAbsentsByDateResponse(struct soap*, const struct ns1__getAbsentsByDateResponse *);
@@ -994,72 +1058,8 @@ inline void soap_delete_ns1__getAbsentsByDateResponse(struct soap *soap, struct 
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAbsentsByDateResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
-#ifndef SOAP_TYPE_ns1__isValidUserCredentials
-#define SOAP_TYPE_ns1__isValidUserCredentials (103)
-#endif
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__isValidUserCredentials(struct soap*, struct ns1__isValidUserCredentials *);
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__isValidUserCredentials(struct soap*, const struct ns1__isValidUserCredentials *);
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__isValidUserCredentials(struct soap*, const char*, int, const struct ns1__isValidUserCredentials *, const char*);
-SOAP_FMAC3 struct ns1__isValidUserCredentials * SOAP_FMAC4 soap_in_ns1__isValidUserCredentials(struct soap*, const char*, struct ns1__isValidUserCredentials *, const char*);
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__isValidUserCredentials(struct soap*, const struct ns1__isValidUserCredentials *, const char*, const char*);
-
-#ifndef soap_write_ns1__isValidUserCredentials
-#define soap_write_ns1__isValidUserCredentials(soap, data) ( soap_free_temp(soap), soap_begin_send(soap) || (soap_serialize_ns1__isValidUserCredentials(soap, data),0) || soap_put_ns1__isValidUserCredentials(soap, data, "ns1:isValidUserCredentials", NULL) || soap_end_send(soap), (soap)->error )
-#endif
-
-SOAP_FMAC3 struct ns1__isValidUserCredentials * SOAP_FMAC4 soap_get_ns1__isValidUserCredentials(struct soap*, struct ns1__isValidUserCredentials *, const char*, const char*);
-
-#ifndef soap_read_ns1__isValidUserCredentials
-#define soap_read_ns1__isValidUserCredentials(soap, data) ( soap_begin_recv(soap) || !soap_get_ns1__isValidUserCredentials(soap, data, NULL, NULL) || soap_end_recv(soap), (soap)->error )
-#endif
-
-SOAP_FMAC1 struct ns1__isValidUserCredentials * SOAP_FMAC2 soap_instantiate_ns1__isValidUserCredentials(struct soap*, int, const char*, const char*, size_t*);
-
-inline struct ns1__isValidUserCredentials * soap_new_ns1__isValidUserCredentials(struct soap *soap, int n = -1) { return soap_instantiate_ns1__isValidUserCredentials(soap, n, NULL, NULL, NULL); }
-
-inline struct ns1__isValidUserCredentials * soap_new_req_ns1__isValidUserCredentials(struct soap *soap, std::string& accesscode, std::string& username, std::string& password) { struct ns1__isValidUserCredentials *_p = soap_instantiate_ns1__isValidUserCredentials(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__isValidUserCredentials(soap, _p); _p->accesscode = accesscode; _p->username = username; _p->password = password; } return _p; }
-
-inline struct ns1__isValidUserCredentials * soap_new_set_ns1__isValidUserCredentials(struct soap *soap, std::string& accesscode, std::string& username, std::string& password) { struct ns1__isValidUserCredentials *_p = soap_instantiate_ns1__isValidUserCredentials(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__isValidUserCredentials(soap, _p); _p->accesscode = accesscode; _p->username = username; _p->password = password; } return _p; }
-
-inline void soap_delete_ns1__isValidUserCredentials(struct soap *soap, struct ns1__isValidUserCredentials *p) { soap_delete(soap, p); }
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__isValidUserCredentials(struct soap*, int, int, void*, size_t, const void*, size_t);
-
-#ifndef SOAP_TYPE_ns1__isValidUserCredentialsResponse
-#define SOAP_TYPE_ns1__isValidUserCredentialsResponse (102)
-#endif
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__isValidUserCredentialsResponse(struct soap*, struct ns1__isValidUserCredentialsResponse *);
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__isValidUserCredentialsResponse(struct soap*, const struct ns1__isValidUserCredentialsResponse *);
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__isValidUserCredentialsResponse(struct soap*, const char*, int, const struct ns1__isValidUserCredentialsResponse *, const char*);
-SOAP_FMAC3 struct ns1__isValidUserCredentialsResponse * SOAP_FMAC4 soap_in_ns1__isValidUserCredentialsResponse(struct soap*, const char*, struct ns1__isValidUserCredentialsResponse *, const char*);
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__isValidUserCredentialsResponse(struct soap*, const struct ns1__isValidUserCredentialsResponse *, const char*, const char*);
-
-#ifndef soap_write_ns1__isValidUserCredentialsResponse
-#define soap_write_ns1__isValidUserCredentialsResponse(soap, data) ( soap_free_temp(soap), soap_begin_send(soap) || (soap_serialize_ns1__isValidUserCredentialsResponse(soap, data),0) || soap_put_ns1__isValidUserCredentialsResponse(soap, data, "ns1:isValidUserCredentialsResponse", NULL) || soap_end_send(soap), (soap)->error )
-#endif
-
-SOAP_FMAC3 struct ns1__isValidUserCredentialsResponse * SOAP_FMAC4 soap_get_ns1__isValidUserCredentialsResponse(struct soap*, struct ns1__isValidUserCredentialsResponse *, const char*, const char*);
-
-#ifndef soap_read_ns1__isValidUserCredentialsResponse
-#define soap_read_ns1__isValidUserCredentialsResponse(soap, data) ( soap_begin_recv(soap) || !soap_get_ns1__isValidUserCredentialsResponse(soap, data, NULL, NULL) || soap_end_recv(soap), (soap)->error )
-#endif
-
-SOAP_FMAC1 struct ns1__isValidUserCredentialsResponse * SOAP_FMAC2 soap_instantiate_ns1__isValidUserCredentialsResponse(struct soap*, int, const char*, const char*, size_t*);
-
-inline struct ns1__isValidUserCredentialsResponse * soap_new_ns1__isValidUserCredentialsResponse(struct soap *soap, int n = -1) { return soap_instantiate_ns1__isValidUserCredentialsResponse(soap, n, NULL, NULL, NULL); }
-
-inline struct ns1__isValidUserCredentialsResponse * soap_new_req_ns1__isValidUserCredentialsResponse(struct soap *soap, struct soap_dom_element& return_) { struct ns1__isValidUserCredentialsResponse *_p = soap_instantiate_ns1__isValidUserCredentialsResponse(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__isValidUserCredentialsResponse(soap, _p); _p->return_ = return_; } return _p; }
-
-inline struct ns1__isValidUserCredentialsResponse * soap_new_set_ns1__isValidUserCredentialsResponse(struct soap *soap, struct soap_dom_element& return_) { struct ns1__isValidUserCredentialsResponse *_p = soap_instantiate_ns1__isValidUserCredentialsResponse(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__isValidUserCredentialsResponse(soap, _p); _p->return_ = return_; } return _p; }
-
-inline void soap_delete_ns1__isValidUserCredentialsResponse(struct soap *soap, struct ns1__isValidUserCredentialsResponse *p) { soap_delete(soap, p); }
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__isValidUserCredentialsResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
-
 #ifndef SOAP_TYPE_ns1__getClassTeachers
-#define SOAP_TYPE_ns1__getClassTeachers (100)
+#define SOAP_TYPE_ns1__getClassTeachers (109)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getClassTeachers(struct soap*, struct ns1__getClassTeachers *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getClassTeachers(struct soap*, const struct ns1__getClassTeachers *);
@@ -1091,7 +1091,7 @@ inline void soap_delete_ns1__getClassTeachers(struct soap *soap, struct ns1__get
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getClassTeachers(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getClassTeachersResponse
-#define SOAP_TYPE_ns1__getClassTeachersResponse (99)
+#define SOAP_TYPE_ns1__getClassTeachersResponse (108)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getClassTeachersResponse(struct soap*, struct ns1__getClassTeachersResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getClassTeachersResponse(struct soap*, const struct ns1__getClassTeachersResponse *);
@@ -1123,7 +1123,7 @@ inline void soap_delete_ns1__getClassTeachersResponse(struct soap *soap, struct 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getClassTeachersResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__unregisterStudent
-#define SOAP_TYPE_ns1__unregisterStudent (96)
+#define SOAP_TYPE_ns1__unregisterStudent (105)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__unregisterStudent(struct soap*, struct ns1__unregisterStudent *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__unregisterStudent(struct soap*, const struct ns1__unregisterStudent *);
@@ -1155,7 +1155,7 @@ inline void soap_delete_ns1__unregisterStudent(struct soap *soap, struct ns1__un
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__unregisterStudent(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__unregisterStudentResponse
-#define SOAP_TYPE_ns1__unregisterStudentResponse (95)
+#define SOAP_TYPE_ns1__unregisterStudentResponse (104)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__unregisterStudentResponse(struct soap*, struct ns1__unregisterStudentResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__unregisterStudentResponse(struct soap*, const struct ns1__unregisterStudentResponse *);
@@ -1187,7 +1187,7 @@ inline void soap_delete_ns1__unregisterStudentResponse(struct soap *soap, struct
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__unregisterStudentResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getSkoreClassTeacherCourseRelation
-#define SOAP_TYPE_ns1__getSkoreClassTeacherCourseRelation (93)
+#define SOAP_TYPE_ns1__getSkoreClassTeacherCourseRelation (102)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getSkoreClassTeacherCourseRelation(struct soap*, struct ns1__getSkoreClassTeacherCourseRelation *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getSkoreClassTeacherCourseRelation(struct soap*, const struct ns1__getSkoreClassTeacherCourseRelation *);
@@ -1219,7 +1219,7 @@ inline void soap_delete_ns1__getSkoreClassTeacherCourseRelation(struct soap *soa
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getSkoreClassTeacherCourseRelation(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getSkoreClassTeacherCourseRelationResponse
-#define SOAP_TYPE_ns1__getSkoreClassTeacherCourseRelationResponse (92)
+#define SOAP_TYPE_ns1__getSkoreClassTeacherCourseRelationResponse (101)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getSkoreClassTeacherCourseRelationResponse(struct soap*, struct ns1__getSkoreClassTeacherCourseRelationResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getSkoreClassTeacherCourseRelationResponse(struct soap*, const struct ns1__getSkoreClassTeacherCourseRelationResponse *);
@@ -1251,7 +1251,7 @@ inline void soap_delete_ns1__getSkoreClassTeacherCourseRelationResponse(struct s
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getSkoreClassTeacherCourseRelationResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__sendMsg
-#define SOAP_TYPE_ns1__sendMsg (90)
+#define SOAP_TYPE_ns1__sendMsg (99)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__sendMsg(struct soap*, struct ns1__sendMsg *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__sendMsg(struct soap*, const struct ns1__sendMsg *);
@@ -1283,7 +1283,7 @@ inline void soap_delete_ns1__sendMsg(struct soap *soap, struct ns1__sendMsg *p) 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__sendMsg(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__sendMsgResponse
-#define SOAP_TYPE_ns1__sendMsgResponse (89)
+#define SOAP_TYPE_ns1__sendMsgResponse (98)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__sendMsgResponse(struct soap*, struct ns1__sendMsgResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__sendMsgResponse(struct soap*, const struct ns1__sendMsgResponse *);
@@ -1315,7 +1315,7 @@ inline void soap_delete_ns1__sendMsgResponse(struct soap *soap, struct ns1__send
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__sendMsgResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__savePassword
-#define SOAP_TYPE_ns1__savePassword (87)
+#define SOAP_TYPE_ns1__savePassword (96)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__savePassword(struct soap*, struct ns1__savePassword *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__savePassword(struct soap*, const struct ns1__savePassword *);
@@ -1347,7 +1347,7 @@ inline void soap_delete_ns1__savePassword(struct soap *soap, struct ns1__savePas
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__savePassword(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__savePasswordResponse
-#define SOAP_TYPE_ns1__savePasswordResponse (86)
+#define SOAP_TYPE_ns1__savePasswordResponse (95)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__savePasswordResponse(struct soap*, struct ns1__savePasswordResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__savePasswordResponse(struct soap*, const struct ns1__savePasswordResponse *);
@@ -1378,8 +1378,72 @@ inline void soap_delete_ns1__savePasswordResponse(struct soap *soap, struct ns1_
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__savePasswordResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
+#ifndef SOAP_TYPE_ns1__forcePasswordReset
+#define SOAP_TYPE_ns1__forcePasswordReset (93)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__forcePasswordReset(struct soap*, struct ns1__forcePasswordReset *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__forcePasswordReset(struct soap*, const struct ns1__forcePasswordReset *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__forcePasswordReset(struct soap*, const char*, int, const struct ns1__forcePasswordReset *, const char*);
+SOAP_FMAC3 struct ns1__forcePasswordReset * SOAP_FMAC4 soap_in_ns1__forcePasswordReset(struct soap*, const char*, struct ns1__forcePasswordReset *, const char*);
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__forcePasswordReset(struct soap*, const struct ns1__forcePasswordReset *, const char*, const char*);
+
+#ifndef soap_write_ns1__forcePasswordReset
+#define soap_write_ns1__forcePasswordReset(soap, data) ( soap_free_temp(soap), soap_begin_send(soap) || (soap_serialize_ns1__forcePasswordReset(soap, data),0) || soap_put_ns1__forcePasswordReset(soap, data, "ns1:forcePasswordReset", NULL) || soap_end_send(soap), (soap)->error )
+#endif
+
+SOAP_FMAC3 struct ns1__forcePasswordReset * SOAP_FMAC4 soap_get_ns1__forcePasswordReset(struct soap*, struct ns1__forcePasswordReset *, const char*, const char*);
+
+#ifndef soap_read_ns1__forcePasswordReset
+#define soap_read_ns1__forcePasswordReset(soap, data) ( soap_begin_recv(soap) || !soap_get_ns1__forcePasswordReset(soap, data, NULL, NULL) || soap_end_recv(soap), (soap)->error )
+#endif
+
+SOAP_FMAC1 struct ns1__forcePasswordReset * SOAP_FMAC2 soap_instantiate_ns1__forcePasswordReset(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct ns1__forcePasswordReset * soap_new_ns1__forcePasswordReset(struct soap *soap, int n = -1) { return soap_instantiate_ns1__forcePasswordReset(soap, n, NULL, NULL, NULL); }
+
+inline struct ns1__forcePasswordReset * soap_new_req_ns1__forcePasswordReset(struct soap *soap, std::string& accesscode, std::string& userIdentifier, int accountType) { struct ns1__forcePasswordReset *_p = soap_instantiate_ns1__forcePasswordReset(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__forcePasswordReset(soap, _p); _p->accesscode = accesscode; _p->userIdentifier = userIdentifier; _p->accountType = accountType; } return _p; }
+
+inline struct ns1__forcePasswordReset * soap_new_set_ns1__forcePasswordReset(struct soap *soap, std::string& accesscode, std::string& userIdentifier, int accountType) { struct ns1__forcePasswordReset *_p = soap_instantiate_ns1__forcePasswordReset(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__forcePasswordReset(soap, _p); _p->accesscode = accesscode; _p->userIdentifier = userIdentifier; _p->accountType = accountType; } return _p; }
+
+inline void soap_delete_ns1__forcePasswordReset(struct soap *soap, struct ns1__forcePasswordReset *p) { soap_delete(soap, p); }
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__forcePasswordReset(struct soap*, int, int, void*, size_t, const void*, size_t);
+
+#ifndef SOAP_TYPE_ns1__forcePasswordResetResponse
+#define SOAP_TYPE_ns1__forcePasswordResetResponse (92)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__forcePasswordResetResponse(struct soap*, struct ns1__forcePasswordResetResponse *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__forcePasswordResetResponse(struct soap*, const struct ns1__forcePasswordResetResponse *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__forcePasswordResetResponse(struct soap*, const char*, int, const struct ns1__forcePasswordResetResponse *, const char*);
+SOAP_FMAC3 struct ns1__forcePasswordResetResponse * SOAP_FMAC4 soap_in_ns1__forcePasswordResetResponse(struct soap*, const char*, struct ns1__forcePasswordResetResponse *, const char*);
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__forcePasswordResetResponse(struct soap*, const struct ns1__forcePasswordResetResponse *, const char*, const char*);
+
+#ifndef soap_write_ns1__forcePasswordResetResponse
+#define soap_write_ns1__forcePasswordResetResponse(soap, data) ( soap_free_temp(soap), soap_begin_send(soap) || (soap_serialize_ns1__forcePasswordResetResponse(soap, data),0) || soap_put_ns1__forcePasswordResetResponse(soap, data, "ns1:forcePasswordResetResponse", NULL) || soap_end_send(soap), (soap)->error )
+#endif
+
+SOAP_FMAC3 struct ns1__forcePasswordResetResponse * SOAP_FMAC4 soap_get_ns1__forcePasswordResetResponse(struct soap*, struct ns1__forcePasswordResetResponse *, const char*, const char*);
+
+#ifndef soap_read_ns1__forcePasswordResetResponse
+#define soap_read_ns1__forcePasswordResetResponse(soap, data) ( soap_begin_recv(soap) || !soap_get_ns1__forcePasswordResetResponse(soap, data, NULL, NULL) || soap_end_recv(soap), (soap)->error )
+#endif
+
+SOAP_FMAC1 struct ns1__forcePasswordResetResponse * SOAP_FMAC2 soap_instantiate_ns1__forcePasswordResetResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct ns1__forcePasswordResetResponse * soap_new_ns1__forcePasswordResetResponse(struct soap *soap, int n = -1) { return soap_instantiate_ns1__forcePasswordResetResponse(soap, n, NULL, NULL, NULL); }
+
+inline struct ns1__forcePasswordResetResponse * soap_new_req_ns1__forcePasswordResetResponse(struct soap *soap, struct soap_dom_element& return_) { struct ns1__forcePasswordResetResponse *_p = soap_instantiate_ns1__forcePasswordResetResponse(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__forcePasswordResetResponse(soap, _p); _p->return_ = return_; } return _p; }
+
+inline struct ns1__forcePasswordResetResponse * soap_new_set_ns1__forcePasswordResetResponse(struct soap *soap, struct soap_dom_element& return_) { struct ns1__forcePasswordResetResponse *_p = soap_instantiate_ns1__forcePasswordResetResponse(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__forcePasswordResetResponse(soap, _p); _p->return_ = return_; } return _p; }
+
+inline void soap_delete_ns1__forcePasswordResetResponse(struct soap *soap, struct ns1__forcePasswordResetResponse *p) { soap_delete(soap, p); }
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__forcePasswordResetResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
+
 #ifndef SOAP_TYPE_ns1__replaceInum
-#define SOAP_TYPE_ns1__replaceInum (84)
+#define SOAP_TYPE_ns1__replaceInum (90)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__replaceInum(struct soap*, struct ns1__replaceInum *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__replaceInum(struct soap*, const struct ns1__replaceInum *);
@@ -1411,7 +1475,7 @@ inline void soap_delete_ns1__replaceInum(struct soap *soap, struct ns1__replaceI
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__replaceInum(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__replaceInumResponse
-#define SOAP_TYPE_ns1__replaceInumResponse (83)
+#define SOAP_TYPE_ns1__replaceInumResponse (89)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__replaceInumResponse(struct soap*, struct ns1__replaceInumResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__replaceInumResponse(struct soap*, const struct ns1__replaceInumResponse *);
@@ -1442,8 +1506,72 @@ inline void soap_delete_ns1__replaceInumResponse(struct soap *soap, struct ns1__
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__replaceInumResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
+#ifndef SOAP_TYPE_ns1__getAccountPhoto
+#define SOAP_TYPE_ns1__getAccountPhoto (87)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAccountPhoto(struct soap*, struct ns1__getAccountPhoto *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAccountPhoto(struct soap*, const struct ns1__getAccountPhoto *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__getAccountPhoto(struct soap*, const char*, int, const struct ns1__getAccountPhoto *, const char*);
+SOAP_FMAC3 struct ns1__getAccountPhoto * SOAP_FMAC4 soap_in_ns1__getAccountPhoto(struct soap*, const char*, struct ns1__getAccountPhoto *, const char*);
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__getAccountPhoto(struct soap*, const struct ns1__getAccountPhoto *, const char*, const char*);
+
+#ifndef soap_write_ns1__getAccountPhoto
+#define soap_write_ns1__getAccountPhoto(soap, data) ( soap_free_temp(soap), soap_begin_send(soap) || (soap_serialize_ns1__getAccountPhoto(soap, data),0) || soap_put_ns1__getAccountPhoto(soap, data, "ns1:getAccountPhoto", NULL) || soap_end_send(soap), (soap)->error )
+#endif
+
+SOAP_FMAC3 struct ns1__getAccountPhoto * SOAP_FMAC4 soap_get_ns1__getAccountPhoto(struct soap*, struct ns1__getAccountPhoto *, const char*, const char*);
+
+#ifndef soap_read_ns1__getAccountPhoto
+#define soap_read_ns1__getAccountPhoto(soap, data) ( soap_begin_recv(soap) || !soap_get_ns1__getAccountPhoto(soap, data, NULL, NULL) || soap_end_recv(soap), (soap)->error )
+#endif
+
+SOAP_FMAC1 struct ns1__getAccountPhoto * SOAP_FMAC2 soap_instantiate_ns1__getAccountPhoto(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct ns1__getAccountPhoto * soap_new_ns1__getAccountPhoto(struct soap *soap, int n = -1) { return soap_instantiate_ns1__getAccountPhoto(soap, n, NULL, NULL, NULL); }
+
+inline struct ns1__getAccountPhoto * soap_new_req_ns1__getAccountPhoto(struct soap *soap, std::string& accesscode, std::string& userIdentifier) { struct ns1__getAccountPhoto *_p = soap_instantiate_ns1__getAccountPhoto(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__getAccountPhoto(soap, _p); _p->accesscode = accesscode; _p->userIdentifier = userIdentifier; } return _p; }
+
+inline struct ns1__getAccountPhoto * soap_new_set_ns1__getAccountPhoto(struct soap *soap, std::string& accesscode, std::string& userIdentifier) { struct ns1__getAccountPhoto *_p = soap_instantiate_ns1__getAccountPhoto(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__getAccountPhoto(soap, _p); _p->accesscode = accesscode; _p->userIdentifier = userIdentifier; } return _p; }
+
+inline void soap_delete_ns1__getAccountPhoto(struct soap *soap, struct ns1__getAccountPhoto *p) { soap_delete(soap, p); }
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAccountPhoto(struct soap*, int, int, void*, size_t, const void*, size_t);
+
+#ifndef SOAP_TYPE_ns1__getAccountPhotoResponse
+#define SOAP_TYPE_ns1__getAccountPhotoResponse (86)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAccountPhotoResponse(struct soap*, struct ns1__getAccountPhotoResponse *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAccountPhotoResponse(struct soap*, const struct ns1__getAccountPhotoResponse *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__getAccountPhotoResponse(struct soap*, const char*, int, const struct ns1__getAccountPhotoResponse *, const char*);
+SOAP_FMAC3 struct ns1__getAccountPhotoResponse * SOAP_FMAC4 soap_in_ns1__getAccountPhotoResponse(struct soap*, const char*, struct ns1__getAccountPhotoResponse *, const char*);
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__getAccountPhotoResponse(struct soap*, const struct ns1__getAccountPhotoResponse *, const char*, const char*);
+
+#ifndef soap_write_ns1__getAccountPhotoResponse
+#define soap_write_ns1__getAccountPhotoResponse(soap, data) ( soap_free_temp(soap), soap_begin_send(soap) || (soap_serialize_ns1__getAccountPhotoResponse(soap, data),0) || soap_put_ns1__getAccountPhotoResponse(soap, data, "ns1:getAccountPhotoResponse", NULL) || soap_end_send(soap), (soap)->error )
+#endif
+
+SOAP_FMAC3 struct ns1__getAccountPhotoResponse * SOAP_FMAC4 soap_get_ns1__getAccountPhotoResponse(struct soap*, struct ns1__getAccountPhotoResponse *, const char*, const char*);
+
+#ifndef soap_read_ns1__getAccountPhotoResponse
+#define soap_read_ns1__getAccountPhotoResponse(soap, data) ( soap_begin_recv(soap) || !soap_get_ns1__getAccountPhotoResponse(soap, data, NULL, NULL) || soap_end_recv(soap), (soap)->error )
+#endif
+
+SOAP_FMAC1 struct ns1__getAccountPhotoResponse * SOAP_FMAC2 soap_instantiate_ns1__getAccountPhotoResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct ns1__getAccountPhotoResponse * soap_new_ns1__getAccountPhotoResponse(struct soap *soap, int n = -1) { return soap_instantiate_ns1__getAccountPhotoResponse(soap, n, NULL, NULL, NULL); }
+
+inline struct ns1__getAccountPhotoResponse * soap_new_req_ns1__getAccountPhotoResponse(struct soap *soap, std::string& return_) { struct ns1__getAccountPhotoResponse *_p = soap_instantiate_ns1__getAccountPhotoResponse(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__getAccountPhotoResponse(soap, _p); _p->return_ = return_; } return _p; }
+
+inline struct ns1__getAccountPhotoResponse * soap_new_set_ns1__getAccountPhotoResponse(struct soap *soap, std::string& return_) { struct ns1__getAccountPhotoResponse *_p = soap_instantiate_ns1__getAccountPhotoResponse(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__getAccountPhotoResponse(soap, _p); _p->return_ = return_; } return _p; }
+
+inline void soap_delete_ns1__getAccountPhotoResponse(struct soap *soap, struct ns1__getAccountPhotoResponse *p) { soap_delete(soap, p); }
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAccountPhotoResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
+
 #ifndef SOAP_TYPE_ns1__setAccountPhoto
-#define SOAP_TYPE_ns1__setAccountPhoto (81)
+#define SOAP_TYPE_ns1__setAccountPhoto (84)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__setAccountPhoto(struct soap*, struct ns1__setAccountPhoto *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__setAccountPhoto(struct soap*, const struct ns1__setAccountPhoto *);
@@ -1475,7 +1603,7 @@ inline void soap_delete_ns1__setAccountPhoto(struct soap *soap, struct ns1__setA
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__setAccountPhoto(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__setAccountPhotoResponse
-#define SOAP_TYPE_ns1__setAccountPhotoResponse (80)
+#define SOAP_TYPE_ns1__setAccountPhotoResponse (83)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__setAccountPhotoResponse(struct soap*, struct ns1__setAccountPhotoResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__setAccountPhotoResponse(struct soap*, const struct ns1__setAccountPhotoResponse *);
@@ -1507,7 +1635,7 @@ inline void soap_delete_ns1__setAccountPhotoResponse(struct soap *soap, struct n
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__setAccountPhotoResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__setAccountStatus
-#define SOAP_TYPE_ns1__setAccountStatus (78)
+#define SOAP_TYPE_ns1__setAccountStatus (81)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__setAccountStatus(struct soap*, struct ns1__setAccountStatus *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__setAccountStatus(struct soap*, const struct ns1__setAccountStatus *);
@@ -1539,7 +1667,7 @@ inline void soap_delete_ns1__setAccountStatus(struct soap *soap, struct ns1__set
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__setAccountStatus(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__setAccountStatusResponse
-#define SOAP_TYPE_ns1__setAccountStatusResponse (77)
+#define SOAP_TYPE_ns1__setAccountStatusResponse (80)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__setAccountStatusResponse(struct soap*, struct ns1__setAccountStatusResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__setAccountStatusResponse(struct soap*, const struct ns1__setAccountStatusResponse *);
@@ -1571,7 +1699,7 @@ inline void soap_delete_ns1__setAccountStatusResponse(struct soap *soap, struct 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__setAccountStatusResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveUserToClassesAndGroups
-#define SOAP_TYPE_ns1__saveUserToClassesAndGroups (75)
+#define SOAP_TYPE_ns1__saveUserToClassesAndGroups (78)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveUserToClassesAndGroups(struct soap*, struct ns1__saveUserToClassesAndGroups *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveUserToClassesAndGroups(struct soap*, const struct ns1__saveUserToClassesAndGroups *);
@@ -1603,7 +1731,7 @@ inline void soap_delete_ns1__saveUserToClassesAndGroups(struct soap *soap, struc
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveUserToClassesAndGroups(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveUserToClassesAndGroupsResponse
-#define SOAP_TYPE_ns1__saveUserToClassesAndGroupsResponse (74)
+#define SOAP_TYPE_ns1__saveUserToClassesAndGroupsResponse (77)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveUserToClassesAndGroupsResponse(struct soap*, struct ns1__saveUserToClassesAndGroupsResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveUserToClassesAndGroupsResponse(struct soap*, const struct ns1__saveUserToClassesAndGroupsResponse *);
@@ -1635,7 +1763,7 @@ inline void soap_delete_ns1__saveUserToClassesAndGroupsResponse(struct soap *soa
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveUserToClassesAndGroupsResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveUserToClass
-#define SOAP_TYPE_ns1__saveUserToClass (72)
+#define SOAP_TYPE_ns1__saveUserToClass (75)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveUserToClass(struct soap*, struct ns1__saveUserToClass *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveUserToClass(struct soap*, const struct ns1__saveUserToClass *);
@@ -1667,7 +1795,7 @@ inline void soap_delete_ns1__saveUserToClass(struct soap *soap, struct ns1__save
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveUserToClass(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveUserToClassResponse
-#define SOAP_TYPE_ns1__saveUserToClassResponse (71)
+#define SOAP_TYPE_ns1__saveUserToClassResponse (74)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveUserToClassResponse(struct soap*, struct ns1__saveUserToClassResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveUserToClassResponse(struct soap*, const struct ns1__saveUserToClassResponse *);
@@ -1699,7 +1827,7 @@ inline void soap_delete_ns1__saveUserToClassResponse(struct soap *soap, struct n
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveUserToClassResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__removeUserFromGroup
-#define SOAP_TYPE_ns1__removeUserFromGroup (69)
+#define SOAP_TYPE_ns1__removeUserFromGroup (72)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__removeUserFromGroup(struct soap*, struct ns1__removeUserFromGroup *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__removeUserFromGroup(struct soap*, const struct ns1__removeUserFromGroup *);
@@ -1731,7 +1859,7 @@ inline void soap_delete_ns1__removeUserFromGroup(struct soap *soap, struct ns1__
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__removeUserFromGroup(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__removeUserFromGroupResponse
-#define SOAP_TYPE_ns1__removeUserFromGroupResponse (68)
+#define SOAP_TYPE_ns1__removeUserFromGroupResponse (71)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__removeUserFromGroupResponse(struct soap*, struct ns1__removeUserFromGroupResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__removeUserFromGroupResponse(struct soap*, const struct ns1__removeUserFromGroupResponse *);
@@ -1763,7 +1891,7 @@ inline void soap_delete_ns1__removeUserFromGroupResponse(struct soap *soap, stru
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__removeUserFromGroupResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveUserToClasses
-#define SOAP_TYPE_ns1__saveUserToClasses (66)
+#define SOAP_TYPE_ns1__saveUserToClasses (69)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveUserToClasses(struct soap*, struct ns1__saveUserToClasses *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveUserToClasses(struct soap*, const struct ns1__saveUserToClasses *);
@@ -1795,7 +1923,7 @@ inline void soap_delete_ns1__saveUserToClasses(struct soap *soap, struct ns1__sa
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveUserToClasses(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveUserToClassesResponse
-#define SOAP_TYPE_ns1__saveUserToClassesResponse (65)
+#define SOAP_TYPE_ns1__saveUserToClassesResponse (68)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveUserToClassesResponse(struct soap*, struct ns1__saveUserToClassesResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveUserToClassesResponse(struct soap*, const struct ns1__saveUserToClassesResponse *);
@@ -1827,7 +1955,7 @@ inline void soap_delete_ns1__saveUserToClassesResponse(struct soap *soap, struct
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveUserToClassesResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__delClass
-#define SOAP_TYPE_ns1__delClass (63)
+#define SOAP_TYPE_ns1__delClass (66)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__delClass(struct soap*, struct ns1__delClass *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__delClass(struct soap*, const struct ns1__delClass *);
@@ -1859,7 +1987,7 @@ inline void soap_delete_ns1__delClass(struct soap *soap, struct ns1__delClass *p
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__delClass(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__delClassResponse
-#define SOAP_TYPE_ns1__delClassResponse (62)
+#define SOAP_TYPE_ns1__delClassResponse (65)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__delClassResponse(struct soap*, struct ns1__delClassResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__delClassResponse(struct soap*, const struct ns1__delClassResponse *);
@@ -1891,7 +2019,7 @@ inline void soap_delete_ns1__delClassResponse(struct soap *soap, struct ns1__del
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__delClassResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveClassListJson
-#define SOAP_TYPE_ns1__saveClassListJson (60)
+#define SOAP_TYPE_ns1__saveClassListJson (63)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveClassListJson(struct soap*, struct ns1__saveClassListJson *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveClassListJson(struct soap*, const struct ns1__saveClassListJson *);
@@ -1923,7 +2051,7 @@ inline void soap_delete_ns1__saveClassListJson(struct soap *soap, struct ns1__sa
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveClassListJson(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveClassListJsonResponse
-#define SOAP_TYPE_ns1__saveClassListJsonResponse (59)
+#define SOAP_TYPE_ns1__saveClassListJsonResponse (62)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveClassListJsonResponse(struct soap*, struct ns1__saveClassListJsonResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveClassListJsonResponse(struct soap*, const struct ns1__saveClassListJsonResponse *);
@@ -1955,7 +2083,7 @@ inline void soap_delete_ns1__saveClassListJsonResponse(struct soap *soap, struct
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveClassListJsonResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveClassList
-#define SOAP_TYPE_ns1__saveClassList (57)
+#define SOAP_TYPE_ns1__saveClassList (60)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveClassList(struct soap*, struct ns1__saveClassList *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveClassList(struct soap*, const struct ns1__saveClassList *);
@@ -1987,7 +2115,7 @@ inline void soap_delete_ns1__saveClassList(struct soap *soap, struct ns1__saveCl
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveClassList(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveClassListResponse
-#define SOAP_TYPE_ns1__saveClassListResponse (56)
+#define SOAP_TYPE_ns1__saveClassListResponse (59)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveClassListResponse(struct soap*, struct ns1__saveClassListResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveClassListResponse(struct soap*, const struct ns1__saveClassListResponse *);
@@ -2019,7 +2147,7 @@ inline void soap_delete_ns1__saveClassListResponse(struct soap *soap, struct ns1
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveClassListResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getClassListJson
-#define SOAP_TYPE_ns1__getClassListJson (54)
+#define SOAP_TYPE_ns1__getClassListJson (57)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getClassListJson(struct soap*, struct ns1__getClassListJson *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getClassListJson(struct soap*, const struct ns1__getClassListJson *);
@@ -2051,7 +2179,7 @@ inline void soap_delete_ns1__getClassListJson(struct soap *soap, struct ns1__get
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getClassListJson(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getClassListJsonResponse
-#define SOAP_TYPE_ns1__getClassListJsonResponse (53)
+#define SOAP_TYPE_ns1__getClassListJsonResponse (56)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getClassListJsonResponse(struct soap*, struct ns1__getClassListJsonResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getClassListJsonResponse(struct soap*, const struct ns1__getClassListJsonResponse *);
@@ -2083,7 +2211,7 @@ inline void soap_delete_ns1__getClassListJsonResponse(struct soap *soap, struct 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getClassListJsonResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getClassList
-#define SOAP_TYPE_ns1__getClassList (51)
+#define SOAP_TYPE_ns1__getClassList (54)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getClassList(struct soap*, struct ns1__getClassList *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getClassList(struct soap*, const struct ns1__getClassList *);
@@ -2115,7 +2243,7 @@ inline void soap_delete_ns1__getClassList(struct soap *soap, struct ns1__getClas
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getClassList(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getClassListResponse
-#define SOAP_TYPE_ns1__getClassListResponse (50)
+#define SOAP_TYPE_ns1__getClassListResponse (53)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getClassListResponse(struct soap*, struct ns1__getClassListResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getClassListResponse(struct soap*, const struct ns1__getClassListResponse *);
@@ -2147,7 +2275,7 @@ inline void soap_delete_ns1__getClassListResponse(struct soap *soap, struct ns1_
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getClassListResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveUserParameter
-#define SOAP_TYPE_ns1__saveUserParameter (48)
+#define SOAP_TYPE_ns1__saveUserParameter (51)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveUserParameter(struct soap*, struct ns1__saveUserParameter *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveUserParameter(struct soap*, const struct ns1__saveUserParameter *);
@@ -2179,7 +2307,7 @@ inline void soap_delete_ns1__saveUserParameter(struct soap *soap, struct ns1__sa
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveUserParameter(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__saveUserParameterResponse
-#define SOAP_TYPE_ns1__saveUserParameterResponse (47)
+#define SOAP_TYPE_ns1__saveUserParameterResponse (50)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveUserParameterResponse(struct soap*, struct ns1__saveUserParameterResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveUserParameterResponse(struct soap*, const struct ns1__saveUserParameterResponse *);
@@ -2211,7 +2339,7 @@ inline void soap_delete_ns1__saveUserParameterResponse(struct soap *soap, struct
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveUserParameterResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__delUser
-#define SOAP_TYPE_ns1__delUser (45)
+#define SOAP_TYPE_ns1__delUser (48)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__delUser(struct soap*, struct ns1__delUser *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__delUser(struct soap*, const struct ns1__delUser *);
@@ -2243,7 +2371,7 @@ inline void soap_delete_ns1__delUser(struct soap *soap, struct ns1__delUser *p) 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__delUser(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__delUserResponse
-#define SOAP_TYPE_ns1__delUserResponse (44)
+#define SOAP_TYPE_ns1__delUserResponse (47)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__delUserResponse(struct soap*, struct ns1__delUserResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__delUserResponse(struct soap*, const struct ns1__delUserResponse *);
@@ -2275,7 +2403,7 @@ inline void soap_delete_ns1__delUserResponse(struct soap *soap, struct ns1__delU
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__delUserResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getCourses
-#define SOAP_TYPE_ns1__getCourses (42)
+#define SOAP_TYPE_ns1__getCourses (45)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getCourses(struct soap*, struct ns1__getCourses *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getCourses(struct soap*, const struct ns1__getCourses *);
@@ -2307,7 +2435,7 @@ inline void soap_delete_ns1__getCourses(struct soap *soap, struct ns1__getCourse
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getCourses(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getCoursesResponse
-#define SOAP_TYPE_ns1__getCoursesResponse (41)
+#define SOAP_TYPE_ns1__getCoursesResponse (44)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getCoursesResponse(struct soap*, struct ns1__getCoursesResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getCoursesResponse(struct soap*, const struct ns1__getCoursesResponse *);
@@ -2339,7 +2467,7 @@ inline void soap_delete_ns1__getCoursesResponse(struct soap *soap, struct ns1__g
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getCoursesResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__addCourseStudents
-#define SOAP_TYPE_ns1__addCourseStudents (39)
+#define SOAP_TYPE_ns1__addCourseStudents (42)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__addCourseStudents(struct soap*, struct ns1__addCourseStudents *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__addCourseStudents(struct soap*, const struct ns1__addCourseStudents *);
@@ -2371,7 +2499,7 @@ inline void soap_delete_ns1__addCourseStudents(struct soap *soap, struct ns1__ad
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__addCourseStudents(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__addCourseStudentsResponse
-#define SOAP_TYPE_ns1__addCourseStudentsResponse (38)
+#define SOAP_TYPE_ns1__addCourseStudentsResponse (41)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__addCourseStudentsResponse(struct soap*, struct ns1__addCourseStudentsResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__addCourseStudentsResponse(struct soap*, const struct ns1__addCourseStudentsResponse *);
@@ -2403,7 +2531,7 @@ inline void soap_delete_ns1__addCourseStudentsResponse(struct soap *soap, struct
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__addCourseStudentsResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__addCourseTeacher
-#define SOAP_TYPE_ns1__addCourseTeacher (36)
+#define SOAP_TYPE_ns1__addCourseTeacher (39)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__addCourseTeacher(struct soap*, struct ns1__addCourseTeacher *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__addCourseTeacher(struct soap*, const struct ns1__addCourseTeacher *);
@@ -2435,7 +2563,7 @@ inline void soap_delete_ns1__addCourseTeacher(struct soap *soap, struct ns1__add
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__addCourseTeacher(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__addCourseTeacherResponse
-#define SOAP_TYPE_ns1__addCourseTeacherResponse (35)
+#define SOAP_TYPE_ns1__addCourseTeacherResponse (38)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__addCourseTeacherResponse(struct soap*, struct ns1__addCourseTeacherResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__addCourseTeacherResponse(struct soap*, const struct ns1__addCourseTeacherResponse *);
@@ -2467,7 +2595,7 @@ inline void soap_delete_ns1__addCourseTeacherResponse(struct soap *soap, struct 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__addCourseTeacherResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__addCourse
-#define SOAP_TYPE_ns1__addCourse (33)
+#define SOAP_TYPE_ns1__addCourse (36)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__addCourse(struct soap*, struct ns1__addCourse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__addCourse(struct soap*, const struct ns1__addCourse *);
@@ -2499,7 +2627,7 @@ inline void soap_delete_ns1__addCourse(struct soap *soap, struct ns1__addCourse 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__addCourse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__addCourseResponse
-#define SOAP_TYPE_ns1__addCourseResponse (32)
+#define SOAP_TYPE_ns1__addCourseResponse (35)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__addCourseResponse(struct soap*, struct ns1__addCourseResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__addCourseResponse(struct soap*, const struct ns1__addCourseResponse *);
@@ -2531,7 +2659,7 @@ inline void soap_delete_ns1__addCourseResponse(struct soap *soap, struct ns1__ad
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__addCourseResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getAllGroupsAndClasses
-#define SOAP_TYPE_ns1__getAllGroupsAndClasses (29)
+#define SOAP_TYPE_ns1__getAllGroupsAndClasses (32)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAllGroupsAndClasses(struct soap*, struct ns1__getAllGroupsAndClasses *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAllGroupsAndClasses(struct soap*, const struct ns1__getAllGroupsAndClasses *);
@@ -2563,7 +2691,7 @@ inline void soap_delete_ns1__getAllGroupsAndClasses(struct soap *soap, struct ns
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAllGroupsAndClasses(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getAllGroupsAndClassesResponse
-#define SOAP_TYPE_ns1__getAllGroupsAndClassesResponse (28)
+#define SOAP_TYPE_ns1__getAllGroupsAndClassesResponse (31)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAllGroupsAndClassesResponse(struct soap*, struct ns1__getAllGroupsAndClassesResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAllGroupsAndClassesResponse(struct soap*, const struct ns1__getAllGroupsAndClassesResponse *);
@@ -2595,7 +2723,7 @@ inline void soap_delete_ns1__getAllGroupsAndClassesResponse(struct soap *soap, s
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAllGroupsAndClassesResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getAllAccountsExtended
-#define SOAP_TYPE_ns1__getAllAccountsExtended (26)
+#define SOAP_TYPE_ns1__getAllAccountsExtended (29)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAllAccountsExtended(struct soap*, struct ns1__getAllAccountsExtended *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAllAccountsExtended(struct soap*, const struct ns1__getAllAccountsExtended *);
@@ -2627,7 +2755,7 @@ inline void soap_delete_ns1__getAllAccountsExtended(struct soap *soap, struct ns
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAllAccountsExtended(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getAllAccountsExtendedResponse
-#define SOAP_TYPE_ns1__getAllAccountsExtendedResponse (25)
+#define SOAP_TYPE_ns1__getAllAccountsExtendedResponse (28)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAllAccountsExtendedResponse(struct soap*, struct ns1__getAllAccountsExtendedResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAllAccountsExtendedResponse(struct soap*, const struct ns1__getAllAccountsExtendedResponse *);
@@ -2659,7 +2787,7 @@ inline void soap_delete_ns1__getAllAccountsExtendedResponse(struct soap *soap, s
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAllAccountsExtendedResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getAllAccounts
-#define SOAP_TYPE_ns1__getAllAccounts (23)
+#define SOAP_TYPE_ns1__getAllAccounts (26)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAllAccounts(struct soap*, struct ns1__getAllAccounts *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAllAccounts(struct soap*, const struct ns1__getAllAccounts *);
@@ -2691,7 +2819,7 @@ inline void soap_delete_ns1__getAllAccounts(struct soap *soap, struct ns1__getAl
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAllAccounts(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_ns1__getAllAccountsResponse
-#define SOAP_TYPE_ns1__getAllAccountsResponse (22)
+#define SOAP_TYPE_ns1__getAllAccountsResponse (25)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__getAllAccountsResponse(struct soap*, struct ns1__getAllAccountsResponse *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__getAllAccountsResponse(struct soap*, const struct ns1__getAllAccountsResponse *);
@@ -2722,6 +2850,70 @@ inline void soap_delete_ns1__getAllAccountsResponse(struct soap *soap, struct ns
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__getAllAccountsResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
 
+#ifndef SOAP_TYPE_ns1__saveGroup
+#define SOAP_TYPE_ns1__saveGroup (23)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveGroup(struct soap*, struct ns1__saveGroup *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveGroup(struct soap*, const struct ns1__saveGroup *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__saveGroup(struct soap*, const char*, int, const struct ns1__saveGroup *, const char*);
+SOAP_FMAC3 struct ns1__saveGroup * SOAP_FMAC4 soap_in_ns1__saveGroup(struct soap*, const char*, struct ns1__saveGroup *, const char*);
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__saveGroup(struct soap*, const struct ns1__saveGroup *, const char*, const char*);
+
+#ifndef soap_write_ns1__saveGroup
+#define soap_write_ns1__saveGroup(soap, data) ( soap_free_temp(soap), soap_begin_send(soap) || (soap_serialize_ns1__saveGroup(soap, data),0) || soap_put_ns1__saveGroup(soap, data, "ns1:saveGroup", NULL) || soap_end_send(soap), (soap)->error )
+#endif
+
+SOAP_FMAC3 struct ns1__saveGroup * SOAP_FMAC4 soap_get_ns1__saveGroup(struct soap*, struct ns1__saveGroup *, const char*, const char*);
+
+#ifndef soap_read_ns1__saveGroup
+#define soap_read_ns1__saveGroup(soap, data) ( soap_begin_recv(soap) || !soap_get_ns1__saveGroup(soap, data, NULL, NULL) || soap_end_recv(soap), (soap)->error )
+#endif
+
+SOAP_FMAC1 struct ns1__saveGroup * SOAP_FMAC2 soap_instantiate_ns1__saveGroup(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct ns1__saveGroup * soap_new_ns1__saveGroup(struct soap *soap, int n = -1) { return soap_instantiate_ns1__saveGroup(soap, n, NULL, NULL, NULL); }
+
+inline struct ns1__saveGroup * soap_new_req_ns1__saveGroup(struct soap *soap, std::string& accesscode, std::string& name, std::string& desc, std::string& code, std::string& parent, std::string& untis) { struct ns1__saveGroup *_p = soap_instantiate_ns1__saveGroup(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__saveGroup(soap, _p); _p->accesscode = accesscode; _p->name = name; _p->desc = desc; _p->code = code; _p->parent = parent; _p->untis = untis; } return _p; }
+
+inline struct ns1__saveGroup * soap_new_set_ns1__saveGroup(struct soap *soap, std::string& accesscode, std::string& name, std::string& desc, std::string& code, std::string& parent, std::string& untis) { struct ns1__saveGroup *_p = soap_instantiate_ns1__saveGroup(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__saveGroup(soap, _p); _p->accesscode = accesscode; _p->name = name; _p->desc = desc; _p->code = code; _p->parent = parent; _p->untis = untis; } return _p; }
+
+inline void soap_delete_ns1__saveGroup(struct soap *soap, struct ns1__saveGroup *p) { soap_delete(soap, p); }
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveGroup(struct soap*, int, int, void*, size_t, const void*, size_t);
+
+#ifndef SOAP_TYPE_ns1__saveGroupResponse
+#define SOAP_TYPE_ns1__saveGroupResponse (22)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns1__saveGroupResponse(struct soap*, struct ns1__saveGroupResponse *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns1__saveGroupResponse(struct soap*, const struct ns1__saveGroupResponse *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns1__saveGroupResponse(struct soap*, const char*, int, const struct ns1__saveGroupResponse *, const char*);
+SOAP_FMAC3 struct ns1__saveGroupResponse * SOAP_FMAC4 soap_in_ns1__saveGroupResponse(struct soap*, const char*, struct ns1__saveGroupResponse *, const char*);
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns1__saveGroupResponse(struct soap*, const struct ns1__saveGroupResponse *, const char*, const char*);
+
+#ifndef soap_write_ns1__saveGroupResponse
+#define soap_write_ns1__saveGroupResponse(soap, data) ( soap_free_temp(soap), soap_begin_send(soap) || (soap_serialize_ns1__saveGroupResponse(soap, data),0) || soap_put_ns1__saveGroupResponse(soap, data, "ns1:saveGroupResponse", NULL) || soap_end_send(soap), (soap)->error )
+#endif
+
+SOAP_FMAC3 struct ns1__saveGroupResponse * SOAP_FMAC4 soap_get_ns1__saveGroupResponse(struct soap*, struct ns1__saveGroupResponse *, const char*, const char*);
+
+#ifndef soap_read_ns1__saveGroupResponse
+#define soap_read_ns1__saveGroupResponse(soap, data) ( soap_begin_recv(soap) || !soap_get_ns1__saveGroupResponse(soap, data, NULL, NULL) || soap_end_recv(soap), (soap)->error )
+#endif
+
+SOAP_FMAC1 struct ns1__saveGroupResponse * SOAP_FMAC2 soap_instantiate_ns1__saveGroupResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct ns1__saveGroupResponse * soap_new_ns1__saveGroupResponse(struct soap *soap, int n = -1) { return soap_instantiate_ns1__saveGroupResponse(soap, n, NULL, NULL, NULL); }
+
+inline struct ns1__saveGroupResponse * soap_new_req_ns1__saveGroupResponse(struct soap *soap, struct soap_dom_element& return_) { struct ns1__saveGroupResponse *_p = soap_instantiate_ns1__saveGroupResponse(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__saveGroupResponse(soap, _p); _p->return_ = return_; } return _p; }
+
+inline struct ns1__saveGroupResponse * soap_new_set_ns1__saveGroupResponse(struct soap *soap, struct soap_dom_element& return_) { struct ns1__saveGroupResponse *_p = soap_instantiate_ns1__saveGroupResponse(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__saveGroupResponse(soap, _p); _p->return_ = return_; } return _p; }
+
+inline void soap_delete_ns1__saveGroupResponse(struct soap *soap, struct ns1__saveGroupResponse *p) { soap_delete(soap, p); }
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ns1__saveGroupResponse(struct soap*, int, int, void*, size_t, const void*, size_t);
+
 #ifndef SOAP_TYPE_ns1__saveClass
 #define SOAP_TYPE_ns1__saveClass (20)
 #endif
@@ -2746,9 +2938,9 @@ SOAP_FMAC1 struct ns1__saveClass * SOAP_FMAC2 soap_instantiate_ns1__saveClass(st
 
 inline struct ns1__saveClass * soap_new_ns1__saveClass(struct soap *soap, int n = -1) { return soap_instantiate_ns1__saveClass(soap, n, NULL, NULL, NULL); }
 
-inline struct ns1__saveClass * soap_new_req_ns1__saveClass(struct soap *soap, std::string& accesscode, struct soap_dom_element& name, struct soap_dom_element& desc, struct soap_dom_element& code, struct soap_dom_element& parent, struct soap_dom_element& untis, struct soap_dom_element& instituteNumber, struct soap_dom_element& adminNumber, struct soap_dom_element& schoolYearDate) { struct ns1__saveClass *_p = soap_instantiate_ns1__saveClass(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__saveClass(soap, _p); _p->accesscode = accesscode; _p->name = name; _p->desc = desc; _p->code = code; _p->parent = parent; _p->untis = untis; _p->instituteNumber = instituteNumber; _p->adminNumber = adminNumber; _p->schoolYearDate = schoolYearDate; } return _p; }
+inline struct ns1__saveClass * soap_new_req_ns1__saveClass(struct soap *soap, std::string& accesscode, std::string& name, std::string& desc, std::string& code, std::string& parent, std::string& untis, std::string& instituteNumber, std::string& adminNumber, std::string& schoolYearDate) { struct ns1__saveClass *_p = soap_instantiate_ns1__saveClass(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__saveClass(soap, _p); _p->accesscode = accesscode; _p->name = name; _p->desc = desc; _p->code = code; _p->parent = parent; _p->untis = untis; _p->instituteNumber = instituteNumber; _p->adminNumber = adminNumber; _p->schoolYearDate = schoolYearDate; } return _p; }
 
-inline struct ns1__saveClass * soap_new_set_ns1__saveClass(struct soap *soap, std::string& accesscode, struct soap_dom_element& name, struct soap_dom_element& desc, struct soap_dom_element& code, struct soap_dom_element& parent, struct soap_dom_element& untis, struct soap_dom_element& instituteNumber, struct soap_dom_element& adminNumber, struct soap_dom_element& schoolYearDate) { struct ns1__saveClass *_p = soap_instantiate_ns1__saveClass(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__saveClass(soap, _p); _p->accesscode = accesscode; _p->name = name; _p->desc = desc; _p->code = code; _p->parent = parent; _p->untis = untis; _p->instituteNumber = instituteNumber; _p->adminNumber = adminNumber; _p->schoolYearDate = schoolYearDate; } return _p; }
+inline struct ns1__saveClass * soap_new_set_ns1__saveClass(struct soap *soap, std::string& accesscode, std::string& name, std::string& desc, std::string& code, std::string& parent, std::string& untis, std::string& instituteNumber, std::string& adminNumber, std::string& schoolYearDate) { struct ns1__saveClass *_p = soap_instantiate_ns1__saveClass(soap, -1, NULL, NULL, NULL); if (_p) { soap_default_ns1__saveClass(soap, _p); _p->accesscode = accesscode; _p->name = name; _p->desc = desc; _p->code = code; _p->parent = parent; _p->untis = untis; _p->instituteNumber = instituteNumber; _p->adminNumber = adminNumber; _p->schoolYearDate = schoolYearDate; } return _p; }
 
 inline void soap_delete_ns1__saveClass(struct soap *soap, struct ns1__saveClass *p) { soap_delete(soap, p); }
 
@@ -2925,7 +3117,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_xsd__anyType(struct soap*, int, int, void*,
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Reason
-#define SOAP_TYPE_PointerToSOAP_ENV__Reason (146)
+#define SOAP_TYPE_PointerToSOAP_ENV__Reason (155)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerToSOAP_ENV__Reason(struct soap*, struct SOAP_ENV__Reason *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerToSOAP_ENV__Reason(struct soap*, const char *, int, struct SOAP_ENV__Reason *const*, const char *);
@@ -2948,7 +3140,7 @@ SOAP_FMAC3 struct SOAP_ENV__Reason ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Rea
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Detail
-#define SOAP_TYPE_PointerToSOAP_ENV__Detail (145)
+#define SOAP_TYPE_PointerToSOAP_ENV__Detail (154)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerToSOAP_ENV__Detail(struct soap*, struct SOAP_ENV__Detail *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerToSOAP_ENV__Detail(struct soap*, const char *, int, struct SOAP_ENV__Detail *const*, const char *);
@@ -2971,7 +3163,7 @@ SOAP_FMAC3 struct SOAP_ENV__Detail ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Det
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Code
-#define SOAP_TYPE_PointerToSOAP_ENV__Code (140)
+#define SOAP_TYPE_PointerToSOAP_ENV__Code (149)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerToSOAP_ENV__Code(struct soap*, struct SOAP_ENV__Code *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerToSOAP_ENV__Code(struct soap*, const char *, int, struct SOAP_ENV__Code *const*, const char *);
