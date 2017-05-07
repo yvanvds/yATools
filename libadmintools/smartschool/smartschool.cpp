@@ -558,15 +558,18 @@ bool y::smartschool::saveClass(const y::ldap::schoolClass & group) {
   description += group.cn().get(); 
   
   if(service.saveClass(
+          
+          // look at older version if this does not work anymore: changes are not fully tested !!!!
+          
           y::utils::Config().getSSPw().ss() , // password smartschool
-          soap_dom_element(nullptr, nullptr, "name", group.cn().get().ss().c_str()), // group name
-          soap_dom_element(nullptr, nullptr, "desc", group.description().get().ss().c_str())          , // group description
-          soap_dom_element(nullptr, nullptr, "code", group.cn().get().ss().c_str())                   , // unique group ID
-          soap_dom_element(nullptr, nullptr, "parent", parent.ss().c_str())                       , // parent for this group
-          soap_dom_element(nullptr, nullptr, "untis", "")                                , // koppeling schoolagenda
-          soap_dom_element(nullptr, nullptr, "instituteNumber", string(group.schoolID  ().get()).ss().c_str()), // institute number
-          soap_dom_element(nullptr, nullptr, "adminNumber", string(group.adminGroup().get()).ss().c_str()), // admin number
-          soap_dom_element(nullptr, nullptr, "schoolYearDate", ""), // schoolyeardate
+          group.cn().get().ss(), // group name
+          group.description().get().ss(), // group description
+          group.cn().get().ss(), // unique group ID
+          parent.ss(), // parent for this group
+          "", // koppeling schoolagenda
+          string(group.schoolID  ().get()).ss(), // institute number
+          string(group.adminGroup().get()).ss(), // admin number
+          "", // schoolyeardate
           result
           ) != SOAP_OK) {
     service.soap_stream_fault(std::cerr);
