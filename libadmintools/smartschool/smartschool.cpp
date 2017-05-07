@@ -334,7 +334,11 @@ bool y::smartschool::saveUser(const y::ldap::account& account) {
   string wisaID = getAccountID(account);
   
   string stamboekNummer(account.stemID().get());
-  if(account.stemID().get() < 1000000) {
+  
+  if(account.stemID().get() == 0) {
+    stamboekNummer = string("");
+  }
+  else if(account.stemID().get() < 1000000) {
     stamboekNummer = string("0") + stamboekNummer;
   }
   
