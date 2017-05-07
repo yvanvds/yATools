@@ -64,7 +64,7 @@ y::smartschool::~smartschool() {
 }
 
 bool y::smartschool::getUserDetails(const string& name, const string& password, y::data::row& details) {
-  soap_dom_element result;
+  /*soap_dom_element result;
   
   if(service.isValidUserCredentials(y::utils::Config().getSSPw().ss(), 
                                     name.ss(), 
@@ -88,7 +88,7 @@ bool y::smartschool::getUserDetails(const string& name, const string& password, 
     }
     
   }
-   
+   */
   return true;
 }
 
