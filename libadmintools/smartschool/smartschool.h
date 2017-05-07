@@ -64,7 +64,7 @@ namespace y {
    
    bool setCoAccount(const string & uid, const string & pw, bool firstAccount);
    
-   bool validate        (const string & username, const string & password);
+   //bool validate        (const string & username, const string & password);
    
    bool deleteUser      (const y::ldap::account & account);
    bool replaceWisaID   (const y::ldap::account & account, WISA_ID & oldID);

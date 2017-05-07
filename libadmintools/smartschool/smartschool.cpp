@@ -424,6 +424,7 @@ bool y::smartschool::saveNationality(const y::ldap::account & account) {
   return saveUserParam(ID, "Nationalititeit", account.nationality().get());
 }
 
+/*
 bool y::smartschool::validate(const string & username, const string & password) {
   soap_dom_element result;
   if(service.isValidUserCredentials(
@@ -443,7 +444,7 @@ bool y::smartschool::validate(const string & username, const string & password) 
       return true;
     }
   }
-}
+}*/
 
 bool y::smartschool::addUserToGroup(const y::ldap::account& account, const string& group, bool keepCurrent) {
   soap_dom_element result;
